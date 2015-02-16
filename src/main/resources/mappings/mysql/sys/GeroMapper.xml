@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.icare.modules.sys.persistence.GeroMapper">
+
+    <cache />
+  
+    <select id="getGero" resultType="Gero" parameterType="int">
+        SELECT
+            id,
+            name,
+            cancel_date      
+        FROM T_GERO
+        WHERE T_GERO.id = #{value}
+    </select>
+
+    <select id="getGerosByName" resultType="Gero" parameterType="String">
+        SELECT
+            id,
+            name,
+            cancel_date      
+        FROM T_GERO
+        WHERE T_GERO.name = #{value}
+            AND T_GERO.cancel_date is null
+    </select>
+
+    <insert id="insertGero" parameterType="Gero">
+        insert into T_GERO(name, cancel_date)
+        values(#{name}, #{cancelDate})
+    </insert>
+    
+</mapper>
