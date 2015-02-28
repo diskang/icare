@@ -3,7 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
-package com.sjtu.icare.common.security.shiro;
+package com.sjtu.icare.modules.sys.utils.security;
 
 import org.apache.shiro.authc.AuthenticationException;
 

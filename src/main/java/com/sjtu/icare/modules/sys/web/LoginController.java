@@ -32,8 +32,8 @@ import com.sjtu.icare.common.utils.CacheUtils;
 import com.sjtu.icare.common.utils.CookieUtils;
 import com.sjtu.icare.common.utils.StringUtils;
 import com.sjtu.icare.common.web.BaseController;
+import com.sjtu.icare.modules.sys.common.UserService;
 import com.sjtu.icare.modules.sys.entity.User;
-import com.sjtu.icare.modules.sys.utils.UserUtils;
 //import com.sjtu.icare.modules.sys.entity.User;
 //import com.sjtu.icare.modules.sys.utils.UserUtils;
 
@@ -50,7 +50,7 @@ public class LoginController extends BaseController{
 	 */
 	@RequestMapping(value = "${adminPath}/login", method = RequestMethod.GET)
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
-		User user = UserUtils.getUser();
+		User user = UserService.getUser();
 		// 如果已经登录，则跳转到管理首页
 		if(user.getUsername() != null){
 			return "redirect:"+Global.getAdminPath();
@@ -64,7 +64,7 @@ public class LoginController extends BaseController{
 	 */
 	@RequestMapping(value = "${adminPath}/login", method = RequestMethod.POST)
 	public String login(@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String username, HttpServletRequest request, HttpServletResponse response, Model model) {
-		User user = UserUtils.getUser();
+		User user = UserService.getUser();
 		// 如果已经登录，则跳转到管理首页
 		if(user.getUsername() != null){
 			return "redirect:"+Global.getAdminPath();
@@ -80,7 +80,7 @@ public class LoginController extends BaseController{
 	@RequiresUser
 	@RequestMapping(value = "${adminPath}")
 	public String index(HttpServletRequest request, HttpServletResponse response) {
-		User user = UserUtils.getUser();
+		User user = UserService.getUser();
 //		// 未登录，则跳转到登录页
 		if(user.getUsername() == null){
 			return "redirect:"+Global.getAdminPath()+"/login";

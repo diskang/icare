@@ -3,7 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
-package com.sjtu.icare.common.security.shiro;
+package com.sjtu.icare.modules.sys.utils.security;
 
 /**
  * 用户和密码（包含验证码）令牌类

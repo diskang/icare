@@ -5,12 +5,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sjtu.icare.common.security.Digests;
-import com.sjtu.icare.common.security.shiro.SystemAuthorizingRealm;
 import com.sjtu.icare.common.service.BaseService;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.Encodes;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.persistence.UserMapper;
+import com.sjtu.icare.modules.sys.utils.security.SystemAuthorizingRealm;
 
 @Service
 @Transactional(readOnly = true)

@@ -1,4 +1,4 @@
-package com.sjtu.icare.modules.sys.utils;
+package com.sjtu.icare.modules.sys.common;
 
 import java.util.Map;
 
@@ -8,11 +8,11 @@ import org.apache.shiro.session.InvalidSessionException;
 import org.apache.shiro.subject.Subject;
 
 import com.google.common.collect.Maps;
-import com.sjtu.icare.common.security.shiro.SystemAuthorizingRealm.UserPrincipal;
 import com.sjtu.icare.common.service.BaseService;
 import com.sjtu.icare.common.utils.SpringContextHolder;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.persistence.UserMapper;
+import com.sjtu.icare.modules.sys.utils.security.SystemAuthorizingRealm.UserPrincipal;
 
 
 
@@ -24,7 +24,7 @@ import com.sjtu.icare.modules.sys.persistence.UserMapper;
  * @author KangShiyong
  * @version 2015-2-15
  */
-public class UserUtils extends BaseService {
+public class UserService extends BaseService {
 
 	private static UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
 	

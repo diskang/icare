@@ -1,4 +1,4 @@
-package com.sjtu.icare.common.security.shiro;
+package com.sjtu.icare.modules.sys.utils.security;
 
 
 import java.io.Serializable;
