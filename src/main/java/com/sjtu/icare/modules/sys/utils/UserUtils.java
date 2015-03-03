@@ -1,5 +1,9 @@
 package com.sjtu.icare.modules.sys.utils;
 
-public class UserUtils {
+import com.sjtu.icare.modules.sys.entity.User;
 
+public class UserUtils {
+	public static User get(String id){
+		return new User();
+	}
 }
