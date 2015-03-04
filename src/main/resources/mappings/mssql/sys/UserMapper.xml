@@ -93,7 +93,6 @@
 	<!-- 插入用户 -->
 	<insert id="insert">
 		INSERT INTO T_USER(
-			id,
 	        username,
 	        name,
 	        password,
@@ -102,7 +101,6 @@
 	        register_date,
 	        photo
 		) VALUES (
-			#{id}, 
 			#{username}, 
 			#{password}, 
 			#{name},
