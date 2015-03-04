@@ -98,7 +98,7 @@
 	        name,
 	        password,
 	        user_type,
-	        user_id as userId,
+	        user_id,
 	        register_date,
 	        photo
 		) VALUES (
