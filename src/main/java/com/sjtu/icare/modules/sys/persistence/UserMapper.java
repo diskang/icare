@@ -32,7 +32,7 @@ public interface UserMapper extends CrudMapper<User>{
 	 * @param username
 	 * @return
 	 */
-	public User getByUserame(User user);
+	public User getByUsername(User user);
 	
 //	/**
 //	 * 查询全部用户数目
