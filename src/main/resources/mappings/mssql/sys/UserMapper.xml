@@ -97,9 +97,9 @@
 	        username,
 	        name,
 	        password,
-	        user_type as userType,
+	        user_type,
 	        user_id as userId,
-	        register_date as registerDate,
+	        register_date,
 	        photo
 		) VALUES (
 			#{id}, 
