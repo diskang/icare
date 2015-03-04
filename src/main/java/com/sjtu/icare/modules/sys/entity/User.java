@@ -1,7 +1,7 @@
 package com.sjtu.icare.modules.sys.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -255,6 +255,9 @@ public class User extends DataEntity<User> {
 		return registerDate;
 	}
 
+	public void setRegisterDate(Date registerDate){
+		this.registerDate = registerDate;
+	}
 //	@ExcelField(title="最后登录IP", type=1, align=1, sort=100)
 //	public String getLoginIp() {
 //		return loginIp;
