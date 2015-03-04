@@ -1,9 +1,230 @@
 package com.sjtu.icare.modules.sys.utils;
 
-import com.sjtu.icare.modules.sys.entity.User;
+import java.util.List;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.UnavailableSecurityManagerException;
+import org.apache.shiro.session.InvalidSessionException;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
+
+import com.sjtu.icare.common.service.BaseService;
+import com.sjtu.icare.common.utils.SpringContextHolder;
+import com.sjtu.icare.modules.sys.entity.Privilege;
+import com.sjtu.icare.modules.sys.entity.User;
+import com.sjtu.icare.modules.sys.persistence.PrivilegeMapper;
+import com.sjtu.icare.modules.sys.persistence.RoleMapper;
+import com.sjtu.icare.modules.sys.persistence.UserMapper;
+import com.sjtu.icare.common.utils.CacheUtils;
+import com.sjtu.icare.modules.sys.entity.Role;
+import com.sjtu.icare.modules.sys.utils.security.SystemAuthorizingRealm.UserPrincipal;
+import com.sjtu.icare.modules.sys.utils.UserUtils;
+
+
+/**
+ * 用户工具类
+ * @author jty
+ * @version 2015-03-03
+ */
 public class UserUtils {
-	public static User get(String id){
+	
+	private static UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
+	private static RoleMapper roleMapper = SpringContextHolder.getBean(RoleMapper.class);
+	private static PrivilegeMapper privilegeMapper = SpringContextHolder.getBean(PrivilegeMapper.class);
+	
+	public static final String USER_CACHE = "userCache";
+	public static final String USER_CACHE_ID_ = "id_";
+	public static final String USER_CACHE_LOGIN_NAME_ = "ln";
+
+	public static final String CACHE_ROLE_LIST = "roleList";
+	public static final String CACHE_PRIVILEGE_LIST = "privilegeList";
+	
+	/**
+	 * 根据ID获取用户
+	 * @param id
+	 * @return 取不到返回null
+	 */
+	public static User get(int id){
+		User user = (User)CacheUtils.get(USER_CACHE, USER_CACHE_ID_ + id);
+		if (user ==  null){
+			user = userMapper.get(id);
+			if (user == null){
+				return null;
+			}
+			user.setRoleList(roleMapper.findList(new Role(user)));
+			CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
+			CacheUtils.put(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getLoginName(), user);
+		}
+		return user;
+	}
+	
+	/**
+	 * 根据登录名获取用户
+	 * @param loginName
+	 * @return 取不到返回null
+	 */
+	public static User getByLoginName(String loginName){
+		User user = (User)CacheUtils.get(USER_CACHE, USER_CACHE_LOGIN_NAME_ + loginName);
+		if (user == null){
+			user = userMapper.getByLoginName(new User(-1, loginName));
+			if (user == null){
+				return null;
+			}
+			user.setRoleList(roleMapper.findList(new Role(user)));
+			CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
+			CacheUtils.put(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getLoginName(), user);
+		}
+		return user;
+	}
+	
+	/**
+	 * 清除当前用户缓存
+	 */
+	public static void clearCache(){
+		removeCache(CACHE_ROLE_LIST);
+		removeCache(CACHE_PRIVILEGE_LIST);
+		UserUtils.clearCache(getUser());
+	}
+	
+	/**
+	 * 清除指定用户缓存
+	 * @param user
+	 */
+	public static void clearCache(User user){
+		CacheUtils.remove(USER_CACHE, USER_CACHE_ID_ + user.getId());
+		CacheUtils.remove(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getLoginName());
+	}
+	
+	/**
+	 * 获取当前用户
+	 * @return 取不到返回 new User()
+	 */
+	public static User getUser(){
+		UserPrincipal principal = getPrincipal();
+		if (principal!=null){
+			User user = get(principal.getId());
+			if (user != null){
+				return user;
+			}
+			return new User();
+		}
+		// 如果没有登录，则返回实例化空的User对象。
 		return new User();
 	}
+	
+	/**
+	 * 获取当前用户角色列表
+	 * @return
+	 */
+	public static List<Role> getRoleList(){
+		@SuppressWarnings("unchecked")
+		List<Role> roleList = (List<Role>)getCache(CACHE_ROLE_LIST);
+		if (roleList == null){
+			User user = getUser();
+			if (user.isAdmin()){
+				roleList = roleMapper.findAllList(new Role());
+			}else{
+				Role role = new Role();
+//				role.getSqlMap().put("dsf", BaseService.dataScopeFilter(user.getCurrentUser(), "o", "u"));
+				roleList = roleMapper.findList(role);
+			}
+			putCache(CACHE_ROLE_LIST, roleList);
+		}
+		return roleList;
+	}
+	
+	/**
+	 * 获取当前用户授权菜单
+	 * @return
+	 */
+	public static List<Privilege> getPrivilegeList(){
+		@SuppressWarnings("unchecked")
+		List<Privilege> privilegelList = (List<Privilege>)getCache(CACHE_PRIVILEGE_LIST);
+		if (privilegelList == null){
+			User user = getUser();
+			if (user.isAdmin()){
+				privilegelList = privilegeMapper.findAllList(new Privilege());
+			}else{
+				Privilege p = new Privilege();
+				p.setUserId(user.getId());
+				privilegelList = privilegeMapper.findByUserId(p);
+			}
+			putCache(CACHE_PRIVILEGE_LIST, privilegelList);
+		}
+		return privilegelList;
+	}
+	
+	/**
+	 * 获取授权主要对象
+	 */
+	public static Subject getSubject(){
+		return SecurityUtils.getSubject();
+	}
+	
+	/**
+	 * 获取当前登录者对象
+	 */
+	public static UserPrincipal getPrincipal(){
+		try{
+			Subject subject = SecurityUtils.getSubject();
+			UserPrincipal principal = (UserPrincipal)subject.getPrincipal();
+			if (principal != null){
+				return principal;
+			}
+//			subject.logout();
+		}catch (UnavailableSecurityManagerException e) {
+			
+		}catch (InvalidSessionException e){
+			
+		}
+		return null;
+	}
+	
+	public static Session getSession(){
+		try{
+			Subject subject = SecurityUtils.getSubject();
+			Session session = subject.getSession(false);
+			if (session == null){
+				session = subject.getSession();
+			}
+			if (session != null){
+				return session;
+			}
+//			subject.logout();
+		}catch (InvalidSessionException e){
+			
+		}
+		return null;
+	}
+	
+	// ============== User Cache ==============
+	
+		public static Object getCache(String key) {
+			return getCache(key, null);
+		}
+		
+		public static Object getCache(String key, Object defaultValue) {
+//			Object obj = getCacheMap().get(key);
+			Object obj = getSession().getAttribute(key);
+			return obj==null?defaultValue:obj;
+		}
+
+		public static void putCache(String key, Object value) {
+//			getCacheMap().put(key, value);
+			getSession().setAttribute(key, value);
+		}
+
+		public static void removeCache(String key) {
+//			getCacheMap().remove(key);
+			getSession().removeAttribute(key);
+		}
+		
+//		public static Map<String, Object> getCacheMap(){
+//			Principal principal = getPrincipal();
+//			if(principal!=null){
+//				return principal.getCacheMap();
+//			}
+//			return new HashMap<String, Object>();
+//		}
+	
 }
