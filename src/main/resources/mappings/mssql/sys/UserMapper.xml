@@ -27,7 +27,7 @@
 	</select>
 	
 	<!-- 根据登录名查询用户 -->
-	<select id="getByLoginName" resultType="User" parameterType="User">
+	<select id="getByUsername" resultType="User" parameterType="User">
 		SELECT
 			<include refid="userColumns"/>
 		FROM T_USER
@@ -45,8 +45,8 @@
 		<!-- <if test="!currentUser.admin">
 			AND a.id != '1'
 		</if> -->
-		<if test="loginName != null and loginName != ''">
-			AND login_name like '%'||#{loginName}||'%'
+		<if test="username != null and username != ''">
+			AND username like '%'||#{username}||'%'
 		</if>
 		<if test="name != null and name != ''">
 			AND name like '%'||#{name}||'%'

@@ -17,22 +17,22 @@ import com.sjtu.icare.common.persistence.CrudMapper;
 @MyBatisDao
 public interface UserMapper extends CrudMapper<User>{
 
-    User findByUsername(String username);
+//    User findByUsername(String username);
 
     //User findByUserId(int userId);//应该不会用id来查。
 
-    void updatePasswordById(@Param("id")int id,@Param("password")String password);//id,password
+//    void updatePasswordById(@Param("id")int id,@Param("password")String password);//id,password
     
-    void save(User user);
+//    void save(User user);
 
-    void delete(@Param("id")int id,@Param("cancelDate")String cancelDate);//id, cancelDate
+//    void delete(@Param("id")int id,@Param("cancelDate")String cancelDate);//id, cancelDate
     
     /**
 	 * 根据登录名称查询用户
-	 * @param loginName
+	 * @param username
 	 * @return
 	 */
-	public User getByLoginName(User user);
+	public User getByUserame(User user);
 	
 //	/**
 //	 * 查询全部用户数目
