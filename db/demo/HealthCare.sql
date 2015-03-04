@@ -6,15 +6,15 @@ GO
 
 CREATE TABLE T_USER
 (
-	id					int				PRIMARY KEY IDENTITY,	//用户id
-	username			nvarchar(30)	NOT NULL,				//用户登录名
-	name				nvarchar(20)	NOT NULL,				//用户姓名
-	password			varchar(64)		NOT NULL,				//用户密码
-	user_type			int				NOT NULL,				//超级管理员=0、管理员=1，员工=2、老人=3、家属=4
-	user_id				int				NOT NULL,				//-1，gero_id, staff_id, elder_id，family_id
-	register_date		datetime		NOT NULL,				//注册日期
-	cancel_date			datetime		,						//注销日期
-	photo				varchar(256)	,						//照片url
+	id					int				PRIMARY KEY IDENTITY,	--用户id
+	username			nvarchar(30)	NOT NULL,				--用户登录名
+	name				nvarchar(20)	NOT NULL,				--用户姓名
+	password			varchar(64)		NOT NULL,				--用户密码
+	user_type			int				NOT NULL,				--超级管理员=0、管理员=1，员工=2、老人=3、家属=4
+	user_id				int				NOT NULL,				---1，gero_id, staff_id, elder_id，family_id
+	register_date		datetime		NOT NULL,				--注册日期
+	cancel_date			datetime		,						--注销日期
+	photo				varchar(256)	,						--照片url
 )
 GO
 

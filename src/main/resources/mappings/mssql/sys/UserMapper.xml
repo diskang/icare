@@ -6,7 +6,161 @@
 
     <cache />
   
-    <select id="findByUsername" resultType="User" parameterType="String">
+	<sql id="userColumns">
+		id,
+        username,
+        name,
+        password,
+        user_type as userType,
+        user_id as userId,
+        register_date as registerDate,
+        cancel_date as cancelDate,
+        photo
+	</sql>
+	
+	<!-- 根据编号获得用户 -->
+	<select id="get" resultType="User">
+		SELECT
+			<include refid="userColumns"/>
+		FROM T_USER
+		WHERE id = #{id}
+	</select>
+	
+	<!-- 根据登录名查询用户 -->
+	<select id="getByLoginName" resultType="User" parameterType="User">
+		SELECT
+			<include refid="userColumns"/>
+		FROM T_USER
+		WHERE username = #{username} AND cancel_date is null
+	</select>
+	
+	<!-- 分页查询用户信息 -->
+	<select id="findList" resultType="User">
+		SELECT
+			<include refid="userColumns"/>
+		FROM T_USER
+		WHERE cancel_date is null
+		
+		<!-- 如果不是超级管理员，则不显示超级管理员用户 -->
+		<!-- <if test="!currentUser.admin">
+			AND a.id != '1'
+		</if> -->
+		<if test="loginName != null and loginName != ''">
+			AND login_name like '%'||#{loginName}||'%'
+		</if>
+		<if test="name != null and name != ''">
+			AND name like '%'||#{name}||'%'
+		</if>
+		<!-- 数据范围过滤 -->
+		<!-- ${sqlMap.dsf} -->
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY name
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 根据OfficeId获取用户（树查询用户时用） -->
+	<!-- <select id="findUserByOfficeId" resultType="User" useCache="true">
+		SELECT
+			a.id, a.name, a.login_name
+		FROM sys_user a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+			AND a.office_id = #{office.id}
+		ORDER BY a.name
+	</select> -->
+	
+	<!-- 查询全部用户 -->
+	<select id="findAllList" resultType="User">
+		SELECT
+			<include refid="userColumns"/>
+		FROM T_USER
+		WHERE cancel_date is null
+		ORDER BY name
+	</select>
+	
+	<!-- 查询全部用户数目 -->
+	<select id="findAllCount" resultType="long">
+		SELECT
+			COUNT(1)
+		FROM T_USER
+		WHERE cancel_date is null
+	</select>
+	
+	<!-- 插入用户 -->
+	<insert id="insert">
+		INSERT INTO T_USER(
+			id,
+	        username,
+	        name,
+	        password,
+	        user_type as userType,
+	        user_id as userId,
+	        register_date as registerDate,
+	        photo
+		) VALUES (
+			#{id}, 
+			#{username}, 
+			#{password}, 
+			#{name},
+			#{userType}, 
+			#{userId}, 
+			#{registerDate}, 
+			#{photo}, 
+		)
+	</insert>
+	
+	<!-- 更新用户 -->
+	<update id="update">
+		UPDATE T_USER SET 
+			username = #{username}, 
+			password = #{password}, 
+			name = #{name}, 
+			user_type = #{userType}, 
+			user_id = #{userId}, 
+			register_date = #{registerDate}, 
+			photo = #{photo}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 删除用户和角色关联表数据 -->
+	<delete id="deleteUserRole">
+		DELETE T_ROLE WHERE user_id = #{id}
+	</delete>
+	
+	<!-- 插入用户和角色关联表数据 -->
+	<insert id="insertUserRole">
+		INSERT INTO T_ROLE(user_id, role_id)
+		<foreach collection="roleList" item="role" separator=" union all ">
+			SELECT #{id}, #{role.id} <!-- FROM dual -->
+		</foreach>
+	</insert>
+	
+	<!-- 更新用户信息  -->
+	<update id="updateUserInfo">
+		UPDATE T_USER SET 		
+			photo = #{photo}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 更新用户密码 -->
+	<update id="updatePasswordById">
+		UPDATE T_USER SET 
+			password = #{password} 
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 逻辑删除用户 -->
+	<update id="delete">
+		UPDATE T_USER SET 
+			cancel_date = #{cancelDate}
+		WHERE id = #{id}
+	</update>
+  
+    <!-- <select id="findByUsername" resultType="User" parameterType="String">
         SELECT
             id,
             username,
@@ -18,15 +172,15 @@
         FROM T_USER
         WHERE T_USER.username = #{value}
             AND T_USER.cancel_date is null
-    </select>
+    </select> -->
 
-    <update id="updatePasswordById"  parameterType="map">
+    <!-- <update id="updatePasswordById"  parameterType="map">
         UPDATE T_USER
         SET password = #{password}
         WHERE T_USER.id = #{id}
-    </update>
+    </update> -->
 
-    <insert id="save" parameterType="user" useGeneratedKeys="true" keyProperty="id">
+    <!-- <insert id="save" parameterType="user" useGeneratedKeys="true" keyProperty="id">
         insert into T_USER(
             username, password, 
             user_type, user_id, 
@@ -37,13 +191,13 @@
             #{userType}, #{userId},
             #{registerDate}, #{cancelDate}
         )
-    </insert>
+    </insert> -->
        
     <!--给cancel_date赋值就表示删除-->
-    <update id="delete"  parameterType="map">
+    <!-- <update id="delete"  parameterType="map">
         UPDATE T_USER
         SET cancel_date = #{cancelDate}
         WHERE T_USER.id = #{id}
-    </update>
+    </update> -->
 
 </mapper>
