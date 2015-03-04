@@ -109,7 +109,7 @@
 			#{userType}, 
 			#{userId}, 
 			#{registerDate}, 
-			#{photo}, 
+			#{photo}
 		)
 	</insert>
 	
