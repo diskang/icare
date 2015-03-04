@@ -39,7 +39,7 @@ public class UserService extends BaseService {
 				Subject subject = SecurityUtils.getSubject();
 				UserPrincipal principal = (UserPrincipal)subject.getPrincipal();
 				if (principal!=null){
-					user = userMapper.findByUsername(principal.getUsername());
+					user = userMapper.getByUsername(new User(-1,principal.getUsername()));
 					putCache(CACHE_USER, user);
 				}
 			}catch (UnavailableSecurityManagerException e) {
