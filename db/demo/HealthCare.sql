@@ -292,12 +292,13 @@ GO
 CREATE TABLE T_PRIVILEGE
 (
 	id					int				PRIMARY KEY IDENTITY,
-	name				nvarchar(50)	NOT NULL,				--
-	parent_id			varchar(64)		NOT NULL,				--
-	parent_ids			varchar(1000)	NOT NULL,				--
-	href				varchar(255)	,						--
-	icon				varchar(100)	,						--
-	notes				nvarchar(500)	,						--
+	name				nvarchar(50)	NOT NULL,				--权限名
+	parent_id			varchar(64)		NOT NULL,				--父亲结点，顶级菜单id为1，其父节点为虚拟结点，为0
+	parent_ids			varchar(1000)	NOT NULL,				--所有父亲权限列表，用逗号分隔，从0开始。添加到索引
+	permission			varchar(255)	NOT NULL,				--shiro权限字符串
+	href				varchar(255)	,						--链接
+	icon				varchar(100)	,						--图标
+	notes				nvarchar(500)	,						--权限说明
 )
 GO
 

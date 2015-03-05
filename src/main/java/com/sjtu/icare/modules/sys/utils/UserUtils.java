@@ -2,6 +2,7 @@ package com.sjtu.icare.modules.sys.utils;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.session.InvalidSessionException;
@@ -19,6 +20,7 @@ import com.sjtu.icare.common.utils.CacheUtils;
 import com.sjtu.icare.modules.sys.entity.Role;
 import com.sjtu.icare.modules.sys.utils.security.SystemAuthorizingRealm.UserPrincipal;
 import com.sjtu.icare.modules.sys.utils.UserUtils;
+import com.sjtu.icare.modules.sys.web.TestController;
 
 
 /**
@@ -27,10 +29,10 @@ import com.sjtu.icare.modules.sys.utils.UserUtils;
  * @version 2015-03-03
  */
 public class UserUtils {
-	
+	private static final Logger logger = Logger.getLogger(TestController.class);
 	private static UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
-//	private static RoleMapper roleMapper = SpringContextHolder.getBean(RoleMapper.class);
-//	private static PrivilegeMapper privilegeMapper = SpringContextHolder.getBean(PrivilegeMapper.class);
+	private static RoleMapper roleMapper = SpringContextHolder.getBean(RoleMapper.class);
+	private static PrivilegeMapper privilegeMapper = SpringContextHolder.getBean(PrivilegeMapper.class);
 	
 	public static final String USER_CACHE = "userCache";
 	public static final String USER_CACHE_ID_ = "id_";
@@ -51,7 +53,7 @@ public class UserUtils {
 			if (user == null){
 				return null;
 			}
-//			user.setRoleList(roleMapper.findList(new Role(user)));
+			user.setRoleList(roleMapper.findList(new Role(user)));
 			CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
 			CacheUtils.put(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getLoginName(), user);
 		}
@@ -66,11 +68,14 @@ public class UserUtils {
 	public static User getByLoginName(String loginName){
 		User user = (User)CacheUtils.get(USER_CACHE, USER_CACHE_LOGIN_NAME_ + loginName);
 		if (user == null){
+			logger.debug("to get user");
 			user = userMapper.getByUsername(new User(-1, loginName));
+			logger.debug("getted user");
 			if (user == null){
 				return null;
 			}
-//			user.setRoleList(roleMapper.findList(new Role(user)));
+			List<Role> roleList = roleMapper.findList(new Role(user));;
+			user.setRoleList(roleList);		
 			CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
 			CacheUtils.put(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getLoginName(), user);
 		}
@@ -122,11 +127,11 @@ public class UserUtils {
 		if (roleList == null){
 			User user = getUser();
 			if (user.isAdmin()){
-//				roleList = roleMapper.findAllList(new Role());
+				roleList = roleMapper.findAllList(new Role());
 			}else{
 				Role role = new Role();
 //				role.getSqlMap().put("dsf", BaseService.dataScopeFilter(user.getCurrentUser(), "o", "u"));
-//				roleList = roleMapper.findList(role);
+				roleList = roleMapper.findList(role);
 			}
 			putCache(CACHE_ROLE_LIST, roleList);
 		}
@@ -143,11 +148,11 @@ public class UserUtils {
 		if (privilegelList == null){
 			User user = getUser();
 			if (user.isAdmin()){
-//				privilegelList = privilegeMapper.findAllList(new Privilege());
+				privilegelList = privilegeMapper.findAllList(new Privilege());
 			}else{
 				Privilege p = new Privilege();
 				p.setUserId(user.getId());
-//				privilegelList = privilegeMapper.findByUserId(p);
+				privilegelList = privilegeMapper.findByUserId(p);
 			}
 			putCache(CACHE_PRIVILEGE_LIST, privilegelList);
 		}

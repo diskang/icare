@@ -24,8 +24,8 @@ public interface RoleMapper extends CrudMapper<Role> {
 	 * @param role
 	 * @return
 	 */
-	public int deleteRoleMenu(Role role);
+	public int deleteRolePrivilege(Role role);
 
-	public int insertRoleMenu(Role role);
+	public int insertRolePrivilege(Role role);
 
 }

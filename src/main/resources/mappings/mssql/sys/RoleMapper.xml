@@ -8,9 +8,9 @@
 		<id property="id" column="id" />
 		<result property="name" column="name" />
 		<result property="notes" column="notes" />
-		<result property="gero_id" column="gero_id" />
+		<result property="geroId" column="gero_id" />
 		<collection property="privilegeList" ofType="Privilege">
-			<id property="id" column="privilegeList.id" />
+			<id property="id" column="rp.id" />
 		</collection>
 	</resultMap>
 	
@@ -37,14 +37,15 @@
 		WHERE a.name = #{name}
 	</select>
 	
-	<select id="findList" resultMap="roleResult">
-		SELECT <!-- DISTINCT -->
+	<select id="findList" resultType="Role">
+		SELECT 
 			<include refid="roleColumns"/>
 		FROM T_ROLE a
 		LEFT JOIN T_USER_ROLES ur ON ur.role_id = a.id
 		LEFT JOIN T_USER u ON u.id = ur.user_id
+		WHERE
 		<if test="user != null and user.id >0">
-			AND u.id = #{user.id}
+			u.id = #{user.id}
 		</if>
 		<if test="user != null and user.username != null and user.username != ''">
 			AND u.username = #{user.username}
@@ -66,7 +67,7 @@
 			notes
 		) VALUES ( 
 			#{name}, 
-			#{gero_id}, 
+			#{geroId}, 
 			#{notes}
 		)
 	</insert>
@@ -74,7 +75,7 @@
 	<update id="update">
 		UPDATE sys_role SET 
 			name = #{name}, 
-			gero_id = #{gero_id}, 
+			gero_id = #{geroId}, 
 			notes = #{notes}, 
 		WHERE id = #{id}
 	</update>
@@ -90,7 +91,9 @@
 		</foreach>
 	</insert>
 	
-	<update id="delete">
-		DELETE T_ROLE WHERE id = #{id}
-	</update>
+	<delete id="delete">
+		DELETE T_ROLE WHERE id = #{id} 
+			AND gero_id IS NOT NULL
+			AND gero_id != ''
+	</delete>
 </mapper>
