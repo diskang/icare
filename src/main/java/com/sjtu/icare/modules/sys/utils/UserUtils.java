@@ -29,8 +29,8 @@ import com.sjtu.icare.modules.sys.utils.UserUtils;
 public class UserUtils {
 	
 	private static UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
-	private static RoleMapper roleMapper = SpringContextHolder.getBean(RoleMapper.class);
-	private static PrivilegeMapper privilegeMapper = SpringContextHolder.getBean(PrivilegeMapper.class);
+//	private static RoleMapper roleMapper = SpringContextHolder.getBean(RoleMapper.class);
+//	private static PrivilegeMapper privilegeMapper = SpringContextHolder.getBean(PrivilegeMapper.class);
 	
 	public static final String USER_CACHE = "userCache";
 	public static final String USER_CACHE_ID_ = "id_";
@@ -51,7 +51,7 @@ public class UserUtils {
 			if (user == null){
 				return null;
 			}
-			user.setRoleList(roleMapper.findList(new Role(user)));
+//			user.setRoleList(roleMapper.findList(new Role(user)));
 			CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
 			CacheUtils.put(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getLoginName(), user);
 		}
@@ -66,11 +66,11 @@ public class UserUtils {
 	public static User getByLoginName(String loginName){
 		User user = (User)CacheUtils.get(USER_CACHE, USER_CACHE_LOGIN_NAME_ + loginName);
 		if (user == null){
-			user = userMapper.getByLoginName(new User(-1, loginName));
+			user = userMapper.getByUsername(new User(-1, loginName));
 			if (user == null){
 				return null;
 			}
-			user.setRoleList(roleMapper.findList(new Role(user)));
+//			user.setRoleList(roleMapper.findList(new Role(user)));
 			CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
 			CacheUtils.put(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getLoginName(), user);
 		}
@@ -122,11 +122,11 @@ public class UserUtils {
 		if (roleList == null){
 			User user = getUser();
 			if (user.isAdmin()){
-				roleList = roleMapper.findAllList(new Role());
+//				roleList = roleMapper.findAllList(new Role());
 			}else{
 				Role role = new Role();
 //				role.getSqlMap().put("dsf", BaseService.dataScopeFilter(user.getCurrentUser(), "o", "u"));
-				roleList = roleMapper.findList(role);
+//				roleList = roleMapper.findList(role);
 			}
 			putCache(CACHE_ROLE_LIST, roleList);
 		}
@@ -143,11 +143,11 @@ public class UserUtils {
 		if (privilegelList == null){
 			User user = getUser();
 			if (user.isAdmin()){
-				privilegelList = privilegeMapper.findAllList(new Privilege());
+//				privilegelList = privilegeMapper.findAllList(new Privilege());
 			}else{
 				Privilege p = new Privilege();
 				p.setUserId(user.getId());
-				privilegelList = privilegeMapper.findByUserId(p);
+//				privilegelList = privilegeMapper.findByUserId(p);
 			}
 			putCache(CACHE_PRIVILEGE_LIST, privilegelList);
 		}

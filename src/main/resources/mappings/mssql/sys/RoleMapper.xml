@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.icare.modules.sys.persistence.RoleMapper">
+	
+	<resultMap id="roleResult" type="Role">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="notes" column="notes" />
+		<result property="gero_id" column="gero_id" />
+		<collection property="privilegeList" ofType="Privilege">
+			<id property="id" column="privilegeList.id" />
+		</collection>
+	</resultMap>
+	
+    <sql id="roleColumns">
+    	a.id,
+    	a.name,
+		a.gero_id AS geroId,
+		a.notes
+    </sql>
+    
+	<select id="get" resultMap="roleResult">
+		SELECT
+			<include refid="roleColumns"/>,
+			rp.id AS "privilegeList.id"
+		FROM T_ROLE a
+		LEFT JOIN T_ROLE_PRIVILEGES rp ON rp.role_id = a.id
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="getByName" resultType="Role">
+		SELECT
+			<include refid="roleColumns"/>
+		FROM T_ROLE a
+		WHERE a.name = #{name}
+	</select>
+	
+	<select id="findList" resultMap="roleResult">
+		SELECT <!-- DISTINCT -->
+			<include refid="roleColumns"/>
+		FROM T_ROLE a
+		LEFT JOIN T_USER_ROLES ur ON ur.role_id = a.id
+		LEFT JOIN T_USER u ON u.id = ur.user_id
+		<if test="user != null and user.id >0">
+			AND u.id = #{user.id}
+		</if>
+		<if test="user != null and user.username != null and user.username != ''">
+			AND u.username = #{user.username}
+		</if>
+		ORDER BY a.name
+	</select>
+	
+	<select id="findAllList" resultType="Role">
+		SELECT
+			<include refid="roleColumns"/>
+		FROM T_ROLE a
+		ORDER BY a.name
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO T_ROLE(
+			name,
+			gero_id,
+			notes
+		) VALUES ( 
+			#{name}, 
+			#{gero_id}, 
+			#{notes}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sys_role SET 
+			name = #{name}, 
+			gero_id = #{gero_id}, 
+			notes = #{notes}, 
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="deleteRoleMenu">
+		DELETE T_ROLE_PRIVILEGES WHERE role_id = #{id}
+	</delete>
+	
+	<insert id="insertRoleMenu">
+		INSERT INTO T_ROLE_PRIVILEGES(role_id, privilege_id)
+		<foreach collection="privilegeList" item="privilege" separator=" union all ">
+			SELECT #{id}, #{privilege.id}
+		</foreach>
+	</insert>
+	
+	<update id="delete">
+		DELETE T_ROLE WHERE id = #{id}
+	</update>
+</mapper>
