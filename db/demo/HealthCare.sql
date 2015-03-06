@@ -7,7 +7,7 @@ GO
 CREATE TABLE T_USER
 (
 	id					int				PRIMARY KEY IDENTITY,	--用户id
-	username			nvarchar(30)	NOT NULL,				--用户登录名
+	username			nvarchar(30)	NOT NULL	UNIQUE,		--用户登录名
 	name				nvarchar(20)	NOT NULL,				--用户姓名
 	password			varchar(64)		NOT NULL,				--用户密码
 	user_type			int				NOT NULL,				--超级管理员=0、管理员=1，员工=2、老人=3、家属=4
@@ -35,22 +35,24 @@ CREATE TABLE T_GERO
 )
 GO
 
-CREATE TABLE T_ROOM
+CREATE TABLE T_AREA
 (
-	id					int				PRIMARY KEY IDENTITY,	--房间id
+	id					int				PRIMARY KEY IDENTITY,	--位置id
+	parent_id			int				NOT NULL,				--0表示逻辑上的根节点
+	parent_ids			varchar(1000)	NOT NULL,				--父节点列表
 	gero_id				int				NOT NULL,				--养老院id，关联GERO
-	room_no				varchar(8)		NOT NULL,				--房间号
-	floor_no			varchar(8)		NOT NULL,				--楼层
-	building			nvarchar(6)		NOT NULL,				--楼号
-	room_name			nvarchar(16)							--房间名
+	type				int				NOT NULL,				--楼栋：1，楼层：2，房间：3，床位：4，区域：5
+	level				int				NOT NULL,				--每深一层加1
+	name				int				NOT NULL,				--位置名称
+	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
 )
 GO
 
-CREATE TABLE T_BLUETOOTH_DEVICE
+CREATE TABLE T_DEVICE
 (
 	id					int				PRIMARY KEY IDENTITY,	--蓝牙设备id
 	elder_id			int				NOT NULL,				--老人id，关联ELDER
-	room_id				int				NOT NULL,				--房间id，关联ROOM
+	area_id				int				NOT NULL,				--房间id，关联AREA
 	name				nvarchar(30)	NOT NULL,				--设备名
 	device_type_id		int				NOT NULL,				--设备种类id，关联DEVICE_TYPE
 	active_mode			varchar(10)		NOT NULL,				--active：正在测量，pause：当前中止，idol：当前空闲（已连接），disconnect：链接断开
@@ -89,7 +91,7 @@ CREATE TABLE T_ELDER
 	nssf_id				varchar(50)		,						--老人社保卡号
 	archive_id			varchar(20)		,						--档案编号，不清楚用处，养老院要求加的。
 	photo_url			varchar(256)	,						--老人照片地址
-	room_id				int				,						--老人入住床号，关联T_ROOM表
+	area_id				int				,						--老人入住床号，关联T_AREA表
 	nationality			nvarchar(20)	,						--民族
 	marriage			int				,						--0:未婚  1：已婚 2：离异 3:丧偶
 	native_place		nvarchar(20)	,						--老人籍贯
@@ -196,8 +198,8 @@ CREATE TABLE T_STAFF
 	name				nvarchar(20)	NOT NULL,				--
 	phone				varchar(20)		,						--
 	email				varchar(20)		,						--
-	idno				varchar(18)		,						--
-	nssf				varchar(20)		,						--
+	identity_no			varchar(18)		NOT NULL,				--
+	nssf_id				varchar(20)		,						--
 	gero_id				int				NOT NULL,				--
 	birthday			date			,						--
 	gender				nvarchar(2)		,						--
@@ -219,12 +221,12 @@ CREATE TABLE T_CAREWORK_RECORD
 )
 GO
 
-CREATE TABLE T_ROOMWORK_RECORD
+CREATE TABLE T_AREAWORK_RECORD
 (
 	id					int				PRIMARY KEY IDENTITY,
 	carer_id			int				NOT NULL,				--
-	room_item_id		int				NOT NULL,				--
-	room_id				int				NOT NULL,				--
+	area_item_id		int				NOT NULL,				--
+	area_id				int				NOT NULL,				--
 	finish_time			datetime		NOT NULL,				--
 )
 GO
@@ -271,11 +273,11 @@ CREATE TABLE T_CAREWORK_SCHEDULE_DETAIL
 )
 GO
 
-CREATE TABLE T_ROOMWORK_SCHEDULE_DETAIL
+CREATE TABLE T_AREAWORK_SCHEDULE_DETAIL
 (
 	id					int				PRIMARY KEY IDENTITY,
 	carer_id			int				NOT NULL,				--
-	room_id				int				NOT NULL,				--
+	area_id				int				NOT NULL,				--
 	work_date			date			NOT NULL,				--
 )
 GO
@@ -293,7 +295,7 @@ CREATE TABLE T_PRIVILEGE
 (
 	id					int				PRIMARY KEY IDENTITY,
 	name				nvarchar(50)	NOT NULL,				--权限名
-	parent_id			varchar(64)		NOT NULL,				--父亲结点，顶级菜单id为1，其父节点为虚拟结点，为0
+	parent_id			int				NOT NULL,				--父亲结点，顶级菜单id为1，其父节点为虚拟结点，为0
 	parent_ids			varchar(1000)	NOT NULL,				--所有父亲权限列表，用逗号分隔，从0开始。添加到索引
 	permission			varchar(255)	NOT NULL,				--shiro权限字符串
 	href				varchar(255)	,						--链接
@@ -324,14 +326,16 @@ CREATE TABLE T_CARE_ITEM
 	name				nvarchar(32)	NOT NULL,				--
 	level				int				NOT NULL,				--
 	notes				nvarchar(32)	,						--
+	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
 )
 GO
 
-CREATE TABLE T_ROOM_ITEM
+CREATE TABLE T_AREA_ITEM
 (
 	id					int				PRIMARY KEY IDENTITY,
 	name				nvarchar(32)	NOT NULL,				--
 	notes				nvarchar(32)	,						--
+	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
 )
 GO
 
@@ -343,16 +347,18 @@ CREATE TABLE T_GERO_CARE_ITEM
 	level				int				NOT NULL,				--
 	period				int				,						--
 	frequency			int				,						--
+	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
 )
 GO
 
-CREATE TABLE T_GERO_ROOM_ITEM
+CREATE TABLE T_GERO_AREA_ITEM
 (
 	id					int				PRIMARY KEY IDENTITY,
 	gero_id				int				NOT NULL,				--
-	room_item_id		int				NOT NULL,				--
+	area_item_id		int				NOT NULL,				--
 	period				int				,						--
 	frequency			int				,						--
+	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
 )
 GO
 
@@ -365,6 +371,7 @@ CREATE TABLE T_ELDER_ITEM
 	period				int				,						--
 	start_time			time			,						--
 	end_time			time			,						--
+	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
 )
 GO
 
@@ -374,26 +381,26 @@ FOREIGN KEY (contact_id)
 REFERENCES T_STAFF(id)
 GO
 
-ALTER TABLE T_ROOM
-ADD CONSTRAINT fk_ROOM_gero_id
+ALTER TABLE T_AREA
+ADD CONSTRAINT fk_AREA_gero_id
 FOREIGN KEY (gero_id)
 REFERENCES T_GERO(id)
 GO
 
-ALTER TABLE T_BLUETOOTH_DEVICE
-ADD CONSTRAINT fk_BLUETOOTH_DEVICE_elder_id
+ALTER TABLE T_DEVICE
+ADD CONSTRAINT fk_DEVICE_elder_id
 FOREIGN KEY (elder_id)
 REFERENCES T_ELDER(id)
 GO
 
-ALTER TABLE T_BLUETOOTH_DEVICE
-ADD CONSTRAINT fk_BLUETOOTH_DEVICE_room_id
-FOREIGN KEY (room_id)
-REFERENCES T_ROOM(id)
+ALTER TABLE T_DEVICE
+ADD CONSTRAINT fk_DEVICE_area_id
+FOREIGN KEY (area_id)
+REFERENCES T_AREA(id)
 GO
 
-ALTER TABLE T_BLUETOOTH_DEVICE
-ADD CONSTRAINT fk_BLUETOOTH_DEVICE_type_id
+ALTER TABLE T_DEVICE
+ADD CONSTRAINT fk_DEVICE_type_id
 FOREIGN KEY (device_type_id)
 REFERENCES T_DEVICE_TYPE(id)
 GO
@@ -417,9 +424,9 @@ REFERENCES T_GERO(id)
 GO
 
 ALTER TABLE T_ELDER
-ADD CONSTRAINT fk_ELDER_room_id
-FOREIGN KEY (room_id)
-REFERENCES T_ROOM(id)
+ADD CONSTRAINT fk_ELDER_area_id
+FOREIGN KEY (area_id)
+REFERENCES T_AREA(id)
 GO
 
 ALTER TABLE T_ELDER_SHEET
@@ -506,22 +513,22 @@ FOREIGN KEY (elder_item_id)
 REFERENCES T_ELDER_ITEM(id)
 GO
 
-ALTER TABLE T_ROOMWORK_RECORD
-ADD CONSTRAINT fk_ROOMWORK_RECORD_carer_id
+ALTER TABLE T_AREAWORK_RECORD
+ADD CONSTRAINT fk_AREAWORK_RECORD_carer_id
 FOREIGN KEY (carer_id)
 REFERENCES T_STAFF(id)
 GO
 
-ALTER TABLE T_ROOMWORK_RECORD
-ADD CONSTRAINT fk_ROOMWORK_RECORD_room_item_id
-FOREIGN KEY (room_item_id)
-REFERENCES T_GERO_ROOM_ITEM(id)
+ALTER TABLE T_AREAWORK_RECORD
+ADD CONSTRAINT fk_AREAWORK_RECORD_area_item_id
+FOREIGN KEY (area_item_id)
+REFERENCES T_GERO_AREA_ITEM(id)
 GO
 
-ALTER TABLE T_ROOMWORK_RECORD
-ADD CONSTRAINT fk_ROOMWORK_RECORD_room_id
-FOREIGN KEY (room_id)
-REFERENCES T_ROOM(id)
+ALTER TABLE T_AREAWORK_RECORD
+ADD CONSTRAINT fk_AREAWORK_RECORD_area_id
+FOREIGN KEY (area_id)
+REFERENCES T_AREA(id)
 GO
 
 ALTER TABLE T_CAREWORK_ELDER_RECORD
@@ -566,16 +573,16 @@ FOREIGN KEY (elder_id)
 REFERENCES T_ELDER(id)
 GO
 
-ALTER TABLE T_ROOMWORK_SCHEDULE_DETAIL
-ADD CONSTRAINT fk_ROOMWORK_SCHEDULE_DETAIL_carer_id
+ALTER TABLE T_AREAWORK_SCHEDULE_DETAIL
+ADD CONSTRAINT fk_AREAWORK_SCHEDULE_DETAIL_carer_id
 FOREIGN KEY (carer_id)
 REFERENCES T_STAFF(id)
 GO
 
-ALTER TABLE T_ROOMWORK_SCHEDULE_DETAIL
-ADD CONSTRAINT fk_ROOMWORK_SCHEDULE_DETAIL_room_id
-FOREIGN KEY (room_id)
-REFERENCES T_ROOM(id)
+ALTER TABLE T_AREAWORK_SCHEDULE_DETAIL
+ADD CONSTRAINT fk_AREAWORK_SCHEDULE_DETAIL_area_id
+FOREIGN KEY (area_id)
+REFERENCES T_AREA(id)
 GO
 
 ALTER TABLE T_ROLE
@@ -620,16 +627,16 @@ FOREIGN KEY (care_item_id)
 REFERENCES T_CARE_ITEM(id)
 GO
 
-ALTER TABLE T_GERO_ROOM_ITEM
-ADD CONSTRAINT fk_GERO_ROOM_ITEM_gero_id
+ALTER TABLE T_GERO_AREA_ITEM
+ADD CONSTRAINT fk_GERO_AREA_ITEM_gero_id
 FOREIGN KEY (gero_id)
 REFERENCES T_GERO(id)
 GO
 
-ALTER TABLE T_GERO_ROOM_ITEM
-ADD CONSTRAINT fk_GERO_ROOM_ITEM_room_item_id
-FOREIGN KEY (room_item_id)
-REFERENCES T_ROOM_ITEM(id)
+ALTER TABLE T_GERO_AREA_ITEM
+ADD CONSTRAINT fk_GERO_AREA_ITEM_area_item_id
+FOREIGN KEY (area_item_id)
+REFERENCES T_AREA_ITEM(id)
 GO
 
 ALTER TABLE T_ELDER_ITEM
