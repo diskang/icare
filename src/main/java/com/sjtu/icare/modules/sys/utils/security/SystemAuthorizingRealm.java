@@ -66,7 +66,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
         SystemService systemService = getSystemService();
         logger.debug("token pass"+token.getPassword().toString());
         User user = systemService.getUserByUsername(token.getUsername());
-        logger.debug("user pass"+user.getPassword().toString());
+//        logger.debug("user pass"+user.getPassword().toString());
         if (user != null) {
             byte[] salt = Encodes.decodeHex(user.getPassword().substring(0,16));
             return new SimpleAuthenticationInfo(

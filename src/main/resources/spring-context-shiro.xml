@@ -21,6 +21,7 @@
 		<property name="filters">
             <map>
                 <entry key="authc" value-ref="formAuthenticationFilter"/>
+                <entry key="statelessAuthc" value-ref="statelessAuthcFilter"/>
             </map>
         </property>
         <!-- Shiro连接约束配置,即过滤链的定义 -->   
@@ -34,6 +35,7 @@
 				${adminPath}/login = authc
 				${adminPath}/logout = logout
 				${adminPath}/** = user
+				/api/** = statelessAuthc
 		 	</value>
 		</property>
 	</bean>
@@ -41,7 +43,15 @@
 	<!-- 定义 Shiro 主要业务对象  ，可以设置自定义的单Realm应用-->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<!-- <property name="sessionManager" ref="sessionManager" /> -->
-		<property name="realm" ref="systemAuthorizingRealm" />
+		<property name = "realms">
+			<list>
+				<ref bean = "systemAuthorizingRealm"/>
+				<ref bean = "statelessRealm"/>
+			</list>
+		</property>
+		<property name="subjectDAO.sessionStorageEvaluator.sessionStorageEnabled"  
+	      value="false"/>  
+		<property name="subjectFactory" ref="subjectFactory"/>
 		<property name="cacheManager" ref="shiroCacheManager" />
 	</bean>
 	<!-- 
@@ -73,4 +83,14 @@
     	<property name="securityManager" ref="securityManager"/>
 	</bean>
 	
+	<!-- Realm实现 -->  
+	<bean id="statelessRealm"   
+	  class="com.sjtu.icare.modules.sys.utils.security.StatelessRealm">  
+	    <property name="cachingEnabled" value="false"/>  
+	</bean>  
+	<!-- Subject工厂 -->  
+	<bean id="subjectFactory"   
+	  class="com.sjtu.icare.modules.sys.utils.security.StatelessDefaultSubjectFactory"/>  
+	<bean id="statelessAuthcFilter"   
+      class="com.sjtu.icare.modules.sys.utils.security.StatelessAuthcFilter"/>
 </beans>
