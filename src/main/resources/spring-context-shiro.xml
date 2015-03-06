@@ -53,6 +53,7 @@
 	      value="false"/>  
 		<property name="subjectFactory" ref="subjectFactory"/>
 		<property name="cacheManager" ref="shiroCacheManager" />
+		<property name="authenticator.authenticationStrategy" ref="firstExceptionStrategy"/>
 	</bean>
 	<!-- 
 	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">  
@@ -93,4 +94,6 @@
 	  class="com.sjtu.icare.modules.sys.utils.security.StatelessDefaultSubjectFactory"/>  
 	<bean id="statelessAuthcFilter"   
       class="com.sjtu.icare.modules.sys.utils.security.StatelessAuthcFilter"/>
+    <bean id="firstExceptionStrategy"   
+      class="com.sjtu.icare.modules.sys.utils.security.FirstExceptionStrategy"/>
 </beans>

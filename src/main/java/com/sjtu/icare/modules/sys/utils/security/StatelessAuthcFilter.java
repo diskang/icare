@@ -10,10 +10,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 
 import com.alibaba.fastjson.JSONObject;
@@ -32,10 +34,14 @@ public class StatelessAuthcFilter extends AccessControlFilter {
 	    Map<String, String[]> params = new HashMap<String, String[]>(request.getParameterMap());  
 	    params.remove("digest");  
 	    //4、生成无状态Token  
+	    
 	    StatelessToken token = new StatelessToken(username, params, clientDigest);  
+	    logger.debug("before login");
 	    try {  
 			//5、委托给Realm进行登录 
-			getSubject(request, response).login(token);
+			Subject subject = getSubject(request, response);
+			logger.debug("subject getted");
+			subject.login(token);
 			
 			/*
 			 * 此处无法准确获取到Exception
@@ -53,10 +59,13 @@ public class StatelessAuthcFilter extends AccessControlFilter {
 	    } catch (ExcessiveAttemptsException eae ) { 
 	    	onLoginFail(response,"Excessive Attempts");
 	    	return false;
-	    } catch (Exception e) {  
-//	    	logger.debug("Hello1");
-//	    	e.printStackTrace();  
-//			logger.debug("Hello2");
+	    }catch (AuthenticationException e) {
+	    	onLoginFail(response,"Authentication Error");
+	    	return false;
+		}catch (Exception e) {  
+	    	logger.debug("Hello1");
+	    	e.printStackTrace();  
+			logger.debug("Hello2");
 			onLoginFail(response,"Login Error"); //6、登录失败  
 			return false;  
 	    }  
