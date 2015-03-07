@@ -17,6 +17,11 @@ import com.sjtu.icare.common.utils.StringUtils;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.utils.UserUtils;
 
+/**
+ * entity支持类实现
+ * @author jty
+ * @version 2015-03-07
+ */
 public abstract class BaseEntity<T> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -36,10 +41,10 @@ public abstract class BaseEntity<T> implements Serializable {
 	 */
 	protected Page<T> page;
 	
-	/**
-	 * 自定义SQL（SQL标识，SQL内容）
-	 */
-	protected Map<String, String> sqlMap;
+//	/**
+//	 * 自定义SQL（SQL标识，SQL内容）
+//	 */
+//	protected Map<String, String> sqlMap;
 	
 //	/**
 //	 * 是否是新记录（默认：false），调用setIsNewRecord()设置新记录，使用自定义ID。
@@ -92,28 +97,33 @@ public abstract class BaseEntity<T> implements Serializable {
 		return page;
 	}
 
-	@JsonIgnore
-	@XmlTransient
-	public Map<String, String> getSqlMap() {
-		if (sqlMap == null){
-			sqlMap = Maps.newHashMap();
-		}
-		return sqlMap;
-	}
-
-	public void setSqlMap(Map<String, String> sqlMap) {
-		this.sqlMap = sqlMap;
-	}
+//	@JsonIgnore
+//	@XmlTransient
+//	public Map<String, String> getSqlMap() {
+//		if (sqlMap == null){
+//			sqlMap = Maps.newHashMap();
+//		}
+//		return sqlMap;
+//	}
+//
+//	public void setSqlMap(Map<String, String> sqlMap) {
+//		this.sqlMap = sqlMap;
+//	}
 //	
-//	/**
-//	 * 插入之前执行方法，子类实现
-//	 */
-//	public abstract void preInsert();
-//	
-//	/**
-//	 * 更新之前执行方法，子类实现
-//	 */
-//	public abstract void preUpdate();
+	/**
+	 * 插入之前执行方法，子类实现
+	 */
+	public abstract void preInsert();
+	
+	/**
+	 * 更新之前执行方法，子类实现
+	 */
+	public abstract void preUpdate();
+	
+	/**
+	 * 删除之前执行方法，子类实现
+	 */
+	public abstract void preDelete();
 //	
 //    /**
 //	 * 是否是新记录（默认：false），调用setIsNewRecord()设置新记录，使用自定义ID。
@@ -171,7 +181,7 @@ public abstract class BaseEntity<T> implements Serializable {
 //	/**
 //	 * 删除标记（0：正常；1：删除；2：审核；）
 //	 */
-//	public static final String DEL_FLAG_NORMAL = "0";
-//	public static final String DEL_FLAG_DELETE = "1";
-//	public static final String DEL_FLAG_AUDIT = "2";
+	public static final String DEL_FLAG_NORMAL = "0";
+	public static final String DEL_FLAG_DELETE = "1";
+	public static final String DEL_FLAG_AUDIT = "2";
 }

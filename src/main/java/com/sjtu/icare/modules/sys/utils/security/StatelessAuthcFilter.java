@@ -20,6 +20,11 @@ import org.apache.shiro.web.filter.AccessControlFilter;
 
 import com.alibaba.fastjson.JSONObject;
 
+/**
+ * 无状态验证过滤类
+ * @author jty
+ * @version 2015-03-06
+ */
 public class StatelessAuthcFilter extends AccessControlFilter {
 	private static final Logger logger = Logger.getLogger(StatelessAuthcFilter.class);
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {  
@@ -42,11 +47,6 @@ public class StatelessAuthcFilter extends AccessControlFilter {
 			Subject subject = getSubject(request, response);
 			logger.debug("subject getted");
 			subject.login(token);
-			
-			/*
-			 * 此处无法准确获取到Exception
-			 */
-			
 	    } catch ( UnknownAccountException uae ) { 
 	    	onLoginFail(response,"No Account");
 	    	return false;
@@ -63,9 +63,7 @@ public class StatelessAuthcFilter extends AccessControlFilter {
 	    	onLoginFail(response,"Authentication Error");
 	    	return false;
 		}catch (Exception e) {  
-	    	logger.debug("Hello1");
-	    	e.printStackTrace();  
-			logger.debug("Hello2");
+//	    	e.printStackTrace();  
 			onLoginFail(response,"Login Error"); //6、登录失败  
 			return false;  
 	    }  

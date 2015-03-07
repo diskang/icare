@@ -4,10 +4,13 @@ import java.util.Map;
 
 import org.apache.shiro.authc.AuthenticationToken;
 
+/**
+ * 无状态token令牌类
+ * @author jty
+ * @version 2015-03-06
+ */
 public class StatelessToken implements AuthenticationToken {  
-    /**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private String username;  
     private Map<String, ?> params;  

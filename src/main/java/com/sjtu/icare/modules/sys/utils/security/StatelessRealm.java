@@ -47,7 +47,6 @@ public class StatelessRealm extends AuthorizingRealm {
         logger.debug(username);
         String key = getKey(username);//根据用户名获取密钥（和客户端的一样）
         //在服务器端生成客户端参数消息摘要
-        logger.debug("here");
         String serverDigest = HmacSHA256Utils.digest(key, statelessToken.getParams());
         logger.debug(serverDigest);
         //然后进行客户端消息摘要和服务器端消息摘要的匹配
@@ -55,7 +54,6 @@ public class StatelessRealm extends AuthorizingRealm {
                 username,
                 serverDigest,
                 getName());
-        logger.debug(info.toString());
         return info;
     }
     

@@ -23,9 +23,8 @@ public class Role extends DataEntity<Role> {
 	
 	private int geroId;		//gero id
 	private String name;	//角色名称
-	private String note;	//角色备注
+	private String notes;	//角色备注
 	
-//	private String name; 	// 角色名称
 //	private String roleType;// 权限类型
 //	private String dataScope;// 数据范围
 	
@@ -257,4 +256,39 @@ public class Role extends DataEntity<Role> {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+
+	/**
+	 * 插入之前执行方法
+	 */
+	public void preInsert() {
+	}
+	
+	/**
+	 * 更新之前执行方法
+	 */
+	public void preUpdate() {
+	}
+	
+	/**
+	 * 删除之前执行方法
+	 */
+	public void preDelete() {
+	}
+
+	public int getGeroId() {
+		return geroId;
+	}
+
+	public void setGeroId(int geroId) {
+		this.geroId = geroId;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}	
 }

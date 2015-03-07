@@ -39,14 +39,14 @@ import com.sjtu.icare.modules.sys.entity.Privilege;
 
 /**
  * 系统安全认证实现类
- * @author ThinkGem
- * @version 2013-5-29
+ * @author jty
+ * @version 2015-03-07
  */
 @Service
 @DependsOn({"userMapper"})
 public class SystemAuthorizingRealm extends AuthorizingRealm {
 
-	private static final Logger logger = Logger.getLogger(TestController.class);
+	private static final Logger logger = Logger.getLogger(SystemAuthorizingRealm.class);
     private SystemService systemService;
 
     /**
@@ -64,11 +64,12 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
             }
         }
         SystemService systemService = getSystemService();
-        logger.debug("token pass"+token.getPassword().toString());
+//        logger.debug("token pass"+token.getPassword().toString());
         User user = systemService.getUserByUsername(token.getUsername());
-//        logger.debug("user pass"+user.getPassword().toString());
+        logger.debug("user pass:"+user.getPassword().toString());
         if (user != null) {
             byte[] salt = Encodes.decodeHex(user.getPassword().substring(0,16));
+            // 此处判断用户密码是否合法
             return new SimpleAuthenticationInfo(
             		new UserPrincipal(user), 
                     user.getPassword().substring(16), ByteSource.Util.bytes(salt), getName());

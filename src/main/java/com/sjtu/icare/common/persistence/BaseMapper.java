@@ -1,9 +1,9 @@
 package com.sjtu.icare.common.persistence;
 
 /**
- * DAO支持类实现
+ * Mapper支持类实现
  * @author jty
- * @version 2014-05-16
+ * @version 2015-03-07
  */
 public interface BaseMapper {
 

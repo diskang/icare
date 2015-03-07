@@ -164,4 +164,22 @@ public class Privilege extends DataEntity<Privilege>{
 	public String toString() {
 		return name;
 	}
+	
+	/**
+	 * 插入之前执行方法
+	 */
+	public void preInsert() {
+	}
+	
+	/**
+	 * 更新之前执行方法
+	 */
+	public void preUpdate() {
+	}
+	
+	/**
+	 * 删除之前执行方法
+	 */
+	public void preDelete() {
+	}
 }
