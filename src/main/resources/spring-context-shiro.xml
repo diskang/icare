@@ -56,9 +56,8 @@
 				<ref bean = "statelessRealm"/>
 			</list>
 		</property>
-		<!-- <property name="subjectDAO.sessionStorageEvaluator.sessionStorageEnabled"  
-	      value="false"/> -->  
-		<property name="subjectFactory" ref="subjectFactory"/>
+		<property name="subjectDAO.sessionStorageEvaluator" ref="multiSessionStorageEvaluator"/>  
+		<!-- <property name="subjectFactory" ref="subjectFactory"/> -->
 		<property name="cacheManager" ref="shiroCacheManager" />
 		
 		<!-- 一种token只使用一个realm -->
@@ -110,4 +109,7 @@
     <!-- 一种token只使用一个realm策略bean --> 
     <bean id="firstExceptionStrategy"   
       class="com.sjtu.icare.modules.sys.utils.security.FirstExceptionStrategy"/>
+      
+    <bean id="multiSessionStorageEvaluator"
+      class="com.sjtu.icare.modules.sys.utils.security.MultiSessionStorageEvaluator"/>
 </beans>

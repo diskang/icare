@@ -1,9 +1,12 @@
 package com.sjtu.icare.modules.sys.webservice;
 
 import java.net.URI;
+
 import javax.validation.Validator;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -58,6 +61,7 @@ public class UserRestDemoController {
 	 * 目前加了produce，只能返回json了
 	 */
 	@RequestMapping(value = "/{username}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
+	@RequiresPermissions("admin")
 	public User getUserInPath(@PathVariable("username") String username) {
 		
 		User user = userMapper.getByUsername(new User(-1,username));

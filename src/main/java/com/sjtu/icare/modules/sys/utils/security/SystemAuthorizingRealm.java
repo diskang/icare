@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -83,6 +84,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+    	logger.debug(getAvailablePrincipal(principals).getClass().toString());
         UserPrincipal principal = (UserPrincipal) getAvailablePrincipal(principals);
         logger.debug("getpermisson");
         User user = getSystemService().getUserByUsername(principal.getUsername());
@@ -180,5 +182,20 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
             return cacheMap;
         }
 
+    }
+    
+    /**
+     * {@inheritDoc}
+     * 重写函数，如果不是web app登录，则用无状态授权
+     */
+    @Override
+    public boolean isPermitted(PrincipalCollection principals, String permission) {
+        if (principals.fromRealm(getName()).isEmpty()) {
+        	logger.debug("not web app auth");
+            return false;
+        }
+        else {
+            return super.isPermitted(principals, permission);
+        }
     }
 }

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class AdminController extends BaseController{
 	 */
 	@RequestMapping(value = "${adminPath}", method = RequestMethod.GET)
 	@ResponseBody
+	@RequiresPermissions("admin")
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
 		logger.debug("admin!");
 		User user = UserUtils.getUser();

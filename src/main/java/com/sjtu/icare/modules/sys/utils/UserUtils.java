@@ -1,6 +1,10 @@
 package com.sjtu.icare.modules.sys.utils;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
@@ -9,6 +13,7 @@ import org.apache.shiro.session.InvalidSessionException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
+import com.google.common.collect.Lists;
 import com.sjtu.icare.common.service.BaseService;
 import com.sjtu.icare.common.utils.SpringContextHolder;
 import com.sjtu.icare.modules.sys.entity.Privilege;
@@ -155,6 +160,22 @@ public class UserUtils {
 				privilegelList = privilegeMapper.findByUserId(p);
 			}
 			putCache(CACHE_PRIVILEGE_LIST, privilegelList);
+		}
+		return privilegelList;
+	}
+	
+	/**
+	 * 获取当前用户授权菜单
+	 * @return
+	 */
+	public static List<Privilege> getPrivilegeList(User u){
+		List<Privilege> privilegelList = Lists.newArrayList();
+		if (u.isAdmin()){
+			privilegelList = privilegeMapper.findAllList(new Privilege());
+		}else{
+			Privilege p = new Privilege();
+			p.setUserId(u.getId());
+			privilegelList = privilegeMapper.findByUserId(p);
 		}
 		return privilegelList;
 	}

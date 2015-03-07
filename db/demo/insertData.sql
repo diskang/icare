@@ -258,7 +258,7 @@ INSERT INTO [dbo].[T_ELDER_TEMPERATURE]
            (1
            ,1
            ,36.6
-           ,'2015-03-06 00:00:00.000')
+           ,'2015-03-06')
 GO
 
 INSERT INTO [dbo].[T_ELDER_TEMPERATURE]
@@ -270,5 +270,5 @@ INSERT INTO [dbo].[T_ELDER_TEMPERATURE]
            (1
            ,1
            ,37.6
-           ,'2015-03-05 00:00:00.000')
+           ,'2015-03-05')
 GO
