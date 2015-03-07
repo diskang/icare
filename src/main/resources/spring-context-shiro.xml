@@ -99,8 +99,8 @@
 	</bean>  
 	
 	<!-- Subject工厂 -->  
-	<bean id="subjectFactory"   
-	  class="com.sjtu.icare.modules.sys.utils.security.StatelessDefaultSubjectFactory"/> 
+	<!-- <bean id="subjectFactory"   
+	  class="com.sjtu.icare.modules.sys.utils.security.StatelessDefaultSubjectFactory"/>  -->
 	
 	<!-- stateless Filter --> 
 	<bean id="statelessAuthcFilter"   
