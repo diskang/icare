@@ -38,8 +38,8 @@ public class SystemService extends BaseService  {
 	private UserMapper userMapper;
 	@Autowired
 	private RoleMapper roleMapper;
-//	@Autowired
-//	private Privilege privilegeMapper;
+	@Autowired
+	private PrivilegeMapper privilegeMapper;
 //	@Autowired
 //	private Session sessionDao;
 	@Autowired
@@ -69,7 +69,8 @@ public class SystemService extends BaseService  {
 	 */
 	public User getUserByUsername(String username) {
 		logger.debug(username);
-		return UserUtils.getByLoginName(username);
+		User u = UserUtils.getByLoginName(username);
+		return u;
 	}
 	
 	public Page<User> findUser(Page<User> page, User user) {

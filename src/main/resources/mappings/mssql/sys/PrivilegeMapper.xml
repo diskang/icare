@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.icare.modules.sys.persistence.PrivilegeMapper">
+	
+	<sql id="privilegeColumns">
+		a.id,
+		a.parent_id AS "parent.id",
+		a.parent_ids,
+		a.name,
+		a.href,
+		a.icon,
+		a.notes,
+		a.permission
+	</sql>
+	
+	<sql id="privilegeJoins">
+		LEFT JOIN T_PRIVILEGE p ON p.id = a.parent_id
+    </sql>
+	
+	<select id="get" resultType="Privilege">
+		SELECT
+			<include refid="privilegeColumns"/>
+		FROM T_PRIVILEGE a
+		<include refid="privilegeJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findAllList" resultType="Privilege">
+		SELECT
+			<include refid="privilegeColumns"/>
+		FROM T_PRIVILEGE a
+		<include refid="privilegeJoins"/>
+		ORDER BY a.id
+	</select>
+	
+	<select id="findByParentIdsLike" resultType="Privilege">
+		SELECT
+			a.id,
+			a.parent_id AS "parent.id",
+			a.parent_ids
+		FROM T_PRIVILEGE a
+		WHERE a.parent_ids LIKE #{parentIds}
+		ORDER BY a.id
+	</select>
+	
+	<select id="findByUserId" resultType="Privilege">
+		SELECT DISTINCT
+			<include refid="privilegeColumns"/>
+		FROM T_PRIVILEGE a
+		LEFT JOIN T_PRIVILEGE p ON p.id = a.parent_id
+		JOIN T_ROLE_PRIVILEGES rp ON rp.privelege_id = a.id
+		JOIN T_ROLE r ON r.id = rp.role_id
+		JOIN T_USER_ROLES ur ON ur.role_id = r.id
+		JOIN T_USER u ON u.id = ur.user_id AND u.id = #{userId}
+		ORDER BY a.id
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO T_PRIVILEGE(
+			parent_id, 
+			parent_ids, 
+			name, 
+			href, 
+			icon,
+			permission, 
+			notes
+		) VALUES (
+			#{parent.id}, 
+			#{parentIds}, 
+			#{name}, 
+			#{href}, 
+			#{icon}, 
+			#{permission}, 
+			#{notes}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE T_PRIVILEGE SET 
+			parent_id = #{parent.id}, 
+			parent_ids = #{parentIds}, 
+			name = #{name}, 
+			href = #{href}, 
+			icon = #{icon}, 
+			permission = #{permission}, 
+			notes = #{notes}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateParentIds">
+		UPDATE T_PRIVILEGE SET 
+			parent_id = #{parent.id}, 
+			parent_ids = #{parentIds}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- <update id="delete">
+		DELETE T_PRIVILEGE WHERE id = #{id} AND
+	</update> -->
+	
+</mapper>

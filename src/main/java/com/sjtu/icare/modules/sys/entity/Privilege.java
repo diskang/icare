@@ -27,7 +27,7 @@ public class Privilege extends DataEntity<Privilege>{
 //	private Integer sort; 	// 排序
 //	private String isShow; 	// 是否在菜单中显示（1：显示；0：不显示）
 	private String notes;	//权限备注
-//	private String permission; // 权限标识
+	private String permission; // 权限标识
 	
 	private int userId;
 	
@@ -114,14 +114,14 @@ public class Privilege extends DataEntity<Privilege>{
 //		this.isShow = isShow;
 //	}
 
-//	@Length(min=0, max=200)
-//	public String getPermission() {
-//		return permission;
-//	}
-//
-//	public void setPermission(String permission) {
-//		this.permission = permission;
-//	}
+	@Length(min=0, max=200)
+	public String getPermission() {
+		return permission;
+	}
+
+	public void setPermission(String permission) {
+		this.permission = permission;
+	}
 
 	public int getParentId() {
 		return parent.getId();
@@ -163,5 +163,23 @@ public class Privilege extends DataEntity<Privilege>{
 	@Override
 	public String toString() {
 		return name;
+	}
+	
+	/**
+	 * 插入之前执行方法
+	 */
+	public void preInsert() {
+	}
+	
+	/**
+	 * 更新之前执行方法
+	 */
+	public void preUpdate() {
+	}
+	
+	/**
+	 * 删除之前执行方法
+	 */
+	public void preDelete() {
 	}
 }

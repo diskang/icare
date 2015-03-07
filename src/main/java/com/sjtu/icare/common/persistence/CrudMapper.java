@@ -3,7 +3,7 @@ package com.sjtu.icare.common.persistence;
 import java.util.List;
 
 /**
- * DAO支持类实现
+ * CrudMapper支持类实现
  * @author jty
  * @version 2015-03-03
  * @param <T>

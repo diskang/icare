@@ -367,4 +367,49 @@ public class User extends DataEntity<User> {
 	public String toString() {
 		return ""+id;
 	}
+	
+
+	/**
+	 * 插入之前执行方法
+	 */
+	public void preInsert() {
+	}
+	
+	/**
+	 * 更新之前执行方法
+	 */
+	public void preUpdate() {
+	}
+	
+	/**
+	 * 删除之前执行方法
+	 */
+	public void preDelete() {
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public Date getCancelDate() {
+		return cancelDate;
+	}
+
+	public void setCancelDate(Date cancelDate) {
+		this.cancelDate = cancelDate;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+	
+	
 }

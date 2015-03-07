@@ -21,28 +21,28 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
 
 	private static final long serialVersionUID = 1L;
 	
-//	protected String remarks;	// 备注
+	protected String notes;	// 备注
 //	protected User createBy;	// 创建者
-//	protected Date createDate;	// 创建日期
+	protected Date createDate;	// 创建日期
 //	protected User updateBy;	// 更新者
-//	protected Date updateDate;	// 更新日期
-//	protected String delFlag; 	// 删除标记（0：正常；1：删除；2：审核）
+	protected Date updateDate;	// 更新日期
+	protected String delFlag; 	// 删除标记（0：正常；1：删除；2：审核）
 //	
 	public DataEntity() {
 		super();
-//		this.delFlag = DEL_FLAG_NORMAL;
+		this.delFlag = DEL_FLAG_NORMAL;
 	}
 	
 	public DataEntity(int id) {
 		super(id);
 	}
 	
-//	/**
-//	 * 插入之前执行方法，需要手动调用
-//	 */
-//	@Override
-//	public void preInsert(){
-//		// 不限制ID为UUID，调用setIsNewRecord()使用自定义ID
+	/**
+	 * 插入之前执行方法，需要手动调用
+	 */
+	@Override
+	public void preInsert(){
+		// 不限制ID为UUID，调用setIsNewRecord()使用自定义ID
 //		if (!this.isNewRecord){
 //			setId(IdGen.uuid());
 //		}
@@ -51,30 +51,30 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
 //			this.updateBy = user;
 //			this.createBy = user;
 //		}
-//		this.updateDate = new Date();
-//		this.createDate = this.updateDate;
-//	}
-//	
-//	/**
-//	 * 更新之前执行方法，需要手动调用
-//	 */
-//	@Override
-//	public void preUpdate(){
+		this.updateDate = new Date();
+		this.createDate = this.updateDate;
+	}
+	
+	/**
+	 * 更新之前执行方法，需要手动调用
+	 */
+	@Override
+	public void preUpdate(){
 //		User user = UserUtils.getUser();
 //		if (StringUtils.isNotBlank(user.getId())){
 //			this.updateBy = user;
 //		}
-//		this.updateDate = new Date();
-//	}
+		this.updateDate = new Date();
+	}
 	
-//	@Length(min=0, max=255)
-//	public String getRemarks() {
-//		return remarks;
-//	}
-//
-//	public void setRemarks(String remarks) {
-//		this.remarks = remarks;
-//	}
+	@Length(min=0, max=255)
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
 //	
 //	@JsonIgnore
 //	public User getCreateBy() {
@@ -112,14 +112,14 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
 //		this.updateDate = updateDate;
 //	}
 //
-//	@JsonIgnore
-//	@Length(min=1, max=1)
-//	public String getDelFlag() {
-//		return delFlag;
-//	}
-//
-//	public void setDelFlag(String delFlag) {
-//		this.delFlag = delFlag;
-//	}
+	@JsonIgnore
+	@Length(min=1, max=1)
+	public String getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(String delFlag) {
+		this.delFlag = delFlag;
+	}
 
 }
