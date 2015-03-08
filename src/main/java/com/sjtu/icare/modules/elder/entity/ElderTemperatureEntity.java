@@ -19,7 +19,7 @@ public class ElderTemperatureEntity implements Serializable {
     private int elderId;
     private int doctorId;
     private float temperature;
-    private Date time;
+    private String time;
  
     private StaffEntity doctorEntity;
     
@@ -55,14 +55,11 @@ public class ElderTemperatureEntity implements Serializable {
     	this.temperature = temperature;
     }
     
-	public Date getTime() {
-		if (time != null)
-			return (Date) time.clone();
-		else
-			return null;
+	public String getTime() {
+		return time;
 	}
 
-	public void setTime(Date time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 
@@ -73,5 +70,7 @@ public class ElderTemperatureEntity implements Serializable {
 	public void setDoctorEntity(StaffEntity doctorEntity) {
 		this.doctorEntity = doctorEntity;
 	}
+
+
 
 }

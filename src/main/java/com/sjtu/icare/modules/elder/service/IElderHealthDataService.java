@@ -1,10 +1,3 @@
-/**
- * @Package com.sjtu.icare.modules.elder.service
- * @Description TODO
- * @date Mar 5, 2015 7:45:02 PM
- * @author Wang Qi
- * @version TODO
- */
 package com.sjtu.icare.modules.elder.service;
 
 import java.sql.Date;
@@ -24,6 +17,9 @@ public interface IElderHealthDataService {
 	ElderEntity getElderEntity(int id);
 
 	List<ElderTemperatureEntity> getElderTemperatureEntity(int elderId, Date startDay, Date endDay);
+
+	void insertElderTemperatureRecord(int elderId, int doctorId,
+			String temperature, String time);
 
 	List<ElderHeartRateEntity> getElderHeartRateEntity(int elderId, Date startDay, Date endDay);
 }

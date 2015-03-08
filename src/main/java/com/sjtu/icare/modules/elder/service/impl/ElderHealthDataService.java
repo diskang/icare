@@ -42,8 +42,14 @@ public class ElderHealthDataService implements IElderHealthDataService {
 	}
 
 	@Override
+	public void insertElderTemperatureRecord(int elderId, int doctorId, String temperature, String time) {
+		elderTemperatureEntityDAO.insertElderTemperatureRecordWithElderidDoctoridTemperatureTime(elderId, doctorId, temperature, time);
+	}
+
+	@Override
 	public List<ElderHeartRateEntity> getElderHeartRateEntity(int elderId, Date startDay, Date endDay) {
 		return elderHeartRateEntityDAO.getElderHeartRateEntityByElderidStartdayEndday(elderId, startDay, endDay);
 	}
-	
+
 }
+	

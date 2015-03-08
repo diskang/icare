@@ -16,7 +16,7 @@
 	</resultMap>
   
     <select id="getElderTemperatureEntityByElderidStartdayEndday" resultMap="ElderTemperatureEntityMap">
-    <![CDATA[
+
         SELECT
             id,
             elder_id,
@@ -26,10 +26,26 @@
         FROM T_ELDER_TEMPERATURE
         WHERE 
             T_ELDER_TEMPERATURE.elder_id = #{elderId}
-            and convert(nvarchar(23), #{startDay}, 121) <= convert(nvarchar(23), T_ELDER_TEMPERATURE.time, 121)
-            and convert(nvarchar(23), #{endDay}, 121) >= convert(nvarchar(23), T_ELDER_TEMPERATURE.time, 121)
-    ]]>
+            <if test="startDate != null">
+                <![CDATA[
+                and #{startDate} <= convert(nvarchar(23), T_ELDER_TEMPERATURE.time, 120)
+                ]]>
+            </if>
+            <if test="endDate != null">
+                <![CDATA[
+                and #{endDate} >= convert(nvarchar(23), T_ELDER_TEMPERATURE.time, 120)
+                ]]>
+            </if>
+  
     </select>
+
+    <insert id="insertElderTemperatureRecordWithElderidDoctoridTemperatureTime" >
+        insert into 
+            T_ELDER_TEMPERATURE(elder_id, doctor_id, temperature, time) 
+        values
+            (#{elderId}, #{doctorId}, #{temperature}, #{time})
+    </insert>
+
 
 
     
