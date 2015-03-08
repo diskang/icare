@@ -1,6 +1,6 @@
 package com.sjtu.icare.modules.elder.service.impl;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +32,13 @@ public class ElderHealthDataService implements IElderHealthDataService {
 	}
 
 	@Override
-	public List<ElderTemperatureEntity> getElderTemperatureEntity(int elderId, Date startDay, Date endDay) {
+	public List<ElderTemperatureEntity> getElderTemperatureEntity(int elderId, String startDay, String endDay) {
 		return elderTemperatureEntityDAO.getElderTemperatureEntityByElderidStartdayEndday(elderId, startDay, endDay);
+	}
+
+	@Override
+	public void insertElderTemperatureRecord(int elderId, int doctorId, String temperature, String time) {
+		elderTemperatureEntityDAO.insertElderTemperatureRecordWithElderidDoctoridTemperatureTime(elderId, doctorId, temperature, time);
 	}
 
 

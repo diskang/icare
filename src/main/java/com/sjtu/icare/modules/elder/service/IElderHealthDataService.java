@@ -7,7 +7,6 @@
  */
 package com.sjtu.icare.modules.elder.service;
 
-import java.sql.Date;
 import java.util.List;
 
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
@@ -23,6 +22,9 @@ public interface IElderHealthDataService {
 	
 	ElderEntity getElderEntity(int id);
 
-	List<ElderTemperatureEntity> getElderTemperatureEntity(int elderId, Date startDay, Date endDay);
+	List<ElderTemperatureEntity> getElderTemperatureEntity(int elderId, String startDay, String endDay);
+
+	void insertElderTemperatureRecord(int elderId, int doctorId,
+			String temperature, String time);
 
 }
