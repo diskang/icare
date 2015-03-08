@@ -19,5 +19,6 @@ public interface ElderHeartRateEntityDAO {
 
 	List<ElderHeartRateEntity> getElderHeartRateEntityByElderidStartdayEndday(@Param("elderId") int elderId, @Param("startDay") Date startDay, @Param("endDay") Date endDay);
 
+	void insertElderHeartRateRecordWithElderidDoctoridRateTime(@Param("elderId") int elderId, @Param("doctorId") int doctorId, @Param("rate") String rate, @Param("time") String time);
 
 }
