@@ -11,10 +11,25 @@ CREATE TABLE T_USER
 	name				nvarchar(20)	NOT NULL,				--用户姓名
 	password			varchar(64)		NOT NULL,				--用户密码
 	user_type			int				NOT NULL,				--超级管理员=0、管理员=1，员工=2、老人=3、家属=4
-	user_id				int				NOT NULL,				---1，gero_id, staff_id, elder_id，family_id
+	user_id				int				NOT NULL,				-- -1，gero_id, staff_id, elder_id，family_id
 	register_date		datetime		NOT NULL,				--注册日期
 	cancel_date			datetime		,						--注销日期
-	photo				varchar(256)	,						--照片url
+	gender				char(1)			,						--性别（男0，女1）
+	photo_url			varchar(256)	,						--照片url
+	identity_no			char(18)		NOT NULL,				--身份证号码
+	age					int				,						--年龄
+	nationality			nvarchar(20)	,						--民族
+	marriage			int				,						--0:未婚  1：已婚 2：离异 3:丧偶
+	native_place		nvarchar(20)	,						--籍贯
+	birthday			date			NOT NULL,				--出生年月日
+	political_status	nvarchar(10)	,						--政治面貌
+	education			nvarchar(50)	,						--受教育水平
+	phone				char(20)		NOT NULL,				--联系方式
+	zip_code			char(10)		,						--邮编	
+	residence_address	nvarchar(50)	,						--户籍地址
+	household_address	nvarchar(50)	,						--居住地址
+	email				varchar(20)		,						--邮箱地址
+	wechat_id			nvarchar(64)	,						--微信账号
 )
 GO
 
@@ -31,7 +46,7 @@ CREATE TABLE T_GERO
 	care_level			int				,						--养老院能提供的最高的护理等级
 	contact_id			int				,						--养老院联系人id，关联staff表
 	logo_url			varchar(256)	,						--养老院logo图片的url地址
-	image_url			varchar(256)	,						--养老院封面图片的url地址
+	photo_url			varchar(256)	,						--养老院封面图片的url地址
 )
 GO
 
@@ -83,21 +98,10 @@ CREATE TABLE T_ELDER
 (
 	id					int				PRIMARY KEY IDENTITY,	--老人ID
 	name				nvarchar(20) 	NOT NULL,				--老人姓名
-	gender				bit				NOT NULL,				--0代表男性，1代表女性
 	gero_id				int				NOT NULL,				--养老院id，关联GERO
-	address				nvarchar(50) 	,						--居住地
-	age					int				,						--老人年龄
-	identity_no			char(18)		NOT NULL,				--老人身份证号码
 	nssf_id				varchar(50)		,						--老人社保卡号
 	archive_id			varchar(20)		,						--档案编号，不清楚用处，养老院要求加的。
-	photo_url			varchar(256)	,						--老人照片地址
 	area_id				int				,						--老人入住床号，关联T_AREA表
-	nationality			nvarchar(20)	,						--民族
-	marriage			int				,						--0:未婚  1：已婚 2：离异 3:丧偶
-	native_place		nvarchar(20)	,						--老人籍贯
-	birthday			date			NOT NULL,				--老人出身年月日
-	political_status	nvarchar(10)	,						--老人政治面貌
-	education			nvarchar(50)	,						--老人受教育水平
 	residence			nvarchar(64)	,						--户口所在地
 	care_level			int				,						--老人护理等级
 	checkin_date		date			,						--入院日期
@@ -139,11 +143,6 @@ CREATE TABLE T_ELDER_FAMILIES
 	name				nvarchar(30)	NOT NULL,				--名字
 	urgent				bit				,						--是否紧急联系人
 	relationship		nvarchar(20)	,						--与老人关系，optional
-	phone				char(20)		NOT NULL,				--联系方式optional
-	zip_code			char(10)		,						--邮编
-	address				nvarchar(128)	,						--家属住址optional
-	identity_no			char(18)		NOT NULL,				--身份证号 optional
-	wechat_id			nvarchar(64)	,						--家属微信账号optional
 )
 GO
 
@@ -196,28 +195,22 @@ CREATE TABLE T_STAFF
 (
 	id					int				PRIMARY KEY IDENTITY,
 	name				nvarchar(20)	NOT NULL,				--
-	phone				varchar(20)		,						--
-	email				varchar(20)		,						--
-	identity_no			varchar(18)		NOT NULL,				--
-	nssf_id				varchar(20)		,						--
-	gero_id				int				NOT NULL,				--
-	birthday			date			,						--
-	gender				nvarchar(2)		,						--
-	basic_url			varchar(50)		,						--
-	residence_address	nvarchar(50)	,						--
-	household_address	nvarchar(50)	,						--
-	leave_date			date			,						--
-	archive_id			varchar(20)		,						--
-	photo_url			varchar(256)	,						--
+	nssf_id				varchar(20)		,						--社保卡账号
+	gero_id				int				NOT NULL,				--关联T_GERO表
+	basic_url			varchar(50)		,						--员工基本信息表扫描件的地址
+	leave_date			date			,						--离职时间
+	archive_id			varchar(20)		,						--纸质档案编号
 )
 GO
 
 CREATE TABLE T_CAREWORK_RECORD
 (
 	id					int				PRIMARY KEY IDENTITY,
-	carer_id			int				NOT NULL,				--
-	elder_item_id		int				NOT NULL,				--
-	finish_time			datetime		NOT NULL,				--
+	carer_id			int				NOT NULL,				--关联T_STAFF表
+	elder_item_id		int				NOT NULL,				--关联T_ELDER_ITEM表
+	finish_time			datetime		NOT NULL,				--完成时间
+	elder_id			int				NOT NULL,				--关联T_ELDER表
+	item_name			nvarchar(32)	NOT NULL,				--项目名
 )
 GO
 
