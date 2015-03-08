@@ -207,10 +207,10 @@ CREATE TABLE T_CAREWORK_RECORD
 (
 	id					int				PRIMARY KEY IDENTITY,
 	carer_id			int				NOT NULL,				--关联T_STAFF表
-	elder_item_id		int				NOT NULL,				--关联T_ELDER_ITEM表
-	finish_time			datetime		NOT NULL,				--完成时间
 	elder_id			int				NOT NULL,				--关联T_ELDER表
+	elder_item_id		int				NOT NULL,				--关联T_ELDER_ITEM表
 	item_name			nvarchar(32)	NOT NULL,				--项目名
+	finish_time			datetime		NOT NULL,				--完成时间
 )
 GO
 
@@ -219,20 +219,21 @@ CREATE TABLE T_AREAWORK_RECORD
 	id					int				PRIMARY KEY IDENTITY,
 	carer_id			int				NOT NULL,				--
 	area_item_id		int				NOT NULL,				--
+	item_name			nvarchar(32)	NOT NULL,				--项目名
 	area_id				int				NOT NULL,				--
 	finish_time			datetime		NOT NULL,				--
 )
 GO
 
-CREATE TABLE T_CAREWORK_ELDER_RECORD
-(
-	id					int				PRIMARY KEY IDENTITY,
-	carer_id			int				NOT NULL,				--
-	elder_id			int				NOT NULL,				--
-	elder_item_list		nvarchar(256)	NOT NULL,				--
-	finish_time			datetime		NOT NULL,				--
-)
-GO
+-- CREATE TABLE T_CAREWORK_ELDER_RECORD
+-- (
+-- 	id					int				PRIMARY KEY IDENTITY,
+-- 	carer_id			int				NOT NULL,				--
+-- 	elder_id			int				NOT NULL,				--
+-- 	elder_item_list		nvarchar(256)	NOT NULL,				--
+-- 	finish_time			datetime		NOT NULL,				--
+-- )
+-- GO
 
 CREATE TABLE T_ELDER_AUDIO_RECORD
 (
@@ -257,21 +258,25 @@ CREATE TABLE T_CARER_SCHEDULE_PLAN
 )
 GO
 
-CREATE TABLE T_CAREWORK_SCHEDULE_DETAIL
+-- CREATE TABLE T_CAREWORK_SCHEDULE_DETAIL
+CREATE TABLE T_CAREWORK
 (
 	id					int				PRIMARY KEY IDENTITY,
 	carer_id			int				NOT NULL,				--
 	elder_id			int				NOT NULL,				--
-	work_date			date			NOT NULL,				--
+	start_date			date			NOT NULL,				--
+	end_date			date			NOT NULL,				--
 )
 GO
 
-CREATE TABLE T_AREAWORK_SCHEDULE_DETAIL
+-- CREATE TABLE T_AREAWORK_SCHEDULE_DETAIL
+CREATE TABLE T_AREAWORK
 (
 	id					int				PRIMARY KEY IDENTITY,
 	carer_id			int				NOT NULL,				--
 	area_id				int				NOT NULL,				--
-	work_date			date			NOT NULL,				--
+	start_date			date			NOT NULL,				--
+	end_date			date			NOT NULL,				--
 )
 GO
 
@@ -313,44 +318,50 @@ CREATE TABLE T_USER_ROLES
 )
 GO
 
+-- CREATE TABLE T_CARE_ITEM
+-- (
+-- 	id					int				PRIMARY KEY IDENTITY,
+-- 	name				nvarchar(32)	NOT NULL,				--
+-- 	level				int				NOT NULL,				--
+-- 	notes				nvarchar(32)	,						--
+-- 	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
+-- )
+-- GO
+
+-- CREATE TABLE T_AREA_ITEM
+-- (
+-- 	id					int				PRIMARY KEY IDENTITY,
+-- 	name				nvarchar(32)	NOT NULL,				--
+-- 	notes				nvarchar(32)	,						--
+-- 	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
+-- )
+-- GO
+
+-- CREATE TABLE T_GERO_CARE_ITEM
 CREATE TABLE T_CARE_ITEM
 (
 	id					int				PRIMARY KEY IDENTITY,
+	gero_id				int				NOT NULL,				--
 	name				nvarchar(32)	NOT NULL,				--
+	-- care_item_id		int				NOT NULL,				--
 	level				int				NOT NULL,				--
+	period				int				,						--
+	frequency			int				,						--
 	notes				nvarchar(32)	,						--
 	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
 )
 GO
 
+-- CREATE TABLE T_GERO_AREA_ITEM
 CREATE TABLE T_AREA_ITEM
 (
 	id					int				PRIMARY KEY IDENTITY,
+	gero_id				int				NOT NULL,				--
 	name				nvarchar(32)	NOT NULL,				--
+	-- area_item_id		int				NOT NULL,				--
+	period				int				,						--
+	frequency			int				,						--
 	notes				nvarchar(32)	,						--
-	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
-)
-GO
-
-CREATE TABLE T_GERO_CARE_ITEM
-(
-	id					int				PRIMARY KEY IDENTITY,
-	gero_id				int				NOT NULL,				--
-	care_item_id		int				NOT NULL,				--
-	level				int				NOT NULL,				--
-	period				int				,						--
-	frequency			int				,						--
-	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
-)
-GO
-
-CREATE TABLE T_GERO_AREA_ITEM
-(
-	id					int				PRIMARY KEY IDENTITY,
-	gero_id				int				NOT NULL,				--
-	area_item_id		int				NOT NULL,				--
-	period				int				,						--
-	frequency			int				,						--
 	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
 )
 GO
@@ -359,7 +370,8 @@ CREATE TABLE T_ELDER_ITEM
 (
 	id					int				PRIMARY KEY IDENTITY,
 	elder_id			int				NOT NULL,				--
-	gero_care_item_id	int				NOT NULL,				--
+	-- gero_care_item_id	int				NOT NULL,				--
+	care_item_id		int				NOT NULL,				--
 	level				int				NOT NULL,				--
 	period				int				,						--
 	start_time			time			,						--
@@ -515,7 +527,7 @@ GO
 ALTER TABLE T_AREAWORK_RECORD
 ADD CONSTRAINT fk_AREAWORK_RECORD_area_item_id
 FOREIGN KEY (area_item_id)
-REFERENCES T_GERO_AREA_ITEM(id)
+REFERENCES T_AREA_ITEM(id)
 GO
 
 ALTER TABLE T_AREAWORK_RECORD
@@ -524,17 +536,17 @@ FOREIGN KEY (area_id)
 REFERENCES T_AREA(id)
 GO
 
-ALTER TABLE T_CAREWORK_ELDER_RECORD
-ADD CONSTRAINT fk_CAREWORK_ELDER_RECORD_carer_id
-FOREIGN KEY (carer_id)
-REFERENCES T_STAFF(id)
-GO
+-- ALTER TABLE T_CAREWORK_ELDER_RECORD
+-- ADD CONSTRAINT fk_CAREWORK_ELDER_RECORD_carer_id
+-- FOREIGN KEY (carer_id)
+-- REFERENCES T_STAFF(id)
+-- GO
 
-ALTER TABLE T_CAREWORK_ELDER_RECORD
-ADD CONSTRAINT fk_CAREWORK_ELDER_RECORD_elder_id
-FOREIGN KEY (elder_id)
-REFERENCES T_ELDER(id)
-GO
+-- ALTER TABLE T_CAREWORK_ELDER_RECORD
+-- ADD CONSTRAINT fk_CAREWORK_ELDER_RECORD_elder_id
+-- FOREIGN KEY (elder_id)
+-- REFERENCES T_ELDER(id)
+-- GO
 
 ALTER TABLE T_ELDER_AUDIO_RECORD
 ADD CONSTRAINT fk_ELDER_AUDIO_RECORD_elder_id
@@ -554,26 +566,26 @@ FOREIGN KEY (gero_id)
 REFERENCES T_GERO(id)
 GO
 
-ALTER TABLE T_CAREWORK_SCHEDULE_DETAIL
-ADD CONSTRAINT fk_CAREWORK_SCHEDULE_DETAIL_carer_id
+ALTER TABLE T_CAREWORK
+ADD CONSTRAINT fk_CAREWORK_carer_id
 FOREIGN KEY (carer_id)
 REFERENCES T_STAFF(id)
 GO
 
-ALTER TABLE T_CAREWORK_SCHEDULE_DETAIL
-ADD CONSTRAINT fk_CAREWORK_SCHEDULE_DETAIL_elder_id
+ALTER TABLE T_CAREWORK
+ADD CONSTRAINT fk_CAREWORK_elder_id
 FOREIGN KEY (elder_id)
 REFERENCES T_ELDER(id)
 GO
 
-ALTER TABLE T_AREAWORK_SCHEDULE_DETAIL
-ADD CONSTRAINT fk_AREAWORK_SCHEDULE_DETAIL_carer_id
+ALTER TABLE T_AREAWORK
+ADD CONSTRAINT fk_AREAWORK_carer_id
 FOREIGN KEY (carer_id)
 REFERENCES T_STAFF(id)
 GO
 
-ALTER TABLE T_AREAWORK_SCHEDULE_DETAIL
-ADD CONSTRAINT fk_AREAWORK_SCHEDULE_DETAIL_area_id
+ALTER TABLE T_AREAWORK
+ADD CONSTRAINT fk_AREAWORK_area_id
 FOREIGN KEY (area_id)
 REFERENCES T_AREA(id)
 GO
@@ -608,29 +620,29 @@ FOREIGN KEY (role_id)
 REFERENCES T_ROLE(id)
 GO
 
-ALTER TABLE T_GERO_CARE_ITEM
-ADD CONSTRAINT fk_GERO_CARE_ITEM_gero_id
+ALTER TABLE T_CARE_ITEM
+ADD CONSTRAINT fk_CARE_ITEM_gero_id
 FOREIGN KEY (gero_id)
 REFERENCES T_GERO(id)
 GO
 
-ALTER TABLE T_GERO_CARE_ITEM
-ADD CONSTRAINT fk_GERO_CARE_ITEM_care_item_id
-FOREIGN KEY (care_item_id)
-REFERENCES T_CARE_ITEM(id)
-GO
+-- ALTER TABLE T_GERO_CARE_ITEM
+-- ADD CONSTRAINT fk_GERO_CARE_ITEM_care_item_id
+-- FOREIGN KEY (care_item_id)
+-- REFERENCES T_CARE_ITEM(id)
+-- GO
 
-ALTER TABLE T_GERO_AREA_ITEM
-ADD CONSTRAINT fk_GERO_AREA_ITEM_gero_id
+ALTER TABLE T_AREA_ITEM
+ADD CONSTRAINT fk_AREA_ITEM_gero_id
 FOREIGN KEY (gero_id)
 REFERENCES T_GERO(id)
 GO
 
-ALTER TABLE T_GERO_AREA_ITEM
-ADD CONSTRAINT fk_GERO_AREA_ITEM_area_item_id
-FOREIGN KEY (area_item_id)
-REFERENCES T_AREA_ITEM(id)
-GO
+-- ALTER TABLE T_GERO_AREA_ITEM
+-- ADD CONSTRAINT fk_GERO_AREA_ITEM_area_item_id
+-- FOREIGN KEY (area_item_id)
+-- REFERENCES T_AREA_ITEM(id)
+-- GO
 
 ALTER TABLE T_ELDER_ITEM
 ADD CONSTRAINT fk_ELDER_ITEM_elder_id
@@ -639,9 +651,9 @@ REFERENCES T_ELDER(id)
 GO
 
 ALTER TABLE T_ELDER_ITEM
-ADD CONSTRAINT fk_ELDER_ITEM_gero_care_item_id
-FOREIGN KEY (gero_care_item_id)
-REFERENCES T_GERO_CARE_ITEM(id)
+ADD CONSTRAINT fk_ELDER_ITEM_care_item_id
+FOREIGN KEY (care_item_id)
+REFERENCES T_CARE_ITEM(id)
 GO
 
 
