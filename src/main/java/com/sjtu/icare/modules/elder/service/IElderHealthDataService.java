@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.sjtu.icare.modules.elder.entity.ElderBloodPressureEntity;
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
+import com.sjtu.icare.modules.elder.entity.ElderHeartRateEntity;
 import com.sjtu.icare.modules.elder.entity.ElderTemperatureEntity;
 
 /**
@@ -16,7 +17,7 @@ public interface IElderHealthDataService {
 	
 	ElderEntity getElderEntity(int id);
 
-	List<ElderTemperatureEntity> getElderTemperatureEntities(int elderId, String startDay, String endDay);
+	List<ElderTemperatureEntity> getElderTemperatureEntities(int elderId, String startDate, String endDate);
 
 	void insertElderTemperatureRecord(int elderId, int doctorId,
 			String temperature, String time);
@@ -27,6 +28,9 @@ public interface IElderHealthDataService {
 	void insertElderBloodPressureRecord(int elderId, Integer doctorId,
 			String diastolicPressure, String systolicPressure, String time);
 	
-	List<ElderHeartRateEntity> getElderHeartRateEntity(int elderId, Date startDay, Date endDay);
+	List<ElderHeartRateEntity> getElderHeartRateEntity(int elderId, String startDate, String endDate);
+
+	void insertElderHeartRateRecord(int elderId, Integer doctorId,
+			String heartRate, String time);
 	
 }

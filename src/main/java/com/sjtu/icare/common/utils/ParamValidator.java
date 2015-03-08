@@ -55,4 +55,15 @@ public class ParamValidator {
 		else
 			return false;
 	}
+
+	public static boolean isHeartRate(String heartRateParam) {
+		if (heartRateParam == null)
+			return false;
+		
+		double hearRate = Double.parseDouble(heartRateParam);
+		if (hearRate > 0 && hearRate < 1000)
+			return true;
+		else
+			return false;
+	}
 }

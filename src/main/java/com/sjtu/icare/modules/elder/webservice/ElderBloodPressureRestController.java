@@ -7,6 +7,7 @@
  */
 package com.sjtu.icare.modules.elder.webservice;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -69,7 +70,24 @@ public class ElderBloodPressureRestController {
 			startDate = DateUtils.formatDateTime(DateUtils.getDateStart(today));
 			endDate = DateUtils.formatDateTime(DateUtils.getDateEnd(today));
 		}
-
+		if (startDate == null && endDate != null) {
+			Date thatDay = null;
+			
+			SimpleDateFormat pattern = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			try {
+				thatDay = pattern.parse(endDate);
+			} catch (Exception e){
+				// pass
+			}
+			pattern = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				thatDay = pattern.parse(endDate);
+			} catch (Exception e){
+				// pass
+			}
+			startDate = DateUtils.formatDateTime(DateUtils.getDateStart(thatDay));
+			endDate = DateUtils.formatDateTime(DateUtils.getDateEnd(thatDay));
+		}
 		ElderEntity elderEntity = elderHealthDataService.getElderEntity(elderId);
 		List<ElderBloodPressureEntity> elderBloodPressureEntityList = elderHealthDataService.getElderBloodPressureEntities(elderId, startDate, endDate);
 
