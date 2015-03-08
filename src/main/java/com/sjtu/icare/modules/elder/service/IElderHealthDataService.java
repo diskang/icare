@@ -12,7 +12,7 @@ import java.util.List;
 
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
 import com.sjtu.icare.modules.elder.entity.ElderTemperatureEntity;
-
+import com.sjtu.icare.modules.elder.entity.ElderHeartRateEntity;
 
 /**
  * @Description 老人体温对应的 service 类
@@ -25,4 +25,5 @@ public interface IElderHealthDataService {
 
 	List<ElderTemperatureEntity> getElderTemperatureEntity(int elderId, Date startDay, Date endDay);
 
+	List<ElderHeartRateEntity> getElderHeartRateEntity(int elderId, Date startDay, Date endDay);
 }
