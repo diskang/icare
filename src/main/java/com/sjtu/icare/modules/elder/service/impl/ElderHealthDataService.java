@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sjtu.icare.modules.elder.entity.ElderBloodPressureEntity;
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
 import com.sjtu.icare.modules.elder.entity.ElderTemperatureEntity;
+import com.sjtu.icare.modules.elder.persistence.ElderBloodPressureEntityDAO;
 import com.sjtu.icare.modules.elder.persistence.ElderEntityDAO;
 import com.sjtu.icare.modules.elder.persistence.ElderTemperatureEntityDAO;
 import com.sjtu.icare.modules.elder.service.IElderHealthDataService;
@@ -25,6 +27,8 @@ public class ElderHealthDataService implements IElderHealthDataService {
 	private ElderEntityDAO elderEntityDAO;
 	@Autowired
 	private ElderTemperatureEntityDAO elderTemperatureEntityDAO;
+	@Autowired
+	private ElderBloodPressureEntityDAO elderBloodPressureEntityDAO;
 
 	@Override
 	public ElderEntity getElderEntity(int id) {
@@ -32,13 +36,27 @@ public class ElderHealthDataService implements IElderHealthDataService {
 	}
 
 	@Override
-	public List<ElderTemperatureEntity> getElderTemperatureEntity(int elderId, String startDay, String endDay) {
-		return elderTemperatureEntityDAO.getElderTemperatureEntityByElderidStartdayEndday(elderId, startDay, endDay);
+	public List<ElderTemperatureEntity> getElderTemperatureEntities(int elderId, String startDay, String endDay) {
+		return elderTemperatureEntityDAO.getElderTemperatureEntitiesByElderidStartdayEndday(elderId, startDay, endDay);
 	}
 
 	@Override
 	public void insertElderTemperatureRecord(int elderId, int doctorId, String temperature, String time) {
 		elderTemperatureEntityDAO.insertElderTemperatureRecordWithElderidDoctoridTemperatureTime(elderId, doctorId, temperature, time);
+	}
+
+	@Override
+	public List<ElderBloodPressureEntity> getElderBloodPressureEntities(
+			int elderId, String startDate, String endDate) {
+		return elderBloodPressureEntityDAO.getElderBloodPressureEntitiesByElderidStartdayEndday(elderId, startDate, endDate);
+	}
+
+	@Override
+	public void insertElderBloodPressureRecord(int elderId, Integer doctorId,
+			String diastolicPressure, String systolicPressure, String time) {
+		elderBloodPressureEntityDAO.insertElderTemperatureRecordWithElderidDoctoridDiastolicpressureSystolicpressure(elderId, doctorId,
+				diastolicPressure, systolicPressure, time);
+		
 	}
 
 
