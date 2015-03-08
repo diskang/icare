@@ -15,7 +15,7 @@
 	    <association property="doctorEntity" column="doctor_id" select="com.sjtu.icare.modules.staff.persistence.StaffEntityDAO.getStaffEntityById"/>
 	</resultMap>
   
-    <select id="getElderTemperatureEntityByElderidStartdayEndday" resultMap="ElderTemperatureEntityMap">
+    <select id="getElderTemperatureEntitiesByElderidStartdayEndday" resultMap="ElderTemperatureEntityMap">
 
         SELECT
             id,

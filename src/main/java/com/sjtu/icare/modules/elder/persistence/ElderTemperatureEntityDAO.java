@@ -16,7 +16,7 @@ import com.sjtu.icare.modules.elder.entity.ElderTemperatureEntity;
 @MyBatisDao
 public interface ElderTemperatureEntityDAO {
 
-	List<ElderTemperatureEntity> getElderTemperatureEntityByElderidStartdayEndday(@Param("elderId") int elderId, @Param("startDate") String startDate, @Param("endDate") String endDate);
+	List<ElderTemperatureEntity> getElderTemperatureEntitiesByElderidStartdayEndday(@Param("elderId") int elderId, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
 	void insertElderTemperatureRecordWithElderidDoctoridTemperatureTime(@Param("elderId") int elderId, @Param("doctorId") int doctorId, @Param("temperature") String temperature, @Param("time") String time);
 

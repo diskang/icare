@@ -18,7 +18,7 @@ public class ElderTemperatureEntity implements Serializable {
     private int id;
     private int elderId;
     private int doctorId;
-    private float temperature;
+    private double temperature;
     private String time;
  
     private StaffEntity doctorEntity;
@@ -47,11 +47,11 @@ public class ElderTemperatureEntity implements Serializable {
     	this.doctorId = doctorId;
     }
     
-    public float getTemperature() {
+    public double getTemperature() {
     	return temperature;
     }
     
-    public void setTemperature(float temperature) {
+    public void setTemperature(double temperature) {
     	this.temperature = temperature;
     }
     
