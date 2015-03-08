@@ -59,7 +59,9 @@ public class ElderHealthDataService implements IElderHealthDataService {
 		
 	}
 
-
-
+	@Override
+	public List<ElderHeartRateEntity> getElderHeartRateEntity(int elderId, Date startDay, Date endDay) {
+		return elderHeartRateEntityDAO.getElderHeartRateEntityByElderidStartdayEndday(elderId, startDay, endDay);
+	}
 	
 }

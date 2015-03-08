@@ -27,6 +27,6 @@ public interface IElderHealthDataService {
 	void insertElderBloodPressureRecord(int elderId, Integer doctorId,
 			String diastolicPressure, String systolicPressure, String time);
 	
-	
+	List<ElderHeartRateEntity> getElderHeartRateEntity(int elderId, Date startDay, Date endDay);
 	
 }
