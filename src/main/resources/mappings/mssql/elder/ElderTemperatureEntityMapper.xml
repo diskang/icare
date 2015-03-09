@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.icare.modules.elder.persistence.ElderTemperatureEntityDAO">
+
+    <cache />
+    
+	<resultMap type="com.sjtu.icare.modules.elder.entity.ElderTemperatureEntity" id="ElderTemperatureEntityMap">
+	    <id property="id" column="id" />
+	    <result property="elderId" column="elder_id" />
+	    <result property="doctorId" column="doctor_id" />
+	    <result property="temperature" column="temperature" />
+	    <result property="time" column="time" />
+	    <association property="doctorEntity" column="doctor_id" select="com.sjtu.icare.modules.staff.persistence.StaffEntityDAO.getStaffEntityById"/>
+	</resultMap>
+  
+    <select id="getElderTemperatureEntitiesByElderidStartdayEndday" resultMap="ElderTemperatureEntityMap">
+
+        SELECT
+            id,
+            elder_id,
+            doctor_id,
+            temperature,
+            time      
+        FROM T_ELDER_TEMPERATURE
+        WHERE 
+            T_ELDER_TEMPERATURE.elder_id = #{elderId}
+            <if test="startDate != null">
+                <![CDATA[
+                and #{startDate} <= convert(nvarchar(23), T_ELDER_TEMPERATURE.time, 120)
+                ]]>
+            </if>
+            <if test="endDate != null">
+                <![CDATA[
+                and #{endDate} >= convert(nvarchar(23), T_ELDER_TEMPERATURE.time, 120)
+                ]]>
+            </if>
+  
+    </select>
+
+    <insert id="insertElderTemperatureRecordWithElderidDoctoridTemperatureTime" >
+        insert into 
+            T_ELDER_TEMPERATURE(elder_id, doctor_id, temperature, time) 
+        values
+            (#{elderId}, #{doctorId}, #{temperature}, #{time})
+    </insert>
+
+
+
+    
+</mapper>
