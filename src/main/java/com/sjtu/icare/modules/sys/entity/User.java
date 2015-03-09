@@ -360,7 +360,7 @@ public class User extends DataEntity<User> {
 	}
 	
 	public boolean isAdmin(){
-		return userType == 0 || userType == 1;
+		return userType == 0;
 	}
 	
 	@Override

@@ -61,7 +61,7 @@ public class UserRestDemoController {
 	 * 目前加了produce，只能返回json了
 	 */
 	@RequestMapping(value = "/{username}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
-	@RequiresPermissions("admin")
+	/*@RequiresPermissions("admin")*/
 	public User getUserInPath(@PathVariable("username") String username) {
 		
 		User user = userMapper.getByUsername(new User(-1,username));

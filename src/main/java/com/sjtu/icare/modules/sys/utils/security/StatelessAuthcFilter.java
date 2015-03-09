@@ -15,6 +15,7 @@ import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 
@@ -47,6 +48,10 @@ public class StatelessAuthcFilter extends AccessControlFilter {
 			Subject subject = getSubject(request, response);
 			logger.debug("subject getted");
 			subject.login(token);
+			String permission = getPathWithinApplication(request)+":"+GET_METHOD;
+			logger.debug(permission);
+			subject.checkPermission(permission);
+			
 	    } catch ( UnknownAccountException uae ) { 
 	    	onLoginFail(response,"No Account");
 	    	return false;
@@ -62,8 +67,11 @@ public class StatelessAuthcFilter extends AccessControlFilter {
 	    }catch (AuthenticationException e) {
 	    	onLoginFail(response,"Authentication Error");
 	    	return false;
+		}catch (UnauthorizedException e) {
+	    	onLoginFail(response,"Unauthorized Error");
+	    	return false;
 		}catch (Exception e) {  
-//	    	e.printStackTrace();  
+	    	e.printStackTrace();  
 			onLoginFail(response,"Login Error"); //6、登录失败  
 			return false;  
 	    }  

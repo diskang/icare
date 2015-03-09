@@ -50,7 +50,7 @@
 			<include refid="privilegeColumns"/>
 		FROM T_PRIVILEGE a
 		LEFT JOIN T_PRIVILEGE p ON p.id = a.parent_id
-		JOIN T_ROLE_PRIVILEGES rp ON rp.privelege_id = a.id
+		JOIN T_ROLE_PRIVILEGES rp ON rp.privilege_id = a.id
 		JOIN T_ROLE r ON r.id = rp.role_id
 		JOIN T_USER_ROLES ur ON ur.role_id = r.id
 		JOIN T_USER u ON u.id = ur.user_id AND u.id = #{userId}

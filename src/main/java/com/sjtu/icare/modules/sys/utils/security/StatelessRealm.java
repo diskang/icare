@@ -77,7 +77,6 @@ public class StatelessRealm extends AuthorizingRealm {
 //            UserUtils.putCache("user", user);
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             List<Privilege> list = UserUtils.getPrivilegeList(user);
-            logger.debug("pl:"+list.get(0).getPermission());
             for (Privilege privilege : list){
                 if (StringUtils.isNotBlank(privilege.getPermission())){
                     // 添加基于Permission的权限信息

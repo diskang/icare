@@ -165,7 +165,7 @@ public class UserUtils {
 	}
 	
 	/**
-	 * 获取当前用户授权菜单
+	 * 获取用户授权菜单(Stateless)
 	 * @return
 	 */
 	public static List<Privilege> getPrivilegeList(User u){

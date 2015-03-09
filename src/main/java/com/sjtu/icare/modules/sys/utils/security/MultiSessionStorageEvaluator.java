@@ -10,31 +10,36 @@ import org.apache.shiro.mgt.SessionStorageEvaluator;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
 
+/**
+ * Web Application 与 Web Service session的分别处理类
+ * @author jty
+ * @version 2015-03-08
+ */
 public class MultiSessionStorageEvaluator implements SessionStorageEvaluator{
-	private static final Logger logger = Logger.getLogger(MultiSessionStorageEvaluator.class);
-	public boolean isSessionStorageEnabled(Subject subject) {
+    private static final Logger logger = Logger.getLogger(MultiSessionStorageEvaluator.class);
+    public boolean isSessionStorageEnabled(Subject subject) {
 
-		  boolean enabled = false;
+          boolean enabled = false;
 
-		  if(WebUtils.isWeb(subject)) {
+          if(WebUtils.isWeb(subject)) {
 
-		    HttpServletRequest request = WebUtils.getHttpRequest(subject);
-		    if (request.getHeader("accept").indexOf("application/json")<0) {
-		    	enabled = true;
-			}
-		    else {
-		    	enabled = false;
-			}
-		    //set 'enabled' based on the current request.
+            HttpServletRequest request = WebUtils.getHttpRequest(subject);
+            if (request.getHeader("accept").indexOf("application/json")<0) {
+                enabled = true;
+            }
+            else {
+                enabled = false;
+            }
+            //set 'enabled' based on the current request.
 
-		  } else {
+          } else {
 
-		    //not a web request - maybe a RMI or daemon invocation?
+            //not a web request - maybe a RMI or daemon invocation?
 
-		    //set 'enabled' another way …
-			
-			  return enabled;
-		  }
-		  return enabled;
-	}
+            //set 'enabled' another way …
+            
+              return enabled;
+          }
+          return enabled;
+    }
 }
