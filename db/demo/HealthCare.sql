@@ -11,7 +11,7 @@ CREATE TABLE T_USER
 	name				nvarchar(20)	NOT NULL,				--用户姓名
 	password			varchar(64)		NOT NULL,				--用户密码
 	user_type			int				NOT NULL,				--超级管理员=0、管理员=1，员工=2、老人=3、家属=4
-	user_id				int				NOT NULL,				-- -1，gero_id, staff_id, elder_id，family_id
+	user_id				int				NOT NULL,				-- -1，gero_id, staff_id, elder_id，relative_id
 	register_date		datetime		NOT NULL,				--注册日期
 	cancel_date			datetime		,						--注销日期
 	gender				char(1)			,						--性别（男0，女1）
@@ -24,7 +24,7 @@ CREATE TABLE T_USER
 	birthday			date			NOT NULL,				--出生年月日
 	political_status	nvarchar(10)	,						--政治面貌
 	education			nvarchar(50)	,						--受教育水平
-	phone				char(20)		NOT NULL,				--联系方式
+	phone_no			char(20)		NOT NULL,				--联系方式
 	zip_code			char(10)		,						--邮编	
 	residence_address	nvarchar(50)	,						--户籍地址
 	household_address	nvarchar(50)	,						--居住地址
@@ -136,7 +136,7 @@ CREATE TABLE T_ELDER_SHEET
 )
 GO
 
-CREATE TABLE T_ELDER_FAMILIES
+CREATE TABLE T_ELDER_RELATIVE
 (
 	id					int				PRIMARY KEY IDENTITY,	--家属ID
 	elder_id			int				NOT NULL,				--关联T_ELDER表
@@ -440,8 +440,8 @@ FOREIGN KEY (elder_id)
 REFERENCES T_ELDER(id)
 GO
 
-ALTER TABLE T_ELDER_FAMILIES
-ADD CONSTRAINT fk_ELDER_FAMILIES_elder_id
+ALTER TABLE T_ELDER_RELATIVE
+ADD CONSTRAINT fk_ELDER_RELATIVE_elder_id
 FOREIGN KEY (elder_id)
 REFERENCES T_ELDER(id)
 GO

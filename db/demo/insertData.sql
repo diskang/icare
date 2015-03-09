@@ -8,6 +8,9 @@ INSERT INTO [dbo].[T_USER]
            ,[user_type]
            ,[user_id]
            ,[register_date]
+		   ,[identity_no]
+		   ,[birthday]
+		   ,[phone_no]
 		   )
      VALUES
            ('su'
@@ -16,6 +19,9 @@ INSERT INTO [dbo].[T_USER]
            ,'0'
            ,'0'
            ,'2015-03-05 00:00:00.000'
+		   ,'1'
+		   ,'1970-01-01'
+		   ,'18888888888'
 		   )
 GO
 
@@ -26,6 +32,9 @@ INSERT INTO [dbo].[T_USER]
            ,[user_type]
            ,[user_id]
            ,[register_date]
+		   ,[identity_no]
+		   ,[birthday]
+		   ,[phone_no]
 		   )
      VALUES
            ('admin'
@@ -34,6 +43,9 @@ INSERT INTO [dbo].[T_USER]
            ,'1'
            ,'1'
            ,'2015-03-05 00:00:00.000'
+		   ,'1'
+		   ,'1970-01-01'
+		   ,'18888888888'
 		   )
 GO
 
@@ -44,6 +56,9 @@ INSERT INTO [dbo].[T_USER]
            ,[user_type]
            ,[user_id]
            ,[register_date]
+		   ,[identity_no]
+		   ,[birthday]
+		   ,[phone_no]
 		   )
      VALUES
            ('carer'
@@ -52,6 +67,9 @@ INSERT INTO [dbo].[T_USER]
            ,'2'
            ,'2'
            ,'2015-03-05 00:00:00.000'
+		   ,'1'
+		   ,'1970-01-01'
+		   ,'18888888888'
 		   )
 GO
 
@@ -62,6 +80,9 @@ INSERT INTO [dbo].[T_USER]
            ,[user_type]
            ,[user_id]
            ,[register_date]
+		   ,[identity_no]
+		   ,[birthday]
+		   ,[phone_no]
 		   )
      VALUES
            ('doctor'
@@ -70,6 +91,9 @@ INSERT INTO [dbo].[T_USER]
            ,'2'
            ,'3'
            ,'2015-03-05 00:00:00.000'
+		   ,'1'
+		   ,'1970-01-01'
+		   ,'18888888888'
 		   )
 GO
 
@@ -80,6 +104,9 @@ INSERT INTO [dbo].[T_USER]
            ,[user_type]
            ,[user_id]
            ,[register_date]
+		   ,[identity_no]
+		   ,[birthday]
+		   ,[phone_no]
 		   )
      VALUES
            ('elder'
@@ -88,6 +115,9 @@ INSERT INTO [dbo].[T_USER]
            ,'3'
            ,'1'
            ,'2015-03-05 00:00:00.000'
+		   ,'1'
+		   ,'1970-01-01'
+		   ,'18888888888'
 		   )
 GO
 
@@ -98,6 +128,9 @@ INSERT INTO [dbo].[T_USER]
            ,[user_type]
            ,[user_id]
            ,[register_date]
+		   ,[identity_no]
+		   ,[birthday]
+		   ,[phone_no]
 		   )
      VALUES
            ('relative'
@@ -106,6 +139,9 @@ INSERT INTO [dbo].[T_USER]
            ,'4'
            ,'1'
            ,'2015-03-05 00:00:00.000'
+		   ,'1'
+		   ,'1970-01-01'
+		   ,'18888888888'
 		   )
 GO
 
@@ -227,25 +263,17 @@ GO
 
 INSERT INTO [dbo].[T_ELDER]
            ([name]
-           ,[gender]
-           ,[gero_id]
-           ,[identity_no]
-           ,[birthday])
+           ,[gero_id])
      VALUES
            ('elder1'
-		   ,0
-		   ,1
-		   ,1
-		   ,'2015-03-05 00:00:00.000')
+		   ,1)
 GO
 
 INSERT INTO [dbo].[T_STAFF]
            ([name]
-		   ,[identity_no]
            ,[gero_id])
      VALUES
            ('staff1'
-		   ,1
 		   ,1)
 GO
 
