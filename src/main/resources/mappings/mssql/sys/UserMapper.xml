@@ -52,14 +52,14 @@
 		</if>
 		<!-- 数据范围过滤 -->
 		<!-- ${sqlMap.dsf} -->
-		<choose>
+		<!-- <choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
 			</when>
-			<otherwise>
+			<otherwise> -->
 				ORDER BY name
-			</otherwise>
-		</choose>
+			<!-- </otherwise>
+		</choose> -->
 	</select>
 	
 	<!-- 根据OfficeId获取用户（树查询用户时用） -->

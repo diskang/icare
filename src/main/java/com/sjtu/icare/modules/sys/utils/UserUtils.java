@@ -34,7 +34,7 @@ import com.sjtu.icare.modules.sys.web.TestController;
  * @version 2015-03-03
  */
 public class UserUtils {
-	private static final Logger logger = Logger.getLogger(TestController.class);
+	private static final Logger logger = Logger.getLogger(UserUtils.class);
 	private static UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
 	private static RoleMapper roleMapper = SpringContextHolder.getBean(RoleMapper.class);
 	private static PrivilegeMapper privilegeMapper = SpringContextHolder.getBean(PrivilegeMapper.class);

@@ -29,7 +29,7 @@ import com.sjtu.icare.common.utils.StringUtils;
 @Service
 @Transactional(readOnly = true)
 public class SystemService extends BaseService  {
-	private static final Logger logger = Logger.getLogger(TestController.class);
+	private static final Logger logger = Logger.getLogger(SystemService.class);
 	public static final String HASH_ALGORITHM = "SHA-1";
 	public static final int HASH_INTERATIONS = 1024;
 	public static final int SALT_SIZE = 8;
@@ -95,20 +95,20 @@ public class SystemService extends BaseService  {
 		return list;
 	}
 	
-	/**
-	 * 通过部门ID获取用户列表，仅返回用户id和name（树查询用户时用）
-	 * @param user
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	public List<User> findUserByOfficeId(String officeId) {
-		List<User> list = (List<User>)CacheUtils.get(UserUtils.USER_CACHE);
-		if (list == null){
-			User user = new User();
-			CacheUtils.put(UserUtils.USER_CACHE, list);
-		}
-		return list;
-	}
+//	/**
+//	 * 通过部门ID获取用户列表，仅返回用户id和name（树查询用户时用）
+//	 * @param user
+//	 * @return
+//	 */
+//	@SuppressWarnings("unchecked")
+//	public List<User> findUserByOfficeId(String officeId) {
+//		List<User> list = (List<User>)CacheUtils.get(UserUtils.USER_CACHE);
+//		if (list == null){
+//			User user = new User();
+//			CacheUtils.put(UserUtils.USER_CACHE, list);
+//		}
+//		return list;
+//	}
 	
 	@Transactional(readOnly = false)
 	public void saveUser(User user) {

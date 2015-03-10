@@ -58,7 +58,7 @@ CREATE TABLE T_AREA
 	gero_id				int				NOT NULL,				--养老院id，关联GERO
 	type				int				NOT NULL,				--楼栋：1，楼层：2，房间：3，床位：4，区域：5
 	level				int				NOT NULL,				--每深一层加1
-	name				int				NOT NULL,				--位置名称
+	name				nvarchar(64)	NOT NULL,				--位置名称
 	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
 )
 GO
@@ -102,7 +102,6 @@ CREATE TABLE T_ELDER
 	nssf_id				varchar(50)		,						--老人社保卡号
 	archive_id			varchar(20)		,						--档案编号，不清楚用处，养老院要求加的。
 	area_id				int				,						--老人入住床号，关联T_AREA表
-	residence			nvarchar(64)	,						--户口所在地
 	care_level			int				,						--老人护理等级
 	checkin_date		date			,						--入院日期
 	checkout_date		date			,						--离院日期
@@ -140,7 +139,7 @@ CREATE TABLE T_ELDER_RELATIVE
 (
 	id					int				PRIMARY KEY IDENTITY,	--家属ID
 	elder_id			int				NOT NULL,				--关联T_ELDER表
-	name				nvarchar(30)	NOT NULL,				--名字
+	name				nvarchar(20)	NOT NULL,				--名字
 	urgent				bit				,						--是否紧急联系人
 	relationship		nvarchar(20)	,						--与老人关系，optional
 )
