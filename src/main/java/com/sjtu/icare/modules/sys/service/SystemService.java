@@ -175,13 +175,13 @@ public class SystemService extends BaseService  {
 	
 	@Transactional(readOnly = false)
 	public void updatePasswordById(int id, String newPassword) {
-		User user = UserUtils.get(id);
+		User user = new User(id);
 		user.setPassword(entryptPassword(newPassword));
 		userMapper.updatePasswordById(user);
 		// 清除用户缓存
 		UserUtils.clearCache(user);
 //		// 清除权限缓存
-//		systemRealm.clearAllCachedAuthorizationInfo();
+		systemRealm.clearAllCachedAuthorizationInfo();
 	}
 	
 //	/**

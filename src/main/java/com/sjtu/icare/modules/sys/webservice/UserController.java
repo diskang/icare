@@ -50,9 +50,8 @@ public class UserController {
 			@RequestParam int pageSize
 			){
 		BasicReturnedJson result = new BasicReturnedJson();
-		Page<User> userPage = new Page<User>(pageNo, pageSize-1);
+		Page<User> userPage = new Page<User>(pageNo, pageSize);
 		List<User> userList = systemService.findUser(userPage, new User()).getList();
-		
 		for (User user : userList){
 			if (user != null){
 				result.addEntity(getUserMapFromUser(user));
@@ -107,16 +106,12 @@ public class UserController {
 	@RequestMapping(value = "/{uid}/password", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> updateUserPasswordFromUserId(
 			@PathVariable("uid") int uid,
-			@RequestParam("old_password") String oldPassword,
-			@RequestParam("new_password") String newPassword
+			@RequestParam("password") String password
 			){
 		User user = UserUtils.get(uid);
 		BasicReturnedJson result = new BasicReturnedJson();
 		if (user != null){	
-//			user.setName(name);
-//			user.setPhotoUrl(photoUrl);	
-			systemService.updateUserInfo(user);
-			result.addEntity(getUserMapFromUser(user));
+			systemService.updatePasswordById(uid, password);
 			result.setErrno(HttpStatus.OK.value());
 			result.setError(HttpStatus.OK.name());
 		}else {
@@ -125,6 +120,7 @@ public class UserController {
 		}
 		return result.getMap();
 	}
+	
 	
 	
 	private Map<String, Object> getUserMapFromUser(User user){
