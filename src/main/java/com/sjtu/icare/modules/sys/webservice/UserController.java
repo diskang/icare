@@ -50,7 +50,7 @@ public class UserController {
 			@RequestParam int pageSize
 			){
 		BasicReturnedJson result = new BasicReturnedJson();
-		Page<User> userPage = new Page<User>(pageNo, pageSize-1);
+		Page<User> userPage = new Page<User>(pageNo, pageSize);
 		List<User> userList = systemService.findUser(userPage, new User()).getList();
 		
 		for (User user : userList){
