@@ -1,5 +1,6 @@
 package com.sjtu.icare.modules.sys.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import com.sjtu.icare.common.service.BaseService;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.Encodes;
 import com.sjtu.icare.modules.sys.entity.Privilege;
+import com.sjtu.icare.modules.sys.entity.Role;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.persistence.PrivilegeMapper;
 import com.sjtu.icare.modules.sys.persistence.RoleMapper;
@@ -79,7 +81,6 @@ public class SystemService extends BaseService  {
 		// 设置分页参数
 		user.setPage(page);
 		// 执行分页查询
-		logger.debug("size:"+userMapper.findList(user).size());
 		page.setList(userMapper.findList(user));
 		return page;
 	}
@@ -175,13 +176,13 @@ public class SystemService extends BaseService  {
 	
 	@Transactional(readOnly = false)
 	public void updatePasswordById(int id, String newPassword) {
-		User user = UserUtils.get(id);
+		User user = new User(id);
 		user.setPassword(entryptPassword(newPassword));
 		userMapper.updatePasswordById(user);
 		// 清除用户缓存
 		UserUtils.clearCache(user);
 //		// 清除权限缓存
-//		systemRealm.clearAllCachedAuthorizationInfo();
+		systemRealm.clearAllCachedAuthorizationInfo();
 	}
 	
 //	/**
@@ -192,13 +193,7 @@ public class SystemService extends BaseService  {
 //		return sessionDao.getActiveSessions(false);
 //	}
 	
-	
-	
-	
-	
-	
-	
-	
+		
 //	public User getUserByUsername(String username) {
 //		return userMapper.findByUsername(username);
 //	}
@@ -216,9 +211,15 @@ public class SystemService extends BaseService  {
 
 	@Transactional(readOnly = false)
 	public void deleteUser(int id) {
-
 //		userMapper.delete(id, DateUtils.getDate());
-		
+	}
+	
+	@Transactional(readOnly = true)
+	public Page<Role> getRolePageFromUserId (Page<Role> page, User user) {
+		Role role = new Role(user);
+		role.setPage(page);
+		page.setList(roleMapper.findList(role));
+		return page;
 	}
 	
 //	@Transactional(readOnly = false)

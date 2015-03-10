@@ -46,20 +46,22 @@ public class UserController {
 	
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> getUserInfoList(
-			@RequestParam int pageNo,
-			@RequestParam int pageSize
+			@RequestParam int page,
+			@RequestParam int limit
 			){
 		BasicReturnedJson result = new BasicReturnedJson();
-		Page<User> userPage = new Page<User>(pageNo, pageSize);
-		List<User> userList = systemService.findUser(userPage, new User()).getList();
-		
+		Page<User> userPage = new Page<User>(page, limit);
+		userPage = systemService.findUser(userPage, new User());
+		List<User> userList = userPage.getList();
+		int total = (int) userPage.getCount();
 		for (User user : userList){
 			if (user != null){
 				result.addEntity(getUserMapFromUser(user));
-				result.setErrno(HttpStatus.OK.value());
+				result.setStatus(HttpStatus.OK.value());
 				result.setError(HttpStatus.OK.name());
+				result.setTotal(total);
 			}else {
-				result.setErrno(HttpStatus.NOT_FOUND.value());
+				result.setStatus(HttpStatus.NOT_FOUND.value());
 				result.setError(HttpStatus.NOT_FOUND.name());
 				break;
 			}
@@ -73,10 +75,10 @@ public class UserController {
 		User user = UserUtils.get(uid);
 		if (user != null){			
 			result.addEntity(getUserMapFromUser(user));
-			result.setErrno(HttpStatus.OK.value());
+			result.setStatus(HttpStatus.OK.value());
 			result.setError(HttpStatus.OK.name());
 		}else {
-			result.setErrno(HttpStatus.NOT_FOUND.value());
+			result.setStatus(HttpStatus.NOT_FOUND.value());
 			result.setError(HttpStatus.NOT_FOUND.name());
 		}
 		return result.getMap();
@@ -95,10 +97,10 @@ public class UserController {
 			user.setPhotoUrl(photoUrl);	
 			systemService.updateUserInfo(user);
 			result.addEntity(getUserMapFromUser(user));
-			result.setErrno(HttpStatus.OK.value());
+			result.setStatus(HttpStatus.OK.value());
 			result.setError(HttpStatus.OK.name());
 		}else {
-			result.setErrno(HttpStatus.NOT_FOUND.value());
+			result.setStatus(HttpStatus.NOT_FOUND.value());
 			result.setError(HttpStatus.NOT_FOUND.name());
 		}
 		return result.getMap();
@@ -107,24 +109,21 @@ public class UserController {
 	@RequestMapping(value = "/{uid}/password", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> updateUserPasswordFromUserId(
 			@PathVariable("uid") int uid,
-			@RequestParam("old_password") String oldPassword,
-			@RequestParam("new_password") String newPassword
+			@RequestParam("password") String password
 			){
 		User user = UserUtils.get(uid);
 		BasicReturnedJson result = new BasicReturnedJson();
 		if (user != null){	
-//			user.setName(name);
-//			user.setPhotoUrl(photoUrl);	
-			systemService.updateUserInfo(user);
-			result.addEntity(getUserMapFromUser(user));
-			result.setErrno(HttpStatus.OK.value());
+			systemService.updatePasswordById(uid, password);
+			result.setStatus(HttpStatus.OK.value());
 			result.setError(HttpStatus.OK.name());
 		}else {
-			result.setErrno(HttpStatus.NOT_FOUND.value());
+			result.setStatus(HttpStatus.NOT_FOUND.value());
 			result.setError(HttpStatus.NOT_FOUND.name());
 		}
 		return result.getMap();
 	}
+	
 	
 	
 	private Map<String, Object> getUserMapFromUser(User user){
@@ -144,15 +143,7 @@ public class UserController {
 		userMap.put("role_list", roleList);
 		ArrayList<Object> privilegeList = new ArrayList<Object>();
 		for (Privilege privilege : UserUtils.getPrivilegeList(user)){
-			Map<String, Object> privilegeMap = new HashMap<String, Object>();
-			privilegeMap.put("id", privilege.getId());
-			privilegeMap.put("name", privilege.getName());
-			privilegeMap.put("parent_id", privilege.getParentId());
-			privilegeMap.put("parent_ids", privilege.getParentIds());
-			privilegeMap.put("permission", privilege.getPermission());
-			privilegeMap.put("href", privilege.getHref());
-			privilegeMap.put("icon", privilege.getIcon());
-			privilegeList.add(privilegeMap);
+			privilegeList.add(getPrivilegeMapFromPrivilege(privilege));
 		}
 		userMap.put("privilege_list", privilegeList);
 		userMap.put("register_date", user.getRegisterDate());
@@ -160,4 +151,30 @@ public class UserController {
 		userMap.put("photo_url", user.getPhotoUrl());
 		return userMap;
 	}
+	
+	private Map<String, Object> getRoleMapFromRole(Role role) {
+		Map<String, Object> roleMap = new HashMap<String, Object>();
+		roleMap.put("id", role.getId());
+		roleMap.put("name", role.getName());
+		roleMap.put("note", role.getNotes());
+		ArrayList<Object> privilegeList = new ArrayList<Object>();
+		for (Privilege privilege : role.getPrivilegeList()){
+			privilegeList.add(getPrivilegeMapFromPrivilege(privilege));
+		}
+		roleMap.put("privilege_list", privilegeList);
+		return roleMap;
+	}
+	
+	private Map<String, Object> getPrivilegeMapFromPrivilege(Privilege privilege){
+		Map<String, Object> privilegeMap = new HashMap<String, Object>();
+		privilegeMap.put("id", privilege.getId());
+		privilegeMap.put("name", privilege.getName());
+		privilegeMap.put("parent_id", privilege.getParentId());
+		privilegeMap.put("parent_ids", privilege.getParentIds());
+		privilegeMap.put("permission", privilege.getPermission());
+		privilegeMap.put("href", privilege.getHref());
+		privilegeMap.put("icon", privilege.getIcon());
+		return privilegeMap;
+	}
+	
 }

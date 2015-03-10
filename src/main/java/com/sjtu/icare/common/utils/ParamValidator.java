@@ -8,6 +8,8 @@
 package com.sjtu.icare.common.utils;
 
 import java.text.SimpleDateFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ParamValidator {
 
@@ -66,4 +68,32 @@ public class ParamValidator {
 		else
 			return false;
 	}
+	
+	public static boolean isInteger(String param) {
+		Pattern pattern = Pattern.compile("[0-9]+");
+		Matcher matcher = pattern.matcher(param);
+		if (matcher.matches())
+			return true;
+		else
+			return false;
+	}
+
+	/**
+	 * @Title isDecimal
+	 * @Description TODO
+	 * @param @param diastolicPressure
+	 * @param @return
+	 * @return boolean
+	 * @throws
+	 */
+	public static boolean isDecimal(String param) {
+		Pattern pattern = Pattern.compile("^(-?\\d+)(\\.\\d+)?$");
+		Matcher matcher = pattern.matcher(param);
+		if (matcher.matches())
+			return true;
+		else
+			return false;
+	}
+	
+	
 }
