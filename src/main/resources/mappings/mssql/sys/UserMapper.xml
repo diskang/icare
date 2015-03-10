@@ -14,7 +14,8 @@
         user_type as userType,
         user_id as userId,
         register_date as registerDate,
-        cancel_date as cancelDate
+        cancel_date as cancelDate,
+        photo_url as photoUrl
 	</sql>
 	
 	<!-- 根据编号获得用户 -->
@@ -52,14 +53,14 @@
 		</if>
 		<!-- 数据范围过滤 -->
 		<!-- ${sqlMap.dsf} -->
-		<!-- <choose>
+		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
 			</when>
-			<otherwise> -->
-				ORDER BY name
-			<!-- </otherwise>
-		</choose> -->
+			<otherwise>
+				ORDER BY id
+			</otherwise>
+		</choose>
 	</select>
 	
 	<!-- 根据OfficeId获取用户（树查询用户时用） -->
@@ -136,7 +137,8 @@
 	<!-- 更新用户信息  -->
 	<update id="updateUserInfo">
 		UPDATE T_USER SET 		
-			photo_url = #{photo_url}
+			photo_url = #{photoUrl} ,
+			name = #{name}
 		WHERE id = #{id}
 	</update>
 	

@@ -79,6 +79,7 @@ public class SystemService extends BaseService  {
 		// 设置分页参数
 		user.setPage(page);
 		// 执行分页查询
+		logger.debug("size:"+userMapper.findList(user).size());
 		page.setList(userMapper.findList(user));
 		return page;
 	}
@@ -167,6 +168,17 @@ public class SystemService extends BaseService  {
 		userMapper.updatePasswordById(user);
 		// 清除用户缓存
 		user.setLoginName(loginName);
+		UserUtils.clearCache(user);
+//		// 清除权限缓存
+//		systemRealm.clearAllCachedAuthorizationInfo();
+	}
+	
+	@Transactional(readOnly = false)
+	public void updatePasswordById(int id, String newPassword) {
+		User user = UserUtils.get(id);
+		user.setPassword(entryptPassword(newPassword));
+		userMapper.updatePasswordById(user);
+		// 清除用户缓存
 		UserUtils.clearCache(user);
 //		// 清除权限缓存
 //		systemRealm.clearAllCachedAuthorizationInfo();

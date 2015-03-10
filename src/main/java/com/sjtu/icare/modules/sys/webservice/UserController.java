@@ -12,8 +12,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
@@ -42,13 +44,15 @@ public class UserController {
 	@Autowired
 	private SystemService systemService;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
-	public Map<String, Object> getUserInfoList(){
+	@RequestMapping(value = "", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
+	public Map<String, Object> getUserInfoList(
+			@RequestParam int pageNo,
+			@RequestParam int pageSize
+			){
 		BasicReturnedJson result = new BasicReturnedJson();
-		int pageNo = 1;
-		int pageSize = 10;
-		Page<User> userPage = new Page<User>(pageNo, pageSize);
+		Page<User> userPage = new Page<User>(pageNo, pageSize-1);
 		List<User> userList = systemService.findUser(userPage, new User()).getList();
+		
 		for (User user : userList){
 			if (user != null){
 				result.addEntity(getUserMapFromUser(user));
@@ -77,6 +81,51 @@ public class UserController {
 		}
 		return result.getMap();
 	}
+	
+	@RequestMapping(value = "/{uid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
+	public Map<String, Object> updateUserInfoFromUserId(
+			@PathVariable("uid") int uid,
+			@RequestParam("name") String name,
+			@RequestParam("photo_url") String photoUrl
+			){
+		User user = UserUtils.get(uid);
+		BasicReturnedJson result = new BasicReturnedJson();
+		if (user != null){	
+			user.setName(name);
+			user.setPhotoUrl(photoUrl);	
+			systemService.updateUserInfo(user);
+			result.addEntity(getUserMapFromUser(user));
+			result.setErrno(HttpStatus.OK.value());
+			result.setError(HttpStatus.OK.name());
+		}else {
+			result.setErrno(HttpStatus.NOT_FOUND.value());
+			result.setError(HttpStatus.NOT_FOUND.name());
+		}
+		return result.getMap();
+	}
+	
+	@RequestMapping(value = "/{uid}/password", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
+	public Map<String, Object> updateUserPasswordFromUserId(
+			@PathVariable("uid") int uid,
+			@RequestParam("old_password") String oldPassword,
+			@RequestParam("new_password") String newPassword
+			){
+		User user = UserUtils.get(uid);
+		BasicReturnedJson result = new BasicReturnedJson();
+		if (user != null){	
+//			user.setName(name);
+//			user.setPhotoUrl(photoUrl);	
+			systemService.updateUserInfo(user);
+			result.addEntity(getUserMapFromUser(user));
+			result.setErrno(HttpStatus.OK.value());
+			result.setError(HttpStatus.OK.name());
+		}else {
+			result.setErrno(HttpStatus.NOT_FOUND.value());
+			result.setError(HttpStatus.NOT_FOUND.name());
+		}
+		return result.getMap();
+	}
+	
 	
 	private Map<String, Object> getUserMapFromUser(User user){
 		Map<String, Object> userMap = new HashMap<String, Object>();
@@ -108,7 +157,7 @@ public class UserController {
 		userMap.put("privilege_list", privilegeList);
 		userMap.put("register_date", user.getRegisterDate());
 		userMap.put("cancel_date", user.getCancelDate());
-		userMap.put("photo_url", user.getPhoto());
+		userMap.put("photo_url", user.getPhotoUrl());
 		return userMap;
 	}
 }

@@ -31,7 +31,7 @@ public class User extends DataEntity<User> {
 //	private String loginIp;	// 最后登陆IP
 //	private Date loginDate;	// 最后登陆日期
 //	private String loginFlag;	// 是否允许登陆
-	private String photo;	// 头像
+	private String photoUrl;	// 头像
     
 //	private String oldLoginName;// 原登录名
 //	private String newPassword;	// 新密码
@@ -403,13 +403,12 @@ public class User extends DataEntity<User> {
 		this.cancelDate = cancelDate;
 	}
 
-	public String getPhoto() {
-		return photo;
+	public String getPhotoUrl() {
+		return photoUrl;
 	}
 
-	public void setPhoto(String photo) {
-		this.photo = photo;
+	public void setPhotoUrl(String photoUrl) {
+		this.photoUrl = photoUrl;
 	}
-	
 	
 }
