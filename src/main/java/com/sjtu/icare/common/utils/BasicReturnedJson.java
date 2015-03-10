@@ -17,16 +17,16 @@ public class BasicReturnedJson {
 	private HashMap<String, Object> map = new HashMap<String, Object>();
 	
 	public BasicReturnedJson() {
-		map.put("errno", 0);
+		map.put("status", 0);
 		map.put("entities", new ArrayList<Object>());
 	}
 	
-	public int getErrno() {
-		return (int) map.get("errno");
+	public int getStatus() {
+		return (int) map.get("status");
 	}
 	
-	public void setErrno(int errno) {
-		map.put("errno", errno);
+	public void setStatus(int status) {
+		map.put("status", status);
 	}
 	
 	public String getError() {
