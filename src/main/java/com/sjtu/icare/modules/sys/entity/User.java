@@ -15,6 +15,7 @@ import com.google.common.collect.Lists;
 import com.sjtu.icare.common.persistence.DataEntity;
 import com.sjtu.icare.common.config.Global;
 import com.sjtu.icare.common.utils.Collections3;
+import com.sjtu.icare.modules.staff.entity.StaffEntity;
 import com.sjtu.icare.modules.sys.entity.Role;
 
 public class User extends DataEntity<User> {
@@ -27,12 +28,27 @@ public class User extends DataEntity<User> {
     private int userId;//-1，gero_id, staff_id, elder_id，family_id
     private Date registerDate;
     private Date cancelDate;
+    private char gender;	//性别（男0，女1）
+    private String photoUrl;	// 头像url
+    private String identityNo;
+    private int age;
+    private String nationality;
+    private int marriage; //0未婚，1已婚
+    private String nativePlace; //籍贯
+    private Date birthday;
+    private String politicalStatus; //政治面貌
+    private String education;
+    private String phoneNo;
+    private String zipCode;
+    private String residenceAddress; //户籍地址
+    private String householdAddress; //居住地址
+    private String email;
+    private String wechatId; //微信账号
+    
 //    private String userType;// 用户类型
 //	private String loginIp;	// 最后登陆IP
 //	private Date loginDate;	// 最后登陆日期
 //	private String loginFlag;	// 是否允许登陆
-	private String photoUrl;	// 头像
-    
 //	private String oldLoginName;// 原登录名
 //	private String newPassword;	// 新密码
 //	
@@ -113,6 +129,12 @@ public class User extends DataEntity<User> {
 	public User(int id, String loginName){
 		super(id);
 		this.username = loginName;
+	}
+	
+	public User(int id, int userType, int userId){
+		super(id);
+		this.userType = userType;
+		this.userId = userId;
 	}
 
 	public User(Role role){
@@ -409,6 +431,143 @@ public class User extends DataEntity<User> {
 
 	public void setPhotoUrl(String photoUrl) {
 		this.photoUrl = photoUrl;
+	}
+	
+	public char getGender() {
+		return gender;
+	}
+
+	public void setGender(char gender) {
+		this.gender = gender;
+	}
+
+	public String getIdentityNo() {
+		return identityNo;
+	}
+
+	public void setIdentityNo(String identityNo) {
+		this.identityNo = identityNo;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
+	public int getMarriage() {
+		return marriage;
+	}
+
+	public void setMarriage(int marriage) {
+		this.marriage = marriage;
+	}
+
+	public String getNativePlace() {
+		return nativePlace;
+	}
+
+	public void setNativePlace(String nativePlace) {
+		this.nativePlace = nativePlace;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getPoliticalStatus() {
+		return politicalStatus;
+	}
+
+	public void setPoliticalStatus(String politicalStatus) {
+		this.politicalStatus = politicalStatus;
+	}
+
+	public String getEducation() {
+		return education;
+	}
+
+	public void setEducation(String education) {
+		this.education = education;
+	}
+
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+
+	public String getResidenceAddress() {
+		return residenceAddress;
+	}
+
+	public void setResidenceAddress(String residenceAddress) {
+		this.residenceAddress = residenceAddress;
+	}
+
+	public String getHouseholdAddress() {
+		return householdAddress;
+	}
+
+	public void setHouseholdAddress(String householdAddress) {
+		this.householdAddress = householdAddress;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getWechatId() {
+		return wechatId;
+	}
+
+	public void setWechatId(String wechatId) {
+		this.wechatId = wechatId;
+	}
+	
+	public Object clone() {
+		try {
+			User cloned = (User) super.clone();
+			
+			if (registerDate != null)
+				cloned.registerDate = (Date) registerDate.clone();
+			if (cancelDate != null)
+				cloned.cancelDate = (Date) cancelDate.clone();
+			if (cancelDate != null)
+				cloned.cancelDate = (Date) cancelDate.clone();
+			
+			return cloned;
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
 	}
 	
 }

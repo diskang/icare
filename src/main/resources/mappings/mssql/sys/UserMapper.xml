@@ -34,6 +34,14 @@
 		WHERE username = #{username} AND cancel_date is null
 	</select>
 	
+	<!-- 根据用户类别和用户ID查询用户 -->
+	<select id="getByUserId" resultType="User" parameterType="User">
+		SELECT
+			<include refid="userColumns"/>
+		FROM T_USER
+		WHERE user_type = #{userType} AND user_id = #{userId} AND cancel_date is null
+	</select>
+	
 	<!-- 分页查询用户信息 -->
 	<select id="findList" resultType="User">
 		SELECT
