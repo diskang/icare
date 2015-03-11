@@ -210,6 +210,17 @@ public class ElderEntity implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	/**
+	 * @Title getPhotoUrl
+	 * @Description TODO
+	 * @param @return
+	 * @return Object
+	 * @throws
+	 */
+	public Object getPhotoUrl() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
     
     
