@@ -9,7 +9,7 @@ import com.sjtu.icare.modules.staff.entity.StaffEntity;
  */
 
 @MyBatisDao
-public interface StaffEntityDAO {
+public interface StaffDAO {
 
 	StaffEntity getStaffEntityById(int id);
 	

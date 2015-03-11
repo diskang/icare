@@ -15,7 +15,7 @@ import com.sjtu.icare.modules.elder.entity.ElderHeartRateEntity;
  */
 
 @MyBatisDao
-public interface ElderHeartRateEntityDAO {
+public interface ElderHeartRateDAO {
 
 	List<ElderHeartRateEntity> getElderHeartRateEntityByElderidStartdayEndday(
 			@Param("elderId") int elderId, 

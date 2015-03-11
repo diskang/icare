@@ -27,14 +27,10 @@ public interface IGeroAreaService {
 	/**
 	 * @Title insertGeroAreaRecord
 	 * @Description TODO
-	 * @param @param parentId
-	 * @param @param type
-	 * @param @param level
-	 * @param @param name
+	 * @param @param geroAreaEntity
 	 * @return void
 	 * @throws
 	 */
-	void insertGeroAreaRecord(Integer parentId, Integer type, Integer level,
-			String name);
+	void insertGeroAreaRecord(GeroAreaEntity geroAreaEntity);
 	
 }

@@ -56,11 +56,10 @@ public class ElderHeartRateRestController {
 	
 		// 参数检查
 		if ((startDate != null && !ParamValidator.isDate(startDate)) || (endDate != null && !ParamValidator.isDate(endDate))) {
-			String message = "#" + ErrorConstants.ELDER_HEART_RATE_GET_PARAM_INVALID + "#\n" + 
-							"start_date 或 end_date 不符合日期格式:\n" +
-							"[start_date=" + startDate + "]" +
-							"[end_date=" + endDate + "]" +
-							"\n";
+			String otherMessage = "start_date 或 end_date 不符合日期格式:" +
+					"[start_date=" + startDate + "]" +
+					"[end_date=" + endDate + "]";
+			String message = ErrorConstants.format(ErrorConstants.ELDER_HEART_RATE_GET_PARAM_INVALID, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
@@ -116,11 +115,8 @@ public class ElderHeartRateRestController {
 			
 			return basicReturnedJson.getMap();
 		} catch(Exception e) {
-			
-			String message = "#" + ErrorConstants.ELDER_HEART_RATE_GET_SERVICE_FAILED + "#\n" + 
-					"获取老人心率数据失败：\n" +
-					"[" + e.getMessage() + "]" +
-					"\n";
+			String otherMessage = "[" + e.getMessage() + "]";
+			String message = ErrorConstants.format(ErrorConstants.ELDER_HEART_RATE_GET_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 			
@@ -153,11 +149,9 @@ public class ElderHeartRateRestController {
 				throw new Exception();
 		
 		} catch(Exception e) {
-			String message = "#" + ErrorConstants.ELDER_HEART_RATE_INSERT_PARAM_INVALID + "#\n" + 
-					"非法参数:\n" +
-					"[heart_rate=" + requestBodyParamMap.get("heart_rate") + "]" +
-					"[time=" + requestBodyParamMap.get("time") + "]" +
-					"\n";
+			String otherMessage = "[heart_rate=" + requestBodyParamMap.get("heart_rate") + "]" +
+					"[time=" + requestBodyParamMap.get("time") + "]";
+			String message = ErrorConstants.format(ErrorConstants.ELDER_HEART_RATE_POST_PARAM_INVALID, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
@@ -169,10 +163,9 @@ public class ElderHeartRateRestController {
 		try {
 			elderHealthDataService.insertElderHeartRateRecord(elderId, doctorId, heartRate, time);
 		} catch(Exception e) {
-			String message = "#" + ErrorConstants.ELDER_HEART_RATE_INSERT_SERVICE_FAILED + "#\n" + 
-					"非法参数:\n" +
-					"[" + e.getMessage() + "]" +
-					"\n";
+			String otherMessage = "[" + e.getMessage() + "]";
+			String message = ErrorConstants.format(ErrorConstants.ELDER_HEART_RATE_POST_SERVICE_FAILED, otherMessage);
+			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
 

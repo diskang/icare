@@ -11,17 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sjtu.icare.modules.staff.entity.StaffEntity;
-import com.sjtu.icare.modules.staff.persistence.StaffEntityDAO;
+import com.sjtu.icare.modules.staff.persistence.StaffDAO;
 import com.sjtu.icare.modules.staff.service.IStaffDataService;
 
 @Service
 public class StaffDataService implements IStaffDataService {
 	@Autowired
-	private StaffEntityDAO staffEntityDAO;
+	private StaffDAO staffDAO;
 	
 	@Override
 	public StaffEntity getStaffEntity(int id) {
-		return staffEntityDAO.getStaffEntityById(id);
+		return staffDAO.getStaffEntityById(id);
 	}
 	
 

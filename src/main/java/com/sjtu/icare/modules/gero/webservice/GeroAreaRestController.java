@@ -21,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
+import com.sjtu.icare.common.utils.CommonUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
@@ -69,10 +72,8 @@ public class GeroAreaRestController {
 			return basicReturnedJson.getMap();
 			
 		} catch (Exception e) {
-			String message = "#" + ErrorConstants.GERO_AREA_GET_SERVICE_FAILED + "#\n" + 
-					"获取养老院数据失败：\n" +
-					"[" + e.getMessage() + "]" +
-					"\n";
+			String otherMessage = "[" + e.getMessage() + "]";
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREA_GET_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
@@ -84,19 +85,20 @@ public class GeroAreaRestController {
 			@PathVariable("gid") int geroId,
 			@RequestBody String inJson
 			) {	
-		// TODO 把下划线格式改成驼峰
-		Map<String, Object> requestBodyParamMap = ParamUtils.getMapByJson(inJson, logger);
-
+		// 将参数转化成驼峰格式的 Map
+		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
+		Map<String, Object> requestParamMap = CommonUtils.convertMapToCamelStyle(tempRquestParamMap);
+		
 		Integer parentId;
 		Integer type;
 		Integer level;
 		String name;
 		
 		try {
-			parentId = (Integer) requestBodyParamMap.get("parent_id");
-			type = (Integer) requestBodyParamMap.get("type");
-			level = (Integer) requestBodyParamMap.get("level");
-			name = (String) requestBodyParamMap.get("name");
+			parentId = (Integer) requestParamMap.get("parentId");
+			type = (Integer) requestParamMap.get("type");
+			level = (Integer) requestParamMap.get("level");
+			name = (String) requestParamMap.get("name");
 			
 			if (parentId == null || type == null || level == null || name == null)
 				throw new Exception();
@@ -105,12 +107,10 @@ public class GeroAreaRestController {
 			// TODO
 			
 		} catch(Exception e) {
-			String message = "#" + ErrorConstants.GERO_AREA_INSERT_PARAM_INVALID + "#\n" + 
-					"非法参数:\n" +
-					"[doctor_id=" + requestBodyParamMap.get("doctor_id") + "]" +
-					"[temperature=" + requestBodyParamMap.get("temperature") + "]" +
-					"[time=" + requestBodyParamMap.get("time") + "]" +
-					"\n";
+			String otherMessage = "[parent_id=" + requestParamMap.get("parentId") + "]" +
+					"[type=" + requestParamMap.get("type") + "]" +
+					"[name=" + requestParamMap.get("name") + "]";
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREA_POST_PARAM_INVALID, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
@@ -118,14 +118,15 @@ public class GeroAreaRestController {
 		// 获取基础的 JSON
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
 		
+		// TODO
 		// 插入数据
 		try {
-			geroAreaService.insertGeroAreaRecord(parentId, type, level, name);
+			GeroAreaEntity postEntity = JSONObject.toJavaObject((JSON) requestParamMap, GeroAreaEntity.class);
+			geroAreaService.insertGeroAreaRecord(postEntity);
 		} catch(Exception e) {
-			String message = "#" + ErrorConstants.GERO_AREA_INSERT_SERVICE_FAILED + "#\n" + 
-					"非法参数:\n" +
-					"[" + e.getMessage() + "]" +
-					"\n";
+			String otherMessage = "[" + e.getMessage() + "]";
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREA_POST_SERVICE_FAILED, otherMessage);
+			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
 

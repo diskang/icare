@@ -34,6 +34,8 @@ public class TestControllerS7 {
 
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object testMethod(@RequestBody String json) {
+		
+//		JSON.
 		JSONObject jsonObject = JSON.parseObject(json);
 //		System.out.println(jsonObject.toJSONString());
 //		System.out.println("=======================");

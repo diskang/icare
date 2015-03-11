@@ -24,5 +24,15 @@ public interface GeroAreaDAO {
 	 * @throws
 	 */
 	List<GeroAreaEntity> getGeroAreaEntities(int geroId);
+
+	/**
+	 * @Title insertGeroAreaEntity
+	 * @Description TODO
+	 * @param @param geroAreaEntity
+	 * @param @return
+	 * @return Object
+	 * @throws
+	 */
+	void insertGeroAreaEntity(GeroAreaEntity geroAreaEntity);
 	
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.sjtu.icare.modules.elder.persistence.ElderEntityDAO">
+<mapper namespace="com.sjtu.icare.modules.elder.persistence.ElderDAO">
 
     <cache />
   
@@ -10,30 +10,18 @@
         SELECT
 			id,
 			name,
-			gender,
 			gero_id,
-			address,
-			age,
-			identity_no,
 			nssf_id,
 			archive_id,
-			photo_url,
 			area_id,
-			nationality,
-			marriage,
-			native_place,
-			birthday,
-			political_status,
-			education,
-			residence,
-			care_level,
-			checkin_date,
-			checkout_date,
-			apply_url,
-			survey_url,
-			assess_url,
-			track_url,
-			pad_mac
+	        care_level,
+	        checkin_date,
+            checkout_date,
+            apply_url,
+            survey_url,
+            assess_url,
+            track_url,
+            pad_mac
         FROM T_ELDER
         WHERE T_ELDER.id = #{id}
     </select>

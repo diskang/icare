@@ -55,11 +55,10 @@ public class ElderBloodPressureRestController {
 
 		// 参数检查
 		if ((startDate != null && !ParamValidator.isDate(startDate)) || (endDate != null && !ParamValidator.isDate(endDate))) {
-			String message = "#" + ErrorConstants.ELDER_BLOOD_PRESSURE_GET_PARAM_INVALID + "#\n" + 
-							"start_date 或 end_date 不符合日期格式:\n" +
-							"[start_date=" + startDate + "]" +
-							"[end_date=" + endDate + "]" +
-							"\n";
+			String otherMessage = "start_date 或 end_date 不符合日期格式:\n" +
+					"[start_date=" + startDate + "]" +
+					"[end_date=" + endDate + "]";
+			String message = ErrorConstants.format(ErrorConstants.ELDER_BLOOD_PRESSURE_GET_PARAM_INVALID, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
@@ -117,14 +116,10 @@ public class ElderBloodPressureRestController {
 			return basicReturnedJson.getMap();
 			
 		} catch(Exception e) {
-			
-			String message = "#" + ErrorConstants.ELDER_BLOOD_PRESSURE_GET_SERVICE_FAILED + "#\n" + 
-					"获取老人血压数据失败：\n" +
-					"[" + e.getMessage() + "]" +
-					"\n";
+			String otherMessage = "获取老人血压数据失败：\n" +	 "[" + e.getMessage() + "]";
+			String message = ErrorConstants.format(ErrorConstants.ELDER_BLOOD_PRESSURE_GET_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
-			
 		}
 	}
 
@@ -156,12 +151,11 @@ public class ElderBloodPressureRestController {
 				throw new Exception();
 			
 		} catch(Exception e) {
-			String message = "#" + ErrorConstants.ELDER_BLOOD_PRESSURE_INSERT_PARAM_INVALID + "#\n" + 
-					"非法参数:\n" +
+			String otherMessage = "非法参数:\n" +
 					"[diastolic_pressure=" + requestBodyParamMap.get("diastolic_pressure") + "]" +
 					"[systolic_pressure=" + requestBodyParamMap.get("systolic_pressure") + "]" +
-					"[time=" + requestBodyParamMap.get("time") + "]" +
-					"\n";
+					"[time=" + requestBodyParamMap.get("time") + "]";
+			String message = ErrorConstants.format(ErrorConstants.ELDER_BLOOD_PRESSURE_POST_PARAM_INVALID, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
@@ -173,10 +167,8 @@ public class ElderBloodPressureRestController {
 		try {
 			elderHealthDataService.insertElderBloodPressureRecord(elderId, doctorId, diastolicPressure, systolicPressure, time);
 		} catch(Exception e) {
-			String message = "#" + ErrorConstants.ELDER_BLOOD_PRESSURE_INSERT_SERVICE_FAILED + "#\n" + 
-					"非法参数:\n" +
-					"[" + e.getMessage() + "]" +
-					"\n";
+			String otherMessage = "非法参数:" + "[" + e.getMessage() + "]";
+			String message = ErrorConstants.format(ErrorConstants.ELDER_BLOOD_PRESSURE_POST_SERVICE_FAILED, otherMessage);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
 
