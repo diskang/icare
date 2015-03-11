@@ -25,7 +25,7 @@ public interface UserMapper extends CrudMapper<User>{
     
 //    void save(User user);
 
-//    void delete(@Param("id")int id,@Param("cancelDate")String cancelDate);//id, cancelDate
+    void delete(@Param("id")int id,@Param("cancelDate")String cancelDate);//id, cancelDate
     
     /**
 	 * 根据登录名称查询用户
