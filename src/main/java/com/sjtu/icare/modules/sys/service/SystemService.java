@@ -73,6 +73,18 @@ public class SystemService extends BaseService  {
 		return u;
 	}
 	
+	/**
+	 * 根据user_type和user_id获取用户
+	 * @param user_type, userId
+	 * @return
+	 */
+	public User getUserByUserId(int userType, int userId) {
+		logger.debug(userType);
+		logger.debug(userId);
+		User u = UserUtils.getByUserId(userType,userId);
+		return u;
+	}
+	
 	public Page<User> findUser(Page<User> page, User user) {
 //		// 生成数据权限过滤条件（dsf为dataScopeFilter的简写，在xml中使用 ${sqlMap.dsf}调用权限SQL）
 //		user.getSqlMap().put("dsf", dataScopeFilter(user.getCurrentUser(), "o", "a"));

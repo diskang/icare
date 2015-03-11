@@ -35,17 +35,22 @@ import com.sjtu.icare.modules.elder.entity.ElderTemperatureEntity;
 import com.sjtu.icare.modules.elder.service.IElderHealthDataService;
 import com.sjtu.icare.modules.staff.entity.StaffEntity;
 import com.sjtu.icare.modules.staff.service.IStaffDataService;
+import com.sjtu.icare.modules.sys.entity.User;
+import com.sjtu.icare.modules.sys.service.SystemService;
 
 
 @RestController
 @RequestMapping("/elder/{eid}/heart_rate")
 public class ElderHeartRateRestController {
 	private static Logger logger = Logger.getLogger(ElderTemperatureRestController.class);
+	public static final int ELDER_TYPE = 3;		//put where?
 
 	@Autowired
 	private IElderHealthDataService elderHealthDataService;
 	@Autowired
 	private IStaffDataService staffDataService;
+	@Autowired
+	private SystemService systemService;
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getElderHeartRate(
@@ -92,6 +97,7 @@ public class ElderHeartRateRestController {
 		}
 		
 		ElderEntity elderEntity = elderHealthDataService.getElderEntity(elderId);
+		User elderUser = elderEntity.getElderUser();
 		List<ElderHeartRateEntity> elderHeartRateEntityList = elderHealthDataService.getElderHeartRateEntity(elderId, startDate, endDate);
 
 		// 构造返回的 JSON
@@ -99,7 +105,7 @@ public class ElderHeartRateRestController {
 		Map<String, Object> resultMap = new HashMap<String, Object>(); 
 		resultMap.put("id", elderId); 
 		resultMap.put("name", elderEntity.getName()); 
-		resultMap.put("photo", elderEntity.getPhotoUrl()); 
+		resultMap.put("photo", elderUser.getPhotoUrl()); 
 		     
 		List<Object> tempList = new ArrayList<Object>();
 		for (ElderHeartRateEntity entity : elderHeartRateEntityList) {
@@ -109,12 +115,13 @@ public class ElderHeartRateRestController {
 			tempMap.put("times", entity.getTime());
 			
 			StaffEntity doctorEntity = entity.getDoctorEntity();
+			User doctorUser = doctorEntity.getStaffUser();
 			
 			if (doctorEntity != null) {
 				HashMap<String, Object> tempMap2 = new HashMap<String, Object>();
 				tempMap2.put("id", doctorEntity.getId());
 				tempMap2.put("name", doctorEntity.getName());
-				tempMap2.put("photo", doctorEntity.getPhotoUrl());
+				tempMap2.put("photo", doctorUser.getPhotoUrl());
 				tempMap.put("doctor", tempMap2);
 			}
 			

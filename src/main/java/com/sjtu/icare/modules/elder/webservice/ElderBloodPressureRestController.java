@@ -35,6 +35,7 @@ import com.sjtu.icare.modules.elder.entity.ElderTemperatureEntity;
 import com.sjtu.icare.modules.elder.service.IElderHealthDataService;
 import com.sjtu.icare.modules.staff.entity.StaffEntity;
 import com.sjtu.icare.modules.staff.service.IStaffDataService;
+import com.sjtu.icare.modules.sys.entity.User;
 
 @RestController
 @RequestMapping("/elder/{eid}/blood_pressure")
@@ -89,6 +90,7 @@ public class ElderBloodPressureRestController {
 			endDate = DateUtils.formatDateTime(DateUtils.getDateEnd(thatDay));
 		}
 		ElderEntity elderEntity = elderHealthDataService.getElderEntity(elderId);
+		User elderUser = elderEntity.getElderUser();
 		List<ElderBloodPressureEntity> elderBloodPressureEntityList = elderHealthDataService.getElderBloodPressureEntities(elderId, startDate, endDate);
 
 		// 构造返回的 JSON
@@ -96,7 +98,7 @@ public class ElderBloodPressureRestController {
 		Map<String, Object> resultMap = new HashMap<String, Object>(); 
 		resultMap.put("id", elderId); 
 		resultMap.put("name", elderEntity.getName()); 
-		resultMap.put("photo", elderEntity.getPhotoUrl()); 
+		resultMap.put("photo", elderUser.getPhotoUrl()); 
 		     
 		List<Object> tempList = new ArrayList<Object>();
 		for (ElderBloodPressureEntity entity : elderBloodPressureEntityList) {
@@ -107,12 +109,13 @@ public class ElderBloodPressureRestController {
 			tempMap.put("times", entity.getTime());
 			
 			StaffEntity doctorEntity = entity.getDoctorEntity();
+			User doctorUser = doctorEntity.getStaffUser();
 			
 			if (doctorEntity != null) {
 				HashMap<String, Object> tempMap2 = new HashMap<String, Object>();
 				tempMap2.put("id", doctorEntity.getId());
 				tempMap2.put("name", doctorEntity.getName());
-				tempMap2.put("photo", doctorEntity.getPhotoUrl());
+				tempMap2.put("photo", doctorUser.getPhotoUrl());
 				tempMap.put("doctor", tempMap2);
 			}
 			

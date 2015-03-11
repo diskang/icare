@@ -4,6 +4,8 @@ package com.sjtu.icare.modules.elder.entity;
 import java.io.Serializable;
 import java.sql.Date;
 
+import com.sjtu.icare.modules.sys.entity.User;
+
 /**
  * @Description 老人数据 Entity
  * @author WangQi
@@ -17,21 +19,10 @@ public class ElderEntity implements Serializable {
 	
     private int id;
     private String name;
-    private int gender;
     private int geroId;
-    private String address;
-    private int age;
-    private int identityNo;
     private String nssfId;
     private String archiveId;
-    private String photoUrl;
     private int areaId;
-    private String nationality;
-    private int marriage;
-    private String nativePlace;
-    private Date birthday;
-    private String politicalStatus;
-    private String education;
     private String residence;
     private int careLevel;
     private Date checkinDate;
@@ -41,6 +32,8 @@ public class ElderEntity implements Serializable {
     private String assessUrl;
 	private String trackUrl;
     private String padMac;
+    
+    private User elderUser;
     
     /**
 	 * @return the id
@@ -67,18 +60,6 @@ public class ElderEntity implements Serializable {
 		this.name = name;
 	}
 	/**
-	 * @return the gender
-	 */
-	public int getGender() {
-		return gender;
-	}
-	/**
-	 * @param gender the gender to set
-	 */
-	public void setGender(int gender) {
-		this.gender = gender;
-	}
-	/**
 	 * @return the geroId
 	 */
 	public int getGeroId() {
@@ -89,42 +70,6 @@ public class ElderEntity implements Serializable {
 	 */
 	public void setGeroId(int geroId) {
 		this.geroId = geroId;
-	}
-	/**
-	 * @return the address
-	 */
-	public String getAddress() {
-		return address;
-	}
-	/**
-	 * @param address the address to set
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	/**
-	 * @return the age
-	 */
-	public int getAge() {
-		return age;
-	}
-	/**
-	 * @param age the age to set
-	 */
-	public void setAge(int age) {
-		this.age = age;
-	}
-	/**
-	 * @return the identityNo
-	 */
-	public int getIdentityNo() {
-		return identityNo;
-	}
-	/**
-	 * @param identityNo the identityNo to set
-	 */
-	public void setIdentityNo(int identityNo) {
-		this.identityNo = identityNo;
 	}
 	/**
 	 * @return the nssfId
@@ -151,18 +96,6 @@ public class ElderEntity implements Serializable {
 		this.archiveId = archiveId;
 	}
 	/**
-	 * @return the photoUrl
-	 */
-	public String getPhotoUrl() {
-		return photoUrl;
-	}
-	/**
-	 * @param photoUrl the photoUrl to set
-	 */
-	public void setPhotoUrl(String photoUrl) {
-		this.photoUrl = photoUrl;
-	}
-	/**
 	 * @return the roomId
 	 */
 	public int getAreaId() {
@@ -173,78 +106,6 @@ public class ElderEntity implements Serializable {
 	 */
 	public void setAreaId(int areaId) {
 		this.areaId = areaId;
-	}
-	/**
-	 * @return the nationality
-	 */
-	public String getNationality() {
-		return nationality;
-	}
-	/**
-	 * @param nationality the nationality to set
-	 */
-	public void setNationality(String nationality) {
-		this.nationality = nationality;
-	}
-	/**
-	 * @return the marriage
-	 */
-	public int getMarriage() {
-		return marriage;
-	}
-	/**
-	 * @param marriage the marriage to set
-	 */
-	public void setMarriage(int marriage) {
-		this.marriage = marriage;
-	}
-	/**
-	 * @return the nativePlace
-	 */
-	public String getNativePlace() {
-		return nativePlace;
-	}
-	/**
-	 * @param nativePlace the nativePlace to set
-	 */
-	public void setNativePlace(String nativePlace) {
-		this.nativePlace = nativePlace;
-	}
-	/**
-	 * @return the birthday
-	 */
-	public Date getBirthday() {
-		return (Date)birthday.clone();
-	}
-	/**
-	 * @param birthday the birthday to set
-	 */
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
-	/**
-	 * @return the politicalStatus
-	 */
-	public String getPoliticalStatus() {
-		return politicalStatus;
-	}
-	/**
-	 * @param politicalStatus the politicalStatus to set
-	 */
-	public void setPoliticalStatus(String politicalStatus) {
-		this.politicalStatus = politicalStatus;
-	}
-	/**
-	 * @return the education
-	 */
-	public String getEducation() {
-		return education;
-	}
-	/**
-	 * @param education the education to set
-	 */
-	public void setEducation(String education) {
-		this.education = education;
 	}
 	/**
 	 * @return the residence
@@ -365,6 +226,12 @@ public class ElderEntity implements Serializable {
 	 */
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	public User getElderUser() {
+		return (User) elderUser.clone();
+	}
+	public void setElderUser(User elderUser) {
+		this.elderUser = elderUser;
 	}
 
     

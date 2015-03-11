@@ -34,6 +34,13 @@ public interface UserMapper extends CrudMapper<User>{
 	 */
 	public User getByUsername(User user);
 	
+	/**
+	 * 根据用户类别和用户ID查询用户
+	 * @param userType, userId
+	 * @return
+	 */
+	public User getByUserId(User user);
+	
 //	/**
 //	 * 查询全部用户数目
 //	 * @return
