@@ -60,7 +60,8 @@ public class ParamUtils {
 					"非法JSON:\n" +
 					jsonString +
 					"\n";
-			logger.error(message);
+			if (logger != null) 
+				logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
 	}

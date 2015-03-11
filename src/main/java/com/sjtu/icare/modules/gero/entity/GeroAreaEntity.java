@@ -8,7 +8,11 @@
 package com.sjtu.icare.modules.gero.entity;
 
 public class GeroAreaEntity {
-
+	
+	private int parentId;
+	
+	
+	
 	/**
 	 * @Title getParentId
 	 * @Description TODO
@@ -17,8 +21,14 @@ public class GeroAreaEntity {
 	 * @throws
 	 */
 	public Integer getParentId() {
-		// TODO Auto-generated method stub
-		return null;
+		return parentId;
+	}
+
+	/**
+	 * @param parentId the parentId to set
+	 */
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
 	}
 
 	/**

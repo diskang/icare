@@ -8,5 +8,5 @@
 package com.sjtu.icare.common.utils;
 
 public class CommonUtils {
-
+	
 }
