@@ -13,16 +13,16 @@ import com.sjtu.icare.common.persistence.annotation.MyBatisDao;
 import com.sjtu.icare.modules.gero.entity.GeroAreaEntity;
 
 @MyBatisDao
-public interface GeroAreaEntityDAO {
+public interface GeroAreaDAO {
 
 	/**
-	 * @Title getGeroEntityById
+	 * @Title getGeroAreaEntities
 	 * @Description TODO
 	 * @param @param geroId
 	 * @param @return
 	 * @return List<GeroAreaEntity>
 	 * @throws
 	 */
-	List<GeroAreaEntity> getGeroEntityById(int geroId);
+	List<GeroAreaEntity> getGeroAreaEntities(int geroId);
 	
 }

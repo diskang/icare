@@ -8,6 +8,7 @@
 package com.sjtu.icare.modules.gero.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.sjtu.icare.modules.gero.entity.GeroAreaEntity;
 
@@ -16,9 +17,9 @@ public interface IGeroAreaService {
 	/**
 	 * @Title getGeroAreas
 	 * @Description TODO
-	 * @param @param geroId
+	 * @param @param paramsMap
 	 * @param @return
-	 * @return List<GeroAreaEntity>
+	 * @return Object
 	 * @throws
 	 */
 	List<GeroAreaEntity> getGeroAreas(int geroId);

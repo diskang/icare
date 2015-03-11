@@ -53,7 +53,6 @@ public class ElderTemperatureRestController {
 			@RequestParam(value="end_date", required=false) String endDate
 			) {
 		
-		
 		// 参数检查
 		if ((startDate != null && !ParamValidator.isDate(startDate)) || (endDate != null && !ParamValidator.isDate(endDate))) {
 			String message = "#" + ErrorConstants.ELDER_TEMPERATURE_GET_PARAM_INVALID + "#\n" + 

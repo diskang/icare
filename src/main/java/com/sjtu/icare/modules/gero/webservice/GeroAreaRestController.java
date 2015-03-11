@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sjtu.icare.common.config.ErrorConstants;
@@ -38,18 +39,20 @@ public class GeroAreaRestController {
 	private IGeroAreaService geroAreaService;
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
-	public Object getGeroArea(
+	public Object getGeroAreas(
 			@PathVariable("gid") int geroId
 			) {
+		
 		// 获取基础的 JSON返回
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
-		
+	
 		// 参数检查
 		// 参数预处理
 		
 		try {
+			
 			List<GeroAreaEntity> geroAreaEntities = geroAreaService.getGeroAreas(geroId);
-
+			
 			// 构造返回的 JSON
 			for (GeroAreaEntity geroAreaEntity : geroAreaEntities) {
 				Map<String, Object> resultMap = new HashMap<String, Object>(); 
@@ -59,9 +62,12 @@ public class GeroAreaRestController {
 				resultMap.put("type", geroAreaEntity.getType()); 
 				resultMap.put("level", geroAreaEntity.getLevel()); 
 				resultMap.put("name", geroAreaEntity.getName()); 
-			
+
 				basicReturnedJson.addEntity(resultMap);
 			}
+
+			return basicReturnedJson.getMap();
+			
 		} catch (Exception e) {
 			String message = "#" + ErrorConstants.GERO_AREA_GET_SERVICE_FAILED + "#\n" + 
 					"获取养老院数据失败：\n" +
@@ -70,10 +76,7 @@ public class GeroAreaRestController {
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
-
 	
-		
-		return basicReturnedJson.getMap();
 	}
 
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
@@ -81,11 +84,9 @@ public class GeroAreaRestController {
 			@PathVariable("gid") int geroId,
 			@RequestBody String inJson
 			) {	
-		
+		// TODO 把下划线格式改成驼峰
 		Map<String, Object> requestBodyParamMap = ParamUtils.getMapByJson(inJson, logger);
-		
 
-		
 		Integer parentId;
 		Integer type;
 		Integer level;
@@ -132,13 +133,15 @@ public class GeroAreaRestController {
 		
 	}
 	
+	// TODO
 	@RequestMapping(value = "/{aid}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
-	public Object getGeroAreaByAid(
+	public Object getGeroAreaAndSubareas(
 			@PathVariable("gid") int geroId,
-			@RequestBody String inJson
+			@PathVariable("aid") int areaId,
+			@RequestParam(value="sub_level", required=false) String subLevel
 			) {
-				
-		return inJson;
+					
+		return null;
 		
 	}
 }
