@@ -12,12 +12,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
+
 
 public class BasicReturnedJson {
 	private HashMap<String, Object> map = new HashMap<String, Object>();
 	
 	public BasicReturnedJson() {
-		map.put("status", 0);
+		map.put("status", HttpStatus.OK);
 		map.put("entities", new ArrayList<Object>());
 	}
 	
