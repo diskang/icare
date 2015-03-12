@@ -57,5 +57,14 @@ public interface IGeroAreaService {
 	 */
 	List<GeroAreaEntity> getGeroSubareas(GeroAreaEntity ancestorGeroAreaEntity,
 			Integer subLevel);
+
+	/**
+	 * @Title updateGeroAreaRecord
+	 * @Description TODO
+	 * @param @param postEntity
+	 * @return void
+	 * @throws
+	 */
+	void updateGeroAreaRecord(GeroAreaEntity postEntity);
 	
 }

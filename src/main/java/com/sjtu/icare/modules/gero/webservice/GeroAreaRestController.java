@@ -215,4 +215,36 @@ public class GeroAreaRestController {
 		}
 		
 	}
+	
+	@RequestMapping(value = "/{aid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
+	public Object putGeroArea(
+			@PathVariable("gid") int geroId,
+			@PathVariable("aid") int areaId,
+			@RequestBody String inJson
+			) {	
+		// 将参数转化成驼峰格式的 Map
+		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
+		tempRquestParamMap.put("geroId", geroId);
+		tempRquestParamMap.put("id", areaId);
+		Map<String, Object> requestParamMap = CommonUtils.convertMapToCamelStyle(tempRquestParamMap);
+		
+		// 获取基础的 JSON
+		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
+		
+		// 插入数据
+		try {
+			GeroAreaEntity postEntity = new GeroAreaEntity(); 
+			BeanUtils.populate(postEntity, requestParamMap);
+			geroAreaService.updateGeroAreaRecord(postEntity);
+		} catch(Exception e) {
+			String otherMessage = "[" + e.getMessage() + "]";
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREA_PUT_SERVICE_FAILED, otherMessage);
+			logger.error(message);
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
+		}
+
+		return basicReturnedJson.getMap();
+		
+	}
+	
 }

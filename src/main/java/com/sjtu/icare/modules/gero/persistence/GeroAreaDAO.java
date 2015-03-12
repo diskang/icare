@@ -55,5 +55,14 @@ public interface GeroAreaDAO {
 	 * @throws
 	 */
 	List<GeroAreaEntity> getGeroSubareas(Map<String, Object> paramMap);
+
+	/**
+	 * @Title updateGeroAreaEntity
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @return void
+	 * @throws
+	 */
+	void updateGeroAreaEntity(Map<String, Object> paramMap);
 	
 }

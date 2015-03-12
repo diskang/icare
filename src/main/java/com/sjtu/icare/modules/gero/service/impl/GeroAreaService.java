@@ -50,6 +50,12 @@ public class GeroAreaService implements IGeroAreaService {
 		return geroAreaDAO.getGeroSubareas(paramMap);
 	}
 
+	@Override
+	public void updateGeroAreaRecord(GeroAreaEntity postEntity) {
+		Map<String, Object> paramMap = CommonUtils.beanToMap(postEntity);
+		geroAreaDAO.updateGeroAreaEntity(paramMap);
+	}
+
 
 
 

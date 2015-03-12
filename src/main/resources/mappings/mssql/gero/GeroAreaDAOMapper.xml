@@ -59,6 +59,14 @@
             (#{parentId}, #{parentIds}, #{geroId}, #{type}, #{level}, #{name})
     </insert>
 
+    <update id="updateGeroAreaEntity" parameterType="Map">
+        update
+            T_AREA
+        set
+            T_AREA.name = #{name}
+        where
+            T_AREA.id = #{id}
+    </update>
 
 
     
