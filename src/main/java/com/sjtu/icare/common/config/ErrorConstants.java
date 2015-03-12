@@ -30,27 +30,29 @@ public class ErrorConstants {
 	public static final String ELDER_HEART_RATE_POST_PARAM_INVALID = "100011 POST 老人心率：请求参数错误";
 	public static final String ELDER_HEART_RATE_POST_SERVICE_FAILED = "100012 POST 老人心率：后台插入数据失败";
 
-//	// gero service constants
-//
-//	public static final int GERO_AREA_GET_SERVICE_FAILED = 200001;
-//	public static final int GERO_AREA_INSERT_PARAM_INVALID = 200002;
-//	public static final int GERO_AREA_INSERT_SERVICE_FAILED = 200003;
-//
-//	// user service constants
-//	public static final int USER_UPDATE_INFO_PARAM_INVALID = 1000001;
-//	public static final int USER_FOR_ID_NOT_FOUND = 1000002;
-//	public static final int USER_UPDATE_INFO_SERVICE_ERROR = 1000003;
-//	public static final int USER_INFO_GET_PAGE__SERVICE_ERROR = 1000004;
-//	public static final int USER_UPDATE_PASSWORD_PARAM_INVALID = 1000005;
-//	public static final int USER_UPDATE_PASSWORD_SERVICE_ERROR = 1000006;
-//	public static final int USER_UPDATE_ROLE_PARAM_INVALID = 1000007;
-//	public static final int USER_UPDATE_ROLE_SERVICE_ERROR = 1000008;
-//	public static final int USER_DELETE_SERVICE_ERROR = 1000009;
-
 	public static final String GERO_AREA_GET_SERVICE_FAILED = "200001 GET 养老院区域：后台获取数据失败";
 	public static final String GERO_AREA_POST_PARAM_INVALID = "200002 POST 养老院区域：请求参数错误";
 	public static final String GERO_AREA_POST_SERVICE_FAILED = "200003 POST 养老院区域：后台插入数据失败";
 
+	// user service constants
+	public static final String USER_UPDATE_INFO_PARAM_INVALID = "1000001 PUT 更新用户信息：请求参数错误";
+	public static final String USER_FOR_ID_NOT_FOUND = "1000002 未取到该ID的用户";
+	public static final String USER_UPDATE_INFO_SERVICE_ERROR = "1000003 PUT 更新用户信息：后台插入数据失败";
+	public static final String USER_INFO_GET_PAGE_SERVICE_ERROR = "1000004 GET 获取用户列表：后台获取失败";
+	public static final String USER_UPDATE_PASSWORD_PARAM_INVALID = "1000005 PUT 更新用户密码：请求参数错误";
+	public static final String USER_UPDATE_PASSWORD_SERVICE_ERROR = "1000006 PUT 更新用户密码：后台插入数据失败";
+	public static final String USER_UPDATE_ROLE_PARAM_INVALID = "1000007 PUT 更新用户角色：请求参数错误";
+	public static final String USER_UPDATE_ROLE_SERVICE_ERROR = "1000008 PUT 更新用户角色：后台插入数据失败";
+	public static final String USER_DELETE_SERVICE_ERROR = "1000009 DELETE 删除用户：后台插入数据失败";
+	public static final String GERO_FOR_ID_NOT_FOUND = "1000010 未取到该ID的养老院";
+	public static final String GERO_ROLE_GET_PAGE_SERVICE_ERROR = "1000011 GET 获取养老院角色列表：后台获取失败";
+	public static final String ROLE_FOR_ID_NOT_FOUND = "1000012 未取到该ID的角色";
+	public static final String ORDER_BY_PARAM_INVALID = "1000013 未取到该排序条件";
+	public static final String GERO_ROLE_INSERT_PARAM_INVALID = "1000014 POST 插入养老院角色列表：请求参数错误";
+	public static final String GERO_ROLE_INSERT_SERVICE_ERROR = "1000015 POST 插入养老院角色列表：后台获取失败";
+	public static final String GERO_ROLE_INSERT_CONFLICT_ERROR = "1000015 POST 插入养老院角色列表：该养老院已存在该角色";
+	
+	
 	public static String format(String errorConstant, String otherMessage) {
 		if (errorConstant == null)
 			return null;

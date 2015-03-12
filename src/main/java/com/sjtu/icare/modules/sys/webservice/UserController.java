@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sjtu.icare.common.config.ErrorConstants;
+import com.sjtu.icare.common.config.OrderByConstant;
 import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.ParamUtils;
@@ -56,12 +57,24 @@ public class UserController{
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> getUserInfoList(
-			@RequestParam int page,
-			@RequestParam int limit
+			@RequestParam("page") int page,
+			@RequestParam("limit") int limit,
+			@RequestParam("order_by") String orderByTag
 			){
 		BasicReturnedJson result = new BasicReturnedJson();
 		
 		Page<User> userPage = new Page<User>(page, limit);
+		
+		String orderBy = "id";
+		try {
+			orderBy = OrderByConstant.valueOf(orderByTag).getTag();
+		} catch (Exception e1) {
+			String message = ErrorConstants.format(ErrorConstants.ORDER_BY_PARAM_INVALID,"");
+			logger.error(message);
+			throw new RestException(HttpStatus.BAD_REQUEST, message);
+		}
+		
+		userPage.setOrderBy(orderBy);
 		
 		// get page from service
 		List<User> userList;
@@ -71,9 +84,7 @@ public class UserController{
 			userList = userPage.getList();
 			total = (int) userPage.getCount();
 		} catch (Exception e) {
-			String message = "#" + ErrorConstants.USER_INFO_GET_PAGE__SERVICE_ERROR + "#\n" + 
-					"USER_INFO_GET_PAGE__SERVICE_ERROR:\n" +
-					"\n";
+			String message = ErrorConstants.format(ErrorConstants.USER_INFO_GET_PAGE_SERVICE_ERROR,"");
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
@@ -86,9 +97,7 @@ public class UserController{
 				result.setError(HttpStatus.OK.name());
 				result.setTotal(total);
 			}else {
-				String message = "#" + ErrorConstants.USER_FOR_ID_NOT_FOUND + "#\n" + 
-						"USER_IN_LIST_FOUND:\n" +
-						"\n";
+				String message = ErrorConstants.format(ErrorConstants.USER_FOR_ID_NOT_FOUND,"");
 				logger.error(message);
 				throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 			}
@@ -141,11 +150,9 @@ public class UserController{
 			// 此处可添加url的验证方法
 			
 		} catch(Exception e) {
-			String message = "#" + ErrorConstants.USER_UPDATE_INFO_PARAM_INVALID + "#\n" + 
-					"USER_UPDATE_INFO_PARAM_INVALID\n" +
+			String message = ErrorConstants.format(ErrorConstants.USER_UPDATE_INFO_PARAM_INVALID,
 					"[name=" + requestBodyParamMap.get("name") + "]" +
-					"[photoUrl=" + requestBodyParamMap.get("photoUrl") + "]" +
-					"\n";
+					"[photoUrl=" + requestBodyParamMap.get("photoUrl") + "]");
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
@@ -160,10 +167,9 @@ public class UserController{
 		try {
 			systemService.updateUserInfo(user);
 		} catch (Exception e) {
-			String message = "#" + ErrorConstants.USER_UPDATE_INFO_SERVICE_ERROR + "#\n" + 
-					"USER_UPDATE_INFO_SERVICE_ERROR:\n" +
-					"[uid=" + uid + "]" +
-					"\n";
+			String message = ErrorConstants.format(ErrorConstants.USER_UPDATE_INFO_SERVICE_ERROR,
+					"[name=" + requestBodyParamMap.get("name") + "]" +
+					"[photoUrl=" + requestBodyParamMap.get("photoUrl") + "]");
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
@@ -199,10 +205,8 @@ public class UserController{
 			// 此处可添加密码长度的验证方法
 			
 		} catch(Exception e) {
-			String message = "#" + ErrorConstants.USER_UPDATE_PASSWORD_PARAM_INVALID + "#\n" + 
-					"USER_UPDATE_PASSWORD_PARAM_INVALID\n" +
-					"[password=" + requestBodyParamMap.get("password") + "]" +
-					"\n";
+			String message = ErrorConstants.format(ErrorConstants.USER_UPDATE_PASSWORD_PARAM_INVALID,
+					"[password=" + requestBodyParamMap.get("password") + "]");
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
@@ -212,12 +216,10 @@ public class UserController{
 		BasicReturnedJson result = new BasicReturnedJson();
 			
 		try {
-			systemService.updatePasswordById(uid, password);
+			systemService.updatePasswordById(user, password);
 		} catch (Exception e) {
-			String message = "#" + ErrorConstants.USER_UPDATE_PASSWORD_SERVICE_ERROR+ "#\n" + 
-					"USER_UPDATE_PASSWORD_SERVICE_ERROR\n" +
-					"[password=" + requestBodyParamMap.get("password") + "]" +
-					"\n";
+			String message = ErrorConstants.format(ErrorConstants.USER_UPDATE_PASSWORD_SERVICE_ERROR,
+					"[password=" + requestBodyParamMap.get("password") + "]");
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
@@ -248,10 +250,8 @@ public class UserController{
 			roleIds = (List<Integer>) requestBodyParamMap.get("ids");
 			
 		} catch(Exception e) {
-			String message = "#" + ErrorConstants.USER_UPDATE_ROLE_PARAM_INVALID + "#\n" + 
-					"USER_UPDATE_ROLE_PARAM_INVALID\n" +
-					"[roleIds=" + requestBodyParamMap.get("ids") + "]" +
-					"\n";
+			String message = ErrorConstants.format(ErrorConstants.USER_UPDATE_ROLE_PARAM_INVALID,
+					"[roleIds=" + requestBodyParamMap.get("ids") + "]");
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
@@ -274,9 +274,8 @@ public class UserController{
 				throw new Exception();
 			}
 		} catch (Exception e) {
-			String message = "#" + ErrorConstants.USER_UPDATE_ROLE_SERVICE_ERROR + "#\n" + 
-					"USER_UPDATE_ROLE_SERVER_ERROR\n" +
-					"\n";
+			String message = ErrorConstants.format(ErrorConstants.USER_UPDATE_ROLE_SERVICE_ERROR,
+					"[roleIds=" + requestBodyParamMap.get("ids") + "]");
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
@@ -302,9 +301,8 @@ public class UserController{
 		try {
 			systemService.deleteUser(user);
 		} catch (Exception e) {
-			String message = "#" + ErrorConstants.USER_DELETE_SERVICE_ERROR + "#\n" + 
-					"USER_DELETE_SERVICE_ERROR\n" +
-					"\n";
+			String message = ErrorConstants.format(ErrorConstants.USER_UPDATE_ROLE_SERVICE_ERROR,
+					"[uid=" + uid + "]");
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
@@ -329,10 +327,8 @@ public class UserController{
 				throw new Exception();
 			}
 		} catch (Exception e) {
-			String message = "#" + ErrorConstants.USER_FOR_ID_NOT_FOUND + "#\n" + 
-					"USER_FOR_ID_NOT_FOUND:\n" +
-					"[uid=" + uid + "]" +
-					"\n";
+			String message = ErrorConstants.format(ErrorConstants.USER_FOR_ID_NOT_FOUND,
+					"[uid=" + uid + "]");
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
@@ -368,24 +364,6 @@ public class UserController{
 		userMap.put("cancel_date", user.getCancelDate());
 		userMap.put("photo_url", user.getPhotoUrl());
 		return userMap;
-	}
-	
-	/**
-	 * Role返回格式
-	 * @param role
-	 * @return
-	 */
-	private Map<String, Object> getRoleMapFromRole(Role role) {
-		Map<String, Object> roleMap = new HashMap<String, Object>();
-		roleMap.put("id", role.getId());
-		roleMap.put("name", role.getName());
-		roleMap.put("note", role.getNotes());
-		ArrayList<Object> privilegeList = new ArrayList<Object>();
-		for (Privilege privilege : role.getPrivilegeList()){
-			privilegeList.add(getPrivilegeMapFromPrivilege(privilege));
-		}
-		roleMap.put("privilege_list", privilegeList);
-		return roleMap;
 	}
 	
 	/**
