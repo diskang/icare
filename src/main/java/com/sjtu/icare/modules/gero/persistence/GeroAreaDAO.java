@@ -44,7 +44,7 @@ public interface GeroAreaDAO {
 	 * @return Object
 	 * @throws
 	 */
-	void insertGeroAreaEntity(Map<String, Object> geroAreaEntity);
+	void insertGeroAreaRecord(Map<String, Object> geroAreaEntity);
 
 	/**
 	 * @Title getGeroSubareas
@@ -63,6 +63,15 @@ public interface GeroAreaDAO {
 	 * @return void
 	 * @throws
 	 */
-	void updateGeroAreaEntity(Map<String, Object> paramMap);
+	void updateGeroAreaRecord(Map<String, Object> paramMap);
+
+	/**
+	 * @Title deleteGeroAreaRecord
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @return void
+	 * @throws
+	 */
+	void deleteGeroAreaRecord(Map<String, Object> paramMap);
 	
 }

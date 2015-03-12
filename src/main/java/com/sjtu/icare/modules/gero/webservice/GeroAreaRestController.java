@@ -231,7 +231,7 @@ public class GeroAreaRestController {
 		// 获取基础的 JSON
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
 		
-		// 插入数据
+		// 修改数据
 		try {
 			GeroAreaEntity postEntity = new GeroAreaEntity(); 
 			BeanUtils.populate(postEntity, requestParamMap);
@@ -239,6 +239,36 @@ public class GeroAreaRestController {
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
 			String message = ErrorConstants.format(ErrorConstants.GERO_AREA_PUT_SERVICE_FAILED, otherMessage);
+			logger.error(message);
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
+		}
+
+		return basicReturnedJson.getMap();
+		
+	}
+
+	@RequestMapping(value = "/{aid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
+	public Object deleteGeroArea(
+			@PathVariable("gid") int geroId,
+			@PathVariable("aid") int areaId
+			) {	
+		// 将参数转化成驼峰格式的 Map
+		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
+		tempRquestParamMap.put("geroId", geroId);
+		tempRquestParamMap.put("id", areaId);
+		Map<String, Object> requestParamMap = CommonUtils.convertMapToCamelStyle(tempRquestParamMap);
+		
+		// 获取基础的 JSON
+		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
+		
+		// 删除数据
+		try {
+			GeroAreaEntity inputEntity = new GeroAreaEntity(); 
+			BeanUtils.populate(inputEntity, requestParamMap);
+			geroAreaService.deleteGeroAreaRecord(inputEntity);
+		} catch(Exception e) {
+			String otherMessage = "[" + e.getMessage() + "]";
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREA_DELETE_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}

@@ -52,14 +52,14 @@
     
     
     
-    <insert id="insertGeroAreaEntity" parameterType="GeroAreaEntity">
+    <insert id="insertGeroAreaRecord" parameterType="GeroAreaEntity">
         insert into 
             T_AREA(parent_id, parent_ids, gero_id, type, level, name) 
         values
             (#{parentId}, #{parentIds}, #{geroId}, #{type}, #{level}, #{name})
     </insert>
 
-    <update id="updateGeroAreaEntity" parameterType="Map">
+    <update id="updateGeroAreaRecord" parameterType="Map">
         update
             T_AREA
         set
@@ -68,6 +68,13 @@
             T_AREA.id = #{id}
     </update>
 
-
+    <delete id="deleteGeroAreaRecord" parameterType="Map">
+    
+        delete from
+            T_AREA
+        where
+            T_AREA.id = #{id}
+    
+    </delete>
     
 </mapper>

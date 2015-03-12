@@ -66,5 +66,14 @@ public interface IGeroAreaService {
 	 * @throws
 	 */
 	void updateGeroAreaRecord(GeroAreaEntity postEntity);
+
+	/**
+	 * @Title deleteGeroAreaRecord
+	 * @Description TODO
+	 * @param @param inputEntity
+	 * @return void
+	 * @throws
+	 */
+	void deleteGeroAreaRecord(GeroAreaEntity geroAreaEntity);
 	
 }

@@ -39,7 +39,7 @@ public class GeroAreaService implements IGeroAreaService {
 	@Override
 	public void insertGeroAreaRecord(GeroAreaEntity geroAreaEntity) {
 		Map<String, Object> paramMap = CommonUtils.beanToMap(geroAreaEntity);
-		geroAreaDAO.insertGeroAreaEntity(paramMap);
+		geroAreaDAO.insertGeroAreaRecord(paramMap);
 	}
 
 	@Override
@@ -53,7 +53,14 @@ public class GeroAreaService implements IGeroAreaService {
 	@Override
 	public void updateGeroAreaRecord(GeroAreaEntity postEntity) {
 		Map<String, Object> paramMap = CommonUtils.beanToMap(postEntity);
-		geroAreaDAO.updateGeroAreaEntity(paramMap);
+		geroAreaDAO.updateGeroAreaRecord(paramMap);
+	}
+
+	@Override
+	public void deleteGeroAreaRecord(GeroAreaEntity geroAreaEntity) {
+		Map<String, Object> paramMap = CommonUtils.beanToMap(geroAreaEntity);
+		geroAreaDAO.deleteGeroAreaRecord(paramMap);
+		
 	}
 
 
