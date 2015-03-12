@@ -87,7 +87,7 @@ public class ElderBloodPressureRestController {
 			Map<String, Object> resultMap = new HashMap<String, Object>(); 
 			resultMap.put("id", elderId); 
 			resultMap.put("name", elderEntity.getName()); 
-			resultMap.put("photo", elderEntity.getPhotoUrl()); 
+			resultMap.put("photo", elderHealthDataService.getElderPhotoUrl()); 
 			     
 			List<Object> tempList = new ArrayList<Object>();
 			for (ElderBloodPressureEntity entity : elderBloodPressureEntityList) {

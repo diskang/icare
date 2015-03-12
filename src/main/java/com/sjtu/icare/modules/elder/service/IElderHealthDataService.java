@@ -33,4 +33,8 @@ public interface IElderHealthDataService {
 	void insertElderHeartRateRecord(int elderId, Integer doctorId,
 			String heartRate, String time);
 	
+	String getElderPhotoUrl();
+	
+	
+	
 }

@@ -22,7 +22,6 @@
 	    <result property="assessUrl" column="assess_url" />
 	    <result property="trackUrl" column="track_url" />
 		<result property="padMac" column="pad_mac" />
-	    <association property="User" column="id" select="com.sjtu.icare.modules.sys.persistence.UserMapper.getByUserId"/>
 	</resultMap>
   
     <select id="getElderEntityById" resultType="ElderEntity">
