@@ -7,6 +7,8 @@
  */
 package com.sjtu.icare.modules.test.webservice;
 
+import java.util.List;
+
 import javax.validation.Validator;
 
 import org.apache.log4j.Logger;
@@ -21,6 +23,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.sjtu.icare.common.beanvalidator.BeanValidators;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.modules.elder.webservice.ElderTemperatureRestController;
+import com.sjtu.icare.modules.gero.entity.GeroAreaEntity;
+import com.sjtu.icare.modules.gero.service.impl.GeroAreaService;
 import com.sjtu.icare.modules.test.entity.TestEntity;
 
 @RestController
@@ -29,21 +33,20 @@ public class TestControllerS7 {
 	
 	@Autowired
 	private Validator validator;
+	@Autowired
+	private GeroAreaService geroAreaService;
 	
 	private static Logger logger = Logger.getLogger(ElderTemperatureRestController.class);
 
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object testMethod(@RequestBody String json) {
+		GeroAreaEntity queryGeroAreaEntity = new GeroAreaEntity();
+		queryGeroAreaEntity.setGeroId(1);
+		queryGeroAreaEntity.setId(1);
+		List<GeroAreaEntity> result = geroAreaService.getGeroAreas(queryGeroAreaEntity);
+		GeroAreaEntity result2 = geroAreaService.getGeroArea(queryGeroAreaEntity);
 		
-//		JSON.
-		JSONObject jsonObject = JSON.parseObject(json);
-//		System.out.println(jsonObject.toJSONString());
-//		System.out.println("=======================");
-		TestEntity testEntity = (TestEntity) JSONObject.toJavaObject(jsonObject, TestEntity.class);
-//		BeanValidators.validateWithException(validator, testEntity);
-//		System.out.println("" + testEntity);
-		
-		return testEntity;
+		return "test";
 	}
 
 	

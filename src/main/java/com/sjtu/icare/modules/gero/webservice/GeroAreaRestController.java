@@ -11,7 +11,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
+import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
+import org.hibernate.validator.internal.util.privilegedactions.GetClassLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +30,7 @@ import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.CommonUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
+import com.sjtu.icare.common.utils.StringUtils;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.elder.webservice.ElderTemperatureRestController;
@@ -36,7 +40,7 @@ import com.sjtu.icare.modules.gero.service.IGeroAreaService;
 @RestController
 @RequestMapping("/gero/{gid}/area")
 public class GeroAreaRestController {
-	private static Logger logger = Logger.getLogger(ElderTemperatureRestController.class);
+	private static Logger logger = Logger.getLogger(GeroAreaRestController.class);
 
 	@Autowired
 	private IGeroAreaService geroAreaService;
@@ -53,8 +57,9 @@ public class GeroAreaRestController {
 		// 参数预处理
 		
 		try {
-			
-			List<GeroAreaEntity> geroAreaEntities = geroAreaService.getGeroAreas(geroId);
+			GeroAreaEntity queryGeroAreaEntity = new GeroAreaEntity();
+			queryGeroAreaEntity.setGeroId(geroId);
+			List<GeroAreaEntity> geroAreaEntities = geroAreaService.getGeroAreas(queryGeroAreaEntity);
 			
 			// 构造返回的 JSON
 			for (GeroAreaEntity geroAreaEntity : geroAreaEntities) {
@@ -87,28 +92,41 @@ public class GeroAreaRestController {
 			) {	
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
+		tempRquestParamMap.put("geroId", geroId);
 		Map<String, Object> requestParamMap = CommonUtils.convertMapToCamelStyle(tempRquestParamMap);
 		
 		Integer parentId;
+		String parentIds;
 		Integer type;
 		Integer level;
 		String name;
 		
 		try {
 			parentId = (Integer) requestParamMap.get("parentId");
+			parentIds = (String) requestParamMap.get("parentIds");
 			type = (Integer) requestParamMap.get("type");
 			level = (Integer) requestParamMap.get("level");
 			name = (String) requestParamMap.get("name");
 			
-			if (parentId == null || type == null || level == null || name == null)
+			if (parentId == null || parentIds == null || type == null || level == null || name == null)
 				throw new Exception();
 			
 			// 参数详细验证
-			// TODO
+			GeroAreaEntity queryParentGeroAreaEntity = new GeroAreaEntity();
+			queryParentGeroAreaEntity.setId(parentId);
+			GeroAreaEntity parentGeroAreaEntity = geroAreaService.getGeroArea(queryParentGeroAreaEntity);
+			// 根节点 parentId 为 0， level 从1开始
+			if (parentId == 0 && (level != 1 || !StringUtils.isBlank(parentIds)))
+				throw new Exception();
+			
+			if (parentId != 0 && (parentGeroAreaEntity.getLevel() + 1 != level || !parentIds.equals(parentGeroAreaEntity.getParentIds() + parentId + ",")))
+				throw new Exception();
 			
 		} catch(Exception e) {
 			String otherMessage = "[parent_id=" + requestParamMap.get("parentId") + "]" +
+					"[parent_ids=" + requestParamMap.get("parentIds") + "]" +
 					"[type=" + requestParamMap.get("type") + "]" +
+					"[level=" + requestParamMap.get("level") + "]" +
 					"[name=" + requestParamMap.get("name") + "]";
 			String message = ErrorConstants.format(ErrorConstants.GERO_AREA_POST_PARAM_INVALID, otherMessage);
 			logger.error(message);
@@ -118,10 +136,10 @@ public class GeroAreaRestController {
 		// 获取基础的 JSON
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
 		
-		// TODO
 		// 插入数据
 		try {
-			GeroAreaEntity postEntity = JSONObject.toJavaObject((JSON) requestParamMap, GeroAreaEntity.class);
+			GeroAreaEntity postEntity = new GeroAreaEntity(); 
+			BeanUtils.populate(postEntity, requestParamMap);
 			geroAreaService.insertGeroAreaRecord(postEntity);
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";

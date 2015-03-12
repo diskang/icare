@@ -2,7 +2,6 @@ package com.sjtu.icare.modules.elder.entity;
 
 
 import java.io.Serializable;
-import java.sql.Date;
 
 import com.sjtu.icare.modules.staff.entity.StaffEntity;
 

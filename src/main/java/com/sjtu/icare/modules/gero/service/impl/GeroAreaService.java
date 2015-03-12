@@ -23,14 +23,21 @@ public class GeroAreaService implements IGeroAreaService {
 	GeroAreaDAO geroAreaDAO;
 	
 	@Override
-	public List<GeroAreaEntity> getGeroAreas(int geroId) {
-		return geroAreaDAO.getGeroAreaEntities(geroId);
+	public List<GeroAreaEntity> getGeroAreas(GeroAreaEntity geroAreaEntity) {
+		return geroAreaDAO.getGeroAreaEntities(geroAreaEntity);
 	}
-
+	
+	@Override
+	public GeroAreaEntity getGeroArea(GeroAreaEntity geroAreaEntity) {
+		return geroAreaDAO.getGeroAreaEntity(geroAreaEntity);
+	}
+	
 	@Override
 	public void insertGeroAreaRecord(GeroAreaEntity geroAreaEntity) {
 		geroAreaDAO.insertGeroAreaEntity(geroAreaEntity);
 	}
+
+
 
 
 

@@ -22,7 +22,7 @@ public interface IGeroAreaService {
 	 * @return Object
 	 * @throws
 	 */
-	List<GeroAreaEntity> getGeroAreas(int geroId);
+	List<GeroAreaEntity> getGeroAreas(GeroAreaEntity geroAreaEntity);
 
 	/**
 	 * @Title insertGeroAreaRecord
@@ -32,5 +32,14 @@ public interface IGeroAreaService {
 	 * @throws
 	 */
 	void insertGeroAreaRecord(GeroAreaEntity geroAreaEntity);
+
+	/**
+	 * @Title getGeroArea
+	 * @Description TODO
+	 * @param @param parentGeroAreaEntity
+	 * @return void
+	 * @throws
+	 */
+	GeroAreaEntity getGeroArea(GeroAreaEntity geroAreaEntity);
 	
 }

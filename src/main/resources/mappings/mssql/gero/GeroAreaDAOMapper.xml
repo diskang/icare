@@ -6,46 +6,42 @@
 
     <cache />
     
-	<resultMap type="com.sjtu.icare.modules.elder.entity.ElderBloodPressureEntity" id="ElderBloodPressureEntityMap">
+	<resultMap type="com.sjtu.icare.modules.gero.entity.GeroAreaEntity" id="GeroAreaEntityMap">
 	    <id property="id" column="id" />
-	    <result property="elderId" column="elder_id" />
-	    <result property="doctorId" column="doctor_id" />
-	    <result property="diastolicPressure" column="diastolic_pressure" />
-	    <result property="systolicPressure" column="systolic_pressure" />
-	    <result property="time" column="time" />
-	    <association property="doctorEntity" column="doctor_id" select="com.sjtu.icare.modules.staff.persistence.StaffEntityDAO.getStaffEntityById"/>
+	    <result property="parentId" column="parent_id" />
+	    <result property="parentIds" column="parent_ids" />
+	    <result property="geroId" column="gero_id" />
+	    <result property="type" column="type" />
+	    <result property="level" column="level" />
+	    <result property="name" column="name" />
+	    <result property="delFlag" column="del_flag" />
 	</resultMap>
   
-    <select id="getElderBloodPressureEntitiesByElderidStartdayEndday" resultMap="ElderBloodPressureEntityMap">
+    <select id="getGeroAreaEntities" parameterType="GeroAreaEntity" resultMap="GeroAreaEntityMap">
 
         SELECT
-            id,
-            elder_id,
-            doctor_id,
-            diastolic_pressure,
-            systolic_pressure,
-            time      
-        FROM T_ELDER_BLOOD_PRESSURE
+			*
+        FROM T_AREA
         WHERE 
-            T_ELDER_BLOOD_PRESSURE.elder_id = #{elderId}
-            <if test="startDate != null">
-                <![CDATA[
-                and #{startDate} <= convert(nvarchar(23), T_ELDER_BLOOD_PRESSURE.time, 120)
-                ]]>
-            </if>
-            <if test="endDate != null">
-                <![CDATA[
-                and #{endDate} >= convert(nvarchar(23), T_ELDER_BLOOD_PRESSURE.time, 120)
-                ]]>
-            </if>
+            T_AREA.gero_id = #{geroId}
   
     </select>
     
-    <insert id="insertElderTemperatureRecordWithElderidDoctoridDiastolicpressureSystolicpressure" >
+    <select id="getGeroAreaEntity" parameterType="GeroAreaEntity" resultMap="GeroAreaEntityMap">
+
+        SELECT
+            *
+        FROM T_AREA
+        WHERE 
+            T_AREA.id = #{id}
+  
+    </select>
+    
+    <insert id="insertGeroAreaEntity" parameterType="GeroAreaEntity">
         insert into 
-            T_ELDER_BLOOD_PRESSURE(elder_id, doctor_id, diastolic_pressure, systolic_pressure, time) 
+            T_AREA(parent_id, parent_ids, gero_id, type, level, name) 
         values
-            (#{elderId}, #{doctorId}, #{diastolicPressure}, #{systolicPressure}, #{time})
+            (#{parentId}, #{parentIds}, #{geroId}, #{type}, #{level}, #{name})
     </insert>
 
 

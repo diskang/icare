@@ -1,7 +1,6 @@
 package com.sjtu.icare.modules.elder.persistence;
 
 
-import java.sql.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;

@@ -16,15 +16,25 @@ import com.sjtu.icare.modules.gero.entity.GeroAreaEntity;
 public interface GeroAreaDAO {
 
 	/**
-	 * @Title getGeroAreaEntities
+	 * @Title getGeroAreaEntitiesByGeroid
 	 * @Description TODO
 	 * @param @param geroId
 	 * @param @return
 	 * @return List<GeroAreaEntity>
 	 * @throws
 	 */
-	List<GeroAreaEntity> getGeroAreaEntities(int geroId);
-
+	List<GeroAreaEntity> getGeroAreaEntities(GeroAreaEntity geroAreaEntity);
+	
+	/**
+	 * @Title getGeroAreaEntitiy
+	 * @Description TODO
+	 * @param @param geroAreaEntity
+	 * @param @return
+	 * @return GeroAreaEntity
+	 * @throws
+	 */
+	GeroAreaEntity getGeroAreaEntity(GeroAreaEntity geroAreaEntity);
+	
 	/**
 	 * @Title insertGeroAreaEntity
 	 * @Description TODO
@@ -34,5 +44,9 @@ public interface GeroAreaDAO {
 	 * @throws
 	 */
 	void insertGeroAreaEntity(GeroAreaEntity geroAreaEntity);
+
+
+
+
 	
 }
