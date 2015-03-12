@@ -23,7 +23,7 @@ public class RestException extends RuntimeException {
 	}
 
 	public RestException(HttpStatus status, String message) {
-		super("{\n\t\"errno\": "+status+",\n\t\"error\": \""+message+"\"\n}");
+		super("{\n\t\"status\": "+status+",\n\t\"error\": \""+message+"\"\n}");
 		this.status = status;
 	}
 

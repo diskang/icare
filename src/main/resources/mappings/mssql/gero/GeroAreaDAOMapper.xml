@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.icare.modules.gero.persistence.GeroAreaDAO">
+
+    <cache />
+    
+	<resultMap type="com.sjtu.icare.modules.elder.entity.ElderBloodPressureEntity" id="ElderBloodPressureEntityMap">
+	    <id property="id" column="id" />
+	    <result property="elderId" column="elder_id" />
+	    <result property="doctorId" column="doctor_id" />
+	    <result property="diastolicPressure" column="diastolic_pressure" />
+	    <result property="systolicPressure" column="systolic_pressure" />
+	    <result property="time" column="time" />
+	    <association property="doctorEntity" column="doctor_id" select="com.sjtu.icare.modules.staff.persistence.StaffEntityDAO.getStaffEntityById"/>
+	</resultMap>
+  
+    <select id="getElderBloodPressureEntitiesByElderidStartdayEndday" resultMap="ElderBloodPressureEntityMap">
+
+        SELECT
+            id,
+            elder_id,
+            doctor_id,
+            diastolic_pressure,
+            systolic_pressure,
+            time      
+        FROM T_ELDER_BLOOD_PRESSURE
+        WHERE 
+            T_ELDER_BLOOD_PRESSURE.elder_id = #{elderId}
+            <if test="startDate != null">
+                <![CDATA[
+                and #{startDate} <= convert(nvarchar(23), T_ELDER_BLOOD_PRESSURE.time, 120)
+                ]]>
+            </if>
+            <if test="endDate != null">
+                <![CDATA[
+                and #{endDate} >= convert(nvarchar(23), T_ELDER_BLOOD_PRESSURE.time, 120)
+                ]]>
+            </if>
+  
+    </select>
+    
+    <insert id="insertElderTemperatureRecordWithElderidDoctoridDiastolicpressureSystolicpressure" >
+        insert into 
+            T_ELDER_BLOOD_PRESSURE(elder_id, doctor_id, diastolic_pressure, systolic_pressure, time) 
+        values
+            (#{elderId}, #{doctorId}, #{diastolicPressure}, #{systolicPressure}, #{time})
+    </insert>
+
+
+
+    
+</mapper>

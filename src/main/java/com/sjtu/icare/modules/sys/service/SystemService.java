@@ -1,5 +1,6 @@
 package com.sjtu.icare.modules.sys.service;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -75,6 +76,18 @@ public class SystemService extends BaseService  {
 		return u;
 	}
 	
+	/**
+	 * 根据user_type和user_id获取用户
+	 * @param user_type, userId
+	 * @return
+	 */
+	public User getUserByUserId(int userType, int userId) {
+		logger.debug(userType);
+		logger.debug(userId);
+		User u = UserUtils.getByUserId(userType,userId);
+		return u;
+	}
+	
 	public Page<User> findUser(Page<User> page, User user) {
 //		// 生成数据权限过滤条件（dsf为dataScopeFilter的简写，在xml中使用 ${sqlMap.dsf}调用权限SQL）
 //		user.getSqlMap().put("dsf", dataScopeFilter(user.getCurrentUser(), "o", "a"));
@@ -142,6 +155,29 @@ public class SystemService extends BaseService  {
 	}
 	
 	@Transactional(readOnly = false)
+	public boolean updateUserRoles(User user){
+		if (user.getId()>0){
+			// 更新用户与角色关联
+			userMapper.deleteUserRole(user);
+			if (user.getRoleList() != null && user.getRoleList().size() > 0){
+				userMapper.insertUserRole(user);
+			}else{
+				throw new ServiceException(user.getLoginName() + "No role setted!");
+			}
+			// 将当前用户同步到Activiti
+//			saveActivitiUser(user);
+			// 清除用户缓存
+			UserUtils.clearCache(user);
+//			// 清除权限缓存
+			systemRealm.clearAllCachedAuthorizationInfo();
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	@Transactional(readOnly = false)
 	public void updateUserInfo(User user) {
 //		user.preUpdate();
 		userMapper.updateUserInfo(user);
@@ -153,13 +189,16 @@ public class SystemService extends BaseService  {
 	
 	@Transactional(readOnly = false)
 	public void deleteUser(User user) {
-		userMapper.delete(user);
-		// 同步到Activiti
-//		deleteActivitiUser(user);
-		// 清除用户缓存
-		UserUtils.clearCache(user);
-//		// 清除权限缓存
-//		systemRealm.clearAllCachedAuthorizationInfo();
+		if (user != null) {
+			user.setCancelDate((new java.sql.Date ( new Date().getTime())));
+			userMapper.delete(user);
+			// 同步到Activiti
+//			deleteActivitiUser(user);
+			// 清除用户缓存
+			UserUtils.clearCache(user);
+			// 清除权限缓存
+			systemRealm.clearAllCachedAuthorizationInfo();
+		}		
 	}
 	
 	@Transactional(readOnly = false)
@@ -209,10 +248,10 @@ public class SystemService extends BaseService  {
 //		
 //	}
 
-	@Transactional(readOnly = false)
-	public void deleteUser(int id) {
+//	@Transactional(readOnly = false)
+//	public void deleteUser(int id) {
 //		userMapper.delete(id, DateUtils.getDate());
-	}
+//	}
 	
 	@Transactional(readOnly = true)
 	public Page<Role> getRolePageFromUserId (Page<Role> page, User user) {

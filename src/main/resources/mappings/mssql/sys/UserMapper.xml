@@ -34,6 +34,14 @@
 		WHERE username = #{username} AND cancel_date is null
 	</select>
 	
+	<!-- 根据用户类别和用户ID查询用户 -->
+	<select id="getByUserId" resultType="User" parameterType="User">
+		SELECT
+			<include refid="userColumns"/>
+		FROM T_USER
+		WHERE user_type = #{userType} AND user_id = #{userId} AND cancel_date is null
+	</select>
+	
 	<!-- 分页查询用户信息 -->
 	<select id="findList" resultType="User">
 		SELECT
@@ -123,12 +131,12 @@
 	
 	<!-- 删除用户和角色关联表数据 -->
 	<delete id="deleteUserRole">
-		DELETE T_ROLE WHERE user_id = #{id}
+		DELETE T_USER_ROLES WHERE user_id = #{id}
 	</delete>
 	
 	<!-- 插入用户和角色关联表数据 -->
 	<insert id="insertUserRole">
-		INSERT INTO T_ROLE(user_id, role_id)
+		INSERT INTO T_USER_ROLES(user_id, role_id)
 		<foreach collection="roleList" item="role" separator=" union all ">
 			SELECT #{id}, #{role.id} <!-- FROM dual -->
 		</foreach>

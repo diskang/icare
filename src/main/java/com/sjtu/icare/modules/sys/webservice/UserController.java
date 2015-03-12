@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
@@ -87,9 +88,11 @@ public class UserController {
 	@RequestMapping(value = "/{uid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> updateUserInfoFromUserId(
 			@PathVariable("uid") int uid,
-			@RequestParam("name") String name,
-			@RequestParam("photo_url") String photoUrl
+			@RequestBody String requestString
 			){
+		JSONObject requestJson = JSON.parseObject(requestString);
+		String name = (String) requestJson.get("name");
+		String photoUrl = (String) requestJson.get("photo_url");
 		User user = UserUtils.get(uid);
 		BasicReturnedJson result = new BasicReturnedJson();
 		if (user != null){	
@@ -109,8 +112,10 @@ public class UserController {
 	@RequestMapping(value = "/{uid}/password", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> updateUserPasswordFromUserId(
 			@PathVariable("uid") int uid,
-			@RequestParam("password") String password
+			@RequestBody String requestString
 			){
+		JSONObject requestJson = JSON.parseObject(requestString);
+		String password = (String) requestJson.get("password");
 		User user = UserUtils.get(uid);
 		BasicReturnedJson result = new BasicReturnedJson();
 		if (user != null){	
@@ -124,7 +129,54 @@ public class UserController {
 		return result.getMap();
 	}
 	
+	@RequestMapping(value = "/{uid}/role", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
+	public Map<String, Object> updateUserRoleFromUserId(
+			@PathVariable("uid") int uid,
+			@RequestBody String requestString
+			){
+		JSONObject requestJson = JSON.parseObject(requestString);
+		List<Integer> roleIds = (List<Integer>) requestJson.get("ids");
+		User user = UserUtils.get(uid);
+		BasicReturnedJson result = new BasicReturnedJson();
+		if (user != null){
+			List<Role> roleList = new ArrayList<Role>();
+			for (int id : roleIds){
+				if (id>0){
+					roleList.add(new Role(id));
+				}
+			}
+			user.setRoleList(roleList);
+			if (systemService.updateUserRoles(user)){
+				user = UserUtils.get(uid);
+				result.addEntity(getUserMapFromUser(user));
+				result.setStatus(HttpStatus.OK.value());
+				result.setError(HttpStatus.OK.name());
+			}
+			else {
+				result.setStatus(HttpStatus.BAD_REQUEST.value());
+				result.setError(HttpStatus.BAD_REQUEST.name());
+			}
+		}else {
+			result.setStatus(HttpStatus.NOT_FOUND.value());
+			result.setError(HttpStatus.NOT_FOUND.name());
+		}
+		return result.getMap();
+	}
 	
+	@RequestMapping(value = "/{uid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
+	public Map<String, Object> deleteUserFromUserId(@PathVariable("uid") int uid){
+		User user = UserUtils.get(uid);
+		BasicReturnedJson result = new BasicReturnedJson();
+		if (user != null){
+			systemService.deleteUser(user);
+			result.setStatus(HttpStatus.OK.value());
+			result.setError(HttpStatus.OK.name());
+		}else {
+			result.setStatus(HttpStatus.NOT_FOUND.value());
+			result.setError(HttpStatus.NOT_FOUND.name());
+		}
+		return result.getMap();
+	}
 	
 	private Map<String, Object> getUserMapFromUser(User user){
 		Map<String, Object> userMap = new HashMap<String, Object>();
