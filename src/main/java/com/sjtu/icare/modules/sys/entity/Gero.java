@@ -35,4 +35,15 @@ public class Gero implements Serializable {
     public void setCancelDate(String cancelDate) {
         this.cancelDate = cancelDate;
     }
+
+	public Gero(int id) {
+		super();
+		this.id = id;
+	}
+
+	public Gero() {
+		super();
+	}
+    
+    
 }

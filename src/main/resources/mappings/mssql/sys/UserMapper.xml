@@ -15,7 +15,8 @@
         user_id as userId,
         register_date as registerDate,
         cancel_date as cancelDate,
-        photo_url as photoUrl
+        photo_url as photoUrl,
+        gero_id as geroId
 	</sql>
 	
 	<!-- 根据编号获得用户 -->

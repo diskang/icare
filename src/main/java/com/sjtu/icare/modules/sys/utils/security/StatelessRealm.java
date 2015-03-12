@@ -76,6 +76,8 @@ public class StatelessRealm extends AuthorizingRealm {
         	logger.debug("user getted");
 //            UserUtils.putCache("user", user);
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+            info.addRole("gero:"+user.getGeroId());
+            logger.debug("role:"+"gero:"+user.getGeroId());
             List<Privilege> list = UserUtils.getPrivilegeList(user);
             for (Privilege privilege : list){
                 if (StringUtils.isNotBlank(privilege.getPermission())){
@@ -114,15 +116,26 @@ public class StatelessRealm extends AuthorizingRealm {
      */
     @Override
     public boolean isPermitted(PrincipalCollection principals, String permission) throws RestException{
-        
-    	logger.debug("statelss auth");
-    	Boolean result = false;
-    	try {
-    		result = super.isPermitted(principals, permission);
-		} catch (Exception e) {
-			// TODO: handle exception
-			logger.debug("exception");
-		}
-        return result;
+    	if (principals.fromRealm(getName()).isEmpty()) {
+            return false;
+        }
+        else {
+            return super.isPermitted(principals, permission);
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     * 重写函数，如果不是web app登录，则用无状态授权
+     */
+    @Override
+    public boolean hasRole(PrincipalCollection principals, String roleIdentifier) {
+        if (principals.fromRealm(getName()).isEmpty()) {
+        	logger.debug("not stateless auth");
+            return false;
+        }
+        else {
+            return super.hasRole(principals, roleIdentifier);
+        }
     }
 }

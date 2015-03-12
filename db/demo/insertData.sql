@@ -1,6 +1,30 @@
 USE [HCDB_UPDATE_TEST]
 GO
 
+INSERT INTO [dbo].[T_GERO]
+           ([name]
+           ,[city]
+           ,[district]
+		   ,[register_date])
+     VALUES
+           ('default'
+           ,'default'
+           ,'default'
+		   ,'2015-03-12')
+GO
+
+INSERT INTO [dbo].[T_GERO]
+           ([name]
+           ,[city]
+           ,[district]
+		   ,[register_date])
+     VALUES
+           ('test'
+           ,'shanghai'
+           ,'minhang'
+		   ,'2015-03-11')
+GO
+
 INSERT INTO [dbo].[T_USER]
            ([username]
            ,[name]
@@ -11,6 +35,7 @@ INSERT INTO [dbo].[T_USER]
 		   ,[identity_no]
 		   ,[birthday]
 		   ,[phone_no]
+		   ,[gero_id]
 		   )
      VALUES
            ('su'
@@ -22,6 +47,7 @@ INSERT INTO [dbo].[T_USER]
 		   ,'1'
 		   ,'1970-01-01'
 		   ,'18888888888'
+		   ,'1'
 		   )
 GO
 
@@ -35,6 +61,7 @@ INSERT INTO [dbo].[T_USER]
 		   ,[identity_no]
 		   ,[birthday]
 		   ,[phone_no]
+		   ,[gero_id]
 		   )
      VALUES
            ('admin'
@@ -46,6 +73,7 @@ INSERT INTO [dbo].[T_USER]
 		   ,'1'
 		   ,'1970-01-01'
 		   ,'18888888888'
+		   ,'1'
 		   )
 GO
 
@@ -59,6 +87,7 @@ INSERT INTO [dbo].[T_USER]
 		   ,[identity_no]
 		   ,[birthday]
 		   ,[phone_no]
+		   ,[gero_id]
 		   )
      VALUES
            ('carer'
@@ -70,6 +99,7 @@ INSERT INTO [dbo].[T_USER]
 		   ,'1'
 		   ,'1970-01-01'
 		   ,'18888888888'
+		   ,'1'
 		   )
 GO
 
@@ -83,6 +113,7 @@ INSERT INTO [dbo].[T_USER]
 		   ,[identity_no]
 		   ,[birthday]
 		   ,[phone_no]
+		   ,[gero_id]
 		   )
      VALUES
            ('doctor'
@@ -94,6 +125,7 @@ INSERT INTO [dbo].[T_USER]
 		   ,'1'
 		   ,'1970-01-01'
 		   ,'18888888888'
+		   ,'1'
 		   )
 GO
 
@@ -107,6 +139,7 @@ INSERT INTO [dbo].[T_USER]
 		   ,[identity_no]
 		   ,[birthday]
 		   ,[phone_no]
+		   ,[gero_id]
 		   )
      VALUES
            ('elder'
@@ -118,6 +151,7 @@ INSERT INTO [dbo].[T_USER]
 		   ,'1'
 		   ,'1970-01-01'
 		   ,'18888888888'
+		   ,'1'
 		   )
 GO
 
@@ -131,6 +165,7 @@ INSERT INTO [dbo].[T_USER]
 		   ,[identity_no]
 		   ,[birthday]
 		   ,[phone_no]
+		   ,[gero_id]
 		   )
      VALUES
            ('relative'
@@ -142,6 +177,7 @@ INSERT INTO [dbo].[T_USER]
 		   ,'1'
 		   ,'1970-01-01'
 		   ,'18888888888'
+		   ,'1'
 		   )
 GO
 
@@ -185,16 +221,6 @@ INSERT INTO [dbo].[T_PRIVILEGE]
            ,'0,1,2'
            ,'staff'
            ,'/staff')
-GO
-
-INSERT INTO [dbo].[T_GERO]
-           ([name]
-           ,[city]
-           ,[district])
-     VALUES
-           ('test'
-           ,'shanghai'
-           ,'minhang')
 GO
 
 INSERT INTO [dbo].[T_ROLE]

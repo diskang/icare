@@ -44,6 +44,7 @@ public class User extends DataEntity<User> {
     private String householdAddress; //居住地址
     private String email;
     private String wechatId; //微信账号
+    private int geroId;
     
 //    private String userType;// 用户类型
 //	private String loginIp;	// 最后登陆IP
@@ -569,5 +570,14 @@ public class User extends DataEntity<User> {
 			return null;
 		}
 	}
+
+	public int getGeroId() {
+		return geroId;
+	}
+
+	public void setGeroId(int geroId) {
+		this.geroId = geroId;
+	}
+	
 	
 }

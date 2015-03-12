@@ -15,9 +15,11 @@ import com.sjtu.icare.common.security.Digests;
 import com.sjtu.icare.common.service.BaseService;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.Encodes;
+import com.sjtu.icare.modules.sys.entity.Gero;
 import com.sjtu.icare.modules.sys.entity.Privilege;
 import com.sjtu.icare.modules.sys.entity.Role;
 import com.sjtu.icare.modules.sys.entity.User;
+import com.sjtu.icare.modules.sys.persistence.GeroMapper;
 import com.sjtu.icare.modules.sys.persistence.PrivilegeMapper;
 import com.sjtu.icare.modules.sys.persistence.RoleMapper;
 import com.sjtu.icare.modules.sys.persistence.UserMapper;
@@ -43,6 +45,8 @@ public class SystemService extends BaseService  {
 	private RoleMapper roleMapper;
 	@Autowired
 	private PrivilegeMapper privilegeMapper;
+	@Autowired
+	private GeroMapper geroMapper;
 //	@Autowired
 //	private Session sessionDao;
 	@Autowired
@@ -81,7 +85,7 @@ public class SystemService extends BaseService  {
 	 * @param user_type, userId
 	 * @return
 	 */
-	public User getUserByUserId(int userType, int userId) {
+	public User getUserByUserTypeAndUserId(int userType, int userId) {
 		logger.debug(userType);
 		logger.debug(userId);
 		User u = UserUtils.getByUserId(userType,userId);
@@ -214,8 +218,7 @@ public class SystemService extends BaseService  {
 	}
 	
 	@Transactional(readOnly = false)
-	public void updatePasswordById(int id, String newPassword) {
-		User user = new User(id);
+	public void updatePasswordById(User user, String newPassword) {
 		user.setPassword(entryptPassword(newPassword));
 		userMapper.updatePasswordById(user);
 		// 清除用户缓存
@@ -268,6 +271,29 @@ public class SystemService extends BaseService  {
 //		systemRealm.clearCachedAuthorizationInfo(username);
 //	}
 	
+	@Transactional(readOnly = true)
+	public Gero getGeroById (Gero gero){
+		return geroMapper.getGero(gero.getId());
+	}
+	
+	@Transactional(readOnly = true)
+	public Page<Role> getRolePageFromGeroId (Page<Role> page, Gero gero) {
+		Role role = new Role();
+		role.setGeroId(gero.getId());
+		role.setPage(page);
+		page.setList(roleMapper.findAllList(role));
+		return page;
+	}
+	
+	@Transactional(readOnly = false)
+	public void insertGeroRole (Role role) {
+		roleMapper.insert(role);
+	}
+	
+	@Transactional(readOnly = false)
+	public Role getRole (Role role) {
+		return roleMapper.getByNameAndGero(role);
+	}
 	
 	/**
 	 * 生成安全的密码，生成随机的16位salt并经过1024次 sha-1 hash
