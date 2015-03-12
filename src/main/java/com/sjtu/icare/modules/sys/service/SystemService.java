@@ -85,7 +85,7 @@ public class SystemService extends BaseService  {
 	 * @param user_type, userId
 	 * @return
 	 */
-	public User getUserByUserId(int userType, int userId) {
+	public User getUserByUserTypeAndUserId(int userType, int userId) {
 		logger.debug(userType);
 		logger.debug(userId);
 		User u = UserUtils.getByUserId(userType,userId);
