@@ -49,5 +49,4 @@ public class TestControllerS7 {
 		return "test";
 	}
 
-	
 }

@@ -78,8 +78,8 @@ public class SQLServer2005Dialect implements Dialect {
                 .append(orderby)
                 .append(") as __row_number__, ")
                 .append(pagingBuilder)
-                .append(") SELECT * FROM query WHERE __row_number__ BETWEEN ")
-                .append(offset).append(" AND ").append(offset + limit)
+                .append(") SELECT * FROM query WHERE __row_number__ BETWEEN ")//between x and y == [x,y]
+                .append(offset + 1).append(" AND ").append(offset + limit ) 
                 .append(" ORDER BY __row_number__");
 
         return result.toString();

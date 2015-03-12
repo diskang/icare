@@ -27,5 +27,7 @@ public interface RoleMapper extends CrudMapper<Role> {
 	public int deleteRolePrivilege(Role role);
 
 	public int insertRolePrivilege(Role role);
+	
+	public Role getByNameAndGero(Role role);
 
 }

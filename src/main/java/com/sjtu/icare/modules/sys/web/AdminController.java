@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,16 +26,19 @@ public class AdminController extends BaseController{
 	@RequestMapping(value = "${adminPath}", method = RequestMethod.GET)
 	@ResponseBody
 	@RequiresPermissions("admin")
+	@RequiresRoles("gero:1")
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
 		logger.debug("admin!");
-		User user = UserUtils.getUser();
-		// 如果已经登录，则跳转到管理首页
-		if(user.getUsername() != null){
-			if (SecurityUtils.getSubject().isPermitted("admin")){
-				logger.debug("admin");
-				return "redirect:"+Global.getAdminPath();  
+		SecurityUtils.getSubject().hasRole("gero:1");
+			User user = UserUtils.getUser();
+			// 如果已经登录，则跳转到管理首页
+			if(user.getUsername() != null){
+				if (SecurityUtils.getSubject().isPermitted("admin")){
+					logger.debug("admin");
+					return "redirect:"+Global.getAdminPath();  
+				}
 			}
-		}
+//		}
 		return "module/sys/sysLogin";
 	}
 }

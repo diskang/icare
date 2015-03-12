@@ -101,8 +101,8 @@ public class SQLHelper {
     public static int getCount(final String sql, final Connection connection,
     							final MappedStatement mappedStatement, final Object parameterObject,
     							final BoundSql boundSql, Log log) throws SQLException {
-        final String countSql = "select count(1) from (" + sql + ") tmp_count";
-//        final String countSql = "select count(1) " + removeSelect(removeOrders(sql));
+//        final String countSql = "select count(1) from (" + sql + ") tmp_count";
+        final String countSql = "select count(1) " + removeSelect(removeOrders(sql));
         Connection conn = connection;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -157,8 +157,7 @@ public class SQLHelper {
      * @param qlString
      * @return 
      */  
-    @SuppressWarnings("unused")
-	private static String removeSelect(String qlString){  
+    private static String removeSelect(String qlString){  
         int beginPos = qlString.toLowerCase().indexOf("from");  
         return qlString.substring(beginPos);  
     }  
@@ -168,8 +167,7 @@ public class SQLHelper {
      * @param qlString
      * @return 
      */  
-    @SuppressWarnings("unused")
-	private static String removeOrders(String qlString) {  
+    private static String removeOrders(String qlString) {  
         Pattern p = Pattern.compile("order\\s*by[\\w|\\W|\\s|\\S]*", Pattern.CASE_INSENSITIVE);  
         Matcher m = p.matcher(qlString);  
         StringBuffer sb = new StringBuffer();  

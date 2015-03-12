@@ -91,7 +91,8 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
         if (user != null) {
             UserUtils.putCache("user", user);
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-            
+            info.addRole("gero:"+user.getGeroId());
+            logger.debug("role:"+"gero:"+user.getGeroId());
             List<Privilege> list = UserUtils.getPrivilegeList();
             for (Privilege privilege : list){
                 if (StringUtils.isNotBlank(privilege.getPermission())){
@@ -196,6 +197,22 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
         }
         else {
             return super.isPermitted(principals, permission);
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     * 重写函数，如果不是web app登录，则用无状态授权
+     */
+    @Override
+    public boolean hasRole(PrincipalCollection principals, String roleIdentifier) {
+    	logger.debug("here");
+        if (principals.fromRealm(getName()).isEmpty()) {
+        	logger.debug("not web app auth");
+            return false;
+        }
+        else {
+            return super.hasRole(principals, roleIdentifier);
         }
     }
 }

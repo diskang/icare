@@ -34,7 +34,7 @@ import com.sjtu.icare.modules.sys.web.TestController;
  * @version 2015-03-03
  */
 public class UserUtils {
-	private static final Logger logger = Logger.getLogger(TestController.class);
+	private static final Logger logger = Logger.getLogger(UserUtils.class);
 	private static UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
 	private static RoleMapper roleMapper = SpringContextHolder.getBean(RoleMapper.class);
 	private static PrivilegeMapper privilegeMapper = SpringContextHolder.getBean(PrivilegeMapper.class);
@@ -79,11 +79,29 @@ public class UserUtils {
 			if (user == null){
 				return null;
 			}
-			List<Role> roleList = roleMapper.findList(new Role(user));;
+			List<Role> roleList = roleMapper.findList(new Role(user));
 			user.setRoleList(roleList);		
 			CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
 			CacheUtils.put(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getLoginName(), user);
 		}
+		return user;
+	}
+	
+	/**
+	 * 根据user_type和user_id获取用户
+	 * @param userType, userId
+	 * @return 取不到返回null
+	 */
+	public static User getByUserId(int userType, int userId){
+		logger.debug("to get user");
+		User user = userMapper.getByUserId(new User(-1, userType, userId));
+		logger.debug("getted user");
+		if (user == null){
+			return null;
+		}
+		List<Role> roleList = roleMapper.findList(new Role(user));
+		user.setRoleList(roleList);		
+
 		return user;
 	}
 	

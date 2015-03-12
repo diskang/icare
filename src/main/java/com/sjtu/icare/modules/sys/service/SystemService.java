@@ -1,5 +1,7 @@
 package com.sjtu.icare.modules.sys.service;
 
+import java.util.Date;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -13,8 +15,11 @@ import com.sjtu.icare.common.security.Digests;
 import com.sjtu.icare.common.service.BaseService;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.Encodes;
+import com.sjtu.icare.modules.sys.entity.Gero;
 import com.sjtu.icare.modules.sys.entity.Privilege;
+import com.sjtu.icare.modules.sys.entity.Role;
 import com.sjtu.icare.modules.sys.entity.User;
+import com.sjtu.icare.modules.sys.persistence.GeroMapper;
 import com.sjtu.icare.modules.sys.persistence.PrivilegeMapper;
 import com.sjtu.icare.modules.sys.persistence.RoleMapper;
 import com.sjtu.icare.modules.sys.persistence.UserMapper;
@@ -29,7 +34,7 @@ import com.sjtu.icare.common.utils.StringUtils;
 @Service
 @Transactional(readOnly = true)
 public class SystemService extends BaseService  {
-	private static final Logger logger = Logger.getLogger(TestController.class);
+	private static final Logger logger = Logger.getLogger(SystemService.class);
 	public static final String HASH_ALGORITHM = "SHA-1";
 	public static final int HASH_INTERATIONS = 1024;
 	public static final int SALT_SIZE = 8;
@@ -40,6 +45,8 @@ public class SystemService extends BaseService  {
 	private RoleMapper roleMapper;
 	@Autowired
 	private PrivilegeMapper privilegeMapper;
+	@Autowired
+	private GeroMapper geroMapper;
 //	@Autowired
 //	private Session sessionDao;
 	@Autowired
@@ -73,6 +80,18 @@ public class SystemService extends BaseService  {
 		return u;
 	}
 	
+	/**
+	 * 根据user_type和user_id获取用户
+	 * @param user_type, userId
+	 * @return
+	 */
+	public User getUserByUserId(int userType, int userId) {
+		logger.debug(userType);
+		logger.debug(userId);
+		User u = UserUtils.getByUserId(userType,userId);
+		return u;
+	}
+	
 	public Page<User> findUser(Page<User> page, User user) {
 //		// 生成数据权限过滤条件（dsf为dataScopeFilter的简写，在xml中使用 ${sqlMap.dsf}调用权限SQL）
 //		user.getSqlMap().put("dsf", dataScopeFilter(user.getCurrentUser(), "o", "a"));
@@ -95,20 +114,20 @@ public class SystemService extends BaseService  {
 		return list;
 	}
 	
-	/**
-	 * 通过部门ID获取用户列表，仅返回用户id和name（树查询用户时用）
-	 * @param user
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	public List<User> findUserByOfficeId(String officeId) {
-		List<User> list = (List<User>)CacheUtils.get(UserUtils.USER_CACHE);
-		if (list == null){
-			User user = new User();
-			CacheUtils.put(UserUtils.USER_CACHE, list);
-		}
-		return list;
-	}
+//	/**
+//	 * 通过部门ID获取用户列表，仅返回用户id和name（树查询用户时用）
+//	 * @param user
+//	 * @return
+//	 */
+//	@SuppressWarnings("unchecked")
+//	public List<User> findUserByOfficeId(String officeId) {
+//		List<User> list = (List<User>)CacheUtils.get(UserUtils.USER_CACHE);
+//		if (list == null){
+//			User user = new User();
+//			CacheUtils.put(UserUtils.USER_CACHE, list);
+//		}
+//		return list;
+//	}
 	
 	@Transactional(readOnly = false)
 	public void saveUser(User user) {
@@ -140,6 +159,29 @@ public class SystemService extends BaseService  {
 	}
 	
 	@Transactional(readOnly = false)
+	public boolean updateUserRoles(User user){
+		if (user.getId()>0){
+			// 更新用户与角色关联
+			userMapper.deleteUserRole(user);
+			if (user.getRoleList() != null && user.getRoleList().size() > 0){
+				userMapper.insertUserRole(user);
+			}else{
+				throw new ServiceException(user.getLoginName() + "No role setted!");
+			}
+			// 将当前用户同步到Activiti
+//			saveActivitiUser(user);
+			// 清除用户缓存
+			UserUtils.clearCache(user);
+//			// 清除权限缓存
+			systemRealm.clearAllCachedAuthorizationInfo();
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	@Transactional(readOnly = false)
 	public void updateUserInfo(User user) {
 //		user.preUpdate();
 		userMapper.updateUserInfo(user);
@@ -151,13 +193,16 @@ public class SystemService extends BaseService  {
 	
 	@Transactional(readOnly = false)
 	public void deleteUser(User user) {
-		userMapper.delete(user);
-		// 同步到Activiti
-//		deleteActivitiUser(user);
-		// 清除用户缓存
-		UserUtils.clearCache(user);
-//		// 清除权限缓存
-//		systemRealm.clearAllCachedAuthorizationInfo();
+		if (user != null) {
+			user.setCancelDate((new java.sql.Date ( new Date().getTime())));
+			userMapper.delete(user);
+			// 同步到Activiti
+//			deleteActivitiUser(user);
+			// 清除用户缓存
+			UserUtils.clearCache(user);
+			// 清除权限缓存
+			systemRealm.clearAllCachedAuthorizationInfo();
+		}		
 	}
 	
 	@Transactional(readOnly = false)
@@ -172,6 +217,16 @@ public class SystemService extends BaseService  {
 //		systemRealm.clearAllCachedAuthorizationInfo();
 	}
 	
+	@Transactional(readOnly = false)
+	public void updatePasswordById(User user, String newPassword) {
+		user.setPassword(entryptPassword(newPassword));
+		userMapper.updatePasswordById(user);
+		// 清除用户缓存
+		UserUtils.clearCache(user);
+//		// 清除权限缓存
+		systemRealm.clearAllCachedAuthorizationInfo();
+	}
+	
 //	/**
 //	 * 获得活动会话
 //	 * @return
@@ -180,13 +235,7 @@ public class SystemService extends BaseService  {
 //		return sessionDao.getActiveSessions(false);
 //	}
 	
-	
-	
-	
-	
-	
-	
-	
+		
 //	public User getUserByUsername(String username) {
 //		return userMapper.findByUsername(username);
 //	}
@@ -202,11 +251,17 @@ public class SystemService extends BaseService  {
 //		
 //	}
 
-	@Transactional(readOnly = false)
-	public void deleteUser(int id) {
-
+//	@Transactional(readOnly = false)
+//	public void deleteUser(int id) {
 //		userMapper.delete(id, DateUtils.getDate());
-		
+//	}
+	
+	@Transactional(readOnly = true)
+	public Page<Role> getRolePageFromUserId (Page<Role> page, User user) {
+		Role role = new Role(user);
+		role.setPage(page);
+		page.setList(roleMapper.findList(role));
+		return page;
 	}
 	
 //	@Transactional(readOnly = false)
@@ -216,6 +271,29 @@ public class SystemService extends BaseService  {
 //		systemRealm.clearCachedAuthorizationInfo(username);
 //	}
 	
+	@Transactional(readOnly = true)
+	public Gero getGeroById (Gero gero){
+		return geroMapper.getGero(gero.getId());
+	}
+	
+	@Transactional(readOnly = true)
+	public Page<Role> getRolePageFromGeroId (Page<Role> page, Gero gero) {
+		Role role = new Role();
+		role.setGeroId(gero.getId());
+		role.setPage(page);
+		page.setList(roleMapper.findAllList(role));
+		return page;
+	}
+	
+	@Transactional(readOnly = false)
+	public void insertGeroRole (Role role) {
+		roleMapper.insert(role);
+	}
+	
+	@Transactional(readOnly = false)
+	public Role getRole (Role role) {
+		return roleMapper.getByNameAndGero(role);
+	}
 	
 	/**
 	 * 生成安全的密码，生成随机的16位salt并经过1024次 sha-1 hash

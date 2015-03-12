@@ -25,7 +25,7 @@ public interface UserMapper extends CrudMapper<User>{
     
 //    void save(User user);
 
-//    void delete(@Param("id")int id,@Param("cancelDate")String cancelDate);//id, cancelDate
+    void delete(@Param("id")int id,@Param("cancelDate")String cancelDate);//id, cancelDate
     
     /**
 	 * 根据登录名称查询用户
@@ -33,6 +33,13 @@ public interface UserMapper extends CrudMapper<User>{
 	 * @return
 	 */
 	public User getByUsername(User user);
+	
+	/**
+	 * 根据用户类别和用户ID查询用户
+	 * @param userType, userId
+	 * @return
+	 */
+	public User getByUserId(User user);
 	
 //	/**
 //	 * 查询全部用户数目

@@ -37,6 +37,14 @@
 		WHERE a.name = #{name}
 	</select>
 	
+	<select id="getByNameAndGero" resultType="Role">
+		SELECT
+			<include refid="roleColumns"/>
+		FROM T_ROLE a
+		WHERE a.name = #{name}
+			AND a.gero_id = #{geroId}
+	</select>
+	
 	<select id="findList" resultType="Role">
 		SELECT 
 			<include refid="roleColumns"/>
@@ -57,7 +65,14 @@
 		SELECT
 			<include refid="roleColumns"/>
 		FROM T_ROLE a
-		ORDER BY a.name
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY id
+			</otherwise>
+		</choose>
 	</select>
 	
 	<insert id="insert">

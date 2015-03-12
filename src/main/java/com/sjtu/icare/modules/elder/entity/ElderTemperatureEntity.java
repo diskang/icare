@@ -4,6 +4,7 @@ package com.sjtu.icare.modules.elder.entity;
 import java.io.Serializable;
 
 import com.sjtu.icare.modules.staff.entity.StaffEntity;
+import com.sjtu.icare.modules.sys.entity.User;
 
 /**
  * @Description T_ELDER_TEMPERATURE 表对应的 Entity
@@ -69,7 +70,5 @@ public class ElderTemperatureEntity implements Serializable {
 	public void setDoctorEntity(StaffEntity doctorEntity) {
 		this.doctorEntity = doctorEntity;
 	}
-
-
 
 }

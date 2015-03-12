@@ -10,19 +10,12 @@
     <resultMap id="StaffEntityMap" type="com.sjtu.icare.modules.staff.entity.StaffEntity">
         <id property="id" column="id" />
         <result property="name" column="name" />
-        <result property="phone" column="phone" />
-        <result property="email" column="email" />
-        <result property="identityNo" column="identity_no" />
         <result property="nssfId" column="nssf_id" />
         <result property="geroId" column="gero_id" />
         <result property="birthday" column="birthday" />
-        <result property="gender" column="gender" />
         <result property="basicUrl" column="basic_url" />
-        <result property="residenceAddress" column="residence_address" />
-        <result property="householdAddress" column="household_address" />
         <result property="leaveDate" column="leave_date" />
         <result property="archiveId" column="archive_id" />
-        <result property="photoUrl" column="photo_url" />
     </resultMap>
     
     <select id="getStaffEntityById" resultMap="StaffEntityMap">
@@ -30,19 +23,11 @@
         SELECT
 			id,
 			name,
-			phone,
-			email,
-			identity_no,
 			nssf_id,
 			gero_id,
-			birthday,
-			gender,
 			basic_url,
-			residence_address,
-			household_address,
 			leave_date,
 			archive_id,
-			photo_url
         FROM T_STAFF
         WHERE T_STAFF.id = #{id}
   ]]>

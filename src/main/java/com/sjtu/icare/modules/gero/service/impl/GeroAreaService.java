@@ -63,8 +63,4 @@ public class GeroAreaService implements IGeroAreaService {
 		
 	}
 
-
-
-
-
 }

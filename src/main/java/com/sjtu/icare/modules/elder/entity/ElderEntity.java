@@ -4,6 +4,8 @@ package com.sjtu.icare.modules.elder.entity;
 import java.io.Serializable;
 import java.sql.Date;
 
+import com.sjtu.icare.modules.sys.entity.User;
+
 /**
  * @Description 老人数据 Entity
  * @author WangQi
@@ -29,6 +31,8 @@ public class ElderEntity implements Serializable {
     private String assessUrl;
 	private String trackUrl;
     private String padMac;
+    
+    private User elderUser;
     
     /**
 	 * @return the id
@@ -221,10 +225,5 @@ public class ElderEntity implements Serializable {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-    
-    
-    
- 
 
 }
