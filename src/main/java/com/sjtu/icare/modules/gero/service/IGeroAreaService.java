@@ -7,6 +7,7 @@
  */
 package com.sjtu.icare.modules.gero.service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,9 @@ import com.sjtu.icare.modules.gero.entity.GeroAreaEntity;
 public interface IGeroAreaService {
 
 	/**
+	 * @throws NoSuchMethodException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
 	 * @Title getGeroAreas
 	 * @Description TODO
 	 * @param @param paramsMap
@@ -41,5 +45,17 @@ public interface IGeroAreaService {
 	 * @throws
 	 */
 	GeroAreaEntity getGeroArea(GeroAreaEntity geroAreaEntity);
+
+	/**
+	 * @Title getGeroSubareas
+	 * @Description TODO
+	 * @param @param ancestorGeroAreaEntity
+	 * @param @param subLevel
+	 * @param @return
+	 * @return List<GeroAreaEntity>
+	 * @throws
+	 */
+	List<GeroAreaEntity> getGeroSubareas(GeroAreaEntity ancestorGeroAreaEntity,
+			Integer subLevel);
 	
 }

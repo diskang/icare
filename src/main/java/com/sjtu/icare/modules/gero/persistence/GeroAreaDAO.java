@@ -8,6 +8,7 @@
 package com.sjtu.icare.modules.gero.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import com.sjtu.icare.common.persistence.annotation.MyBatisDao;
 import com.sjtu.icare.modules.gero.entity.GeroAreaEntity;
@@ -23,7 +24,7 @@ public interface GeroAreaDAO {
 	 * @return List<GeroAreaEntity>
 	 * @throws
 	 */
-	List<GeroAreaEntity> getGeroAreaEntities(GeroAreaEntity geroAreaEntity);
+	List<GeroAreaEntity> getGeroAreaEntities(Map<String, Object> geroAreaEntity);
 	
 	/**
 	 * @Title getGeroAreaEntitiy
@@ -33,7 +34,7 @@ public interface GeroAreaDAO {
 	 * @return GeroAreaEntity
 	 * @throws
 	 */
-	GeroAreaEntity getGeroAreaEntity(GeroAreaEntity geroAreaEntity);
+	GeroAreaEntity getGeroAreaEntity(Map<String, Object> geroAreaEntity);
 	
 	/**
 	 * @Title insertGeroAreaEntity
@@ -43,10 +44,16 @@ public interface GeroAreaDAO {
 	 * @return Object
 	 * @throws
 	 */
-	void insertGeroAreaEntity(GeroAreaEntity geroAreaEntity);
+	void insertGeroAreaEntity(Map<String, Object> geroAreaEntity);
 
-
-
-
+	/**
+	 * @Title getGeroSubareas
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @param @return
+	 * @return List<GeroAreaEntity>
+	 * @throws
+	 */
+	List<GeroAreaEntity> getGeroSubareas(Map<String, Object> paramMap);
 	
 }

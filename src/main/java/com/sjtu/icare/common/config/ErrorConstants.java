@@ -34,6 +34,8 @@ public class ErrorConstants {
 	public static final String GERO_AREA_GET_SERVICE_FAILED = "200001 GET 养老院区域：后台获取数据失败";
 	public static final String GERO_AREA_POST_PARAM_INVALID = "200002 POST 养老院区域：请求参数错误";
 	public static final String GERO_AREA_POST_SERVICE_FAILED = "200003 POST 养老院区域：后台插入数据失败";
+	public static final String GERO_AREA_GET_SUBAREA_PARAM_INVALID = "200004 GET 养老院子区域：请求参数错误";
+	public static final String GERO_AREA_GET_SUBAREA_SERVICE_FAILED = "200006 GET 养老院子区域：后台获取数据失败";
 
 	public static String format(String errorConstant, String otherMessage) {
 		if (errorConstant == null)

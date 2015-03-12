@@ -7,6 +7,7 @@
  */
 package com.sjtu.icare.modules.gero.webservice;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,7 @@ import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.CommonUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
+import com.sjtu.icare.common.utils.ParamValidator;
 import com.sjtu.icare.common.utils.StringUtils;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
@@ -152,15 +154,65 @@ public class GeroAreaRestController {
 		
 	}
 	
-	// TODO
 	@RequestMapping(value = "/{aid}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getGeroAreaAndSubareas(
 			@PathVariable("gid") int geroId,
 			@PathVariable("aid") int areaId,
-			@RequestParam(value="sub_level", required=false) String subLevel
+			@RequestParam(value="sub_level", required=false) Integer subLevel
 			) {
-					
-		return null;
+		
+		// 获取基础的 JSON返回
+		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
+	
+		// 参数检查
+		if (subLevel != null && subLevel < 0) {
+			String otherMessage = "sub_level 参数错误:" +
+					"[sub_level=" + subLevel + "]";
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREA_GET_SUBAREA_PARAM_INVALID, otherMessage);
+			logger.error(message);
+			throw new RestException(HttpStatus.BAD_REQUEST, message);
+		}
+		// 参数预处理
+		if (subLevel == null)
+			subLevel = 1;
+		
+		try {
+			GeroAreaEntity queryGeroAreaEntity = new GeroAreaEntity();
+			queryGeroAreaEntity.setGeroId(geroId);
+			queryGeroAreaEntity.setId(areaId);
+			GeroAreaEntity ancestorGeroAreaEntity = geroAreaService.getGeroArea(queryGeroAreaEntity);
+			List<GeroAreaEntity> descendantGeroAreaEntities = geroAreaService.getGeroSubareas(ancestorGeroAreaEntity, subLevel);
+			
+			// 构造返回的 JSON
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("id", geroId); 
+			resultMap.put("parent_id", ancestorGeroAreaEntity.getParentId()); 
+			resultMap.put("parent_ids", ancestorGeroAreaEntity.getParentIds()); 
+			resultMap.put("type", ancestorGeroAreaEntity.getType()); 
+			resultMap.put("level", ancestorGeroAreaEntity.getLevel()); 
+			resultMap.put("name", ancestorGeroAreaEntity.getName()); 
+			
+			ArrayList<Object> tempList = new ArrayList<Object>();
+			for (GeroAreaEntity geroAreaEntity : descendantGeroAreaEntities) {
+				Map<String, Object> tempMap = new HashMap<String, Object>();
+				tempMap.put("id", geroId); 
+				tempMap.put("parent_id", geroAreaEntity.getParentId()); 
+				tempMap.put("parent_ids", geroAreaEntity.getParentIds()); 
+				tempMap.put("type", geroAreaEntity.getType()); 
+				tempMap.put("level", geroAreaEntity.getLevel()); 
+				tempMap.put("name", geroAreaEntity.getName()); 
+				tempList.add(tempMap);
+			}
+			resultMap.put("area_list", tempList); 
+			basicReturnedJson.addEntity(resultMap);
+			return basicReturnedJson.getMap();
+			
+		} catch (Exception e) {
+			String otherMessage = "[" + e.getMessage() + "]";
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREA_GET_SUBAREA_SERVICE_FAILED, otherMessage);
+			logger.error(message);
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
+		}
 		
 	}
 }

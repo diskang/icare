@@ -17,7 +17,7 @@
 	    <result property="delFlag" column="del_flag" />
 	</resultMap>
   
-    <select id="getGeroAreaEntities" parameterType="GeroAreaEntity" resultMap="GeroAreaEntityMap">
+    <select id="getGeroAreaEntities" parameterType="Map" resultMap="GeroAreaEntityMap">
 
         SELECT
 			*
@@ -27,7 +27,7 @@
   
     </select>
     
-    <select id="getGeroAreaEntity" parameterType="GeroAreaEntity" resultMap="GeroAreaEntityMap">
+    <select id="getGeroAreaEntity" parameterType="Map" resultMap="GeroAreaEntityMap">
 
         SELECT
             *
@@ -36,6 +36,21 @@
             T_AREA.id = #{id}
   
     </select>
+    
+    <select id="getGeroSubareas" parameterType="Map" resultMap="GeroAreaEntityMap">
+        <![CDATA[
+        SELECT
+            *
+        FROM T_AREA
+        WHERE 
+            T_AREA.parent_ids LIKE #{parentIds} + CONVERT(varchar(1000), #{id}) + ',%'
+            and T_AREA.level >= #{level}
+            and T_AREA.level <= #{level} + #{subLevel}
+        ]]>
+    </select>
+    
+    
+    
     
     <insert id="insertGeroAreaEntity" parameterType="GeroAreaEntity">
         insert into 
