@@ -11,6 +11,7 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,11 +44,13 @@ import com.sjtu.icare.modules.sys.service.SystemService;
 public class GeroRoleController {
 	private static Logger logger = Logger.getLogger(GeroRoleController.class);
 	
+	
+	
 	@Autowired
 	private SystemService systemService;
 	
 	@RequestMapping(value = "/{gid}/role", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
-	
+//	@RequiresRoles((@ModelAttribute int gid)+"")
 	public Map<String, Object> getGeroRoleList(
 			@PathVariable("gid") int gid,
 			@RequestParam("page") int page,
