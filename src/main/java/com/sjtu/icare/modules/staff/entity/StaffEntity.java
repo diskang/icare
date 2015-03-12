@@ -25,8 +25,6 @@ public class StaffEntity implements Serializable, Cloneable {
     private Date leaveDate;
     private String archiveId;
     
-    private User staffUser;
-    
 	/**
 	 * @return the id
 	 */
@@ -120,13 +118,6 @@ public class StaffEntity implements Serializable, Cloneable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	public User getStaffUser() {
-		return (User) staffUser.clone();
-	}
-	public void setStaffUser(User staffUser) {
-		this.staffUser = staffUser;
-	}
 
 	public Object clone() {
 		try {
@@ -140,9 +131,6 @@ public class StaffEntity implements Serializable, Cloneable {
 			return null;
 		}
 	}
-	public Object getPhotoUrl() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	
 }
