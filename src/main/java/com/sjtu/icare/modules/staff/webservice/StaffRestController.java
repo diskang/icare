@@ -45,7 +45,7 @@ public class StaffRestController {
 	IStaffDataService staffDataService;
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
-	public Object getStaffSchedulePlan(
+	public Object getStaffSchedulePlans(
 			@PathVariable("sid") int staffId,
 			@RequestParam(value="start_date", required=false) String startDate,
 			@RequestParam(value="end_date", required=false) String endDate
@@ -65,13 +65,13 @@ public class StaffRestController {
 			// 参数预处理
 			if (startDate == null && endDate == null) {
 				Date today = new Date();
-				startDate = DateUtils.formatDateTime(DateUtils.getDateStart(today));
-				endDate = DateUtils.formatDateTime(DateUtils.getDateEnd(today));
+				startDate = DateUtils.formatDate(DateUtils.getDateStart(today));
+				endDate = DateUtils.formatDate(DateUtils.getDateEnd(today));
 			}
 			if (startDate == null && endDate != null) {
 				Date thatDay = ParamUtils.convertStringToDate(endDate);
-				startDate = DateUtils.formatDateTime(DateUtils.getDateStart(thatDay));
-				endDate = DateUtils.formatDateTime(DateUtils.getDateEnd(thatDay));
+				startDate = DateUtils.formatDate(DateUtils.getDateStart(thatDay));
+				endDate = DateUtils.formatDate(DateUtils.getDateEnd(thatDay));
 			}
 			
 			// 获取基础的 JSON返回
@@ -104,7 +104,7 @@ public class StaffRestController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
-	public Object postStaffSchedulePlan(
+	public Object postStaffSchedulePlans(
 			@PathVariable("sid") int staffId,
 			@RequestBody String inJson
 			) {	
@@ -163,6 +163,188 @@ public class StaffRestController {
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
 			String message = ErrorConstants.format(ErrorConstants.STAFF_SCHEDULE_PLAN_POST_SERVICE_FAILED, otherMessage);
+			logger.error(message);
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
+		}
+
+		return basicReturnedJson.getMap();
+		
+	}
+	
+	@RequestMapping(value = "/{date}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
+	public Object getStaffSchedulePlan(
+			@PathVariable("sid") Integer staffId,
+			@PathVariable("date") String date
+			) {
+		
+		// 参数检查
+		if (date != null && !ParamValidator.isDate(date)) {
+			String otherMessage = "date 不符合日期格式:" +
+					"[date=" + date + "]";
+			String message = ErrorConstants.format(ErrorConstants.STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_GET_PARAM_INVALID, otherMessage);
+			logger.error(message);
+			throw new RestException(HttpStatus.BAD_REQUEST, message);
+		}
+		
+		// 获取基础的 JSON返回
+		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
+
+		String startDate;
+		String endDate;
+		try {
+			// 参数预处理
+			Date thatDay = CommonUtils.getDate(date);
+			startDate = DateUtils.formatDate(DateUtils.getDateStart(thatDay));
+			endDate = DateUtils.formatDate(DateUtils.getDateEnd(thatDay));
+
+			StaffSchedulePlanEntity queryStaffSchedulePlanEntity = new StaffSchedulePlanEntity();
+			queryStaffSchedulePlanEntity.setStaffId(staffId);
+			List<StaffSchedulePlanEntity> staffSchedulePlanEntities = staffDataService.getStaffSchedulePlans(queryStaffSchedulePlanEntity, startDate, endDate);
+	
+			// 构造返回的 JSON
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			if (staffSchedulePlanEntities.size() == 1)
+				resultMap.put("id", staffSchedulePlanEntities.get(0).getId());
+			else if (staffSchedulePlanEntities.size() > 1)
+				throw new Exception("内部错误，一天有多次排班记录");
+		
+			basicReturnedJson.addEntity(resultMap);
+			return basicReturnedJson.getMap();
+			
+		} catch (Exception e) {
+			String otherMessage = "[" + e.getMessage() + "]";
+			String message = ErrorConstants.format(ErrorConstants.STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_GET_SERVICE_FAILED, otherMessage);
+			logger.error(message);
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
+		}
+		
+	}
+	
+	@RequestMapping(value = "/{date}", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
+	public Object postStaffSchedulePlan(
+			@PathVariable("sid") int staffId,
+			@PathVariable("date") String date
+			) {	
+		// 将参数转化成驼峰格式的 Map
+		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
+		tempRquestParamMap.put("staffId", staffId);
+		Map<String, Object> requestParamMap = CommonUtils.convertMapToCamelStyle(tempRquestParamMap);
+
+		// 参数检查
+		if (date != null && !ParamValidator.isDate(date)) {
+			String otherMessage = "date 不符合日期格式:" +
+					"[date=" + date + "]";
+			String message = ErrorConstants.format(ErrorConstants.STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_POST_PARAM_INVALID, otherMessage);
+			logger.error(message);
+			throw new RestException(HttpStatus.BAD_REQUEST, message);
+		}
+		
+		// 获取基础的 JSON返回
+		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
+
+		String startDate;
+		String endDate;
+		try {
+			// 参数预处理
+			Date thatDay = CommonUtils.getDate(date);
+			startDate = DateUtils.formatDate(DateUtils.getDateStart(thatDay));
+			endDate = DateUtils.formatDate(DateUtils.getDateEnd(thatDay));
+
+			StaffSchedulePlanEntity queryStaffSchedulePlanEntity = new StaffSchedulePlanEntity();
+			queryStaffSchedulePlanEntity.setStaffId(staffId);
+			List<StaffSchedulePlanEntity> staffSchedulePlanEntities = staffDataService.getStaffSchedulePlans(queryStaffSchedulePlanEntity, startDate, endDate);
+	
+			// 构造返回的 JSON
+			
+			if (staffSchedulePlanEntities.size() > 1)
+				throw new Exception("内部错误，一天有多次排班记录");
+			
+			// 获取 geroId
+			StaffEntity queryStaffEntity = new StaffEntity();
+			queryStaffEntity.setId(staffId);
+			StaffEntity staffEntity = staffDataService.getStaffEntity(queryStaffEntity);
+			int geroId = staffEntity.getGeroId();
+			
+			StaffSchedulePlanEntity postEntity = new StaffSchedulePlanEntity(); 
+			BeanUtils.populate(postEntity, requestParamMap);
+			postEntity.setGeroId(geroId);
+			
+			List<String> tempList = new ArrayList<String>();
+			tempList.add(date);
+			if (staffSchedulePlanEntities.isEmpty())
+				staffDataService.insertStaffSchedulePlans(postEntity, tempList);
+		
+			return basicReturnedJson.getMap();
+			
+		} catch (Exception e) {
+			String otherMessage = "[" + e.getMessage() + "]";
+			String message = ErrorConstants.format(ErrorConstants.STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_POST_SERVICE_FAILED, otherMessage);
+			logger.error(message);
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
+		}
+		
+	}
+	
+	@RequestMapping(value = "/{date}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
+	public Object deleteStaffSchedulePlan(
+			@PathVariable("sid") int staffId,
+			@PathVariable("date") String date
+			) {	
+		// 将参数转化成驼峰格式的 Map
+		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
+		tempRquestParamMap.put("staffId", staffId);
+		Map<String, Object> requestParamMap = CommonUtils.convertMapToCamelStyle(tempRquestParamMap);
+
+		// 参数检查
+		if (date != null && !ParamValidator.isDate(date)) {
+			String otherMessage = "date 不符合日期格式:" +
+					"[date=" + date + "]";
+			String message = ErrorConstants.format(ErrorConstants.STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_DELETE_PARAM_INVALID, otherMessage);
+			logger.error(message);
+			throw new RestException(HttpStatus.BAD_REQUEST, message);
+		}
+		
+		String startDate;
+		String endDate;
+		
+		try {
+			// 参数预处理
+			Date thatDay = CommonUtils.getDate(date);
+			Date today = new Date();
+			if (thatDay.after(today))
+				throw new Exception("删除的日期超过当天");
+			startDate = DateUtils.formatDate(DateUtils.getDateStart(thatDay));
+			endDate = DateUtils.formatDate(DateUtils.getDateEnd(thatDay));
+
+			StaffSchedulePlanEntity queryStaffSchedulePlanEntity = new StaffSchedulePlanEntity();
+			queryStaffSchedulePlanEntity.setStaffId(staffId);
+			List<StaffSchedulePlanEntity> staffSchedulePlanEntities = staffDataService.getStaffSchedulePlans(queryStaffSchedulePlanEntity, startDate, endDate);
+
+			if (staffSchedulePlanEntities.isEmpty())
+				throw new Exception("删除的排班记录不存在");
+
+		} catch(Exception e) {
+			String otherMessage = "[" + e.getMessage() + "]";
+			String message = ErrorConstants.format(ErrorConstants.STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_DELETE_PARAM_INVALID, otherMessage);
+			logger.error(message);
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
+		}
+		
+		// 获取基础的 JSON
+		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
+		
+		// 删除数据
+		try {
+			StaffSchedulePlanEntity deleteEntity = new StaffSchedulePlanEntity(); 
+			BeanUtils.populate(deleteEntity, requestParamMap);
+			
+			List<String> tempList = new ArrayList<String>();
+			tempList.add(date);
+			staffDataService.deleteStaffSchedulePlans(deleteEntity, tempList);
+			
+		} catch(Exception e) {
+			String otherMessage = "[" + e.getMessage() + "]";
+			String message = ErrorConstants.format(ErrorConstants.STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_DELETE_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}

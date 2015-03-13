@@ -12,8 +12,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import schemasMicrosoftComOfficeOffice.STInsetMode;
-
 import com.sjtu.icare.common.persistence.annotation.MyBatisDao;
 import com.sjtu.icare.modules.elder.entity.ElderBloodPressureEntity;
 

@@ -45,9 +45,9 @@ public class StaffDataService implements IStaffDataService {
 	
 	@Override
 	public List<StaffSchedulePlanEntity> getStaffSchedulePlans(
-			StaffSchedulePlanEntity queryCarerSchedulePlanEntity,
+			StaffSchedulePlanEntity queryStaffSchedulePlanEntity,
 			String startDate, String endDate) {
-		Map<String, Object> paramMap = CommonUtils.beanToMap(queryCarerSchedulePlanEntity);
+		Map<String, Object> paramMap = CommonUtils.beanToMap(queryStaffSchedulePlanEntity);
 		paramMap.put("startDate", startDate);
 		paramMap.put("endDate", endDate);
 		return staffSchedulePlanDAO.getStaffSchedulePlans(paramMap);

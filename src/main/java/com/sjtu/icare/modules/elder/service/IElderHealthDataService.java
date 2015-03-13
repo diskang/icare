@@ -1,6 +1,5 @@
 package com.sjtu.icare.modules.elder.service;
 
-import java.sql.Date;
 import java.util.List;
 
 import com.sjtu.icare.modules.elder.entity.ElderBloodPressureEntity;

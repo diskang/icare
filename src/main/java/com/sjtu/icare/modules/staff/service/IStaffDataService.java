@@ -21,7 +21,7 @@ public interface IStaffDataService {
 	User getUserEntityOfStaff(StaffEntity StaffEntity);
 
 	List<StaffSchedulePlanEntity> getStaffSchedulePlans(
-			StaffSchedulePlanEntity queryCarerSchedulePlanEntity,
+			StaffSchedulePlanEntity queryStaffSchedulePlanEntity,
 			String startDate, String endDate);
 
 	void insertStaffSchedulePlans(StaffSchedulePlanEntity staffSchedulePlanEntity, List<String> workDate);

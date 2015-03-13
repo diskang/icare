@@ -2,9 +2,6 @@ package com.sjtu.icare.modules.elder.entity;
 
 
 import java.io.Serializable;
-import java.sql.Date;
-
-import com.sjtu.icare.modules.sys.entity.User;
 
 /**
  * @Description 老人数据 Entity
@@ -15,34 +12,39 @@ import com.sjtu.icare.modules.sys.entity.User;
 
 public class ElderEntity implements Serializable {
   
-    private static final long serialVersionUID = 1L;
-	
-    private int id;
+	private static final long serialVersionUID = 1L;
+
+    private Integer id;
     private String name;
-    private int geroId;
+    private Integer geroId;
     private String nssfId;
     private String archiveId;
-    private int areaId;
-    private int careLevel;
-    private Date checkinDate;
-    private Date checkoutDate;
+    private Integer areaId;
+    private Integer careLevel;
+    private String checkinDate;
+    private String checkoutDate;
     private String applyUrl;
     private String surveyUrl;
     private String assessUrl;
 	private String trackUrl;
     private String padMac;
-   
-    
-    /**
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	/**
@@ -60,13 +62,13 @@ public class ElderEntity implements Serializable {
 	/**
 	 * @return the geroId
 	 */
-	public int getGeroId() {
+	public Integer getGeroId() {
 		return geroId;
 	}
 	/**
 	 * @param geroId the geroId to set
 	 */
-	public void setGeroId(int geroId) {
+	public void setGeroId(Integer geroId) {
 		this.geroId = geroId;
 	}
 	/**
@@ -94,70 +96,64 @@ public class ElderEntity implements Serializable {
 		this.archiveId = archiveId;
 	}
 	/**
-	 * @return the roomId
+	 * @return the areaId
 	 */
-	public int getAreaId() {
+	public Integer getAreaId() {
 		return areaId;
 	}
 	/**
-	 * @param roomId the roomId to set
+	 * @param areaId the areaId to set
 	 */
-	public void setAreaId(int areaId) {
+	public void setAreaId(Integer areaId) {
 		this.areaId = areaId;
 	}
 	/**
 	 * @return the careLevel
 	 */
-	public int getCareLevel() {
+	public Integer getCareLevel() {
 		return careLevel;
 	}
 	/**
 	 * @param careLevel the careLevel to set
 	 */
-	public void setCareLevel(int careLevel) {
+	public void setCareLevel(Integer careLevel) {
 		this.careLevel = careLevel;
 	}
 	/**
 	 * @return the checkinDate
 	 */
-	public Date getCheckinDate() {
-		if (checkinDate != null)
-			return (Date)checkinDate.clone();
-		else
-			return null;
+	public String getCheckinDate() {
+		return checkinDate;
 	}
 	/**
 	 * @param checkinDate the checkinDate to set
 	 */
-	public void setCheckinDate(Date checkinDate) {
+	public void setCheckinDate(String checkinDate) {
 		this.checkinDate = checkinDate;
 	}
 	/**
 	 * @return the checkoutDate
 	 */
-	public Date getCheckoutDate() {
-		if (checkoutDate != null)
-			return (Date)checkoutDate.clone();
-		else
-			return null;
+	public String getCheckoutDate() {
+		return checkoutDate;
 	}
 	/**
 	 * @param checkoutDate the checkoutDate to set
 	 */
-	public void setCheckoutDate(Date checkoutDate) {
+	public void setCheckoutDate(String checkoutDate) {
 		this.checkoutDate = checkoutDate;
 	}
 	/**
-	 * @return the apply_url
+	 * @return the applyUrl
 	 */
 	public String getApplyUrl() {
 		return applyUrl;
 	}
 	/**
-	 * @param apply_url the apply_url to set
+	 * @param applyUrl the applyUrl to set
 	 */
-	public void setApplyUrl(String apply_url) {
-		this.applyUrl = apply_url;
+	public void setApplyUrl(String applyUrl) {
+		this.applyUrl = applyUrl;
 	}
 	/**
 	 * @return the surveyUrl
@@ -207,11 +203,7 @@ public class ElderEntity implements Serializable {
 	public void setPadMac(String padMac) {
 		this.padMac = padMac;
 	}
-	/**
-	 * @return the serialversionuid
-	 */
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+   
+  
 
 }

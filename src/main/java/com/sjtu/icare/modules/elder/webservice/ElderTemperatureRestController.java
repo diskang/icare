@@ -26,7 +26,6 @@ import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
 import com.sjtu.icare.modules.elder.entity.ElderTemperatureEntity;
 import com.sjtu.icare.modules.elder.service.IElderHealthDataService;
-import com.sjtu.icare.modules.gero.entity.GeroAreaEntity;
 import com.sjtu.icare.modules.staff.entity.StaffEntity;
 import com.sjtu.icare.modules.staff.service.IStaffDataService;
 import com.sjtu.icare.modules.sys.entity.User;

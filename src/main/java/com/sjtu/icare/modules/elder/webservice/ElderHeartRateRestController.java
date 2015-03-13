@@ -101,7 +101,7 @@ public class ElderHeartRateRestController {
 			for (ElderHeartRateEntity entity : elderHeartRateEntityList) {
 				HashMap<String, Object> tempMap = new HashMap<String, Object>();
 				tempMap.put("id", entity.getId());
-				tempMap.put("heart_rate", entity.getHeartRate());
+				tempMap.put("heart_rate", entity.getRate());
 				tempMap.put("times", entity.getTime());
 				
 				StaffEntity queryStaffEntity = new StaffEntity();
