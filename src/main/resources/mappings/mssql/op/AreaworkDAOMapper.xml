@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.icare.modules.op.persistence.AreaworkDAO">
+
+    <cache />
+    
+    
+  
+    <select id="getAreaworkEntityById" resultType="AreaworkEntity" parameterType="int">
+        SELECT
+			id,
+			carer_id,
+			area_id,
+			start_date,
+			end_date
+        FROM T_AREAWORK
+        WHERE T_AREAWORK.id = #{id}
+    </select>
+    
+    <select id="getAreaworkEntitiesByCarerid" resultType="AreaworkEntity" parameterType="int">
+        SELECT
+			id,
+			carer_id,
+			area_id,
+			start_date,
+			end_date
+        FROM T_AREAWORK
+        WHERE T_AREAWORK.carer_id = #{carerId}
+    </select>
+    
+    <select id="getAreaworkEntityByElderid" resultType="AreaworkEntity" parameterType="int">
+        SELECT
+			id,
+			carer_id,
+			area_id,
+			start_date,
+			end_date
+        FROM T_AREAWORK
+        WHERE T_AREAWORK.elder_id = #{elderId}
+    </select>
+    
+</mapper>
