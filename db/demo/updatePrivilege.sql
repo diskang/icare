@@ -2,6 +2,17 @@ ALTER TABLE T_ROLE_PRIVILEGES
 DROP CONSTRAINT fk_ROLE_PRIVILEGES_privilege_id
 GO
 
+DROP TABLE T_ROLE_PRIVILEGES
+GO
+
+CREATE TABLE T_ROLE_PRIVILEGES
+(
+	id					int				PRIMARY KEY IDENTITY,
+	role_id				int				NOT NULL,				--
+	privilege_id		int				,						--
+)
+GO
+
 DROP TABLE T_PRIVILEGE
 go
 
