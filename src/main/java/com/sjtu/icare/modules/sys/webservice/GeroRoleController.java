@@ -1,17 +1,11 @@
 package com.sjtu.icare.modules.sys.webservice;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,16 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sjtu.icare.common.config.ErrorConstants;
-import com.sjtu.icare.common.config.OrderByConstant;
 import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.ParamUtils;
+import com.sjtu.icare.common.web.rest.GeroBaseController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.sys.entity.Gero;
-import com.sjtu.icare.modules.sys.entity.Privilege;
 import com.sjtu.icare.modules.sys.entity.Role;
-import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.service.SystemService;
 
 /**
@@ -41,40 +33,28 @@ import com.sjtu.icare.modules.sys.service.SystemService;
 */
 @RestController
 @RequestMapping("/gero")
-public class GeroRoleController {
+public class GeroRoleController extends GeroBaseController {
 	private static Logger logger = Logger.getLogger(GeroRoleController.class);
-	
-	
 	
 	@Autowired
 	private SystemService systemService;
-	
+
 	@RequestMapping(value = "/{gid}/role", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
-//	@RequiresRoles((@ModelAttribute int gid)+"")
 	public Map<String, Object> getGeroRoleList(
 			@PathVariable("gid") int gid,
 			@RequestParam("page") int page,
 			@RequestParam("limit") int limit,
 			@RequestParam("order_by") String orderByTag){
 		
+//		checkGero(gid);
+		
 		BasicReturnedJson result = new BasicReturnedJson();
 		
 		Gero gero = getGeroFromId(gid);
 		
 		Page<Role> rolePage = new Page<Role>(page,limit);
-		
-		SecurityUtils.getSubject().checkRole("");
 
-		String orderBy = "id";
-		try {
-			orderBy = OrderByConstant.valueOf(orderByTag).getTag();
-		} catch (Exception e1) {
-			String message = ErrorConstants.format(ErrorConstants.ORDER_BY_PARAM_INVALID,"");
-			logger.error(message);
-			throw new RestException(HttpStatus.BAD_REQUEST, message);
-		}
-		
-		rolePage.setOrderBy(orderBy);
+		rolePage = setOrderBy(rolePage, orderByTag);
 		
 		// get page from service
 		List<Role> roleList;
@@ -91,7 +71,7 @@ public class GeroRoleController {
 		
 		for (Role role : roleList){
 			if (role != null){
-				result.addEntity(getRoleMapFromRole(role));
+				result.addEntity(getRoleInfoMapFromRole(role));
 			}else {
 				String message = ErrorConstants.format(ErrorConstants.ROLE_FOR_ID_NOT_FOUND,"");
 				logger.error(message);
@@ -109,6 +89,8 @@ public class GeroRoleController {
 			@PathVariable("gid") int gid,
 			@RequestBody String inJson
 			){
+		
+//		checkGero(gid);
 		
 		BasicReturnedJson result = new BasicReturnedJson();
 		
@@ -134,15 +116,13 @@ public class GeroRoleController {
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
 		
-		Gero gero = getGeroFromId(gid);
-		
 		Role role = new Role();
 		role.setName(name);
 		role.setNotes(notes);
 		role.setGeroId(gid);
 		
 		try {
-			if (systemService.getRole(role) != null)
+			if (systemService.getRoleByNameAndGero(role) != null)
 				throw new Exception();
 		} catch (Exception e1) {
 			String message = ErrorConstants.format(ErrorConstants.GERO_ROLE_INSERT_CONFLICT_ERROR,
@@ -154,8 +134,8 @@ public class GeroRoleController {
 		
 		try {
 			systemService.insertGeroRole(role);
-			role = systemService.getRole(role);
-			result.addEntity(getRoleMapFromRole(role));
+			role = systemService.getRoleByNameAndGero(role);
+			result.addEntity(getRoleInfoMapFromRole(role));
 		} catch (Exception e) {
 			String message = ErrorConstants.format(ErrorConstants.GERO_ROLE_INSERT_SERVICE_ERROR,
 					"[name=" + requestBodyParamMap.get("name") + "]" +
@@ -168,41 +148,26 @@ public class GeroRoleController {
 	}
 	
 	@RequestMapping(value = "/{gid}/role/{rid}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
-	public Map<String, Object> getGeroRole(){
+	public Map<String, Object> getGeroRole(
+			@PathVariable("rid") int rid
+			){
 		
 		BasicReturnedJson result = new BasicReturnedJson();
-		Subject userSubject = SecurityUtils.getSubject();
 		
+		Role role = getRoleFromId(rid);
+		
+		try {
+			role = systemService.getPrivilegeListByRole(role);
+		} catch (Exception e) {
+			String message = ErrorConstants.format(ErrorConstants.GERO_ROLE_GET_PRIVILEGE_SERVICE_ERROR,
+					"[rid=" + rid + "]");
+			logger.error(message);
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
+		}
+		
+		result.addEntity(getRoleMapFromRole(role));
 		return result.getMap();
 	}
 	
-	/**
-	 * Role返回格式
-	 * @param role
-	 * @return
-	 */
-	private Map<String, Object> getRoleMapFromRole(Role role) {
-		Map<String, Object> roleMap = new HashMap<String, Object>();
-		roleMap.put("id", role.getId());
-		roleMap.put("name", role.getName());
-		roleMap.put("note", role.getNotes());
-		return roleMap;
-	}
 	
-	private Gero getGeroFromId(int gid){
-		
-		Gero gero = new Gero();
-		try {
-			gero = systemService.getGeroById(new Gero(gid));
-			if (gero == null){
-				throw new Exception();
-			}
-		} catch (Exception e) {
-			String message = ErrorConstants.format(ErrorConstants.GERO_FOR_ID_NOT_FOUND,
-					"[gid=" + gid + "]");
-			logger.error(message);
-			throw new RestException(HttpStatus.BAD_REQUEST, message);
-		}
-		return gero;
-	}
 }

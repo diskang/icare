@@ -1,3 +1,16 @@
+EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'HCDB_UPDATE_TEST'
+GO
+USE [master]
+GO
+ALTER DATABASE [HCDB_UPDATE_TEST] SET  SINGLE_USER WITH ROLLBACK IMMEDIATE
+GO
+USE [master]
+GO
+/****** Object:  Database [HCDB_UPDATE_TEST]    Script Date: 2015/3/13 11:00:40 ******/
+DROP DATABASE [HCDB_UPDATE_TEST]
+GO
+
+
 CREATE DATABASE HCDB_UPDATE_TEST
 GO
 
@@ -251,10 +264,10 @@ CREATE TABLE T_ELDER_AUDIO_RECORD
 )
 GO
 
-CREATE TABLE T_CARER_SCHEDULE_PLAN
+CREATE TABLE T_STAFF_SCHEDULE_PLAN
 (
 	id					int				PRIMARY KEY IDENTITY,
-	carer_id			int				NOT NULL,				--
+	staff_id			int				NOT NULL,				--
 	gero_id				int				NOT NULL,				--
 	work_date			date			NOT NULL,				--
 )
@@ -285,7 +298,7 @@ GO
 CREATE TABLE T_ROLE
 (
 	id					int				PRIMARY KEY IDENTITY,
-	gero_id				int				,						--关联T_GERO，如果为空，表明是系统角色，不能删除
+	gero_id				int				NOT NULL,				--关联T_GERO，如果为1，表明是系统角色，不能删除
 	name				nvarchar(50)	NOT NULL,				--角色名称
 	notes				nvarchar(32)	NOT NULL,				--备注
 )
@@ -590,15 +603,15 @@ REFERENCES T_ELDER(id)
 ON DELETE NO ACTION
 GO
 
-ALTER TABLE T_CARER_SCHEDULE_PLAN
-ADD CONSTRAINT fk_CARER_SCHEDULE_PLAN_carer_id
-FOREIGN KEY (carer_id)
+ALTER TABLE T_STAFF_SCHEDULE_PLAN
+ADD CONSTRAINT fk_STAFF_SCHEDULE_PLAN_carer_id
+FOREIGN KEY (staff_id)
 REFERENCES T_STAFF(id)
 ON DELETE NO ACTION
 GO
 
-ALTER TABLE T_CARER_SCHEDULE_PLAN
-ADD CONSTRAINT fk_CARER_SCHEDULE_PLAN_gero_id
+ALTER TABLE T_STAFF_SCHEDULE_PLAN
+ADD CONSTRAINT fk_STAFF_SCHEDULE_PLAN_gero_id
 FOREIGN KEY (gero_id)
 REFERENCES T_GERO(id)
 ON DELETE NO ACTION

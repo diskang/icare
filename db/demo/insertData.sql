@@ -181,110 +181,109 @@ INSERT INTO [dbo].[T_USER]
 		   )
 GO
 
-INSERT INTO [dbo].[T_PRIVILEGE]
+INSERT INTO [dbo].[T_ROLE]
            ([name]
-           ,[parent_id]
-           ,[parent_ids]
-           ,[permission]
-           ,[href])
+           ,[notes]
+		   ,[gero_id])
      VALUES
            ('su'
-           ,0
-           ,'0'
-           ,'su'
-           ,'/')
+           ,'super user'
+		   ,'1')
 GO
 
-INSERT INTO [dbo].[T_PRIVILEGE]
+INSERT INTO [dbo].[T_ROLE]
            ([name]
-           ,[parent_id]
-           ,[parent_ids]
-           ,[permission]
-           ,[href])
+           ,[notes]
+		   ,[gero_id])
      VALUES
            ('admin'
-           ,1
-           ,'0,1'
            ,'admin'
-           ,'/admin')
-GO
-
-INSERT INTO [dbo].[T_PRIVILEGE]
-           ([name]
-           ,[parent_id]
-           ,[parent_ids]
-           ,[permission]
-           ,[href])
-     VALUES
-           ('staff'
-           ,2
-           ,'0,1,2'
-           ,'staff'
-           ,'/staff')
+		   ,'1')
 GO
 
 INSERT INTO [dbo].[T_ROLE]
            ([name]
-           ,[notes])
-     VALUES
-           ('su'
-           ,'super user')
-GO
-
-INSERT INTO [dbo].[T_ROLE]
-           ([name]
-           ,[notes])
-     VALUES
-           ('admin'
-           ,'admin')
-GO
-
-INSERT INTO [dbo].[T_ROLE]
-           ([name]
-           ,[notes])
+           ,[notes]
+		   ,[gero_id])
      VALUES
            ('carer'
-           ,'carer')
+           ,'carer'
+		   ,'1')
 GO
 
 INSERT INTO [dbo].[T_ROLE]
            ([name]
-           ,[notes])
+           ,[notes]
+		   ,[gero_id])
      VALUES
            ('doctor'
-           ,'doctor')
+           ,'doctor'
+		   ,'1')
 GO
 
 INSERT INTO [dbo].[T_ROLE]
            ([name]
-           ,[notes])
+           ,[notes]
+		   ,[gero_id])
      VALUES
            ('elder'
-           ,'elder')
+           ,'elder'
+		   ,'1')
 GO
 
 INSERT INTO [dbo].[T_ROLE]
            ([name]
-           ,[notes])
+           ,[notes]
+		   ,[gero_id])
      VALUES
            ('relative'
-           ,'relative')
+           ,'relative'
+		   ,'1')
 GO
 
-INSERT INTO [dbo].[T_ROLE_PRIVILEGES]
-           ([role_id]
-           ,[privilege_id])
+INSERT INTO [dbo].[T_USER_ROLES]
+           ([user_id]
+           ,[role_id])
      VALUES
-           (1
-           ,1)
+           ('1'
+           ,'1'
+		   )
 GO
 
-INSERT INTO [dbo].[T_ROLE_PRIVILEGES]
-           ([role_id]
-           ,[privilege_id])
+INSERT INTO [dbo].[T_USER_ROLES]
+           ([user_id]
+           ,[role_id])
      VALUES
-           (1
-           ,2)
+           ('1'
+           ,'2'
+		   )
+GO
+
+INSERT INTO [dbo].[T_USER_ROLES]
+           ([user_id]
+           ,[role_id])
+     VALUES
+           ('1'
+           ,'3'
+		   )
+GO
+
+INSERT INTO [dbo].[T_USER_ROLES]
+           ([user_id]
+           ,[role_id])
+     VALUES
+           ('1'
+           ,'4'
+		   )
+GO
+
+INSERT INTO [dbo].[T_USER_ROLES]
+           ([user_id]
+           ,[role_id])
+     VALUES
+           ('2'
+           ,'1'
+		   )
 GO
 
 INSERT INTO [dbo].[T_ELDER]

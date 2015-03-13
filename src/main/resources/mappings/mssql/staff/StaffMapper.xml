@@ -18,14 +18,12 @@
     </resultMap>
     
     <select id="getStaffEntity" resultMap="StaffEntityMap">
-    <![CDATA[
+        <![CDATA[
         SELECT
 			*
         FROM T_STAFF
         WHERE T_STAFF.id = #{id}
-  ]]>
+        ]]>
     </select>
 
-
-    
 </mapper>

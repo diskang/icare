@@ -54,7 +54,9 @@ public class ErrorConstants {
 	public static final String ORDER_BY_PARAM_INVALID = "1000013 未取到该排序条件";
 	public static final String GERO_ROLE_INSERT_PARAM_INVALID = "1000014 POST 插入养老院角色列表：请求参数错误";
 	public static final String GERO_ROLE_INSERT_SERVICE_ERROR = "1000015 POST 插入养老院角色列表：后台获取失败";
-	public static final String GERO_ROLE_INSERT_CONFLICT_ERROR = "1000015 POST 插入养老院角色列表：该养老院已存在该角色";
+	public static final String GERO_ROLE_INSERT_CONFLICT_ERROR = "1000016 POST 插入养老院角色列表：该养老院已存在该角色";
+	public static final String USER_NO_PRIVILEGE_FOR_THIS_GERO = "1000017 用户没有操作此养老院的权限";
+	public static final String GERO_ROLE_GET_PRIVILEGE_SERVICE_ERROR = "1000018 GET 查询养老院角色权限：后台获取失败";
 	
 	// staff schedule constants
 	public static final String STAFF_SCHEDULE_PLAN_GET_PARAM_INVALID = "300001 GET 员工排信息：请求参数错误";
