@@ -7,6 +7,7 @@ import com.sjtu.icare.modules.elder.entity.ElderBloodPressureEntity;
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
 import com.sjtu.icare.modules.elder.entity.ElderHeartRateEntity;
 import com.sjtu.icare.modules.elder.entity.ElderTemperatureEntity;
+import com.sjtu.icare.modules.sys.entity.User;
 
 /**
  * @Description 老人体温对应的 service 类
@@ -32,5 +33,7 @@ public interface IElderHealthDataService {
 
 	void insertElderHeartRateRecord(int elderId, Integer doctorId,
 			String heartRate, String time);
+	
+	User getUserEntityOfElder(ElderEntity elderEntity);
 	
 }

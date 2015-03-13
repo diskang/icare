@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sjtu.icare.common.config.CommonConstants;
 import com.sjtu.icare.modules.elder.entity.ElderBloodPressureEntity;
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
 import com.sjtu.icare.modules.elder.entity.ElderHeartRateEntity;
@@ -14,6 +15,8 @@ import com.sjtu.icare.modules.elder.persistence.ElderDAO;
 import com.sjtu.icare.modules.elder.persistence.ElderHeartRateDAO;
 import com.sjtu.icare.modules.elder.persistence.ElderTemperatureDAO;
 import com.sjtu.icare.modules.elder.service.IElderHealthDataService;
+import com.sjtu.icare.modules.sys.entity.User;
+import com.sjtu.icare.modules.sys.service.SystemService;
 
 /**
  * @Description 老人信息的 service 类（接口如果有重载会在这一层做相应的封装）
@@ -32,6 +35,8 @@ public class ElderHealthDataService implements IElderHealthDataService {
 	private ElderBloodPressureDAO elderBloodPressureDAO;
 	@Autowired
 	private ElderHeartRateDAO elderHeartRateDAO;
+	@Autowired
+	private SystemService systemService;
 
 	@Override
 	public ElderEntity getElderEntity(int id) {
@@ -72,6 +77,11 @@ public class ElderHealthDataService implements IElderHealthDataService {
 		elderHeartRateDAO.insertElderHeartRateRecordWithElderidDoctoridRateTime(elderId, doctorId,
 				heartRate, time);
 	
+	}
+
+	@Override
+	public User getUserEntityOfElder(ElderEntity elderEntity) {
+		return systemService.getUserByUserTypeAndUserId(CommonConstants.ELDER_TYPE, elderEntity.getId());
 	}
 	
 }

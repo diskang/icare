@@ -31,8 +31,7 @@ public class ElderEntity implements Serializable {
     private String assessUrl;
 	private String trackUrl;
     private String padMac;
-    
-    private User elderUser;
+   
     
     /**
 	 * @return the id
@@ -213,17 +212,6 @@ public class ElderEntity implements Serializable {
 	 */
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-	/**
-	 * @Title getPhotoUrl
-	 * @Description TODO
-	 * @param @return
-	 * @return Object
-	 * @throws
-	 */
-	public Object getPhotoUrl() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

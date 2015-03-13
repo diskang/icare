@@ -28,6 +28,7 @@ import com.sjtu.icare.modules.elder.entity.ElderTemperatureEntity;
 import com.sjtu.icare.modules.elder.service.IElderHealthDataService;
 import com.sjtu.icare.modules.staff.entity.StaffEntity;
 import com.sjtu.icare.modules.staff.service.IStaffDataService;
+import com.sjtu.icare.modules.sys.entity.User;
 
 /**
  * @Description 老人体温数据处理
@@ -81,12 +82,13 @@ public class ElderTemperatureRestController {
 			
 			ElderEntity elderEntity = elderHealthDataService.getElderEntity(elderId);
 			List<ElderTemperatureEntity> elderTemperatureEntityList = elderHealthDataService.getElderTemperatureEntities(elderId, startDate, endDate);
-
+			User userEntityOfElder = elderHealthDataService.getUserEntityOfElder(elderEntity);
+			
 			// 构造返回的 JSON
 			Map<String, Object> resultMap = new HashMap<String, Object>(); 
 			resultMap.put("id", elderId); 
 			resultMap.put("name", elderEntity.getName()); 
-			resultMap.put("photo", elderEntity.getPhotoUrl()); 
+			resultMap.put("photo", userEntityOfElder.getPhotoUrl()); 
 			     
 			List<Object> tempList = new ArrayList<Object>();
 			for (ElderTemperatureEntity entity : elderTemperatureEntityList) {
@@ -96,12 +98,13 @@ public class ElderTemperatureRestController {
 				tempMap.put("times", entity.getTime());
 				
 				StaffEntity doctorEntity = entity.getDoctorEntity();
+				User userEntityOfDoctor = staffDataService.getUserEntityOfStaff(doctorEntity);
 				
 				if (doctorEntity != null) {
 					HashMap<String, Object> tempMap2 = new HashMap<String, Object>();
 					tempMap2.put("id", doctorEntity.getId());
 					tempMap2.put("name", doctorEntity.getName());
-					tempMap2.put("photo", doctorEntity.getPhotoUrl());
+					tempMap2.put("photo", userEntityOfDoctor.getPhotoUrl());
 					tempMap.put("doctor", tempMap2);
 				}
 				
