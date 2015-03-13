@@ -53,4 +53,23 @@ public class StaffDataService implements IStaffDataService {
 		return staffSchedulePlanDAO.getStaffSchedulePlans(paramMap);
 	}
 
+	@Override
+	public void insertStaffSchedulePlans(
+			StaffSchedulePlanEntity staffSchedulePlanEntity,
+			List<String> workDate) {
+		Map<String, Object> paramMap = CommonUtils.beanToMap(staffSchedulePlanEntity);
+		paramMap.put("workDate", workDate);
+		staffSchedulePlanDAO.insertStaffSchedulePlans(paramMap);
+	}
+
+	@Override
+	public void deleteStaffSchedulePlans(StaffSchedulePlanEntity staffSchedulePlanEntity,
+			List<String> noworkDate) {
+		Map<String, Object> paramMap = CommonUtils.beanToMap(staffSchedulePlanEntity);
+		paramMap.put("noworkDate", noworkDate);
+		staffSchedulePlanDAO.deleteStaffSchedulePlans(paramMap);
+	}
+
+
+
 }

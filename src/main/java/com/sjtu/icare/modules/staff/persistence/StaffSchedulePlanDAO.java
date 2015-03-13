@@ -18,5 +18,9 @@ public interface StaffSchedulePlanDAO {
 
 	List<StaffSchedulePlanEntity> getStaffSchedulePlans(
 			Map<String, Object> paramMap);
+
+	void insertStaffSchedulePlans(Map<String, Object> paramMap);
+
+	void deleteStaffSchedulePlans(Map<String, Object> paramMap);
 	
 }

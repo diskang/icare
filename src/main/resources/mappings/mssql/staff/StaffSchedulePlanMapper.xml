@@ -15,16 +15,44 @@
     </resultMap>
     
     <select id="getStaffSchedulePlans" parameterType="Map" resultMap="StaffSchedulePlanMap">
-        <![CDATA[
+
         SELECT
             *
         FROM 
             T_STAFF_SCHEDULE_PLAN
         WHERE 
             T_STAFF_SCHEDULE_PLAN.staff_id = #{staffId}
-        ]]>
+            <if test="startDate != null">
+                <![CDATA[
+                and #{startDate} <= convert(nvarchar(23), T_STAFF_SCHEDULE_PLAN.work_date, 120)
+                ]]>
+            </if>
+            <if test="endDate != null">
+                <![CDATA[
+                and #{endDate} >= convert(nvarchar(23), T_STAFF_SCHEDULE_PLAN.work_date, 120)
+                ]]>
+            </if>
+
     </select>
+    
+    <insert id="insertStaffSchedulePlans">
+        insert into 
+            T_STAFF_SCHEDULE_PLAN(staff_id, gero_id, work_date) 
+        values
+	            <foreach collection="workDate" item="item" index="index" separator="," >
+	            (#{staffId}, #{geroId}, #{item})
+	            </foreach>
+    </insert>
 
-
+    <delete id="deleteStaffSchedulePlans">
+        delete from
+            T_STAFF_SCHEDULE_PLAN
+        where
+            T_STAFF_SCHEDULE_PLAN.staff_id = #{staffId} 
+            and T_STAFF_SCHEDULE_PLAN.work_date in
+            <foreach collection="noworkDate" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+            </foreach>
+    </delete>
     
 </mapper>
