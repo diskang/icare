@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.sjtu.icare.modules.elder.persistence.ElderBloodPressureEntityDAO">
+<mapper namespace="com.sjtu.icare.modules.elder.persistence.ElderBloodPressureDAO">
 
     <cache />
     
@@ -13,7 +13,7 @@
 	    <result property="diastolicPressure" column="diastolic_pressure" />
 	    <result property="systolicPressure" column="systolic_pressure" />
 	    <result property="time" column="time" />
-	    <association property="doctorEntity" column="doctor_id" select="com.sjtu.icare.modules.staff.persistence.StaffEntityDAO.getStaffEntityById"/>
+	    <association property="doctorEntity" column="doctor_id" select="com.sjtu.icare.modules.staff.persistence.StaffDAO.getStaffEntityById"/>
 	</resultMap>
   
     <select id="getElderBloodPressureEntitiesByElderidStartdayEndday" resultMap="ElderBloodPressureEntityMap">

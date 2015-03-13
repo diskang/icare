@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.icare.modules.elder.persistence.ElderDAO">
+
+    <cache />
+    
+    <resultMap type="com.sjtu.icare.modules.elder.entity.ElderEntity" id="ElderEntityMap">
+	    <id property="id" column="id" />
+	    <result property="name" column="name" />
+	    <result property="geroId" column="gero_id" />
+	    <result property="nssfId" column="nssf_id" />
+	    <result property="archiveId" column="archive_id" />
+	    <result property="areaId" column="area_id" />
+	    <result property="residence" column="residence" />
+	    <result property="careLevel" column="care_level" />
+	    <result property="checkinDate" column="checkin_date" />
+	    <result property="checkoutDate" column="checkout_date" />
+	    <result property="applyUrl" column="apply_url" />
+	    <result property="surveyUrl" column="survey_url" />
+	    <result property="assessUrl" column="assess_url" />
+	    <result property="trackUrl" column="track_url" />
+		<result property="padMac" column="pad_mac" />
+	</resultMap>
+  
+    <select id="getElderEntityById" resultType="ElderEntity">
+        SELECT
+			id,
+			name,
+			gero_id,
+			nssf_id,
+			archive_id,
+			area_id,
+	        care_level,
+	        checkin_date,
+            checkout_date,
+            apply_url,
+            survey_url,
+            assess_url,
+            track_url,
+            pad_mac
+        FROM T_ELDER
+        WHERE T_ELDER.id = #{id}
+    </select>
+
+    <select id="getNameById" resultType="String">
+        SELECT
+            name
+        FROM T_ELDER
+        WHERE T_ELDER.id = #{id}
+    </select>
+    
+    <select id="getPhotoById" resultType="String">
+        SELECT
+            photo_url
+        FROM T_ELDER
+        WHERE T_ELDER.id = #{id}
+    </select>
+
+    
+</mapper>

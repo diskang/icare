@@ -8,10 +8,13 @@
 package com.sjtu.icare.modules.staff.service;
 
 import com.sjtu.icare.modules.staff.entity.StaffEntity;
+import com.sjtu.icare.modules.sys.entity.User;
 
 
 public interface IStaffDataService {
 	
 	StaffEntity getStaffEntity(int id);
+
+	User getUserEntityOfStaff(StaffEntity StaffEntity);
 	
 }

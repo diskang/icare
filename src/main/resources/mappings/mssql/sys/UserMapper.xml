@@ -43,6 +43,15 @@
 		WHERE user_type = #{userType} AND user_id = #{userId} AND cancel_date is null
 	</select>
 	
+    <!-- 
+    <select id="getByUseridUsertype" resultType="User" parameterType="Map">
+        SELECT
+            <include refid="userColumns"/>
+        FROM T_USER
+        WHERE user_type = 3 AND user_id = #{userId} AND cancel_date is null
+    </select>
+    -->
+    
 	<!-- 分页查询用户信息 -->
 	<select id="findList" resultType="User">
 		SELECT

@@ -1,7 +1,6 @@
 package com.sjtu.icare.modules.elder.persistence;
 
 
-import java.sql.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -15,7 +14,7 @@ import com.sjtu.icare.modules.elder.entity.ElderHeartRateEntity;
  */
 
 @MyBatisDao
-public interface ElderHeartRateEntityDAO {
+public interface ElderHeartRateDAO {
 
 	List<ElderHeartRateEntity> getElderHeartRateEntityByElderidStartdayEndday(
 			@Param("elderId") int elderId, 
