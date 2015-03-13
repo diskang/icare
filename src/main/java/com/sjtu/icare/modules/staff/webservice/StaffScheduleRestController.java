@@ -38,8 +38,8 @@ import com.sjtu.icare.modules.staff.service.IStaffDataService;
 
 @RestController
 @RequestMapping("/staff/{sid}/schedule")
-public class StaffRestController {
-	private static Logger logger = Logger.getLogger(StaffRestController.class);
+public class StaffScheduleRestController {
+	private static Logger logger = Logger.getLogger(StaffScheduleRestController.class);
 	
 	@Autowired
 	IStaffDataService staffDataService;
