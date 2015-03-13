@@ -277,6 +277,15 @@ INSERT INTO [dbo].[T_USER_ROLES]
 		   )
 GO
 
+INSERT INTO [dbo].[T_USER_ROLES]
+           ([user_id]
+           ,[role_id])
+     VALUES
+           ('2'
+           ,'1'
+		   )
+GO
+
 INSERT INTO [dbo].[T_ELDER]
            ([name]
            ,[gero_id])
