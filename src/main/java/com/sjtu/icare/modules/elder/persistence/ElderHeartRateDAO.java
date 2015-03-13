@@ -2,6 +2,7 @@ package com.sjtu.icare.modules.elder.persistence;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -16,10 +17,7 @@ import com.sjtu.icare.modules.elder.entity.ElderHeartRateEntity;
 @MyBatisDao
 public interface ElderHeartRateDAO {
 
-	List<ElderHeartRateEntity> getElderHeartRateEntityByElderidStartdayEndday(
-			@Param("elderId") int elderId, 
-			@Param("startDate") String startDate, 
-			@Param("endDate") String endDate);
+	List<ElderHeartRateEntity> getElderHeartRateEntityByElderidStartdayEndday(Map<String, Object> paramMap);
 
 	void insertElderHeartRateRecordWithElderidDoctoridRateTime(
 			@Param("elderId") int elderId, 

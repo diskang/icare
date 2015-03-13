@@ -21,7 +21,7 @@ public class ElderHeartRateEntity implements Serializable {
     private float rate;     //心率
     private Date time;      //测量时间
  
-    private StaffEntity doctorEntity;
+//    private StaffEntity doctorEntity;
     
     public int getId() {
         return id;
@@ -66,12 +66,12 @@ public class ElderHeartRateEntity implements Serializable {
 		this.time = time;
 	}
 
-	public StaffEntity getDoctorEntity() {
-		return (StaffEntity) doctorEntity.clone();
-	}
-
-	public void setDoctorEntity(StaffEntity doctorEntity) {
-		this.doctorEntity = doctorEntity;
-	}
+//	public StaffEntity getDoctorEntity() {
+//		return (StaffEntity) doctorEntity.clone();
+//	}
+//
+//	public void setDoctorEntity(StaffEntity doctorEntity) {
+//		this.doctorEntity = doctorEntity;
+//	}
 
 }

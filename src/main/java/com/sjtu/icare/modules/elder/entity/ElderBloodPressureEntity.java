@@ -21,7 +21,7 @@ public class ElderBloodPressureEntity implements Serializable {
     private double systolicPressure;
     private String time;
  
-    private StaffEntity doctorEntity;
+//    private StaffEntity doctorEntity;
 
 	/**
 	 * @return the id
@@ -107,19 +107,19 @@ public class ElderBloodPressureEntity implements Serializable {
 		this.time = time;
 	}
 
-	/**
-	 * @return the doctorEntity
-	 */
-	public StaffEntity getDoctorEntity() {
-		return (StaffEntity) doctorEntity.clone();
-	}
-
-	/**
-	 * @param doctorEntity the doctorEntity to set
-	 */
-	public void setDoctorEntity(StaffEntity doctorEntity) {
-		this.doctorEntity = doctorEntity;
-	}
+//	/**
+//	 * @return the doctorEntity
+//	 */
+//	public StaffEntity getDoctorEntity() {
+//		return (StaffEntity) doctorEntity.clone();
+//	}
+//
+//	/**
+//	 * @param doctorEntity the doctorEntity to set
+//	 */
+//	public void setDoctorEntity(StaffEntity doctorEntity) {
+//		this.doctorEntity = doctorEntity;
+//	}
 
 	/**
 	 * @return the serialversionuid

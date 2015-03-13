@@ -4,7 +4,6 @@ package com.sjtu.icare.modules.elder.entity;
 import java.io.Serializable;
 
 import com.sjtu.icare.modules.staff.entity.StaffEntity;
-import com.sjtu.icare.modules.sys.entity.User;
 
 /**
  * @Description T_ELDER_TEMPERATURE 表对应的 Entity
@@ -21,7 +20,7 @@ public class ElderTemperatureEntity implements Serializable {
     private double temperature;
     private String time;
  
-    private StaffEntity doctorEntity;
+//    private StaffEntity doctorEntity;
     
     public int getId() {
         return id;
@@ -63,12 +62,15 @@ public class ElderTemperatureEntity implements Serializable {
 		this.time = time;
 	}
 
-	public StaffEntity getDoctorEntity() {
-		return (StaffEntity) doctorEntity.clone();
-	}
-
-	public void setDoctorEntity(StaffEntity doctorEntity) {
-		this.doctorEntity = doctorEntity;
-	}
+//	public StaffEntity getDoctorEntity() {
+//		if (doctorEntity != null)
+//			return (StaffEntity) doctorEntity.clone();
+//		else
+//			return null;
+//	}
+//
+//	public void setDoctorEntity(StaffEntity doctorEntity) {
+//		this.doctorEntity = doctorEntity;
+//	}
 
 }

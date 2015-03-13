@@ -12,22 +12,15 @@
         <result property="name" column="name" />
         <result property="nssfId" column="nssf_id" />
         <result property="geroId" column="gero_id" />
-        <result property="birthday" column="birthday" />
         <result property="basicUrl" column="basic_url" />
         <result property="leaveDate" column="leave_date" />
         <result property="archiveId" column="archive_id" />
     </resultMap>
     
-    <select id="getStaffEntityById" resultMap="StaffEntityMap">
+    <select id="getStaffEntity" resultMap="StaffEntityMap">
     <![CDATA[
         SELECT
-			id,
-			name,
-			nssf_id,
-			gero_id,
-			basic_url,
-			leave_date,
-			archive_id,
+			*
         FROM T_STAFF
         WHERE T_STAFF.id = #{id}
   ]]>

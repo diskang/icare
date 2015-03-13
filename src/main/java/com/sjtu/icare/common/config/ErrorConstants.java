@@ -56,6 +56,10 @@ public class ErrorConstants {
 	public static final String GERO_ROLE_INSERT_SERVICE_ERROR = "1000015 POST 插入养老院角色列表：后台获取失败";
 	public static final String GERO_ROLE_INSERT_CONFLICT_ERROR = "1000015 POST 插入养老院角色列表：该养老院已存在该角色";
 	
+	// staff schedule constants
+	public static final String STAFF_SCHEDULE_GET_PARAM_INVALID = "300001 GET 员工上班信息：请求参数错误";
+	public static final String STAFF_SCHEDULE_GET_SERVICE_FAILED = "300002 GET 员工上班信息：请求参数错误";
+	
 	
 	public static String format(String errorConstant, String otherMessage) {
 		if (errorConstant == null)

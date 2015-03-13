@@ -40,7 +40,7 @@ import com.sjtu.icare.modules.sys.entity.User;
 @RestController
 @RequestMapping("/elder/{eid}/blood_pressure")
 public class ElderBloodPressureRestController {
-	private static Logger logger = Logger.getLogger(ElderTemperatureRestController.class);
+	private static Logger logger = Logger.getLogger(ElderBloodPressureRestController.class);
 
 	@Autowired
 	private IElderHealthDataService elderHealthDataService;
@@ -80,9 +80,14 @@ public class ElderBloodPressureRestController {
 			// 获取基础的 JSON返回
 			BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
 			
+			ElderEntity queryElderEntity = new ElderEntity();
+			queryElderEntity.setId(elderId);
+			ElderEntity elderEntity = elderHealthDataService.getElderEntity(queryElderEntity);
 			
-			ElderEntity elderEntity = elderHealthDataService.getElderEntity(elderId);
-			List<ElderBloodPressureEntity> elderBloodPressureEntityList = elderHealthDataService.getElderBloodPressureEntities(elderId, startDate, endDate);
+			ElderBloodPressureEntity queryBloodPressureEntity = new ElderBloodPressureEntity();
+			queryBloodPressureEntity.setElderId(elderId);
+			List<ElderBloodPressureEntity> elderBloodPressureEntityList = elderHealthDataService.getElderBloodPressureEntities(queryBloodPressureEntity, startDate, endDate);
+			
 			User userEntityOfElder = elderHealthDataService.getUserEntityOfElder(elderEntity);
 	
 			// 构造返回的 JSON
@@ -99,9 +104,14 @@ public class ElderBloodPressureRestController {
 				tempMap.put("systolic_pressure", entity.getSystolicPressure());
 				tempMap.put("times", entity.getTime());
 				
-				StaffEntity doctorEntity = entity.getDoctorEntity();
-				User userEntityOfDoctor = staffDataService.getUserEntityOfStaff(doctorEntity);
+				StaffEntity queryStaffEntity = new StaffEntity();
+				queryStaffEntity.setId(entity.getDoctorId());
+				StaffEntity doctorEntity = staffDataService.getStaffEntity(queryStaffEntity);
 				
+				User userEntityOfDoctor = staffDataService.getUserEntityOfStaff(doctorEntity);
+				if (doctorEntity == null || userEntityOfDoctor == null)
+					throw new Exception("查询不到关联医生");
+		
 				if (doctorEntity != null) {
 					HashMap<String, Object> tempMap2 = new HashMap<String, Object>();
 					tempMap2.put("id", doctorEntity.getId());

@@ -1,5 +1,7 @@
 package com.sjtu.icare.modules.elder.persistence;
 
+import java.util.Map;
+
 import com.sjtu.icare.common.persistence.annotation.MyBatisDao;
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
 
@@ -12,6 +14,6 @@ import com.sjtu.icare.modules.elder.entity.ElderEntity;
 @MyBatisDao
 public interface ElderDAO {
 
-	ElderEntity getElderEntityById(int id);
+	ElderEntity getElderEntity(Map<String, Object> param);
 	
 }

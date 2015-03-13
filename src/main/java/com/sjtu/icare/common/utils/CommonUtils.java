@@ -18,11 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.beanutils.BeanUtils;
-
-import com.alibaba.fastjson.JSON;
-import com.sjtu.icare.common.exception.BeanToMapException;
-import com.sjtu.icare.modules.test.entity.TestEntity;
+import com.sjtu.icare.modules.elder.entity.ElderTemperatureEntity;
 
 public class CommonUtils {
 	public static final char UNDERLINE='_';
@@ -194,7 +190,7 @@ public class CommonUtils {
 //		TestEntity testEntity = new TestEntity();
 //		Map<String, Object> map = beanToMap(testEntity);
 //		System.out.println(map);
-		TestEntity testEntity = new TestEntity();
+		ElderTemperatureEntity testEntity = new ElderTemperatureEntity();
 		Map<String, Object> map = beanToMap(testEntity);
 		System.out.println(map);
 	}
