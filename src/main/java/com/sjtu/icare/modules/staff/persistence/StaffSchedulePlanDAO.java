@@ -25,5 +25,8 @@ public interface StaffSchedulePlanDAO {
 
 	List<StaffSchedulePlanEntity> getAllStaffSchedulePlansByGeroId(
 			Map<String, Object> paramMap);
+
+	List<StaffSchedulePlanEntity> getAllStaffSchedulePlansByGeroIdAndRole(
+			Map<String, Object> paramMap);
 	
 }

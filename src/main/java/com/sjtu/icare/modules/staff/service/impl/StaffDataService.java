@@ -81,6 +81,19 @@ public class StaffDataService implements IStaffDataService {
 		
 	}
 
+	@Override
+	public List<StaffSchedulePlanEntity> getAllStaffPlansByGeroId(
+			StaffSchedulePlanEntity staffSchedulePlanEntity,
+			String startDate, String endDate, String role) {
+		Map<String, Object> paramMap = CommonUtils.beanToMap(staffSchedulePlanEntity);
+		paramMap.put("startDate", startDate);
+		paramMap.put("endDate", endDate);
+		paramMap.put("role", role);
+		paramMap.put("userType", CommonConstants.STAFF_TYPE);
+		return staffSchedulePlanDAO.getAllStaffSchedulePlansByGeroIdAndRole(paramMap);
+	
+	}
+
 
 
 }

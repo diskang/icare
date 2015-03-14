@@ -33,4 +33,8 @@ public interface IStaffDataService {
 			StaffSchedulePlanEntity staffSchedulePlanEntity, String startDate,
 			String endDate);
 	
+	List<StaffSchedulePlanEntity> getAllStaffPlansByGeroId(
+			StaffSchedulePlanEntity queryStaffSchedulePlanEntity,
+			String startDate, String endDate, String role);
+	
 }

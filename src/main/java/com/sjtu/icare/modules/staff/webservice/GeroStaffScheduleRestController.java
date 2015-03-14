@@ -77,6 +77,8 @@ public class GeroStaffScheduleRestController {
 			List<StaffSchedulePlanEntity> allStaffSchedulePlans = null;
 			if (role == null)
 				allStaffSchedulePlans = staffDataService.getAllStaffPlansByGeroId(queryStaffSchedulePlanEntity, startDate, endDate);
+			else
+				allStaffSchedulePlans = staffDataService.getAllStaffPlansByGeroId(queryStaffSchedulePlanEntity, startDate, endDate, role);
 
 			// 构造返回的 JSON
 			Map<Integer, Map<String, Object>> staffPlanMap = new HashMap<Integer, Map<String, Object>>();

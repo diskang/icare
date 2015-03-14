@@ -6,6 +6,13 @@
     
    
     <cache />
+    
+    <sql id='fields'>
+        T_STAFF_SCHEDULE_PLAN.id,
+        T_STAFF_SCHEDULE_PLAN.staff_id,
+        T_STAFF_SCHEDULE_PLAN.gero_id,
+        T_STAFF_SCHEDULE_PLAN.work_date
+    </sql>
 
     <resultMap id="StaffSchedulePlanMap" type="com.sjtu.icare.modules.staff.entity.StaffSchedulePlanEntity">
         <id property="id" column="id" />
@@ -56,7 +63,37 @@
 
     </select>
     
-    
+    <select id="getAllStaffSchedulePlansByGeroIdAndRole" resultMap="StaffSchedulePlanMap">
+
+		select 
+		  <include refid='fields'/>
+		from 
+		<!-- 先连 user 和 staff schedule plan， 再连 user roles 和 role 相连的结果 -->
+		(
+		    T_USER inner join T_STAFF_SCHEDULE_PLAN 
+		    on T_USER.user_type = #{userType}
+		    and T_USER.user_id = T_STAFF_SCHEDULE_PLAN.staff_id
+		    and T_STAFF_SCHEDULE_PLAN.gero_id = #{geroId}
+		        <if test="startDate != null">
+		            <![CDATA[
+		            and #{startDate} <= convert(nvarchar(23), T_STAFF_SCHEDULE_PLAN.work_date, 120)
+		            ]]>
+		        </if>
+		        <if test="endDate != null">
+		            <![CDATA[
+		            and #{endDate} >= convert(nvarchar(23), T_STAFF_SCHEDULE_PLAN.work_date, 120)
+		            ]]>
+		        </if>
+		) inner join (
+		
+		    T_USER_ROLES inner join T_ROLE
+		    on 
+		        T_USER_ROLES.role_id = T_ROLE.id
+		        and T_ROLE.name = #{role}
+		) on T_USER_ROLES.user_id = T_USER.id
+
+    </select>
+      
     <insert id="insertStaffSchedulePlans">
         insert into 
             T_STAFF_SCHEDULE_PLAN(staff_id, gero_id, work_date) 
