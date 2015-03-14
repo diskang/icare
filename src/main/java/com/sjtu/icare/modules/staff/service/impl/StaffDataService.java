@@ -70,6 +70,17 @@ public class StaffDataService implements IStaffDataService {
 		staffSchedulePlanDAO.deleteStaffSchedulePlans(paramMap);
 	}
 
+	@Override
+	public List<StaffSchedulePlanEntity> getAllStaffPlansByGeroId(
+			StaffSchedulePlanEntity staffSchedulePlanEntity,
+			String startDate, String endDate) {
+		Map<String, Object> paramMap = CommonUtils.beanToMap(staffSchedulePlanEntity);
+		paramMap.put("startDate", startDate);
+		paramMap.put("endDate", endDate);
+		return staffSchedulePlanDAO.getAllStaffSchedulePlansByGeroId(paramMap);
+		
+	}
+
 
 
 }

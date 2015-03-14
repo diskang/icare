@@ -28,5 +28,9 @@ public interface IStaffDataService {
 
 	void deleteStaffSchedulePlans(StaffSchedulePlanEntity postEntity,
 			List<String> noworkDate);
+
+	List<StaffSchedulePlanEntity> getAllStaffPlansByGeroId(
+			StaffSchedulePlanEntity staffSchedulePlanEntity, String startDate,
+			String endDate);
 	
 }

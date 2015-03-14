@@ -70,6 +70,13 @@ public class ErrorConstants {
 	public static final String STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_DELETE_PARAM_INVALID = "300009 DELETE 员工某天排班信息：请求参数错误";
 	public static final String STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_DELETE_SERVICE_FAILED = "300011 DELETE 员工某天排班信息：后台删除信息失败";
 	
+	// gero staff schedule plan constants 
+	public static final String GERO_STAFF_SCHEDULE_PLAN_GET_PARAM_INVALID = "370001 GET 养老院排班信息：请求参数错误";
+	public static final String GERO_STAFF_SCHEDULE_PLAN_GET_SERVICE_FAILED = "370001 GET 养老院排班信息：后台获取失败";
+	
+	
+	
+	
 	public static String format(String errorConstant, String otherMessage) {
 		if (errorConstant == null)
 			return null;

@@ -35,6 +35,28 @@
 
     </select>
     
+    <select id="getAllStaffSchedulePlansByGeroId" parameterType="Map" resultMap="StaffSchedulePlanMap">
+
+        SELECT
+            *
+        FROM 
+            T_STAFF_SCHEDULE_PLAN
+        WHERE 
+            T_STAFF_SCHEDULE_PLAN.gero_id = #{geroId}
+            <if test="startDate != null">
+                <![CDATA[
+                and #{startDate} <= convert(nvarchar(23), T_STAFF_SCHEDULE_PLAN.work_date, 120)
+                ]]>
+            </if>
+            <if test="endDate != null">
+                <![CDATA[
+                and #{endDate} >= convert(nvarchar(23), T_STAFF_SCHEDULE_PLAN.work_date, 120)
+                ]]>
+            </if>
+
+    </select>
+    
+    
     <insert id="insertStaffSchedulePlans">
         insert into 
             T_STAFF_SCHEDULE_PLAN(staff_id, gero_id, work_date) 
