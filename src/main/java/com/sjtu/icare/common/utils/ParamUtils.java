@@ -10,6 +10,7 @@ package com.sjtu.icare.common.utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -66,6 +67,25 @@ public class ParamUtils {
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
 	}
+	
+	public static List<Object> getListByJson(String jsonString, Logger logger) throws RestException {
+		List<Object> requestBodyParamMap;
+		
+		try {
+			requestBodyParamMap = (List<Object>) JSON.parse(jsonString);
+			return requestBodyParamMap;
+			
+		} catch(Exception e) {
+			String message = "#" + ErrorConstants.COMMON_ERROR_INVALID_JSON + "#\n" + 
+					"非法JSON:\n" +
+					jsonString +
+					"\n";
+			if (logger != null) 
+				logger.error(message);
+			throw new RestException(HttpStatus.BAD_REQUEST, message);
+		}
+	}
+	
 	
 	public static Map<String, String> getDateOfStartDateAndEndDate(String startDate, String endDate) {
 		if (startDate == null && endDate == null) {

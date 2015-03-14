@@ -8,15 +8,16 @@
 package com.sjtu.icare.modules.staff.webservice;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
-import com.sjtu.icare.common.utils.DateUtils;
+import com.sjtu.icare.common.utils.CommonUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.ParamValidator;
 import com.sjtu.icare.common.web.rest.MediaTypes;
@@ -122,4 +123,76 @@ public class GeroStaffScheduleRestController {
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
 	}
+	
+	@RequestMapping(method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
+	public Object putStaffSchedulePlans(
+			@PathVariable("gid") int geroId,
+			@RequestBody String inJson
+			) {	
+		// 将参数转化成驼峰格式的 Map
+		List<Object> tempRquestList = ParamUtils.getListByJson(inJson, logger);
+		
+		// 获取基础的 JSON
+		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
+					
+		for (Object map : tempRquestList) {
+			Map<String, Object> tempRequestParamMap = (Map<String, Object>) map;
+			tempRequestParamMap.put("geroId", geroId);
+			Map<String, Object> requestParamMap = CommonUtils.convertMapToCamelStyle(tempRequestParamMap);
+			
+			List<String> workDate;
+			List<String> noworkDate;
+			Integer staffId;
+			
+			try {
+				workDate = (List<String>) requestParamMap.get("workDate");
+				noworkDate = (List<String>) requestParamMap.get("noworkDate");
+				staffId = (Integer) requestParamMap.get("staffId");
+				
+				// 参数详细验证
+				// work_date, nowork_date 不能有交集
+				HashMap<String, Boolean> bin = new HashMap<String, Boolean>();
+				for (String date : workDate) {
+					if (!ParamValidator.isDate(date))
+						throw new Exception();
+					bin.put(date.trim(), true);
+				}
+				for (String date : noworkDate) {
+					if (!ParamValidator.isDate(date))
+						throw new Exception();
+					if (bin.get(date.trim()) != null)
+						throw new Exception();
+				}
+			} catch(Exception e) {
+				String otherMessage = "[work_date=" + requestParamMap.get("workDate") + "]" +
+						"[nowork_date=" + requestParamMap.get("noworkDate") + "]" +
+						"[staff_id=" + requestParamMap.get("staffId") + "]";
+				String message = ErrorConstants.format(ErrorConstants.GERO_STAFF_SCHEDULE_PLAN_PUT_PARAM_INVALID, otherMessage);
+				logger.error(message);
+				throw new RestException(HttpStatus.BAD_REQUEST, message);
+			}
+			
+			// 插入数据
+			try {
+				
+				StaffSchedulePlanEntity postEntity = new StaffSchedulePlanEntity(); 
+				BeanUtils.populate(postEntity, requestParamMap);
+				postEntity.setGeroId(geroId);
+				if (!workDate.isEmpty())
+					staffDataService.insertStaffSchedulePlans(postEntity, workDate);
+				if (!noworkDate.isEmpty())
+					staffDataService.deleteStaffSchedulePlans(postEntity, noworkDate);
+			} catch(Exception e) {
+				String otherMessage = "[" + e.getMessage() + "]";
+				String message = ErrorConstants.format(ErrorConstants.GERO_STAFF_SCHEDULE_PLAN_PUT_SERVICE_FAILED, otherMessage);
+				logger.error(message);
+				throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
+			}
+		}
+		
+		return basicReturnedJson.getMap();
+
+		
+	}
+	
 }

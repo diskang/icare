@@ -72,9 +72,9 @@ public class ErrorConstants {
 	
 	// gero staff schedule plan constants 
 	public static final String GERO_STAFF_SCHEDULE_PLAN_GET_PARAM_INVALID = "370001 GET 养老院排班信息：请求参数错误";
-	public static final String GERO_STAFF_SCHEDULE_PLAN_GET_SERVICE_FAILED = "370001 GET 养老院排班信息：后台获取失败";
-	
-	
+	public static final String GERO_STAFF_SCHEDULE_PLAN_GET_SERVICE_FAILED = "370002 GET 养老院排班信息：后台获取失败";
+	public static final String GERO_STAFF_SCHEDULE_PLAN_PUT_PARAM_INVALID = "370003 PUT 养老院排班信息：请求参数错误";
+	public static final String GERO_STAFF_SCHEDULE_PLAN_PUT_SERVICE_FAILED = "370004 PUT 养老院排班信息：后台获取失败";
 	
 	
 	public static String format(String errorConstant, String otherMessage) {
