@@ -7,8 +7,8 @@
 	<resultMap id="roleResult" type="Role">
 		<id property="id" column="id" />
 		<result property="name" column="name" />
+		<result property="geroId" column="geroId" />
 		<result property="notes" column="notes" />
-		<result property="geroId" column="gero_id" />
 		<collection property="privilegeList" ofType="Privilege">
 			<id property="id" column="rp.id" />
 		</collection>
@@ -17,7 +17,7 @@
     <sql id="roleColumns">
     	a.id,
     	a.name,
-		a.gero_id AS geroId,
+		a.gero_id as geroId,
 		a.notes
     </sql>
     
@@ -88,18 +88,18 @@
 	</insert>
 	
 	<update id="update">
-		UPDATE sys_role SET 
+		UPDATE T_ROLE SET 
 			name = #{name}, 
 			gero_id = #{geroId}, 
-			notes = #{notes}, 
+			notes = #{notes}
 		WHERE id = #{id}
 	</update>
 	
-	<delete id="deleteRoleMenu">
+	<delete id="deleteRolePrivilege">
 		DELETE T_ROLE_PRIVILEGES WHERE role_id = #{id}
 	</delete>
 	
-	<insert id="insertRoleMenu">
+	<insert id="insertRolePrivilege">
 		INSERT INTO T_ROLE_PRIVILEGES(role_id, privilege_id)
 		<foreach collection="privilegeList" item="privilege" separator=" union all ">
 			SELECT #{id}, #{privilege.id}
@@ -110,5 +110,6 @@
 		DELETE T_ROLE WHERE id = #{id} 
 			AND gero_id IS NOT NULL
 			AND gero_id != ''
+			AND gero_id != 1
 	</delete>
 </mapper>

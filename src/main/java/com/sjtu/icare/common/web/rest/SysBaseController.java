@@ -44,7 +44,7 @@ public class SysBaseController {
 			String message = ErrorConstants.format(ErrorConstants.USER_FOR_ID_NOT_FOUND,
 					"[uid=" + uid + "]");
 			logger.error(message);
-			throw new RestException(HttpStatus.BAD_REQUEST, message);
+			throw new RestException(HttpStatus.NOT_FOUND, message);
 		}
 		return user;
 	}
@@ -61,7 +61,7 @@ public class SysBaseController {
 			String message = ErrorConstants.format(ErrorConstants.GERO_FOR_ID_NOT_FOUND,
 					"[gid=" + gid + "]");
 			logger.error(message);
-			throw new RestException(HttpStatus.BAD_REQUEST, message);
+			throw new RestException(HttpStatus.NOT_FOUND, message);
 		}
 		return gero;
 	}
@@ -78,7 +78,7 @@ public class SysBaseController {
 			String message = ErrorConstants.format(ErrorConstants.ROLE_FOR_ID_NOT_FOUND,
 					"[rid=" + rid + "]");
 			logger.error(message);
-			throw new RestException(HttpStatus.BAD_REQUEST, message);
+			throw new RestException(HttpStatus.NOT_FOUND, message);
 		}
 		return role;
 	}

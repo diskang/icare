@@ -297,7 +297,8 @@ public class SystemService extends BaseService  {
 	
 	@Transactional(readOnly = true)
 	public Role getRoleById (Role role) {
-		return roleMapper.get(role);
+		role = roleMapper.get(role);
+		return role;
 	}
 	
 	@Transactional(readOnly = true)
@@ -308,6 +309,25 @@ public class SystemService extends BaseService  {
 		return role;
 	}
 	
+	@Transactional(readOnly = false)
+	public void updateGeroRole (Role role) {
+		roleMapper.update(role);
+	}
+	
+	@Transactional(readOnly = false)
+	public void deleteGeroRole (Role role) {
+		roleMapper.delete(role);
+	}
+	
+	@Transactional(readOnly = true)
+	public Privilege getPrivilegeById (int id) {
+		return privilegeMapper.get(id);
+	}
+	
+	@Transactional(readOnly = false)
+	public void insertRolePrivilege (Role role) {
+		roleMapper.insertRolePrivilege(role);
+	}
 	
 	/**
 	 * 生成安全的密码，生成随机的16位salt并经过1024次 sha-1 hash

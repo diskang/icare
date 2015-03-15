@@ -57,6 +57,11 @@ public class ErrorConstants {
 	public static final String GERO_ROLE_INSERT_CONFLICT_ERROR = "1000016 POST 插入养老院角色列表：该养老院已存在该角色";
 	public static final String USER_NO_PRIVILEGE_FOR_THIS_GERO = "1000017 用户没有操作此养老院的权限";
 	public static final String GERO_ROLE_GET_PRIVILEGE_SERVICE_ERROR = "1000018 GET 查询养老院角色权限：后台获取失败";
+	public static final String GERO_ROLE_GET_ROLE_NOT_IN_GERO = "1000019 GET 查询养老院角色：该角色不属于此养老院";
+	public static final String GERO_ROLE_UPDATE_CONFLICT_ERROR = "1000020 PUT 修改养老院角色列表：该养老院已存在该角色";
+	public static final String GERO_ROLE_UPDATE_SERVICE_ERROR = "1000021 PUT 修改养老院角色列表：后台获取失败";
+	public static final String GERO_ROLE_DELETE_SERVICE_ERROR = "1000022 DELETE 删除养老院角色：后台删除数据失败";
+	public static final String GERO_ROLE_PRIVILEGE_INSERT_PARAM_INVALID = "1000023 POST 插入养老院角色权限：请求参数错误";
 	
 	
 	public static String format(String errorConstant, String otherMessage) {
