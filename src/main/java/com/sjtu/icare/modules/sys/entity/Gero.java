@@ -8,7 +8,7 @@ public class Gero implements Serializable {
 
     private static final long serialVersionUID = 6321792448424424931L;
     private int id;
-    private String name;
+    private String name; //姓名
     private String cancelDate;
 
     public int getId() {
