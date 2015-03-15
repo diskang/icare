@@ -1,15 +1,20 @@
 package com.sjtu.icare.modules.sys.entity;
 
-import java.io.Serializable;
-
 import org.hibernate.validator.constraints.Length;
 
-public class Gero implements Serializable {
+import com.sjtu.icare.common.persistence.DataEntity;
+
+/**
+ * 养老院Entity
+ * @author jty
+ * @version 2015-03-15
+ */
+public class Gero extends DataEntity<Role>{
 
     private static final long serialVersionUID = 6321792448424424931L;
-    private int id;
-    private String name; //姓名
-    private String cancelDate;
+    
+    private String name; //养老院名
+    private String cancelDate;//注销日期
 
     public int getId() {
         return id;
@@ -44,6 +49,10 @@ public class Gero implements Serializable {
 	public Gero() {
 		super();
 	}
-    
-    
+
+	@Override
+	public void preDelete() {
+		// TODO Auto-generated method stub
+		
+	}
 }

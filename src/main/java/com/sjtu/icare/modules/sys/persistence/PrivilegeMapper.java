@@ -16,15 +16,33 @@ import com.sjtu.icare.modules.sys.entity.Privilege;
  */
 @MyBatisDao
 public interface PrivilegeMapper extends CrudMapper<Privilege> {
-
+	
+	/**
+	 *  查找子列表
+	 * @param privilege
+	 * @return
+	 */
 	public List<Privilege> findByParentIdsLike(Privilege privilege);
-
+	
+	/**
+	 *  查用户权限
+	 * @param privilege
+	 * @return
+	 */
 	public List<Privilege> findByUserId(Privilege privilege);
 	
+	/**
+	 *  查角色权限
+	 * @param privilege
+	 * @return
+	 */
 	public List<Privilege> findByRoleId(Privilege privilege);
 	
+	/**
+	 *  更新parent_ids
+	 * @param privilege
+	 * @return
+	 */
 	public int updateParentIds(Privilege privilege);
-	
-	public int updateSort(Privilege privilege);
 	
 }
