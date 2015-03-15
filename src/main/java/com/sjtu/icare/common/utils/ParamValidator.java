@@ -25,7 +25,7 @@ public class ParamValidator {
 	}
 	
 	public static boolean isDate(String date) {
-		if (CommonUtils.getDate(date) == null)
+		if (MapListUtils.getDate(date) == null)
 			return false;
 		else
 			return true;

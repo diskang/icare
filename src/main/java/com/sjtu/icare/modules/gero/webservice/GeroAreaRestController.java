@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
-import com.sjtu.icare.common.utils.CommonUtils;
+import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.StringUtils;
 import com.sjtu.icare.common.web.rest.MediaTypes;
@@ -89,7 +89,7 @@ public class GeroAreaRestController {
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("geroId", geroId);
-		Map<String, Object> requestParamMap = CommonUtils.convertMapToCamelStyle(tempRquestParamMap);
+		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
 		
 		Integer parentId;
 		String parentIds;
@@ -220,7 +220,7 @@ public class GeroAreaRestController {
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("geroId", geroId);
 		tempRquestParamMap.put("id", areaId);
-		Map<String, Object> requestParamMap = CommonUtils.convertMapToCamelStyle(tempRquestParamMap);
+		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
 		
 		// 获取基础的 JSON
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
@@ -250,7 +250,7 @@ public class GeroAreaRestController {
 		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
 		tempRquestParamMap.put("geroId", geroId);
 		tempRquestParamMap.put("id", areaId);
-		Map<String, Object> requestParamMap = CommonUtils.convertMapToCamelStyle(tempRquestParamMap);
+		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
 		
 		// 获取基础的 JSON
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();

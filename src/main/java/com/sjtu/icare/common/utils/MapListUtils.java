@@ -22,7 +22,7 @@ import java.util.Map;
 
 import com.sjtu.icare.modules.elder.entity.ElderTemperatureEntity;
 
-public class CommonUtils {
+public class MapListUtils {
 	public static final char UNDERLINE='_';
    
 	public static String camelToUnderline(String param){

@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sjtu.icare.common.config.CommonConstants;
-import com.sjtu.icare.common.utils.CommonUtils;
+import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.modules.staff.entity.StaffEntity;
 import com.sjtu.icare.modules.staff.entity.StaffSchedulePlanEntity;
 import com.sjtu.icare.modules.staff.persistence.StaffDAO;
@@ -34,7 +34,7 @@ public class StaffDataService implements IStaffDataService {
 	
 	@Override
 	public StaffEntity getStaffEntity(StaffEntity staffEntity) {
-		Map<String, Object> paramMap = CommonUtils.beanToMap(staffEntity);
+		Map<String, Object> paramMap = MapListUtils.beanToMap(staffEntity);
 		return staffDAO.getStaffEntity(paramMap);
 	}
 	
@@ -47,7 +47,7 @@ public class StaffDataService implements IStaffDataService {
 	public List<StaffSchedulePlanEntity> getStaffSchedulePlans(
 			StaffSchedulePlanEntity queryStaffSchedulePlanEntity,
 			String startDate, String endDate) {
-		Map<String, Object> paramMap = CommonUtils.beanToMap(queryStaffSchedulePlanEntity);
+		Map<String, Object> paramMap = MapListUtils.beanToMap(queryStaffSchedulePlanEntity);
 		paramMap.put("startDate", startDate);
 		paramMap.put("endDate", endDate);
 		return staffSchedulePlanDAO.getStaffSchedulePlans(paramMap);
@@ -57,7 +57,7 @@ public class StaffDataService implements IStaffDataService {
 	public void insertStaffSchedulePlans(
 			StaffSchedulePlanEntity staffSchedulePlanEntity,
 			List<String> workDate) {
-		Map<String, Object> paramMap = CommonUtils.beanToMap(staffSchedulePlanEntity);
+		Map<String, Object> paramMap = MapListUtils.beanToMap(staffSchedulePlanEntity);
 		paramMap.put("workDate", workDate);
 		staffSchedulePlanDAO.insertStaffSchedulePlans(paramMap);
 	}
@@ -65,7 +65,7 @@ public class StaffDataService implements IStaffDataService {
 	@Override
 	public void deleteStaffSchedulePlans(StaffSchedulePlanEntity staffSchedulePlanEntity,
 			List<String> noworkDate) {
-		Map<String, Object> paramMap = CommonUtils.beanToMap(staffSchedulePlanEntity);
+		Map<String, Object> paramMap = MapListUtils.beanToMap(staffSchedulePlanEntity);
 		paramMap.put("noworkDate", noworkDate);
 		staffSchedulePlanDAO.deleteStaffSchedulePlans(paramMap);
 	}
@@ -74,7 +74,7 @@ public class StaffDataService implements IStaffDataService {
 	public List<StaffSchedulePlanEntity> getAllStaffPlansByGeroId(
 			StaffSchedulePlanEntity staffSchedulePlanEntity,
 			String startDate, String endDate) {
-		Map<String, Object> paramMap = CommonUtils.beanToMap(staffSchedulePlanEntity);
+		Map<String, Object> paramMap = MapListUtils.beanToMap(staffSchedulePlanEntity);
 		paramMap.put("startDate", startDate);
 		paramMap.put("endDate", endDate);
 		return staffSchedulePlanDAO.getAllStaffSchedulePlansByGeroId(paramMap);
@@ -85,7 +85,7 @@ public class StaffDataService implements IStaffDataService {
 	public List<StaffSchedulePlanEntity> getAllStaffPlansByGeroId(
 			StaffSchedulePlanEntity staffSchedulePlanEntity,
 			String startDate, String endDate, String role) {
-		Map<String, Object> paramMap = CommonUtils.beanToMap(staffSchedulePlanEntity);
+		Map<String, Object> paramMap = MapListUtils.beanToMap(staffSchedulePlanEntity);
 		paramMap.put("startDate", startDate);
 		paramMap.put("endDate", endDate);
 		paramMap.put("role", role);
