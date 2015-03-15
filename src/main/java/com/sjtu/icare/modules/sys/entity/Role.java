@@ -276,19 +276,20 @@ public class Role extends DataEntity<Role> {
 	public void preDelete() {
 	}
 
-	public int getGeroId() {
-		return geroId;
-	}
-
-	public void setGeroId(int geroId) {
-		this.geroId = geroId;
-	}
-
 	public String getNotes() {
 		return notes;
 	}
 
 	public void setNotes(String notes) {
 		this.notes = notes;
+	}
+
+	public int getGeroId() {
+		return geroId;
+	}
+
+	public void setGeroId(int geroId) {
+		this.geroId = geroId;
 	}	
+	
 }

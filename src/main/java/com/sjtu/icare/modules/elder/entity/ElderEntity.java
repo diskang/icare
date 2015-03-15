@@ -23,7 +23,6 @@ public class ElderEntity implements Serializable {
     private String nssfId;
     private String archiveId;
     private int areaId;
-    private String residence;
     private int careLevel;
     private Date checkinDate;
     private Date checkoutDate;
@@ -32,8 +31,7 @@ public class ElderEntity implements Serializable {
     private String assessUrl;
 	private String trackUrl;
     private String padMac;
-    
-    private User elderUser;
+   
     
     /**
 	 * @return the id
@@ -106,18 +104,6 @@ public class ElderEntity implements Serializable {
 	 */
 	public void setAreaId(int areaId) {
 		this.areaId = areaId;
-	}
-	/**
-	 * @return the residence
-	 */
-	public String getResidence() {
-		return residence;
-	}
-	/**
-	 * @param residence the residence to set
-	 */
-	public void setResidence(String residence) {
-		this.residence = residence;
 	}
 	/**
 	 * @return the careLevel
@@ -227,16 +213,5 @@ public class ElderEntity implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	public User getElderUser() {
-		return (User) elderUser.clone();
-	}
-	public void setElderUser(User elderUser) {
-		this.elderUser = elderUser;
-	}
-
-    
-    
-    
- 
 
 }

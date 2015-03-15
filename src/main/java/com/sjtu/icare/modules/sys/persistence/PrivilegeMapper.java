@@ -21,6 +21,8 @@ public interface PrivilegeMapper extends CrudMapper<Privilege> {
 
 	public List<Privilege> findByUserId(Privilege privilege);
 	
+	public List<Privilege> findByRoleId(Privilege privilege);
+	
 	public int updateParentIds(Privilege privilege);
 	
 	public int updateSort(Privilege privilege);

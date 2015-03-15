@@ -15,7 +15,7 @@ import com.sjtu.icare.common.persistence.annotation.MyBatisDao;
 import com.sjtu.icare.modules.elder.entity.ElderBloodPressureEntity;
 
 @MyBatisDao
-public interface ElderBloodPressureEntityDAO {
+public interface ElderBloodPressureDAO {
 
 	List<ElderBloodPressureEntity> getElderBloodPressureEntitiesByElderidStartdayEndday(
 			@Param("elderId") int elderId, 

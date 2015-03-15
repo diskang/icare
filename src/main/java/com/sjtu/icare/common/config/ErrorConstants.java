@@ -33,6 +33,10 @@ public class ErrorConstants {
 	public static final String GERO_AREA_GET_SERVICE_FAILED = "200001 GET 养老院区域：后台获取数据失败";
 	public static final String GERO_AREA_POST_PARAM_INVALID = "200002 POST 养老院区域：请求参数错误";
 	public static final String GERO_AREA_POST_SERVICE_FAILED = "200003 POST 养老院区域：后台插入数据失败";
+	public static final String GERO_AREA_GET_SUBAREA_PARAM_INVALID = "200004 GET 养老院子区域：请求参数错误";
+	public static final String GERO_AREA_GET_SUBAREA_SERVICE_FAILED = "200006 GET 养老院子区域：后台获取数据失败";
+	public static final String GERO_AREA_PUT_SERVICE_FAILED = "200007 PUT 养老院区域：修改数据失败";
+	public static final String GERO_AREA_DELETE_SERVICE_FAILED = "200008 DELETE 养老院区域：删除数据失败";
 
 	// user service constants
 	public static final String USER_UPDATE_INFO_PARAM_INVALID = "1000001 PUT 更新用户信息：请求参数错误";
@@ -50,7 +54,14 @@ public class ErrorConstants {
 	public static final String ORDER_BY_PARAM_INVALID = "1000013 未取到该排序条件";
 	public static final String GERO_ROLE_INSERT_PARAM_INVALID = "1000014 POST 插入养老院角色列表：请求参数错误";
 	public static final String GERO_ROLE_INSERT_SERVICE_ERROR = "1000015 POST 插入养老院角色列表：后台获取失败";
-	public static final String GERO_ROLE_INSERT_CONFLICT_ERROR = "1000015 POST 插入养老院角色列表：该养老院已存在该角色";
+	public static final String GERO_ROLE_INSERT_CONFLICT_ERROR = "1000016 POST 插入养老院角色列表：该养老院已存在该角色";
+	public static final String USER_NO_PRIVILEGE_FOR_THIS_GERO = "1000017 用户没有操作此养老院的权限";
+	public static final String GERO_ROLE_GET_PRIVILEGE_SERVICE_ERROR = "1000018 GET 查询养老院角色权限：后台获取失败";
+	public static final String GERO_ROLE_GET_ROLE_NOT_IN_GERO = "1000019 GET 查询养老院角色：该角色不属于此养老院";
+	public static final String GERO_ROLE_UPDATE_CONFLICT_ERROR = "1000020 PUT 修改养老院角色列表：该养老院已存在该角色";
+	public static final String GERO_ROLE_UPDATE_SERVICE_ERROR = "1000021 PUT 修改养老院角色列表：后台获取失败";
+	public static final String GERO_ROLE_DELETE_SERVICE_ERROR = "1000022 DELETE 删除养老院角色：后台删除数据失败";
+	public static final String GERO_ROLE_PRIVILEGE_INSERT_PARAM_INVALID = "1000023 POST 插入养老院角色权限：请求参数错误";
 	
 	
 	public static String format(String errorConstant, String otherMessage) {

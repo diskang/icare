@@ -25,7 +25,7 @@ public class AdminController extends BaseController{
 	 */
 	@RequestMapping(value = "${adminPath}", method = RequestMethod.GET)
 	@ResponseBody
-	@RequiresPermissions("admin")
+	@RequiresPermissions("/user/{uid}#GET")
 	@RequiresRoles("gero:1")
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
 		logger.debug("admin!");
@@ -35,7 +35,7 @@ public class AdminController extends BaseController{
 			if(user.getUsername() != null){
 				if (SecurityUtils.getSubject().isPermitted("admin")){
 					logger.debug("admin");
-					return "redirect:"+Global.getAdminPath();  
+					return "redirect:"+Global.getAdminPath();
 				}
 			}
 //		}

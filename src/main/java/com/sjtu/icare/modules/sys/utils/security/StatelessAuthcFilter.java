@@ -50,7 +50,7 @@ public class StatelessAuthcFilter extends AccessControlFilter {
 			subject.login(token);
 			String permission = getPathWithinApplication(request)+":"+GET_METHOD;
 			logger.debug(permission);
-			subject.checkPermission(permission);
+//			subject.checkPermission(permission);
 			
 	    } catch ( UnknownAccountException uae ) { 
 	    	onLoginFail(response,"No Account");

@@ -1,12 +1,8 @@
 package com.sjtu.icare.modules.sys.webservice;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import javax.xml.ws.spi.http.HttpHandler;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.config.OrderByConstant;
 import com.sjtu.icare.common.persistence.Page;
@@ -27,11 +21,10 @@ import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
-import com.sjtu.icare.modules.sys.entity.Privilege;
+import com.sjtu.icare.common.web.rest.SysBaseController;
 import com.sjtu.icare.modules.sys.entity.Role;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.service.SystemService;
-import com.sjtu.icare.modules.sys.utils.UserUtils;
 
 
 /**
@@ -43,7 +36,8 @@ import com.sjtu.icare.modules.sys.utils.UserUtils;
 */
 @RestController
 @RequestMapping("/user")
-public class UserController{
+public class UserController extends SysBaseController{
+	
 	private static Logger logger = Logger.getLogger(UserController.class);
 	
 	@Autowired
@@ -65,16 +59,7 @@ public class UserController{
 		
 		Page<User> userPage = new Page<User>(page, limit);
 		
-		String orderBy = "id";
-		try {
-			orderBy = OrderByConstant.valueOf(orderByTag).getTag();
-		} catch (Exception e1) {
-			String message = ErrorConstants.format(ErrorConstants.ORDER_BY_PARAM_INVALID,"");
-			logger.error(message);
-			throw new RestException(HttpStatus.BAD_REQUEST, message);
-		}
-		
-		userPage.setOrderBy(orderBy);
+		userPage = setOrderBy(userPage, orderByTag);
 		
 		// get page from service
 		List<User> userList;
@@ -311,76 +296,6 @@ public class UserController{
 		result.setError(HttpStatus.OK.name());
 		
 		return result.getMap();
-	}
-	
-	
-	/**
-	 * 通过id获取user
-	 * @param uid
-	 * @return
-	 */
-	private User getUserFromId (int uid){
-		User user;
-		try {
-			user = UserUtils.get(uid);
-			if (user == null) {
-				throw new Exception();
-			}
-		} catch (Exception e) {
-			String message = ErrorConstants.format(ErrorConstants.USER_FOR_ID_NOT_FOUND,
-					"[uid=" + uid + "]");
-			logger.error(message);
-			throw new RestException(HttpStatus.BAD_REQUEST, message);
-		}
-		return user;
-	}
-	
-	/**
-	 * user返回格式
-	 * @param user
-	 * @return
-	 */
-	private Map<String, Object> getUserMapFromUser(User user){
-		Map<String, Object> userMap = new HashMap<String, Object>();
-		userMap.put("id", user.getId());
-		userMap.put("name", user.getName());
-		userMap.put("username", user.getLoginName());
-		userMap.put("user_type", user.getUserType());
-		userMap.put("user_id", user.getUserId());
-		ArrayList<Object> roleList = new ArrayList<Object>();
-		for (Role role : user.getRoleList()){
-			Map<String, Object> roleMap = new HashMap<String, Object>();
-			roleMap.put("id", role.getId());
-			roleMap.put("name", role.getName());
-			roleList.add(roleMap);
-		}
-		userMap.put("role_list", roleList);
-		ArrayList<Object> privilegeList = new ArrayList<Object>();
-		for (Privilege privilege : UserUtils.getPrivilegeList(user)){
-			privilegeList.add(getPrivilegeMapFromPrivilege(privilege));
-		}
-		userMap.put("privilege_list", privilegeList);
-		userMap.put("register_date", user.getRegisterDate());
-		userMap.put("cancel_date", user.getCancelDate());
-		userMap.put("photo_url", user.getPhotoUrl());
-		return userMap;
-	}
-	
-	/**
-	 * Privilege返回格式
-	 * @param privilege
-	 * @return
-	 */
-	private Map<String, Object> getPrivilegeMapFromPrivilege(Privilege privilege){
-		Map<String, Object> privilegeMap = new HashMap<String, Object>();
-		privilegeMap.put("id", privilege.getId());
-		privilegeMap.put("name", privilege.getName());
-		privilegeMap.put("parent_id", privilege.getParentId());
-		privilegeMap.put("parent_ids", privilege.getParentIds());
-		privilegeMap.put("permission", privilege.getPermission());
-		privilegeMap.put("href", privilege.getHref());
-		privilegeMap.put("icon", privilege.getIcon());
-		return privilegeMap;
-	}
-	
+	}	
+
 }

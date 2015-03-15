@@ -290,9 +290,43 @@ public class SystemService extends BaseService  {
 		roleMapper.insert(role);
 	}
 	
-	@Transactional(readOnly = false)
-	public Role getRole (Role role) {
+	@Transactional(readOnly = true)
+	public Role getRoleByNameAndGero (Role role) {
 		return roleMapper.getByNameAndGero(role);
+	}
+	
+	@Transactional(readOnly = true)
+	public Role getRoleById (Role role) {
+		role = roleMapper.get(role);
+		return role;
+	}
+	
+	@Transactional(readOnly = true)
+	public Role getPrivilegeListByRole (Role role) {
+		Privilege privilege = new Privilege();
+		privilege.setRoleId(role.getId());
+		role.setPrivilegeList(privilegeMapper.findByRoleId(privilege));
+		return role;
+	}
+	
+	@Transactional(readOnly = false)
+	public void updateGeroRole (Role role) {
+		roleMapper.update(role);
+	}
+	
+	@Transactional(readOnly = false)
+	public void deleteGeroRole (Role role) {
+		roleMapper.delete(role);
+	}
+	
+	@Transactional(readOnly = true)
+	public Privilege getPrivilegeById (int id) {
+		return privilegeMapper.get(id);
+	}
+	
+	@Transactional(readOnly = false)
+	public void insertRolePrivilege (Role role) {
+		roleMapper.insertRolePrivilege(role);
 	}
 	
 	/**

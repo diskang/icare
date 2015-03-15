@@ -7,76 +7,116 @@
  */
 package com.sjtu.icare.modules.gero.entity;
 
-public class GeroAreaEntity {
+import java.io.Serializable;
+
+public class GeroAreaEntity implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+	
+	private int id;
 	private int parentId;
-	
-	
-	
+	private String parentIds;
+	private int geroId;
+	private int type;
+	private int level;
+	private String name;
+	private String delFlag;
+
 	/**
-	 * @Title getParentId
-	 * @Description TODO
-	 * @param @return
-	 * @return Object
-	 * @throws
+	 * @return the id
 	 */
-	public Integer getParentId() {
+	public int getId() {
+		return id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+	/**
+	 * @return the parentId
+	 */
+	public int getParentId() {
 		return parentId;
 	}
-
 	/**
 	 * @param parentId the parentId to set
 	 */
 	public void setParentId(int parentId) {
 		this.parentId = parentId;
 	}
-
 	/**
-	 * @Title getParentIds
-	 * @Description TODO
-	 * @param @return
-	 * @return Object
-	 * @throws
+	 * @return the parentIds
 	 */
 	public String getParentIds() {
-		// TODO Auto-generated method stub
-		return null;
+		return parentIds;
 	}
-
 	/**
-	 * @Title getType
-	 * @Description TODO
-	 * @param @return
-	 * @return Object
-	 * @throws
+	 * @param parentIds the parentIds to set
 	 */
-	public Integer getType() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setParentIds(String parentIds) {
+		this.parentIds = parentIds;
 	}
-
 	/**
-	 * @Title getLevel
-	 * @Description TODO
-	 * @param @return
-	 * @return Object
-	 * @throws
+	 * @return the geroId
 	 */
-	public Integer getLevel() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getGeroId() {
+		return geroId;
 	}
-
 	/**
-	 * @Title getName
-	 * @Description TODO
-	 * @param @return
-	 * @return Object
-	 * @throws
+	 * @param geroId the geroId to set
+	 */
+	public void setGeroId(int geroId) {
+		this.geroId = geroId;
+	}
+	/**
+	 * @return the type
+	 */
+	public int getType() {
+		return type;
+	}
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(int type) {
+		this.type = type;
+	}
+	/**
+	 * @return the level
+	 */
+	public int getLevel() {
+		return level;
+	}
+	/**
+	 * @param level the level to set
+	 */
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	/**
+	 * @return the name
 	 */
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
+	}
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	/**
+	 * @return the delFlag
+	 */
+	public String getDelFlag() {
+		return delFlag;
+	}
+	/**
+	 * @param delFlag the delFlag to set
+	 */
+	public void setDelFlag(String delFlag) {
+		this.delFlag = delFlag;
 	}
 
 }

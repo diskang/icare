@@ -31,6 +31,8 @@ public class Privilege extends DataEntity<Privilege>{
 	
 	private int userId;
 	
+	private int roleId;
+	
 	public Privilege(){
 		super();
 //		this.sort = 30;
@@ -182,4 +184,22 @@ public class Privilege extends DataEntity<Privilege>{
 	 */
 	public void preDelete() {
 	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
+	public int getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
+	}
+	
+	
 }

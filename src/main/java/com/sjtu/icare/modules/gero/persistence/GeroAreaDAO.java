@@ -8,6 +8,7 @@
 package com.sjtu.icare.modules.gero.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import com.sjtu.icare.common.persistence.annotation.MyBatisDao;
 import com.sjtu.icare.modules.gero.entity.GeroAreaEntity;
@@ -16,13 +17,61 @@ import com.sjtu.icare.modules.gero.entity.GeroAreaEntity;
 public interface GeroAreaDAO {
 
 	/**
-	 * @Title getGeroAreaEntities
+	 * @Title getGeroAreaEntitiesByGeroid
 	 * @Description TODO
 	 * @param @param geroId
 	 * @param @return
 	 * @return List<GeroAreaEntity>
 	 * @throws
 	 */
-	List<GeroAreaEntity> getGeroAreaEntities(int geroId);
+	List<GeroAreaEntity> getGeroAreaEntities(Map<String, Object> geroAreaEntity);
+	
+	/**
+	 * @Title getGeroAreaEntitiy
+	 * @Description TODO
+	 * @param @param geroAreaEntity
+	 * @param @return
+	 * @return GeroAreaEntity
+	 * @throws
+	 */
+	GeroAreaEntity getGeroAreaEntity(Map<String, Object> geroAreaEntity);
+	
+	/**
+	 * @Title insertGeroAreaEntity
+	 * @Description TODO
+	 * @param @param geroAreaEntity
+	 * @param @return
+	 * @return Object
+	 * @throws
+	 */
+	void insertGeroAreaRecord(Map<String, Object> geroAreaEntity);
+
+	/**
+	 * @Title getGeroSubareas
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @param @return
+	 * @return List<GeroAreaEntity>
+	 * @throws
+	 */
+	List<GeroAreaEntity> getGeroSubareas(Map<String, Object> paramMap);
+
+	/**
+	 * @Title updateGeroAreaEntity
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @return void
+	 * @throws
+	 */
+	void updateGeroAreaRecord(Map<String, Object> paramMap);
+
+	/**
+	 * @Title deleteGeroAreaRecord
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @return void
+	 * @throws
+	 */
+	void deleteGeroAreaRecord(Map<String, Object> paramMap);
 	
 }

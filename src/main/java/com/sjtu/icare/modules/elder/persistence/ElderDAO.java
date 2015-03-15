@@ -10,7 +10,7 @@ import com.sjtu.icare.modules.elder.entity.ElderEntity;
  */
 
 @MyBatisDao
-public interface ElderEntityDAO {
+public interface ElderDAO {
 
 	ElderEntity getElderEntityById(int id);
 	
