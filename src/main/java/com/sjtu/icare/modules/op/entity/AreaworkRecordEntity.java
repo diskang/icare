@@ -10,7 +10,7 @@ public class AreaworkRecordEntity implements Serializable {
 	private int areaId;			//区域ID
 	private int areaItemId;		//区域护理项目ID
 	private String itemName;	//项目名
-	private Date finishTime;	//完成时间
+	private String finishTime;	//完成时间
 	
 	public int getId() {
 		return id;
@@ -42,10 +42,10 @@ public class AreaworkRecordEntity implements Serializable {
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
-	public Date getFinishTime() {
+	public String getFinishTime() {
 		return finishTime;
 	}
-	public void setFinishTime(Date finishTime) {
+	public void setFinishTime(String finishTime) {
 		this.finishTime = finishTime;
 	}
 }

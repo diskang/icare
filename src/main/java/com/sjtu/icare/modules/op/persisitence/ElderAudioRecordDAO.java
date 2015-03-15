@@ -1,6 +1,7 @@
 package com.sjtu.icare.modules.op.persisitence;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -16,9 +17,9 @@ import com.sjtu.icare.modules.op.entity.ElderAudioRecordEntity;
 @MyBatisDao
 public interface ElderAudioRecordDAO {
 
-	ElderAudioRecordEntity getElderAudioRecordEntityById(int id);
+	ElderAudioRecordEntity getElderAudioRecordEntityById(Map<String, Object> ElderAudioRecordEntity);
 	
 	List<ElderAudioRecordEntity> getElderAudioRecordEntitiesByRecorderidentityRecorderid(@Param("recorderIdentity") int recorderIdentity, @Param("recorderId") int recorderId);
 	
-	List<ElderAudioRecordEntity> getElderAudioRecordEntitiesByElderid(int elderId);
+	List<ElderAudioRecordEntity> getElderAudioRecordEntitiesByElderid(Map<String, Object> ElderAudioRecordEntity);
 }

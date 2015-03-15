@@ -1,5 +1,7 @@
 package com.sjtu.icare.modules.op.persisitence;
 
+import java.util.Map;
+
 import com.sjtu.icare.common.persistence.annotation.MyBatisDao;
 import com.sjtu.icare.modules.op.entity.AreaworkRecordEntity;;
 
@@ -12,6 +14,6 @@ import com.sjtu.icare.modules.op.entity.AreaworkRecordEntity;;
 @MyBatisDao
 public interface AreaworkRecordDAO {
 
-	AreaworkRecordEntity getAreaworkRecordEntityById(int id);
+	AreaworkRecordEntity getAreaworkRecordEntityById(Map<String, Object> AreaworkRecordEntity);
 	
 }

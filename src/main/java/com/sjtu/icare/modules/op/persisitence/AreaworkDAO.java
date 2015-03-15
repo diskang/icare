@@ -1,6 +1,7 @@
 package com.sjtu.icare.modules.op.persisitence;
 
 import java.util.List;
+import java.util.Map;
 
 import com.sjtu.icare.common.persistence.annotation.MyBatisDao;
 import com.sjtu.icare.modules.op.entity.AreaworkEntity;
@@ -14,10 +15,10 @@ import com.sjtu.icare.modules.op.entity.AreaworkEntity;
 @MyBatisDao
 public interface AreaworkDAO {
 
-	AreaworkEntity getCareworkEntityById(int id);
+	AreaworkEntity getCareworkEntityById(Map<String, Object> AreaworkEntity);
 	
-	List<AreaworkEntity> getCareworkEntitiesByCarerid(int carerId);
+	List<AreaworkEntity> getCareworkEntitiesByCarerid(Map<String, Object> AreaworkEntity);
 	
-	AreaworkEntity getCareworkEntityByElderid(int areaId);
+	AreaworkEntity getCareworkEntityByElderid(Map<String, Object> AreaworkEntity);
 	
 }
