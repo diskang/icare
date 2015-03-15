@@ -22,6 +22,10 @@ public class GeroBaseController extends SysBaseController{
 	@Autowired
 	private SystemService systemService;
 	
+	/**
+	 *  检查用户是否有管理员权限
+	 * @param gid
+	 */
 	public void checkGero(int gid) {
 		try {
 			SecurityUtils.getSubject().checkRole("gero:"+gid);

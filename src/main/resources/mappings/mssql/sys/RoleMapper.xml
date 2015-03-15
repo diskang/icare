@@ -96,7 +96,12 @@
 	</update>
 	
 	<delete id="deleteRolePrivilege">
-		DELETE T_ROLE_PRIVILEGES WHERE role_id = #{id}
+		DELETE T_ROLE_PRIVILEGES
+		where role_id = #{id} 
+		AND privilege_id in 
+		<foreach collection="privilegeList" item="privilege" open="(" separator="," close=")">
+			#{privilege.id}
+		</foreach>
 	</delete>
 	
 	<insert id="insertRolePrivilege">

@@ -329,6 +329,16 @@ public class SystemService extends BaseService  {
 		roleMapper.insertRolePrivilege(role);
 	}
 	
+	@Transactional(readOnly = false)
+	public void deletePrivilege (Privilege privilege){
+		privilegeMapper.delete(privilege);
+	}
+	
+	@Transactional(readOnly = false)
+	public void deleteRolePrivilege (Role role){
+		roleMapper.deleteRolePrivilege(role);
+	}
+	
 	/**
 	 * 生成安全的密码，生成随机的16位salt并经过1024次 sha-1 hash
 	 */

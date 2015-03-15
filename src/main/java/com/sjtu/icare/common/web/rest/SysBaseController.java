@@ -2,9 +2,12 @@ package com.sjtu.icare.common.web.rest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +21,7 @@ import com.sjtu.icare.modules.sys.entity.Role;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.service.SystemService;
 import com.sjtu.icare.modules.sys.utils.UserUtils;
+import com.sjtu.icare.modules.sys.utils.security.SystemAuthorizingRealm.UserPrincipal;
 import com.sjtu.icare.modules.sys.webservice.UserController;
 
 @RestController
@@ -49,8 +53,12 @@ public class SysBaseController {
 		return user;
 	}
 	
+	/**
+	 *  id获取养老院
+	 * @param gid
+	 * @return
+	 */
 	protected Gero getGeroFromId(int gid){
-		
 		Gero gero = new Gero();
 		try {
 			gero = systemService.getGeroById(new Gero(gid));
@@ -66,8 +74,12 @@ public class SysBaseController {
 		return gero;
 	}
 	
+	/**
+	 *  id获取角色
+	 * @param rid
+	 * @return
+	 */
 	protected Role getRoleFromId(int rid){
-		
 		Role role = new Role();
 		try {
 			role = systemService.getRoleById(new Role(rid));
@@ -83,6 +95,43 @@ public class SysBaseController {
 		return role;
 	}
 	
+	protected List<Privilege> getRolePrivileges(Role role) {
+		List<Privilege> rolePrivileges;
+		try {
+			rolePrivileges = systemService.getPrivilegeListByRole(role).getPrivilegeList();
+		} catch (Exception e) {
+			String message = ErrorConstants.format(ErrorConstants.GERO_ROLE_GET_PRIVILEGE_SERVICE_ERROR,
+					"[rid:" + role.getId()  + "]" );
+			logger.error(message);
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
+		}
+		return rolePrivileges;
+	}
+	
+	/**
+	 *  获取当前用户
+	 * @return
+	 */
+	protected User getCurrentUser(){
+		User user;
+		try {
+			Subject subject = SecurityUtils.getSubject();
+			String username;
+			if (subject.getPrincipal().equals(String.class)) {
+				username = (String) subject.getPrincipal();
+			}else {
+				username = ((UserPrincipal) subject.getPrincipal()).getUsername();
+			}
+			user = UserUtils.getByLoginName(username);
+		} catch (Exception e) {
+			String message = ErrorConstants.format(ErrorConstants.GET_USER_PRINCIPAL_FAILED,
+					"[" + "]" );
+			logger.error(message);
+			throw new RestException(HttpStatus.UNAUTHORIZED, message);
+		}
+		return user;
+	}
+	
 	protected <T> Page<T> setOrderBy (Page<T> page, String orderByTag){
 		String orderBy = "id";
 		try {
@@ -95,6 +144,8 @@ public class SysBaseController {
 		page.setOrderBy(orderBy);
 		return page;
 	}
+	
+	
 	
 	/**
 	 * user返回格式
@@ -144,6 +195,11 @@ public class SysBaseController {
 		return privilegeMap;
 	}
 	
+	/**
+	 *  获取角色基本信息
+	 * @param role
+	 * @return
+	 */
 	protected Map<String, Object> getRoleInfoMapFromRole(Role role) {
 		Map<String, Object> roleMap = new HashMap<String, Object>();
 		roleMap.put("id", role.getId());
@@ -152,6 +208,11 @@ public class SysBaseController {
 		return roleMap;
 	}
 	
+	/**
+	 *  获取角色包括权限信息
+	 * @param role
+	 * @return
+	 */
 	protected Map<String, Object> getRoleMapFromRole(Role role) {
 		Map<String, Object> roleMap = new HashMap<String, Object>();
 		roleMap.put("id", role.getId());
