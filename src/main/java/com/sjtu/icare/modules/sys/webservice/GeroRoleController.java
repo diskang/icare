@@ -54,6 +54,14 @@ public class GeroRoleController extends GeroBaseController {
 	@Autowired
 	private SystemService systemService;
 
+	/**
+	 *  获取养老院角色列表
+	 * @param gid
+	 * @param page
+	 * @param limit
+	 * @param orderByTag
+	 * @return
+	 */
 	@RequestMapping(value = "/{gid}/role", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> getGeroRoleList(
 			@PathVariable("gid") int gid,
