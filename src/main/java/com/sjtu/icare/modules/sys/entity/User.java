@@ -26,8 +26,8 @@ public class User extends DataEntity<User> {
     private String name;
     private int userType;//超级管理员=0、管理员=1，员工=2、老人=3、家属=4
     private int userId;//-1，gero_id, staff_id, elder_id，family_id
-    private Date registerDate;
-    private Date cancelDate;
+    private String registerDate;
+    private String cancelDate;
     private char gender;	//性别（男0，女1）
     private String photoUrl;	// 头像url
     private String identityNo;
@@ -35,7 +35,7 @@ public class User extends DataEntity<User> {
     private String nationality;
     private int marriage; //0未婚，1已婚
     private String nativePlace; //籍贯
-    private Date birthday;
+    private String birthday;
     private String politicalStatus; //政治面貌
     private String education;
     private String phoneNo;
@@ -274,11 +274,11 @@ public class User extends DataEntity<User> {
 	}
 
 //	@ExcelField(title="创建时间", type=0, align=1, sort=90)
-	public Date getRegisterDate() {
+	public String getRegisterDate() {
 		return registerDate;
 	}
 
-	public void setRegisterDate(Date registerDate){
+	public void setRegisterDate(String registerDate){
 		this.registerDate = registerDate;
 	}
 //	@ExcelField(title="最后登录IP", type=1, align=1, sort=100)
@@ -418,11 +418,11 @@ public class User extends DataEntity<User> {
 		this.userId = userId;
 	}
 
-	public Date getCancelDate() {
+	public String getCancelDate() {
 		return cancelDate;
 	}
 
-	public void setCancelDate(Date cancelDate) {
+	public void setCancelDate(String cancelDate) {
 		this.cancelDate = cancelDate;
 	}
 
@@ -482,11 +482,11 @@ public class User extends DataEntity<User> {
 		this.nativePlace = nativePlace;
 	}
 
-	public Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 
@@ -552,23 +552,6 @@ public class User extends DataEntity<User> {
 
 	public void setWechatId(String wechatId) {
 		this.wechatId = wechatId;
-	}
-	
-	public Object clone() {
-		try {
-			User cloned = (User) super.clone();
-			
-			if (registerDate != null)
-				cloned.registerDate = (Date) registerDate.clone();
-			if (cancelDate != null)
-				cloned.cancelDate = (Date) cancelDate.clone();
-			if (cancelDate != null)
-				cloned.cancelDate = (Date) cancelDate.clone();
-			
-			return cloned;
-		} catch (CloneNotSupportedException e) {
-			return null;
-		}
 	}
 
 	public int getGeroId() {

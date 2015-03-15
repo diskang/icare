@@ -194,7 +194,7 @@ public class SystemService extends BaseService  {
 	@Transactional(readOnly = false)
 	public void deleteUser(User user) {
 		if (user != null) {
-			user.setCancelDate((new java.sql.Date ( new Date().getTime())));
+			user.setCancelDate(DateUtils.formatDate(new Date()));
 			userMapper.delete(user);
 			// 同步到Activiti
 //			deleteActivitiUser(user);
