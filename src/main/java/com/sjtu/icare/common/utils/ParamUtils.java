@@ -9,6 +9,8 @@ package com.sjtu.icare.common.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -64,6 +66,63 @@ public class ParamUtils {
 				logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
+	}
+	
+	public static List<Object> getListByJson(String jsonString, Logger logger) throws RestException {
+		List<Object> requestBodyParamMap;
+		
+		try {
+			requestBodyParamMap = (List<Object>) JSON.parse(jsonString);
+			return requestBodyParamMap;
+			
+		} catch(Exception e) {
+			String message = "#" + ErrorConstants.COMMON_ERROR_INVALID_JSON + "#\n" + 
+					"非法JSON:\n" +
+					jsonString +
+					"\n";
+			if (logger != null) 
+				logger.error(message);
+			throw new RestException(HttpStatus.BAD_REQUEST, message);
+		}
+	}
+	
+	
+	public static Map<String, String> getDateOfStartDateAndEndDate(String startDate, String endDate) {
+		if (startDate == null && endDate == null) {
+			Date today = new Date();
+			startDate = DateUtils.formatDate(DateUtils.getDateStart(today));
+			endDate = DateUtils.formatDate(DateUtils.getDateEnd(today));
+		}
+		if (startDate == null && endDate != null) {
+			Date thatDay = ParamUtils.convertStringToDate(endDate);
+			startDate = DateUtils.formatDate(DateUtils.getDateStart(thatDay));
+			endDate = DateUtils.formatDate(DateUtils.getDateEnd(thatDay));
+		}
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		
+		return map;
+		
+	}
+	
+	public static Map<String, String> getDateTimeOfStartDateAndEndDate(String startDate, String endDate) {
+		if (startDate == null && endDate == null) {
+			Date today = new Date();
+			startDate = DateUtils.formatDateTime(DateUtils.getDateStart(today));
+			endDate = DateUtils.formatDateTime(DateUtils.getDateEnd(today));
+		}
+		if (startDate == null && endDate != null) {
+			Date thatDay = ParamUtils.convertStringToDate(endDate);
+			startDate = DateUtils.formatDateTime(DateUtils.getDateStart(thatDay));
+			endDate = DateUtils.formatDateTime(DateUtils.getDateEnd(thatDay));
+		}
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		
+		return map;
+		
 	}
 	
 }

@@ -14,8 +14,6 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
-import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
-import org.hibernate.validator.internal.util.privilegedactions.GetClassLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,17 +23,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.CommonUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
-import com.sjtu.icare.common.utils.ParamValidator;
 import com.sjtu.icare.common.utils.StringUtils;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
-import com.sjtu.icare.modules.elder.webservice.ElderTemperatureRestController;
 import com.sjtu.icare.modules.gero.entity.GeroAreaEntity;
 import com.sjtu.icare.modules.gero.service.IGeroAreaService;
 

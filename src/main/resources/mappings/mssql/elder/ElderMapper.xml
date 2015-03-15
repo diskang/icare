@@ -24,7 +24,7 @@
 		<result property="padMac" column="pad_mac" />
 	</resultMap>
   
-    <select id="getElderEntityById" resultType="ElderEntity">
+    <select id="getElderEntity" resultType="ElderEntity">
         SELECT
 			id,
 			name,

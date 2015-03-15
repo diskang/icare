@@ -70,6 +70,24 @@ public class ErrorConstants {
 	public static final String GERO_ROLE_PRIVILEGE_DELETE_PRIVILEGE_NOT_FOUND = "1000029 DELETE 删除养老院角色权限：删除权限不存在";
 	public static final String GERO_ROLE_PRIVILEGE_DELETE_SERVICE_ERROR = "1000030 DELETE 删除养老院角色权限：后台删除数据失败";
 	
+	// staff schedule constants
+	public static final String STAFF_SCHEDULE_PLAN_GET_PARAM_INVALID = "300001 GET 员工排信息：请求参数错误";
+	public static final String STAFF_SCHEDULE_PLAN_GET_SERVICE_FAILED = "300002 GET 员工排班信息：后台获取失败";
+	public static final String STAFF_SCHEDULE_PLAN_POST_PARAM_INVALID = "300003 POST 员工排班信息：请求参数错误";
+	public static final String STAFF_SCHEDULE_PLAN_POST_SERVICE_FAILED = "300004 POST 员工排班信息：后台插入数据失败";
+	public static final String STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_GET_PARAM_INVALID = "300005 GET 员工某天排班信息：请求参数错误";
+	public static final String STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_GET_SERVICE_FAILED = "300006 GET 员工某天排班信息：后台获取失败";
+	public static final String STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_POST_PARAM_INVALID = "300007 POST 员工某天排班信息：请求参数错误";
+	public static final String STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_POST_SERVICE_FAILED = "300008 POST 员工某天排班信息：后台插入数据失败";
+	public static final String STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_DELETE_PARAM_INVALID = "300009 DELETE 员工某天排班信息：请求参数错误";
+	public static final String STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_DELETE_SERVICE_FAILED = "300011 DELETE 员工某天排班信息：后台删除信息失败";
+	
+	// gero staff schedule plan constants 
+	public static final String GERO_STAFF_SCHEDULE_PLAN_GET_PARAM_INVALID = "370001 GET 养老院排班信息：请求参数错误";
+	public static final String GERO_STAFF_SCHEDULE_PLAN_GET_SERVICE_FAILED = "370002 GET 养老院排班信息：后台获取失败";
+	public static final String GERO_STAFF_SCHEDULE_PLAN_PUT_PARAM_INVALID = "370003 PUT 养老院排班信息：请求参数错误";
+	public static final String GERO_STAFF_SCHEDULE_PLAN_PUT_SERVICE_FAILED = "370004 PUT 养老院排班信息：后台获取失败";
+	
 	public static String format(String errorConstant, String otherMessage) {
 		if (errorConstant == null)
 			return null;

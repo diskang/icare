@@ -25,26 +25,10 @@ public class ParamValidator {
 	}
 	
 	public static boolean isDate(String date) {
-		if (date == null)
+		if (CommonUtils.getDate(date) == null)
 			return false;
-		
-		SimpleDateFormat pattern = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		try {
-			pattern.parse(date);
+		else
 			return true;
-		} catch (Exception e){
-			// pass
-		}
-		
-		pattern = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			pattern.parse(date);
-			return true;
-		} catch (Exception e){
-			// pass
-		}
-		
-		return false;
 	}
 
 	public static boolean isBloodPressure(String systolicPressureParam) {

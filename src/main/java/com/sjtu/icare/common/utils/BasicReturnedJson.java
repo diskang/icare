@@ -19,7 +19,7 @@ public class BasicReturnedJson {
 	private HashMap<String, Object> map = new HashMap<String, Object>();
 	
 	public BasicReturnedJson() {
-		map.put("status", HttpStatus.OK);
+		map.put("status", HttpStatus.OK.value());
 		map.put("entities", new ArrayList<Object>());
 	}
 	

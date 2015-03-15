@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.icare.modules.gero.persistence.CareItemDAO">
+
+    <cache />
+    
+	<resultMap type="com.sjtu.icare.modules.gero.entity.CareItemEntity" id="CareItemEntityMap">
+	    <id property="id" column="id" />
+	    <result property="geroId" column="gero_id" />
+	    <result property="name" column="name" />
+	    <result property="level" column="level" />
+	    <result property="period" column="period" />
+	    <result property="frequency" column="frequency" />
+	    <result property="notes" column="notes" />
+	    <result property="delFlag" column="del_flag" />
+	</resultMap>
+  
+    <select id="getCareItemEntityById" parameterType="Map" resultMap="CareItemEntityMap">
+
+        SELECT
+			*
+        FROM T_CARE_ITEM
+        WHERE 
+            T_CARE_ITEM.id = #{Id}
+  
+    </select>
+    
+</mapper>

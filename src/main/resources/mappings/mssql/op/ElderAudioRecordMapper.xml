@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.icare.modules.op.persistence.ElderAudioRecordDAO">
+
+    <cache />
+    
+    <sql id="elderAudioRecordEntityColumns">
+        id,
+		recorder_identity as recorderIdentity,
+		recorder_id as recorderId,
+		listener_identity as listenerIdentity,
+		listener_id as listenerId,
+		elder_id as elderId,
+		record_time as recordTime,
+		url,
+		read_times as readTimes
+	</sql>
+  
+    <select id="getElderAudioRecordEntityById" resultType="ElderAudioRecordEntity">
+        SELECT
+			<include refid="elderAudioRecordEntityColumns"/>
+        FROM T_ELDER_AUDIO_RECORD
+        WHERE T_ELDER_AUDIO_RECORD.id = #{id}
+    </select>
+    
+    <select id="getElderAudioRecordEntitiesByRecorderidentityRecorderid" resultType="ElderAudioRecordEntity">
+        SELECT
+			<include refid="elderAudioRecordEntityColumns"/>
+        FROM T_ELDER_AUDIO_RECORD
+        WHERE T_ELDER_AUDIO_RECORD.recorder_identity = #{recorderIdentity} AND T_ELDER_AUDIO_RECORD.recorder_id = #{recorderId}
+    </select>
+    
+      <select id="getElderAudioRecordEntitiesByElderid" resultType="ElderAudioRecordEntity">
+        SELECT
+			<include refid="elderAudioRecordEntityColumns"/>
+        FROM T_ELDER_AUDIO_RECORD
+        WHERE T_ELDER_AUDIO_RECORD.elder_id = #{elderId}
+    </select>
+    
+</mapper>

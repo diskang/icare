@@ -7,14 +7,34 @@
  */
 package com.sjtu.icare.modules.staff.service;
 
+import java.util.List;
+
 import com.sjtu.icare.modules.staff.entity.StaffEntity;
+import com.sjtu.icare.modules.staff.entity.StaffSchedulePlanEntity;
 import com.sjtu.icare.modules.sys.entity.User;
 
 
 public interface IStaffDataService {
 	
-	StaffEntity getStaffEntity(int id);
+	StaffEntity getStaffEntity(StaffEntity staffEntity);
 
 	User getUserEntityOfStaff(StaffEntity StaffEntity);
+
+	List<StaffSchedulePlanEntity> getStaffSchedulePlans(
+			StaffSchedulePlanEntity queryStaffSchedulePlanEntity,
+			String startDate, String endDate);
+
+	void insertStaffSchedulePlans(StaffSchedulePlanEntity staffSchedulePlanEntity, List<String> workDate);
+
+	void deleteStaffSchedulePlans(StaffSchedulePlanEntity postEntity,
+			List<String> noworkDate);
+
+	List<StaffSchedulePlanEntity> getAllStaffPlansByGeroId(
+			StaffSchedulePlanEntity staffSchedulePlanEntity, String startDate,
+			String endDate);
+	
+	List<StaffSchedulePlanEntity> getAllStaffPlansByGeroId(
+			StaffSchedulePlanEntity queryStaffSchedulePlanEntity,
+			String startDate, String endDate, String role);
 	
 }

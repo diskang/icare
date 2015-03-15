@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.icare.modules.elder.persistence.ElderHeartRateDAO">
+
+    <cache />
+    
+	<resultMap type="com.sjtu.icare.modules.elder.entity.ElderHeartRateEntity" id="ElderHeartRateEntityMap">
+	    <id property="id" column="id" />
+	    <result property="elderId" column="elder_id" />
+	    <result property="doctorId" column="doctor_id" />
+	    <result property="rate" column="rate" />
+	    <result property="time" column="time" />
+	</resultMap>
+  
+    <select id="getElderHeartRateEntityByElderidStartdayEndday" resultMap="ElderHeartRateEntityMap">
+    
+        SELECT
+            id,
+            elder_id,
+            doctor_id,
+            rate,
+            time      
+        FROM T_ELDER_HEART_RATE
+        WHERE 
+            T_ELDER_HEART_RATE.elder_id = #{elderId}
+            <if test="startDate != null">
+            <![CDATA[
+                and #{startDate} <= convert(nvarchar(23), T_ELDER_HEART_RATE.time, 120)
+            ]]>
+            </if>
+            <if test="endDate != null">
+                <![CDATA[
+                and #{endDate} >= convert(nvarchar(23), T_ELDER_HEART_RATE.time, 120)
+                ]]>
+            </if>
+    </select>
+
+     <insert id="insertElderHeartRateRecordWithElderidDoctoridRateTime" >
+        insert into 
+            T_ELDER_HEART_RATE(elder_id, doctor_id, rate, time) 
+        values
+            (#{elderId}, #{doctorId}, #{rate}, #{time})
+    </insert>
+    
+</mapper>

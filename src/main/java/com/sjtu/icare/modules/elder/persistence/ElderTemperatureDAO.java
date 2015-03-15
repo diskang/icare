@@ -2,6 +2,7 @@ package com.sjtu.icare.modules.elder.persistence;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -16,7 +17,7 @@ import com.sjtu.icare.modules.elder.entity.ElderTemperatureEntity;
 @MyBatisDao
 public interface ElderTemperatureDAO {
 
-	List<ElderTemperatureEntity> getElderTemperatureEntitiesByElderidStartdayEndday(@Param("elderId") int elderId, @Param("startDate") String startDate, @Param("endDate") String endDate);
+	List<ElderTemperatureEntity> getElderTemperatureEntitiesByElderidStartdayEndday(Map<String, Object> paramMap);
 
 	void insertElderTemperatureRecordWithElderidDoctoridTemperatureTime(@Param("elderId") int elderId, @Param("doctorId") int doctorId, @Param("temperature") String temperature, @Param("time") String time);
 

@@ -12,38 +12,43 @@ import java.io.Serializable;
 public class GeroAreaEntity implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	
-	private int id;
-	private int parentId;
+
+	private Integer id;
+	private Integer parentId;
 	private String parentIds;
-	private int geroId;
-	private int type;
-	private int level;
+	private Integer geroId;
+	private Integer type;
+	private Integer level;
 	private String name;
 	private String delFlag;
-
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	/**
 	 * @return the parentId
 	 */
-	public int getParentId() {
+	public Integer getParentId() {
 		return parentId;
 	}
 	/**
 	 * @param parentId the parentId to set
 	 */
-	public void setParentId(int parentId) {
+	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
 	}
 	/**
@@ -61,37 +66,37 @@ public class GeroAreaEntity implements Serializable{
 	/**
 	 * @return the geroId
 	 */
-	public int getGeroId() {
+	public Integer getGeroId() {
 		return geroId;
 	}
 	/**
 	 * @param geroId the geroId to set
 	 */
-	public void setGeroId(int geroId) {
+	public void setGeroId(Integer geroId) {
 		this.geroId = geroId;
 	}
 	/**
 	 * @return the type
 	 */
-	public int getType() {
+	public Integer getType() {
 		return type;
 	}
 	/**
 	 * @param type the type to set
 	 */
-	public void setType(int type) {
+	public void setType(Integer type) {
 		this.type = type;
 	}
 	/**
 	 * @return the level
 	 */
-	public int getLevel() {
+	public Integer getLevel() {
 		return level;
 	}
 	/**
 	 * @param level the level to set
 	 */
-	public void setLevel(int level) {
+	public void setLevel(Integer level) {
 		this.level = level;
 	}
 	/**
@@ -118,5 +123,7 @@ public class GeroAreaEntity implements Serializable{
 	public void setDelFlag(String delFlag) {
 		this.delFlag = delFlag;
 	}
+
+
 
 }
