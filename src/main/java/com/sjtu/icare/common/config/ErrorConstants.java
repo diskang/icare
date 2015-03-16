@@ -78,6 +78,7 @@ public class ErrorConstants {
 	
 	// duty carer constants
 	public static final String DUTY_CARER_ELDER_GET_PARAM_INVALID = "380001 GET 负责护工信息：请求参数错误";
+	public static final String DUTY_CARER_ELDER_GET_SERVICE_FAILED = "380002 GET 负责护工信息：后台获取失败";
 	
 	
 	public static String format(String errorConstant, String otherMessage) {

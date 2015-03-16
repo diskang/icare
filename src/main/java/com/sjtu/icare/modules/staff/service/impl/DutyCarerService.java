@@ -33,8 +33,7 @@ public class DutyCarerService implements IDutyCarerService {
 			ElderEntity elderEntity, String date) {
 		Map<String, Object> paramMap = MapListUtils.beanToMap(elderEntity);
 		paramMap.put("date", date);
-	//	return careworkDao.getCareworkEntityByElderid(paramMap);
-		return null;
+		return careworkDao.getStaffEntitiesByElderId(paramMap);
 	}
 	
 }
