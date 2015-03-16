@@ -29,6 +29,7 @@ import com.sjtu.icare.common.utils.ParamValidator;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
+import com.sjtu.icare.modules.gero.entity.GeroAreaEntity;
 import com.sjtu.icare.modules.staff.entity.StaffEntity;
 import com.sjtu.icare.modules.staff.service.IDutyCarerService;
 import com.sjtu.icare.modules.staff.service.IStaffDataService;
@@ -103,4 +104,66 @@ public class DutyCarerRestContorller {
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
 	}
+	
+	@RequestMapping(value="/area/{aid}/duty_carer", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
+	public Object getAreaDutyCarer(
+			@PathVariable("aid") int areaId,
+			@RequestParam(value="date", required=false) String date
+			) {
+		
+		// 参数检查
+		if (date != null && !ParamValidator.isDate(date)) {
+			String otherMessage = "date 不符合日期格式:" +
+					"[date=" + date + "]";
+			String message = ErrorConstants.format(ErrorConstants.DUTY_CARER_AREA_GET_PARAM_INVALID, otherMessage);
+			logger.error(message);
+			throw new RestException(HttpStatus.BAD_REQUEST, message);
+		}
+		
+		try {
+			// 参数预处理
+			if (date == null) {
+				Date today = new Date();
+				date = DateUtils.formatDate(DateUtils.getDateStart(today));
+			}
+			if (date == null) {
+				Date thatDay = ParamUtils.convertStringToDate(date);
+				date = DateUtils.formatDate(DateUtils.getDateEnd(thatDay));
+			}
+			
+			// 获取基础的 JSON返回
+			BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
+			
+			GeroAreaEntity queryGeroAreaEntity = new GeroAreaEntity();
+			queryGeroAreaEntity.setId(areaId);
+			List<StaffEntity> dutyCarers = dutyCarerService.getDutyCarerByAreaIdAndDate(queryGeroAreaEntity, date);
+			
+			// 构造返回的 JSON
+			for (StaffEntity staffEntity : dutyCarers) {
+				Map<String, Object> resultMap = new HashMap<String, Object>(); 
+				resultMap.put("id", staffEntity.getId());
+				
+				User user = staffDataService.getUserEntityOfStaff(staffEntity);
+				resultMap.put("gero_id", user.getGeroId());
+				resultMap.put("name", user.getName());
+				resultMap.put("phone", user.getPhoneNo());
+				resultMap.put("gender", user.getGender());
+				resultMap.put("photo_url", user.getPhotoUrl());
+				resultMap.put("work_date", date);
+				  
+				basicReturnedJson.addEntity(resultMap);
+			}
+			
+			return basicReturnedJson.getMap();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			String otherMessage = "[" + e.getMessage() + "]";
+			String message = ErrorConstants.format(ErrorConstants.DUTY_CARER_ELDER_GET_SERVICE_FAILED, otherMessage);
+			logger.error(message);
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
+		}
+	}
+	
+	
 }

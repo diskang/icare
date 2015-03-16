@@ -25,7 +25,7 @@ import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.elder.webservice.ElderTemperatureRestController;
 import com.sjtu.icare.modules.gero.service.impl.GeroAreaService;
-import com.sjtu.icare.modules.op.persisitence.CareworkDAO;
+import com.sjtu.icare.modules.op.persistence.CareworkDAO;
 import com.sjtu.icare.modules.staff.entity.StaffEntity;
 import com.sjtu.icare.modules.staff.service.impl.DutyCarerService;
 

@@ -77,9 +77,10 @@ public class ErrorConstants {
 	public static final String GERO_STAFF_SCHEDULE_PLAN_PUT_SERVICE_FAILED = "370004 PUT 养老院排班信息：后台获取失败";
 	
 	// duty carer constants
-	public static final String DUTY_CARER_ELDER_GET_PARAM_INVALID = "380001 GET 负责护工信息：请求参数错误";
-	public static final String DUTY_CARER_ELDER_GET_SERVICE_FAILED = "380002 GET 负责护工信息：后台获取失败";
-	
+	public static final String DUTY_CARER_ELDER_GET_PARAM_INVALID = "380001 GET 负责老人护工信息：请求参数错误";
+	public static final String DUTY_CARER_ELDER_GET_SERVICE_FAILED = "380002 GET 负责老人护工信息：后台获取失败";
+	public static final String DUTY_CARER_AREA_GET_PARAM_INVALID = "380003 GET 负责区域护工信息：请求参数错误";
+	public static final String DUTY_CARER_AREA_GET_SERVICE_FAILED = "380004 GET 负责区域护工信息：后台获取失败";
 	
 	public static String format(String errorConstant, String otherMessage) {
 		if (errorConstant == null)
