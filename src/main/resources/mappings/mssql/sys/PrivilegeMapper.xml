@@ -41,7 +41,7 @@
 			a.parent_id AS "parent.id",
 			a.parent_ids
 		FROM T_PRIVILEGE a
-		WHERE a.parent_ids LIKE #{parentIds}
+		WHERE a.parent_ids LIKE '%'+#{parentIds}+'%'
 		ORDER BY a.id
 	</select>
 	
@@ -107,8 +107,12 @@
 		WHERE id = #{id}
 	</update>
 	
-	<!-- <update id="delete">
-		DELETE T_PRIVILEGE WHERE id = #{id} AND
-	</update> -->
+	<update id="deleteChildrens">
+		DELETE T_PRIVILEGE WHERE parent_ids like '%'+#{parentIds}+'%'
+	</update>
+	
+	<update id="delete">
+		DELETE T_PRIVILEGE WHERE id=#{id}
+	</update>
 	
 </mapper>

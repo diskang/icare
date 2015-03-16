@@ -322,7 +322,7 @@ public class GeroRoleController extends GeroBaseController {
 	 * @param inJson
 	 * @return
 	 */
-	@RequestMapping(value = "/{gid}/role/{rid}/privilege", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
+	@RequestMapping(value = "/{gid}/role/{rid}/privilege", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> insertGeroRolePrivilege(
 			@PathVariable("rid") int rid,
 			@PathVariable("gid") int gid,
@@ -495,42 +495,22 @@ public class GeroRoleController extends GeroBaseController {
 			}
 		}
 		
-		// 获取删除权限列表
-		List<Privilege> deletePrivileges = new ArrayList<Privilege>();
-		for (Privilege privilege : inputPrivileges){
-			deletePrivileges.addAll(getDeletePrivilegeList(privilege, rolePrivileges));
-		}
-
-		// 删除权限列表
 		try {
-			if (deletePrivileges.size() > 0) {
-				role.setPrivilegeList(deletePrivileges);
-				systemService.deleteRolePrivilege(role);
+			for (Privilege privilege : inputPrivileges) {
+				if (privilege != null)
+					systemService.deleteRolePrivilege(role, privilege);
 			}
-			role = systemService.getPrivilegeListByRole(role);
 		} catch (Exception e) {
-			String message = ErrorConstants.format(ErrorConstants.GERO_ROLE_PRIVILEGE_DELETE_SERVICE_ERROR,
-					"[delete_privilege_ids=" + requestBodyParamMap.get("delete_privilege_ids") + "]");
+			String message = ErrorConstants.format(ErrorConstants.GERO_ROLE_DELETE_SERVICE_ERROR,"");
 			logger.error(message);
-			throw new RestException(HttpStatus.NOT_FOUND, message);
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
+		
+		role = getRoleFromId(rid);
 		result.addEntity(getRoleMapFromRole(role));
 		
 		return result.getMap();
 	}
-	
-//	@RequestMapping(value = "/{gid}/role/{rid}/test", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
-//	public Map<String, Object> deleteTest(
-//			@PathVariable("rid") int rid,
-//			@PathVariable("gid") int gid
-//			){
-//		Role role = getRoleFromId(rid);
-//		List<Privilege> privilegeList = new ArrayList<Privilege>();
-//		privilegeList.add(new Privilege(3));
-//		role.setPrivilegeList(privilegeList);
-//		systemService.deleteRolePrivilege(role);
-//		return new BasicReturnedJson().getMap();
-//	}
 	
 	
 	/**
@@ -549,25 +529,6 @@ public class GeroRoleController extends GeroBaseController {
 			logger.error(message);
 			throw new RestException(HttpStatus.UNAUTHORIZED, message);
 		}
-	}
-	
-	/**
-	 *  获取删除权限列表
-	 * @param inPrivilege
-	 * @param inPrivileges
-	 * @return
-	 */
-	private List<Privilege> getDeletePrivilegeList(Privilege inPrivilege, List<Privilege> inPrivileges) {
-		String parentIds = inPrivilege.getParentIds()+inPrivilege.getId()+',';
-		List<Privilege> deletePrivileges = new ArrayList<Privilege>();
-		deletePrivileges.add(inPrivilege);
-		for (Privilege privilege : inPrivileges) {
-			if (privilege.getParentIds().indexOf(parentIds)>-1) {
-				logger.debug("delete privilege:"+privilege.getId());
-				deletePrivileges.add(privilege);
-			}
-		}
-		return deletePrivileges;
 	}
 	
 	/** 

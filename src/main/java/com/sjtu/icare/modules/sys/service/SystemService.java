@@ -349,21 +349,55 @@ public class SystemService extends BaseService  {
 	}
 	
 	/**
+	 * 删除角色权限
+	 * @param role
+	 */
+	@Transactional(readOnly = false)
+	public void deleteRolePrivilege (Role role, Privilege privilege){
+		List<Privilege> deletePrivileges = new ArrayList<Privilege>();
+		deletePrivileges.add(privilege);
+		privilege.setParentIds(privilege.getParentIds()+privilege.getId()+',');
+		deletePrivileges.addAll(privilegeMapper.findByParentIdsLike(privilege));
+		role.setPrivilegeList(deletePrivileges);
+		roleMapper.deleteRolePrivilege(role);
+	}
+	
+	/**
+	 * 获取权限列表
+	 * @return
+	 */
+	@Transactional(readOnly=true)
+	public List<Privilege> getPrivilegeList(){
+		return privilegeMapper.findAllList(new Privilege());
+	}
+
+	/**
+	 * 添加权限
+	 * @param privilege
+	 */
+	@Transactional(readOnly = false)
+	public void insertPrivilege(Privilege privilege) {
+		privilegeMapper.insert(privilege);
+	}
+	
+	/**
+	 * 更新权限信息
+	 * @param privilege
+	 */
+	@Transactional(readOnly = false)
+	public void updatePrivilege(Privilege privilege) {
+		privilegeMapper.update(privilege);
+	}
+	
+	/**
 	 * 删除权限
 	 * @param privilege
 	 */
 	@Transactional(readOnly = false)
 	public void deletePrivilege (Privilege privilege){
+		privilege.setParentIds(privilege.getParentIds()+privilege.getId()+',');
+		privilegeMapper.deleteChildrens(privilege);
 		privilegeMapper.delete(privilege);
-	}
-	
-	/**
-	 * 删除角色权限
-	 * @param role
-	 */
-	@Transactional(readOnly = false)
-	public void deleteRolePrivilege (Role role){
-		roleMapper.deleteRolePrivilege(role);
 	}
 	
 	/**

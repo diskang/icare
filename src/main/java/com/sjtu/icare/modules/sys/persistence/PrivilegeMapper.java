@@ -45,4 +45,10 @@ public interface PrivilegeMapper extends CrudMapper<Privilege> {
 	 */
 	public int updateParentIds(Privilege privilege);
 	
+	/**
+	 * 删除权限子树
+	 * @param privilege
+	 */
+	public void deleteChildrens(Privilege privilege) ;
+	
 }
