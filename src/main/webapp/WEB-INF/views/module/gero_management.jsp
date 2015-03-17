@@ -1,0 +1,389 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<link href="/resthouse/static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/resthouse/static/css/manager.css" rel="stylesheet" type="text/css">
+<!---------------------------------响应式------------------------>
+<link href="/resthouse/static/css/conter.css" rel="stylesheet" type="text/css">
+<link href="/resthouse/static/css/jeesite.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="/resthouse/static/css/easyui.css">
+<link rel="stylesheet" type="text/css" href="/resthouse/static/css/icon.css">
+</head>
+
+<body>
+<!-------------------------头部-------------------------->
+<div class="head">
+  <div class="container header-s">
+    <div class="logo"><img src="/resthouse/static/images/LOGO.png" ></div>
+    <div class="dianhua"><img src="/resthouse/static/images/d_1.png"></div>
+  </div>
+</div>
+<!--------------------------导航条-------------------------------->
+<div class="daohang">
+  <div class="container Navigation">
+    <ul id="topNavi">
+      <li class="navli" href="#">首页</li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="di">
+  <div class="container Information">
+  <!--------------------------左导航--------------------------------> 
+    <div class="leftNav" id="leftNavi" >
+      <div style="background:url(/resthouse/static/images/r_1.jpg);line-height:30px;font-size:16px;color: #fff;height:30px;padding-left:20px;font-size:20px;margin:0;text-align:left;">菜单</div>
+      <ul id="lefttree" style="padding-left:20px;padding-top:10px;text-align:left;">
+      </ul>
+    </div>
+
+
+  <!--------------------------右内容-------------------------------->
+    <div class="rightNav" id="rightNavi" style="min-height:710px;">
+
+
+  <!--------------------------老人列表-------------------------------->
+      <div id="eldershow" class="inf hide" style="min-height:700px;">
+        <div class="pers-s">老人信息中心</div>
+        <div class="old">
+          <div class="page-header">老人信息查询:</div>
+          <div class="Inquiry">
+            <div class="form-group group">
+              <label class="control" for="name">姓名:</label>
+              <div class="col-smm-2">
+                <input id="elder_name" class="form-control"  value=""></input>
+              </div>
+            </div>
+            <div class="form-group group">
+              <label class="col-ssm-1" for="name">房间:</label>
+              <div class="col-smm-2">
+                <input id="elder_bedid" class="form-control"  value=""></input>
+              </div>
+            </div>
+            <div class="form-group group">
+              <label class="col-smm-1" for="name">护理等级:</label>
+              <div class="col-smm-2">
+                <select id="elder_care_level" class="form-control"  value="">
+                </select>
+              </div>
+            </div>
+            <div class="form-group group"> 
+              <div class="col-md-offset-2">
+                <button id="elder-search" class="btn btn-default" onclick="doSearch()" style="margin-left:30px;" >搜索</button>
+              </div>
+            </div>
+          </div>
+          <div class="list" style="min-height:500px">
+              <table id="elderpage"  class="easyui-datagrid" title="老人信息列表" style="height:400px;" data-options="onDblClickRow:elder.onElderDblClickRow">
+                <thead>
+                  <tr>
+                    <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'bed_id',width:120,align:'center'">房 间</th>
+                    <th data-options="field:'name',width:120,align:'center'">姓 名</th>
+                    <th data-options="field:'identity_no',width:160,align:'center'">身份证号</th>
+                    <th data-options="field:'gender',width:80,align:'center'">性 别</th>
+                    <th data-options="field:'age',width:80,align:'center'">年 龄</th>
+                    <th data-options="field:'care_level',width:120,align:'center'">护理等级</th>
+                  </tr>
+                </thead>
+              </table>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <!--------------------------员工列表-------------------------------->
+      <div id="staffshow" class="inf hide" style="min-height:700px;">
+        <div class="pers-s">员工信息中心</div>
+        <div class="old">
+          <div class="page-header">员工信息查询:</div>
+          <div class="Inquiry">
+            <div class="form-group group">
+              <label class="control">姓名:</label>
+              <div class="col-smm-2">
+                <input id="elder_name" class="form-control"  value=""></input>
+              </div>
+            </div>
+            <div class="form-group group">
+              <label class="col-smm-1">角色:</label>
+              <div class="col-smm-2">
+                <select id="elder_care_level" class="form-control"  value="">
+                </select>
+              </div>
+            </div>
+            <div class="form-group group"> 
+              <div class="col-md-offset-2">
+                <button id="elder-search" class="btn btn-default" onclick="doSearch()" style="margin-left:30px;" >搜索</button>
+              </div>
+            </div>
+          </div>
+          <div class="list" style="min-height:500px">
+              <table id="staffpage"  class="easyui-datagrid" title="员工信息列表" style="height:400px;" data-options="onDblClickRow:staff.onStaffDblClickRow">
+                <thead>
+                  <tr>
+                    <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'role',width:100,align:'center'">角色</th>
+                    <th data-options="field:'name',width:100,align:'center'">姓 名</th>
+                    <th data-options="field:'identity_no',width:160,align:'center'">身份证号</th>
+                    <th data-options="field:'gender',width:80,align:'center'">性 别</th>
+                    <th data-options="field:'phone',width:100,align:'center'">电 话</th>
+                    <th data-options="field:'email',width:120,align:'center'">邮 箱</th>
+                  </tr>
+                </thead>
+              </table>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <!--------------------------排班-------------------------------->
+      <div id="arrangeshow" class="inf hide" style="min-height:700px;">
+        <div class="pers-s">员工排班</div>
+        <div class="old">
+          <div id="calendar" class="fc fc-ltr fc-unthemed">
+            <div class="fc-toolbar">
+              <div class="fc-left">
+                <div class="fc-button-group">
+                  <button type="button" class="fc-prev-button fc-state-default"><span class="fc-icon fc-icon-left-single-arrow"></span></button>
+                  <button type="button" class="fc-next-button fc-state-default"><span class="fc-icon fc-icon-right-single-arrow"></span></button>
+                </div>
+                <button type="button" class="fc-today-button fc-state-default ">今天</button>
+              </div>
+              <div class="fc-center"><h2>2015年2月9 — 15日</h2></div>
+            </div>
+            <div class="fc-view-container" style="">
+              <div class="fc-view" style="">
+                <table>
+                  <thead >
+                    <tr>
+                      <th class="fc-name" >姓名</th>
+                      <th class="fc-sun">周日 2/9</th>
+                      <th class="fc-mon">周一 2/10</th>
+                      <th class="fc-tue">周二 2/11</th>
+                      <th class="fc-wed">周三 2/12</th>
+                      <th class="fc-thu">周四 2/13</th>
+                      <th class="fc-fri">周五 2/14</th>
+                      <th class="fc-sat">周六 2/15</th>
+                    </tr>
+                  </thead>
+                  <tbody class="fc-body">
+                      <tr>
+                        <td class="fc-name"><span>xxx</span></td>
+                          <td ></td>
+                          <td ></td>
+                          <td ></td>
+                          <td ></td>
+                          <td ></td>
+                          <td ></td>
+                          <td ></td>
+                        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+    <!--------------------------院方角色列表-------------------------------->
+      <div id="geroscheduleshow" class="inf hide" style="min-height:700px;">
+        <div class="pers-s">养老院角色管理</div>
+        <div class="old">
+          <div class="list" style="min-height:300px;padding-top:10px;">
+
+          </div>
+        </div>
+      </div>
+
+
+
+      <!--------------------------项目列表-------------------------------->
+      <div id="itemshow" class="inf hide" style="min-height:700px;">
+        <div class="pers-s">项目总表</div>
+        <div class="old">
+          <div class="list" style="min-height:280px;padding-top:10px;">
+              <table id="careitempage"  class="easyui-datagrid" title="专护项目列表" style="height:270px;" data-options="onDblClickRow:item.onCareDblClickRow">
+                <thead>
+                  <tr>
+                    <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'name',width:140,align:'center'">名 称</th>
+                    <th data-options="field:'care_level',width:100,align:'center'">护理等级</th>
+                    <th data-options="field:'notes',width:300,align:'center'">说 明</th>
+                  </tr>
+                </thead>
+              </table>
+          </div>
+          <div class="list" style="min-height:300px">
+              <table id="areaitempage"  class="easyui-datagrid" title="房护项目列表" style="height:270px;" data-options="onDblClickRow:item.onAreaDblClickRow">
+                <thead>
+                  <tr>
+                    <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'name',width:140,align:'center'">名 称</th>
+                    <th data-options="field:'notes',width:400,align:'center'">说 明</th>
+                  </tr>
+                </thead>
+              </table>
+          </div>
+        </div>
+      </div>
+
+      <!--------------------------院方项目列表-------------------------------->
+      <div id="geroitemshow" class="inf hide" style="min-height:700px;">
+        <div class="pers-s">养老院项目管理</div>
+        <div class="old">
+          <div class="page-header">项目总表:</div>
+          <div id='aa'class="easyui-accordion" style="width:500px;height:230px;">
+            <div title="item0" style="overflow:auto;padding:10px;" data-options="tools:[{iconCls:'icon-add',handler:function(){alert('added');}}]">
+            notes
+            </div>
+            <div title="item1"  style="padding:10px;"data-options="tools:[{iconCls:'icon-add',handler:function(){alert('added');}}]">
+              The accordion allows you to provide multiple panels and display one ore more at a time. Each panel 
+            </div>
+            <div title="item4" style="padding:10px" data-options="tools:[{iconCls:'icon-add',handler:function(){alert('added');}}]">
+            notes
+            </div>
+            <div title="item4" style="padding:10px" data-options="tools:[{iconCls:'icon-add',handler:function(){alert('added');}}]">
+            notes
+            </div>
+            <div title="item4" style="padding:10px" data-options="tools:[{iconCls:'icon-add',handler:function(){alert('added');}}]">
+            notes
+            </div>
+          </div>
+       
+          <div class="list" style="min-height:280px;padding-top:10px;">
+              <table id="geroitempage"  class="easyui-datagrid" title="专护项目列表" style="height:270px;" data-options="onDblClickRow:geroItem.onCareDblClickRow">
+                <thead>
+                  <tr>
+                    <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'name',width:140,align:'center'">名 称</th>
+                    <th data-options="field:'care_level',width:100,align:'center'">护理等级</th>
+                    <th data-options="field:'notes',width:300,align:'center'">说 明</th>
+                  </tr>
+                </thead>
+              </table>
+          </div>
+        </div>
+      </div>
+
+      <!--------------------------院方角色列表-------------------------------->
+      <div id="geroroleshow" class="inf hide" style="min-height:700px;">
+        <div class="pers-s">养老院角色管理</div>
+        <div class="old">
+          <div class="list" style="min-height:300px;padding-top:10px;">
+              <table id="gerorolepage"  class="easyui-datagrid" title="角色列表" style="height:300px;width:500px;" data-options="onDblClickRow:role.onRoleDblClickRow">
+                <thead>
+                  <tr>
+                    <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'name',width:140,align:'center'">角色名</th>
+                    <th data-options="field:'notes',width:300,align:'center'">说 明</th>
+                  </tr>
+                </thead>
+              </table>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!--------------------------权限列表-------------------------------->
+      <div id="authorityshow" class="inf hide" style="min-height:700px;">
+        <div class="pers-s">权限中心</div>
+        <div class="old">
+            <div  class="easyui-panel"  title="权限列表"style="height:600px;width:500px;padding:10px;overflow:scroll;">
+              <ul id="authoritytree" style="padding-left:20px;text-align:left;">
+              </ul>
+            </div>
+        </div>
+      </div>
+
+
+    </div><!--rightNav-->
+  </div><!--inforamtion-->
+</div><!--di-->
+
+<!-----------------------老人个人信息------------------------------>
+<div id="elder-dialog-form"  class="easyui-dialog" title="老人信息详情" style="width:700px;height:600px;padding:10px"
+      data-options="
+        modal:true,
+        closed:true,
+        fix:true,
+        left:($(window).width()-700)*0.5,
+        top:($(window).height()-700)*0.5,
+        draggable:false,
+        iconCls: 'icon-save',
+        toolbar: [{
+          text:'修改',
+          iconCls:'icon-edit',
+          handler:function(){
+            alert('修改')
+          }
+        },{
+          text:'删除',
+          iconCls:'icon-remove',
+          handler:function(){
+            alert('删除')
+          }
+        }],
+        buttons: [{
+          text:'Ok',
+          iconCls:'icon-ok',
+          handler:function(){
+            $('#elder-dialog-form').dialog('close');
+          }
+        }]
+      ">
+    <div id="elder-Info-card" class="info-card hide">
+      <div id="elder-Info-card-a">
+        <ul>
+          <li>姓 名：<text>admin</text></li>
+          <li>出生年月日：<text>1980-7-10</text></li>
+          <li>性 别：<text>女</text></li>
+          <li>民 族：<text>汉</text></li>
+          <li>籍贯：<text>xxx</text></li>
+          <li>户籍所在地：<text>xxx</text></li>
+          <li>政治面貌：<text>xxx</text></li>
+          <li>教育水平：<text>xxx</text></li>
+          <li>身份证号：<text>411345398604564</text></li>
+          <li>社保卡号：<text>13761937563</text></li>
+          <li>档案编号：<text>007</text></li>
+          <li>入住床号：<text>a-2-201-3</text></li>
+          <li>联系人电话：<text>411345398604564</text></li>
+          <li>家庭地址：<text>411345398604564</text></li>
+        </ul>
+      </div>
+      <div id="elder-Info-card-b"><img src="/resthouse/static/images/p_2.jpg"></div>
+    </div>
+
+    <div id="authority-Info-card" class="info-card hide">
+      <ul id="authoritychecktree" class="easyui-tree" style="padding-left:20px;text-align:left;" data-options="lines:true,checkbox:true">
+      </ul>
+    </div>    
+</div>
+
+<script type="text/javascript" src="/resthouse/static/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="/resthouse/static/js/jquery.easyui.min.js"></script>
+<script  type="text/javascript" src="/resthouse/static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/topleftNavi.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/elder.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/staff.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/item.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/geroitem.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/role.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/authority.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/arrange.js"></script>
+</body>
+</html>

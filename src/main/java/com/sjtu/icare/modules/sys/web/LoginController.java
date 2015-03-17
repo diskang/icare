@@ -58,7 +58,7 @@ public class LoginController extends BaseController{
 		User user = UserUtils.getUser();
 		// 如果已经登录，则跳转到管理首页
 		if(user.getUsername() != null){
-			return "redirect:"+Global.getAdminPath();  
+			return "module/gero_management";  
 		}
 		return "module/sys/sysLogin";
 	}
