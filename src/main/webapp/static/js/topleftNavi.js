@@ -116,7 +116,7 @@ $(function(){
         type: "get",
         dataType: "json",
         contentType: "application/json;charset=utf-8",
-        url: "/user/1",
+        url: "/resthouse/user/1",
         success: function (msg) {
             temptree=msg.entities[0].privilege_list;
             leftTop.removeLefttree;
