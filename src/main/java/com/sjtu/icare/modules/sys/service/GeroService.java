@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 import com.sjtu.icare.modules.sys.entity.Gero;
 import com.sjtu.icare.modules.sys.persistence.GeroMapper;
 
+/**
+ *  测试类
+ * @author garfieldjty
+ *
+ */
 @Service
 public class GeroService{
 	@Autowired

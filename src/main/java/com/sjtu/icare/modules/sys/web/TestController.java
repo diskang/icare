@@ -18,7 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sjtu.icare.common.config.Global;
 import com.sjtu.icare.modules.sys.entity.User;
 
-
+/**
+ * 测试类
+ * @author KangShiyong
+ *
+ */
 @Controller
 @RequestMapping("/test")
 public class TestController {

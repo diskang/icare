@@ -17,6 +17,11 @@ import com.sjtu.icare.common.web.BaseController;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.utils.UserUtils;
 
+/**
+ * 测试类
+ * @author garfieldjty
+ *
+ */
 @Controller
 public class AdminController extends BaseController{
 	

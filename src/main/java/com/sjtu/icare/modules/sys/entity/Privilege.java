@@ -22,10 +22,7 @@ public class Privilege extends DataEntity<Privilege>{
 	private String parentIds; // 所有父级编号
 	private String name; 	// 名称
 	private String href; 	// 链接
-//	private String target; 	// 目标（ mainFrame、_blank、_self、_parent、_top）
 	private String icon; 	// 图标
-//	private Integer sort; 	// 排序
-//	private String isShow; 	// 是否在菜单中显示（1：显示；0：不显示）
 	private String notes;	//权限备注
 	private String permission; // 权限标识
 	
@@ -35,8 +32,6 @@ public class Privilege extends DataEntity<Privilege>{
 	
 	public Privilege(){
 		super();
-//		this.sort = 30;
-//		this.isShow = "1";
 	}
 	
 	public Privilege(int id){
@@ -80,15 +75,6 @@ public class Privilege extends DataEntity<Privilege>{
 		this.href = href;
 	}
 
-//	@Length(min=0, max=20)
-//	public String getTarget() {
-//		return target;
-//	}
-//
-//	public void setTarget(String target) {
-//		this.target = target;
-//	}
-	
 	@Length(min=0, max=100)
 	public String getIcon() {
 		return icon;
@@ -97,24 +83,6 @@ public class Privilege extends DataEntity<Privilege>{
 	public void setIcon(String icon) {
 		this.icon = icon;
 	}
-	
-//	@NotNull
-//	public Integer getSort() {
-//		return sort;
-//	}
-//	
-//	public void setSort(Integer sort) {
-//		this.sort = sort;
-//	}
-//	
-//	@Length(min=1, max=1)
-//	public String getIsShow() {
-//		return isShow;
-//	}
-//
-//	public void setIsShow(String isShow) {
-//		this.isShow = isShow;
-//	}
 
 	@Length(min=0, max=200)
 	public String getPermission() {
@@ -151,7 +119,7 @@ public class Privilege extends DataEntity<Privilege>{
 
 	@JsonIgnore
 	public static String getRootId(){
-		return "1";
+		return "0";
 	}
 	
 	public int getUserId() {
@@ -200,6 +168,5 @@ public class Privilege extends DataEntity<Privilege>{
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}
-	
-	
+		
 }

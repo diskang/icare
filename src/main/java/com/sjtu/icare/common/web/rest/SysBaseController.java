@@ -132,6 +132,12 @@ public class SysBaseController {
 		return user;
 	}
 	
+	/**
+	 * 设置orderBy参数
+	 * @param page
+	 * @param orderByTag
+	 * @return
+	 */
 	protected <T> Page<T> setOrderBy (Page<T> page, String orderByTag){
 		String orderBy = "id";
 		try {
@@ -144,8 +150,6 @@ public class SysBaseController {
 		page.setOrderBy(orderBy);
 		return page;
 	}
-	
-	
 	
 	/**
 	 * user返回格式

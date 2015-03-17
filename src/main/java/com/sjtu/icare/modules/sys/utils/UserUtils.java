@@ -262,13 +262,4 @@ public class UserUtils {
 //			getCacheMap().remove(key);
 			getSession().removeAttribute(key);
 		}
-		
-//		public static Map<String, Object> getCacheMap(){
-//			Principal principal = getPrincipal();
-//			if(principal!=null){
-//				return principal.getCacheMap();
-//			}
-//			return new HashMap<String, Object>();
-//		}
-	
 }
