@@ -354,11 +354,10 @@ GO
 -- )
 -- GO
 
--- CREATE TABLE T_GERO_CARE_ITEM
 CREATE TABLE T_CARE_ITEM
 (
-	id					int				PRIMARY KEY IDENTITY,
-	gero_id				int				NOT NULL,				--
+	id					int				PRIMARY KEY IDENTITY,	--
+	gero_id				int				NOT NULL,				--gero_id=1时为默认项目
 	name				nvarchar(32)	NOT NULL,				--
 	icon				varchar(32)		,						--
 	level				int				NOT NULL,				--
@@ -369,11 +368,10 @@ CREATE TABLE T_CARE_ITEM
 )
 GO
 
--- CREATE TABLE T_GERO_AREA_ITEM
 CREATE TABLE T_AREA_ITEM
 (
 	id					int				PRIMARY KEY IDENTITY,
-	gero_id				int				NOT NULL,				--
+	gero_id				int				NOT NULL,				--gero_id=1时为默认项目
 	name				nvarchar(32)	NOT NULL,				--
 	icon				varchar(32)		,						--
 	period				int				,						--
@@ -387,7 +385,7 @@ CREATE TABLE T_ELDER_ITEM
 (
 	id					int				PRIMARY KEY IDENTITY,
 	elder_id			int				NOT NULL,				--
-	care_item_id		int				NOT NULL,				--
+	care_item_id		int				NOT NULL,				--关联T_CARE_ITEM表
 	icon				varchar(32)		,						--
 	level				int				NOT NULL,				--
 	period				int				,						--
