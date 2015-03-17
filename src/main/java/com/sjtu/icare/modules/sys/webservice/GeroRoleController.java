@@ -512,6 +512,67 @@ public class GeroRoleController extends GeroBaseController {
 		return result.getMap();
 	}
 	
+	/**
+	 * 修改角色员工
+	 * @param rid
+	 * @param gid
+	 * @param inJson
+	 * @return
+	 */
+	@RequestMapping(value = "/{gid}/role/{rid}/user", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
+	public Map<String, Object> updateRoleUser(
+			@PathVariable("rid") int rid,
+			@PathVariable("gid") int gid,
+			@RequestBody String inJson
+			){
+
+//		checkGero(gid);
+		
+		BasicReturnedJson result = new BasicReturnedJson();
+		
+		Role role = getRoleFromId(rid);
+		
+		checkRoleInGero(role, gid);
+		
+		Map<String, Object> requestBodyParamMap = ParamUtils.getMapByJson(inJson, logger);
+		List<Integer> userIdList = new ArrayList<Integer>();
+		
+		// 输入参数检查
+		try {
+			userIdList = (List<Integer>) requestBodyParamMap.get("user_ids");
+			if (userIdList == null) {
+				throw new Exception();
+			}
+		} catch(Exception e) {
+			String message = ErrorConstants.format(ErrorConstants.GERO_ROLE_USER_INSERT_PARAM_INVALID,
+					"[user_ids=" + requestBodyParamMap.get("user_ids") + "]" );
+			logger.error(message);
+			throw new RestException(HttpStatus.BAD_REQUEST, message);
+		}
+		
+		// 判断用户是否属于养老院
+		for (int id : userIdList){
+			User user = systemService.getUser(id);
+			if (user.getGeroId() != gid) {
+				String message = ErrorConstants.format(ErrorConstants.GERO_ROLE_USER_INSERT_NOT_FOUND,
+						"[user_id=" + id + "]" );
+				logger.error(message);
+				throw new RestException(HttpStatus.NOT_FOUND, message);
+			}
+		}
+		
+		role.setUserIdList(userIdList);
+		
+		try {
+			systemService.updateRoleUser(role);
+		} catch (Exception e) {
+			String message = ErrorConstants.format(ErrorConstants.GERO_ROLE_USER_SERVICE_ERROR,"" );
+			logger.error(message);
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
+		}
+		
+		return result.getMap();
+	}
 	
 	/**
 	 *  判断角色属于养老院

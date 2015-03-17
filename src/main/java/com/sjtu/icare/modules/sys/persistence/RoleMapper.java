@@ -32,5 +32,8 @@ public interface RoleMapper extends CrudMapper<Role> {
 	 * @return
 	 */
 	public Role getByNameAndGero(Role role);
-
+	
+	public void insertRoleUser(Role role);
+	
+	public void deleteRoleUser (Role role);
 }

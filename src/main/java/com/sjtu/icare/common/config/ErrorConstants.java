@@ -79,6 +79,9 @@ public class ErrorConstants {
 	public static final String GET_PRIVILEGE_SERVICE_ERROR = "1000036 PUT 修改权限：查询权限后台失败";
 	public static final String UPDATE_PRIVILEGE_SERVICE_ERROR = "1000037 PUT 修改权限：修改权限后台失败";
 	public static final String DELETE_PRIVILEGE_SERVICE_ERROR = "1000038 DELETE 删除权限：删除权限后台失败";
+	public static final String GERO_ROLE_USER_INSERT_PARAM_INVALID = "1000039 INSERT 添加角色用户：请求参数错误";
+	public static final String GERO_ROLE_USER_INSERT_NOT_FOUND = "1000040 INSERT 添加角色用户：养老院不存在该用户";
+	public static final String GERO_ROLE_USER_SERVICE_ERROR = "1000040 INSERT 添加角色用户：后台修改失败";
 	
 	// staff schedule constants
 	public static final String STAFF_SCHEDULE_PLAN_GET_PARAM_INVALID = "300001 GET 员工排信息：请求参数错误";

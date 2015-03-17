@@ -104,6 +104,16 @@ public class SystemService extends BaseService  {
 	}
 	
 	/**
+	 *  查询user列表不分页
+	 * @param page
+	 * @param user
+	 * @return
+	 */
+	public List<User> findUserList(User user) {
+		return userMapper.findList(user);
+	}
+	
+	/**
 	 * 无分页查询人员列表
 	 * @param user
 	 * @return
@@ -398,6 +408,12 @@ public class SystemService extends BaseService  {
 		privilege.setParentIds(privilege.getParentIds()+privilege.getId()+',');
 		privilegeMapper.deleteChildrens(privilege);
 		privilegeMapper.delete(privilege);
+	}
+	
+	@Transactional(readOnly = false)
+	public void updateRoleUser(Role role){
+		roleMapper.deleteRoleUser(role);
+		roleMapper.insertRoleUser(role);
 	}
 	
 	/**

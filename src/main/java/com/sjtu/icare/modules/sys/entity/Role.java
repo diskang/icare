@@ -22,6 +22,8 @@ public class Role extends DataEntity<Role> {
 	private String notes;	//角色备注
 	
 	private User user;		// 根据用户ID查询角色列表
+	
+	private List<Integer> userIdList = Lists.newArrayList(); //权限用户列表
 
 	private List<Privilege> privilegeList = Lists.newArrayList(); // 拥有权限列表
 	
@@ -127,6 +129,14 @@ public class Role extends DataEntity<Role> {
 
 	public void setGeroId(int geroId) {
 		this.geroId = geroId;
+	}
+
+	public List<Integer> getUserIdList() {
+		return userIdList;
+	}
+
+	public void setUserIdList(List<Integer> userIdList) {
+		this.userIdList = userIdList;
 	}	
 	
 }
