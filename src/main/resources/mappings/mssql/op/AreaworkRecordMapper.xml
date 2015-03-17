@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.icare.modules.op.persistence.AreaworkRecordDAO">
+
+    <cache />
+    
+    
+  
+    <select id="getAreaworkRecordEntityById" resultType="AreaworkRecordEntity">
+        SELECT
+			id,
+			carer_id,
+			area_id,
+			elder_item_id,
+			item_name,
+			finish_time
+        FROM T_AREAWORK_RECORD
+        WHERE T_AREAWORK_RECORD.id = #{id}
+    </select>
+    
+</mapper>

@@ -80,8 +80,14 @@ public class ElderTemperatureRestController {
 			// 获取基础的 JSON返回
 			BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
 			
-			ElderEntity elderEntity = elderHealthDataService.getElderEntity(elderId);
-			List<ElderTemperatureEntity> elderTemperatureEntityList = elderHealthDataService.getElderTemperatureEntities(elderId, startDate, endDate);
+			ElderEntity queryElderEntity = new ElderEntity();
+			queryElderEntity.setId(elderId);
+			ElderEntity elderEntity = elderHealthDataService.getElderEntity(queryElderEntity);
+			
+			ElderTemperatureEntity queryElderTemperatureEntity = new ElderTemperatureEntity();
+			queryElderTemperatureEntity.setElderId(elderId);
+			List<ElderTemperatureEntity> elderTemperatureEntityList = elderHealthDataService.getElderTemperatureEntities(queryElderTemperatureEntity, startDate, endDate);
+			
 			User userEntityOfElder = elderHealthDataService.getUserEntityOfElder(elderEntity);
 			
 			// 构造返回的 JSON
@@ -97,8 +103,13 @@ public class ElderTemperatureRestController {
 				tempMap.put("temperature", entity.getTemperature());
 				tempMap.put("times", entity.getTime());
 				
-				StaffEntity doctorEntity = entity.getDoctorEntity();
+				StaffEntity queryStaffEntity = new StaffEntity();
+				queryStaffEntity.setId(entity.getDoctorId());
+				StaffEntity doctorEntity = staffDataService.getStaffEntity(queryStaffEntity);
+				
 				User userEntityOfDoctor = staffDataService.getUserEntityOfStaff(doctorEntity);
+				if (doctorEntity == null || userEntityOfDoctor == null)
+					throw new Exception("查询不到关联医生");
 				
 				if (doctorEntity != null) {
 					HashMap<String, Object> tempMap2 = new HashMap<String, Object>();

@@ -41,7 +41,7 @@ import com.sjtu.icare.modules.sys.entity.User;
 @RestController
 @RequestMapping("/elder/{eid}/heart_rate")
 public class ElderHeartRateRestController {
-	private static Logger logger = Logger.getLogger(ElderTemperatureRestController.class);
+	private static Logger logger = Logger.getLogger(ElderHeartRateRestController.class);
 
 	@Autowired
 	private IElderHealthDataService elderHealthDataService;
@@ -81,8 +81,13 @@ public class ElderHeartRateRestController {
 			// 获取基础的 JSON返回
 			BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
 		
-			ElderEntity elderEntity = elderHealthDataService.getElderEntity(elderId);
-			List<ElderHeartRateEntity> elderHeartRateEntityList = elderHealthDataService.getElderHeartRateEntity(elderId, startDate, endDate);
+			ElderEntity queryElderEntity = new ElderEntity();
+			queryElderEntity.setId(elderId);
+			ElderEntity elderEntity = elderHealthDataService.getElderEntity(queryElderEntity);
+			
+			ElderHeartRateEntity queryElderHeartRateEntity = new ElderHeartRateEntity();
+			queryElderHeartRateEntity.setElderId(elderId);
+			List<ElderHeartRateEntity> elderHeartRateEntityList = elderHealthDataService.getElderHeartRateEntity(queryElderHeartRateEntity, startDate, endDate);
 			User userEntityOfElder = elderHealthDataService.getUserEntityOfElder(elderEntity);
 			
 			// 构造返回的 JSON
@@ -96,11 +101,16 @@ public class ElderHeartRateRestController {
 			for (ElderHeartRateEntity entity : elderHeartRateEntityList) {
 				HashMap<String, Object> tempMap = new HashMap<String, Object>();
 				tempMap.put("id", entity.getId());
-				tempMap.put("heart_rate", entity.getHeartRate());
+				tempMap.put("heart_rate", entity.getRate());
 				tempMap.put("times", entity.getTime());
 				
-				StaffEntity doctorEntity = entity.getDoctorEntity();
+				StaffEntity queryStaffEntity = new StaffEntity();
+				queryStaffEntity.setId(entity.getDoctorId());
+				StaffEntity doctorEntity = staffDataService.getStaffEntity(queryStaffEntity);
+				
 				User userEntityOfDoctor = staffDataService.getUserEntityOfStaff(doctorEntity);
+				if (doctorEntity == null || userEntityOfDoctor == null)
+					throw new Exception("查询不到关联医生");
 				
 				if (doctorEntity != null) {
 					HashMap<String, Object> tempMap2 = new HashMap<String, Object>();

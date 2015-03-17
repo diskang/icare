@@ -13,7 +13,6 @@
 	    <result property="diastolicPressure" column="diastolic_pressure" />
 	    <result property="systolicPressure" column="systolic_pressure" />
 	    <result property="time" column="time" />
-	    <association property="doctorEntity" column="doctor_id" select="com.sjtu.icare.modules.staff.persistence.StaffDAO.getStaffEntityById"/>
 	</resultMap>
   
     <select id="getElderBloodPressureEntitiesByElderidStartdayEndday" resultMap="ElderBloodPressureEntityMap">

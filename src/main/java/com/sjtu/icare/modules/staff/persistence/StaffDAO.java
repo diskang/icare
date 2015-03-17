@@ -1,5 +1,7 @@
 package com.sjtu.icare.modules.staff.persistence;
 
+import java.util.Map;
+
 import com.sjtu.icare.common.persistence.annotation.MyBatisDao;
 import com.sjtu.icare.modules.staff.entity.StaffEntity;
 /**
@@ -11,6 +13,6 @@ import com.sjtu.icare.modules.staff.entity.StaffEntity;
 @MyBatisDao
 public interface StaffDAO {
 
-	StaffEntity getStaffEntityById(int id);
+	StaffEntity getStaffEntity(Map<String, Object> paramMap);
 	
 }

@@ -7,9 +7,7 @@
  */
 package com.sjtu.icare.modules.gero.service;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Map;
 
 import com.sjtu.icare.modules.gero.entity.GeroAreaEntity;
 

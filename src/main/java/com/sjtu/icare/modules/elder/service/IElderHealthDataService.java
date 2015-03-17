@@ -1,6 +1,5 @@
 package com.sjtu.icare.modules.elder.service;
 
-import java.sql.Date;
 import java.util.List;
 
 import com.sjtu.icare.modules.elder.entity.ElderBloodPressureEntity;
@@ -16,20 +15,20 @@ import com.sjtu.icare.modules.sys.entity.User;
  */
 public interface IElderHealthDataService {
 	
-	ElderEntity getElderEntity(int id);
+	ElderEntity getElderEntity(ElderEntity elderEntity);
 
-	List<ElderTemperatureEntity> getElderTemperatureEntities(int elderId, String startDate, String endDate);
+	List<ElderTemperatureEntity> getElderTemperatureEntities(ElderTemperatureEntity elderTemperatureEntity, String startDate, String endDate);
 
 	void insertElderTemperatureRecord(int elderId, int doctorId,
 			String temperature, String time);
 
 	List<ElderBloodPressureEntity> getElderBloodPressureEntities(
-			int elderId, String startDate, String endDate);
+			ElderBloodPressureEntity elderBloodPressureEntity, String startDate, String endDate);
 
 	void insertElderBloodPressureRecord(int elderId, Integer doctorId,
 			String diastolicPressure, String systolicPressure, String time);
 	
-	List<ElderHeartRateEntity> getElderHeartRateEntity(int elderId, String startDate, String endDate);
+	List<ElderHeartRateEntity> getElderHeartRateEntity(ElderHeartRateEntity elderHeartRateEntity, String startDate, String endDate);
 
 	void insertElderHeartRateRecord(int elderId, Integer doctorId,
 			String heartRate, String time);

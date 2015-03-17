@@ -87,6 +87,18 @@
 		)
 	</insert>
 	
+	<!-- 插入用户和角色关联表数据 -->
+	<insert id="insertRoleUser">
+		INSERT INTO T_USER_ROLES(user_id, role_id)
+		<foreach collection="userIdList" item="userId" separator=" union all ">
+			SELECT #{userId}, #{id} <!-- FROM dual -->
+		</foreach>
+	</insert>
+	
+	<delete id="deleteRoleUser">
+		DELETE T_USER_ROLES WHERE role_id = #{id}
+	</delete>
+	
 	<update id="update">
 		UPDATE T_ROLE SET 
 			name = #{name}, 
@@ -96,7 +108,12 @@
 	</update>
 	
 	<delete id="deleteRolePrivilege">
-		DELETE T_ROLE_PRIVILEGES WHERE role_id = #{id}
+		DELETE T_ROLE_PRIVILEGES
+		where role_id = #{id} 
+		AND privilege_id in 
+		<foreach collection="privilegeList" item="privilege" open="(" separator="," close=")">
+			#{privilege.id}
+		</foreach>
 	</delete>
 	
 	<insert id="insertRolePrivilege">

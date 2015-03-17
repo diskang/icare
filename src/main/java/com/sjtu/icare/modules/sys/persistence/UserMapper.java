@@ -1,8 +1,6 @@
 package com.sjtu.icare.modules.sys.persistence;
 
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 import com.sjtu.icare.modules.sys.entity.User;
@@ -16,16 +14,6 @@ import com.sjtu.icare.common.persistence.CrudMapper;
  */
 @MyBatisDao
 public interface UserMapper extends CrudMapper<User>{
-
-//    User findByUsername(String username);
-
-    //User findByUserId(int userId);//应该不会用id来查。
-
-//    void updatePasswordById(@Param("id")int id,@Param("password")String password);//id,password
-    
-//    void save(User user);
-
-    void delete(@Param("id")int id,@Param("cancelDate")String cancelDate);//id, cancelDate
     
     /**
 	 * 根据登录名称查询用户
@@ -53,13 +41,6 @@ public interface UserMapper extends CrudMapper<User>{
 	 * @return
 	 */
 	public int updatePasswordById(User user);
-	
-//	/**
-//	 * 更新登录信息，如：登录IP、登录时间
-//	 * @param user
-//	 * @return
-//	 */
-//	public int updateLoginInfo(User user);
 
 	/**
 	 * 删除用户角色关联数据
@@ -81,5 +62,12 @@ public interface UserMapper extends CrudMapper<User>{
 	 * @return
 	 */
 	public int updateUserInfo(User user);
+	
+	/**
+	 *  逻辑删除用户
+	 * @param id
+	 * @param cancelDate
+	 */
+	void delete(@Param("id")int id,@Param("cancelDate")String cancelDate);//id, cancelDate
 
 }

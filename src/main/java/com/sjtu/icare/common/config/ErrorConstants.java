@@ -62,7 +62,44 @@ public class ErrorConstants {
 	public static final String GERO_ROLE_UPDATE_SERVICE_ERROR = "1000021 PUT 修改养老院角色列表：后台获取失败";
 	public static final String GERO_ROLE_DELETE_SERVICE_ERROR = "1000022 DELETE 删除养老院角色：后台删除数据失败";
 	public static final String GERO_ROLE_PRIVILEGE_INSERT_PARAM_INVALID = "1000023 POST 插入养老院角色权限：请求参数错误";
+	public static final String GET_USER_PRINCIPAL_FAILED = "1000024 GET 获取当前用户令牌失败";
+	public static final String GET_USER_PRIVILEGE_FAILED = "1000025 GET 获取当前用户权限失败";
+	public static final String SORT_PRIVILEGE_FAILED = "1000026 GET 插入养老院角色权限：权限排序失败";
+	public static final String GERO_ROLE_INSERT_PRIVILEGE_NO_PARENT = "1000027 GET 插入养老院角色权限：该角色没有此权限的父权限";
+	public static final String GERO_ROLE_PRIVILEGE_DELETE_PARAM_INVALID = "1000028 DELETE 删除养老院角色权限：请求参数错误";
+	public static final String GERO_ROLE_PRIVILEGE_DELETE_PRIVILEGE_NOT_FOUND = "1000029 DELETE 删除养老院角色权限：删除权限不存在";
+	public static final String GERO_ROLE_PRIVILEGE_DELETE_SERVICE_ERROR = "1000030 DELETE 删除养老院角色权限：后台删除数据失败";
+	public static final String GET_PRIVILEGE_LIST_SERVICE_ERROR = "1000031 GET 查询权限列表：后台获取失败";
+	public static final String GET_PRIVILEGE_LIST_EMPTY_ERROR = "1000032 GET 查询权限列表：未取到数据";
+	public static final String INSERT_PRIVILEGE_PARAM_INVALID = "1000033 POST 插入权限：请求参数错误";
+	public static final String GET_PARENT_PRIVILEGE_ERROR = "1000033 POST 插入权限：系统取父权限失败";
+	public static final String GET_PARENT_PRIVILEGE_NOT_FOUND = "1000033 POST 插入权限：父权限不存在";
+	public static final String INSERT_PRIVILEGE_SERVICE_ERROR = "1000034 POST 插入权限：后台插入失败";
+	public static final String GET_PRIVILEGE_NOT_FOUND = "1000035 PUT 修改权限：无此权限";
+	public static final String GET_PRIVILEGE_SERVICE_ERROR = "1000036 PUT 修改权限：查询权限后台失败";
+	public static final String UPDATE_PRIVILEGE_SERVICE_ERROR = "1000037 PUT 修改权限：修改权限后台失败";
+	public static final String DELETE_PRIVILEGE_SERVICE_ERROR = "1000038 DELETE 删除权限：删除权限后台失败";
+	public static final String GERO_ROLE_USER_INSERT_PARAM_INVALID = "1000039 INSERT 添加角色用户：请求参数错误";
+	public static final String GERO_ROLE_USER_INSERT_NOT_FOUND = "1000040 INSERT 添加角色用户：养老院不存在该用户";
+	public static final String GERO_ROLE_USER_SERVICE_ERROR = "1000040 INSERT 添加角色用户：后台修改失败";
 	
+	// staff schedule constants
+	public static final String STAFF_SCHEDULE_PLAN_GET_PARAM_INVALID = "300001 GET 员工排信息：请求参数错误";
+	public static final String STAFF_SCHEDULE_PLAN_GET_SERVICE_FAILED = "300002 GET 员工排班信息：后台获取失败";
+	public static final String STAFF_SCHEDULE_PLAN_POST_PARAM_INVALID = "300003 POST 员工排班信息：请求参数错误";
+	public static final String STAFF_SCHEDULE_PLAN_POST_SERVICE_FAILED = "300004 POST 员工排班信息：后台插入数据失败";
+	public static final String STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_GET_PARAM_INVALID = "300005 GET 员工某天排班信息：请求参数错误";
+	public static final String STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_GET_SERVICE_FAILED = "300006 GET 员工某天排班信息：后台获取失败";
+	public static final String STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_POST_PARAM_INVALID = "300007 POST 员工某天排班信息：请求参数错误";
+	public static final String STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_POST_SERVICE_FAILED = "300008 POST 员工某天排班信息：后台插入数据失败";
+	public static final String STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_DELETE_PARAM_INVALID = "300009 DELETE 员工某天排班信息：请求参数错误";
+	public static final String STAFF_SCHEDULE_PLAN_SPECIFIC_DAY_DELETE_SERVICE_FAILED = "300011 DELETE 员工某天排班信息：后台删除信息失败";
+	
+	// gero staff schedule plan constants 
+	public static final String GERO_STAFF_SCHEDULE_PLAN_GET_PARAM_INVALID = "370001 GET 养老院排班信息：请求参数错误";
+	public static final String GERO_STAFF_SCHEDULE_PLAN_GET_SERVICE_FAILED = "370002 GET 养老院排班信息：后台获取失败";
+	public static final String GERO_STAFF_SCHEDULE_PLAN_PUT_PARAM_INVALID = "370003 PUT 养老院排班信息：请求参数错误";
+	public static final String GERO_STAFF_SCHEDULE_PLAN_PUT_SERVICE_FAILED = "370004 PUT 养老院排班信息：后台获取失败";
 	
 	public static String format(String errorConstant, String otherMessage) {
 		if (errorConstant == null)

@@ -13,16 +13,14 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.beanutils.BeanUtils;
-
-import com.alibaba.fastjson.JSON;
-import com.sjtu.icare.common.exception.BeanToMapException;
-import com.sjtu.icare.modules.test.entity.TestEntity;
+import com.sjtu.icare.modules.elder.entity.ElderTemperatureEntity;
 
 public class CommonUtils {
 	public static final char UNDERLINE='_';
@@ -189,12 +187,40 @@ public class CommonUtils {
         return obj; 
     } 
     
-
+    /**
+     * 
+     * @Title getDate
+     * @Description TODO
+     * @param @param date
+     * @param @return
+     * @return Date， null if cannot parse 
+     * @throws
+     */
+    public static Date getDate(String date) {
+		if (date == null)
+			return null;
+		
+		SimpleDateFormat pattern = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+			return pattern.parse(date);
+		} catch (Exception e){
+			// pass
+		}
+		
+		pattern = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			return pattern.parse(date);
+		} catch (Exception e){
+			// pass
+		}
+		
+		return null;
+    }
 	public static void main(String[] args) throws IllegalAccessException, InvocationTargetException, IntrospectionException {
 //		TestEntity testEntity = new TestEntity();
 //		Map<String, Object> map = beanToMap(testEntity);
 //		System.out.println(map);
-		TestEntity testEntity = new TestEntity();
+		ElderTemperatureEntity testEntity = new ElderTemperatureEntity();
 		Map<String, Object> map = beanToMap(testEntity);
 		System.out.println(map);
 	}
