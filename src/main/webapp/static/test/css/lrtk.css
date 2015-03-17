@@ -1,0 +1,424 @@
+@charset "utf-8";
+
+/*����ͼ*/
+.focus{ position:relative; width:100%; height:400px; background-color: #000; float: left;}  
+.focus img{ width:100%; height:400px;} 
+.focus .shadow .title{width: 260px; height: 65px;padding-left: 30px;padding-top: 20px;}
+.focus .shadow .title a{ text-decoration:none; color:#fff; font-size:14px; font-weight:bolder; overflow:hidden; }
+.focus .btn{ position:absolute; bottom:34px; left:510px; overflow:hidden; zoom:1;} 
+.focus .btn a{position:relative; display:inline; width:13px; height:13px; border-radius:7px; margin:0 5px;color:#B0B0B0;font:12px/15px "\5B8B\4F53"; text-decoration:none; text-align:center; outline:0; float:left; background:#D9D9D9; }  
+.focus .btn a:hover,.focus .btn a.current{  cursor:pointer;background:#fc114a;}  
+.focus .fPic{ position:absolute; left:0px; top:0px; }  
+.focus .D1fBt{ overflow:hidden; zoom:1;  height:16px; z-index:10;  }  
+.focus .shadow{ width:100%; position:absolute; bottom:0; left:0px; z-index:10; height:80px; line-height: 80px; background:rgba(0,0,0,0.6);    
+filter:progid:DXImageTransform.Microsoft.gradient( GradientType = 0,startColorstr = '#80000000',endColorstr = '#80000000')\9;  display:block;  text-align:left; }  
+.focus .shadow a{ text-decoration:none; color:#fff; font-size:20px; overflow:hidden; margin-left:10px; font-family: "\5FAE\8F6F\96C5\9ED1";}  
+.focus .fcon{ position:relative; width:100%; float:left;  display:none; background:#000  }  
+.focus .fcon img{ display:block; }  
+.focus .fbg{bottom:25px; right:50%; position:absolute; height:21px; text-align:center; z-index: 200; }  
+.focus .fbg div{margin:4px auto 0;overflow:hidden;zoom:1;height:14px}    
+.focus .D1fBt a{position:relative; display:inline; width:12px; height:12px; border-radius:7px; margin:0 5px;color:#B0B0B0;font:12px/15px "\5B8B\4F53"; text-decoration:none; text-align:center; outline:0; float:left; background:#D9D9D9; }    
+.focus .D1fBt .current,.focus .D1fBt a:hover{background:#fc114a;}    
+.focus .D1fBt img{display:none}    
+.focus .D1fBt i{display:none; font-style:normal; }    
+.focus .prev,.focus .next{position:absolute;width:40px;height:74px;background: url(../images/focus_btn.png) no-repeat;}
+.focus .prev{top: 50%;margin-top: -37px; left: 0;background-position:0 -74px; cursor:pointer; }  
+.focus .next{top: 50%;margin-top: -37px; right: 0;  background-position:-40px -74px;  cursor:pointer;}  
+.focus .prev:hover{  background-position:0 0; }  
+.focus .next:hover{  background-position:-40px 0;}  
+
+@media screen and (max-width: 767px){
+
+.logo{
+  padding-left:15px;
+}
+.dianhua{
+	display:none;
+}
+
+.focus{
+  position:relative; 
+  width:100%; 
+  height:417px; 
+  background-color: #000; 
+  float: left;
+  overflow:hidden;
+}
+
+.focus img{ 
+  width:100%;
+  height: 417px;
+} 
+.focus .fcon img{
+  display:block;
+  width:100%;
+  height:417px; 
+}
+.cont-b li .span1{
+  width:30%;
+  height:70px;
+  float:left;
+  margin-left:10px;
+  margin-right:10px;
+}
+.cont-b li .span1 img{
+  width:100%;
+  height:70px;
+}
+.cont-b li .span2{
+	text-align: left;
+	float: left;
+	width: 50%;
+}
+/*------------��ҳ----------*/
+.nurse li{
+  width:100%;
+  float:left;
+  height:185px;
+  background-color:#CCC;
+  padding-top:5px;
+  margin-bottom:5px;
+}
+.about{
+  height:auto;
+  margin-top: 30px;
+}
+.content{
+  padding-left:20px;
+  padding-right:20px;
+}
+.house .span1{
+  float:left;
+  width:100%;
+  height:302px;
+  margin-bottom:20px;
+}
+.house .span2{
+	width: 100%;
+	height: 302px;
+	float:left;
+	padding-left: 10px;
+	padding-right: 10px;
+	font-family: ΢���ź�;
+	text-align: left;
+	line-height: 28px;
+	font-size:14px;
+	padding-bottom: 25px;
+	margin-bottom:20px;
+}
+
+.introduction{
+  height:auto;
+}
+.fotter-b{
+  width:100%;
+  text-align:center;
+}
+
+.Navigation .nav-b{
+	display:none;
+ }
+.nav-bb{
+  float:right;
+  text-align:left;
+  width:20%;
+  font-size:18px;
+  font-family:΢���ź�;
+  text-align:center;
+  
+  line-height:54px;
+  height:54px;
+}
+.dropdown-menu{
+	padding-left:10px;
+}
+.contact-a{
+  width:100%;
+}
+.contact-b{
+  display:none;
+}
+.contact-a,.contact-b{
+  height:450px;
+ }
+.cont-a{
+  margin-left:20px;
+}
+
+.cont-b li{
+  width:50%;
+  float:left;
+}
+.con-b .conli{
+ padding-left:25px;
+}
+.con-a{
+ padding-left:25px;
+}
+.con-b .conli-a{
+  padding-left:50px;
+}
+.treatment-a li{
+  width:100%;
+}
+.Environment-b .huan-a,.Environment-b .huan-b,.Environment-b .huan-c{
+  width:100%;
+}
+.Environment-b .huan-b,.Environment-b .huan-c{
+	margin-left:0px;
+}
+.treatment-a li .span1,.treatment-a li .span3{
+  padding-left:10px;
+  padding-right:10px;
+  width:98%;
+  
+}
+.treatment-a li .span2{
+	 padding-left:10px;
+  padding-right:10px;
+  width:98%;
+}
+.treatment-a li .span1{
+  width:98%;
+  height:200px;
+  overflow:hidden;
+}
+.treatment-a li .span1 img{
+  width:98%;
+  height:200px;
+}
+.treatment-a li .span2{
+  width:100%;
+  font-size:14px;
+  float:left;
+  line-height:25px;
+  margin-bottom:15px;
+  height:85px;
+}
+
+.treatment-a li .span3{
+ height:50px;
+}
+.treatment-a li{
+  height:auto;
+}
+.Environment-b .huan-c{
+  width:100%;
+  float:right;
+  height:auto;
+}
+.Environment-b .huan-a .span2{
+  margin-bottom:5px;
+}
+.Environment-a h4{
+  font-size:16px;
+  width:30%;
+}
+Environment-b .huan-a .span1 img{
+  padding-left:10px;
+  padding-right:10px;
+}
+.Environment-b .huan-b .span2{
+  height:180px;
+  width:100%;
+  flaot:left;
+}
+.Environment-b .huan-b,.Environment-b .huan-c{
+	display:none;
+}
+
+.di-a{
+
+		border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #a9a9a9;
+}
+.Navigation .nav{
+  float:left;
+  text-align:left;
+  width:20%;
+  font-size:18px;
+  font-family:΢���ź�;
+  text-align:center;
+}
+.fotter-a{
+	display:none;
+}
+}
+@media(max-width:992px){
+.focus{
+	 position:relative; width:100%; height:417px; background-color: #000; float: left;
+	 overflow:hidden;
+}
+
+.focus .fcon img{ 
+ display:block;
+  width:100%;
+  height:417px; 
+   } 
+
+}
+@media(min-width:1200px){
+.nav-bb{
+	display:none;
+  }}
+  /*--------------------------------共用CSS*/
+#nav {
+	width: 100%;
+	line-height: 24px;
+	list-style-type: none;
+	text-align: left;
+	font-size: 18px;    /*定义整个ul菜单的行高和背景色*/
+	font-family: "微软雅黑";
+	float: left;
+	height: auto;
+	color: #00000;
+}
+#PARENT{
+	width: 100%;
+	float: right;
+	height: auto;
+
+}
+#nav a {
+ width: 92%; 
+ display: block;
+ padding-left:10px;
+ color:#00000;
+ /*Width(一定要)，否则下面的Li会变形*/
+}
+#nav .d {
+	background: #f6f6f6;/*一级目录的背景色*/
+	color: #000000;
+	border-bottom: #bbbbbb 1px solid; /*下面的一条白边*/
+	float: left; /*float：left,本不应该设置，但由于在Firefox不能正常显示 继承Nav的width,限制宽度，li自动向下延伸*/
+	line-height: 70px;
+	width: 100%;
+	height: auto;
+	float:right;
+}
+#nav .navli-d{
+  width:12%;
+  float:right;
+  height:auto;
+  margin-top:-40px;
+  background-color:none;
+}
+#nav .d a:hover{
+	width: 100%;
+	color: #fff;
+	background-color: #c1bfbf;
+}
+
+#nav a:link  {
+ color:#000000; text-decoration:none;
+}
+#nav a:visited  {
+ color:#000000;text-decoration:none;
+}
+#nav a:hover  {
+ color:#000000;text-decoration:none;font-weight:bold;
+}
+/*==================二级目录===================*/
+#nav li ul {
+ list-style:none;
+ text-align:left;
+}
+#nav li ul li{ 
+ width:100%;
+ float:left;
+ height:70%;
+ border-bottom: #bbbbbb 1px solid;
+ color:#000000; /*二级目录的背景色*/
+}
+#nav li ul li {
+	background: #f6f6f6;/*一级目录的背景色*/
+	color: #000000;
+	border-bottom: #bbbbbb 1px solid; /*下面的一条白边*/
+	float: left; /*float：left,本不应该设置，但由于在Firefox不能正常显示 继承Nav的width,限制宽度，li自动向下延伸*/
+	line-height: 70px;
+	width: 100%;
+	height: auto;
+	float:right;
+}
+#nav li ul a{
+         padding-left:20px;
+         width:100%;
+		 color:#fff;
+		 
+ /* padding-left二级目录中文字向右移动，但Width必须重新设置=(总宽度-padding-left)*/
+}
+/*下面是二级目录的链接样式*/
+#nav li ul a:link  {
+ color:#666; text-decoration:none;
+}
+#nav li ul a:visited  {
+ color:#666;text-decoration:none;
+}
+#nav li ul a:hover {
+ color:#F3F3F3;
+ text-decoration:none;
+ font-weight:normal;
+ background:#CC0000;
+ /* 二级onmouseover的字体颜色、背景色*/
+}
+/*==============================*/
+#nav li:hover ul {
+ left: auto;
+}
+#nav li.sfhover ul {
+ left: auto;
+}
+#content {
+ clear: left; 
+}
+#nav ul.collapsed {
+ display: none;
+}
+.col-xxs-7{
+  width:100%;
+  float:left;
+ }
+.col-xxs-6{
+	width:100%;
+	float:left;
+}
+}
+@media (min-width:768px){
+.Navigation .navli-c,#nav,collapsed{
+	display:none;
+}
+.navli-c a:hover{
+	display:none;
+}
+.collapsed li{
+	display:none;
+}
+#PARENT{
+	display:none;
+}
+.navli-d,#nav li {
+	display:none;
+}
+}
+@media(min-width:1200px){
+.Navigation .navli-c,#nav,collapsed{
+	display:none;
+}
+.navli-c a:hover{
+	display:none;
+}
+.collapsed li{
+	display:none;
+}
+#PARENT{
+	display:none;
+}
+.navli-d,#nav li {
+	display:none;
+}
+.xs .col-xxs-6{
+  width:40%;
+  float:left;
+}
+}
