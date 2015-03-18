@@ -16,8 +16,6 @@ import com.sjtu.icare.common.persistence.CrudMapper;
 public interface RoleMapper extends CrudMapper<Role> {
 
 	public Role getByName(Role role);
-	
-	public Role getByEnname(Role role);
 
 	/**
 	 * 维护角色与菜单权限关系
@@ -28,6 +26,14 @@ public interface RoleMapper extends CrudMapper<Role> {
 
 	public int insertRolePrivilege(Role role);
 	
+	/**
+	 *  以角色名和养老院取角色
+	 * @param role
+	 * @return
+	 */
 	public Role getByNameAndGero(Role role);
-
+	
+	public void insertRoleUser(Role role);
+	
+	public void deleteRoleUser (Role role);
 }

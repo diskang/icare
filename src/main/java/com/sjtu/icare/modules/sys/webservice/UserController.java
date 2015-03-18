@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,7 +37,7 @@ import com.sjtu.icare.modules.sys.service.SystemService;
 * @author jty
 */
 @RestController
-@RequestMapping("/user")
+@RequestMapping({"${api.web}/user","${api.service}/user"})
 public class UserController extends SysBaseController{
 	
 	private static Logger logger = Logger.getLogger(UserController.class);
@@ -51,10 +53,13 @@ public class UserController extends SysBaseController{
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> getUserInfoList(
+			HttpServletRequest request,
 			@RequestParam("page") int page,
 			@RequestParam("limit") int limit,
 			@RequestParam("order_by") String orderByTag
 			){
+		checkPermission(request);
+		
 		BasicReturnedJson result = new BasicReturnedJson();
 		
 		Page<User> userPage = new Page<User>(page, limit);
@@ -96,7 +101,10 @@ public class UserController extends SysBaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/{uid}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
-	public Map<String, Object> getUserInfoFromUserId(@PathVariable("uid") int uid){
+	public Map<String, Object> getUserInfoFromUserId(
+			HttpServletRequest request,
+			@PathVariable("uid") int uid){
+		checkPermission(request);
 		
 		BasicReturnedJson result = new BasicReturnedJson();
 		

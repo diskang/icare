@@ -139,7 +139,7 @@ public class MapListUtils {
 					if (result != null) { 
 						returnMap.put(propertyName, result); 
 					} else { 
-						returnMap.put(propertyName, ""); 
+						returnMap.put(propertyName, null); 
 					} 
 				}
 			} 

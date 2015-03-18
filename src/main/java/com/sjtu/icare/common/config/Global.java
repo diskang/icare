@@ -51,6 +51,20 @@ public class Global {
 	}
 	
 	/**
+	 * 获取有状态api根路径
+	 */
+	public static String getServiceAPIPath() {
+		return getConfig("api.service");
+	}
+	
+	/**
+	 * 获取无状态api根路径
+	 */
+	public static String getWebAPIPath() {
+		return getConfig("api.web");
+	}
+	
+	/**
 	 * 获取前端根路径
 	 */
 	public static String getFrontPath() {

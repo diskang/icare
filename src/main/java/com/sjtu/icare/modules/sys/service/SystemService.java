@@ -31,6 +31,11 @@ import com.sjtu.icare.common.utils.CacheUtils;
 import com.sjtu.icare.common.service.ServiceException;
 import com.sjtu.icare.common.utils.StringUtils;
 
+/**
+ *  系统服务（包含用户、角色、权限管理）
+ * @author garfieldjty
+ *
+ */
 @Service
 @Transactional(readOnly = true)
 public class SystemService extends BaseService  {
@@ -47,17 +52,9 @@ public class SystemService extends BaseService  {
 	private PrivilegeMapper privilegeMapper;
 	@Autowired
 	private GeroMapper geroMapper;
-//	@Autowired
-//	private Session sessionDao;
 	@Autowired
 	private SystemAuthorizingRealm systemRealm;
-	
-//	public SessionDAO getSessionDao() {
-//		return sessionDao;
-//	}
-	
-	
-	
+
 	//-- User Service --//
 	
 	/**
@@ -92,14 +89,28 @@ public class SystemService extends BaseService  {
 		return u;
 	}
 	
+	/**
+	 *  分页查询user列表
+	 * @param page
+	 * @param user
+	 * @return
+	 */
 	public Page<User> findUser(Page<User> page, User user) {
-//		// 生成数据权限过滤条件（dsf为dataScopeFilter的简写，在xml中使用 ${sqlMap.dsf}调用权限SQL）
-//		user.getSqlMap().put("dsf", dataScopeFilter(user.getCurrentUser(), "o", "a"));
 		// 设置分页参数
 		user.setPage(page);
 		// 执行分页查询
 		page.setList(userMapper.findList(user));
 		return page;
+	}
+	
+	/**
+	 *  查询user列表不分页
+	 * @param page
+	 * @param user
+	 * @return
+	 */
+	public List<User> findUserList(User user) {
+		return userMapper.findList(user);
 	}
 	
 	/**
@@ -113,32 +124,18 @@ public class SystemService extends BaseService  {
 		List<User> list = userMapper.findList(user);
 		return list;
 	}
-	
-//	/**
-//	 * 通过部门ID获取用户列表，仅返回用户id和name（树查询用户时用）
-//	 * @param user
-//	 * @return
-//	 */
-//	@SuppressWarnings("unchecked")
-//	public List<User> findUserByOfficeId(String officeId) {
-//		List<User> list = (List<User>)CacheUtils.get(UserUtils.USER_CACHE);
-//		if (list == null){
-//			User user = new User();
-//			CacheUtils.put(UserUtils.USER_CACHE, list);
-//		}
-//		return list;
-//	}
-	
+	/**
+	 * 更新用户
+	 * @param user
+	 */
 	@Transactional(readOnly = false)
 	public void saveUser(User user) {
 		if (user.getId()<=0){
-//			user.preInsert();
 			userMapper.insert(user);
 		}else{
 			// 清除原用户机构用户缓存
 			User oldUser = userMapper.get(user.getId());
 			// 更新用户数据
-//			user.preUpdate();
 			userMapper.update(user);
 		}
 		if (user.getId()>0){
@@ -149,15 +146,16 @@ public class SystemService extends BaseService  {
 			}else{
 				throw new ServiceException(user.getLoginName() + "没有设置角色！");
 			}
-			// 将当前用户同步到Activiti
-//			saveActivitiUser(user);
 			// 清除用户缓存
 			UserUtils.clearCache(user);
-//			// 清除权限缓存
-//			systemRealm.clearAllCachedAuthorizationInfo();
+			// 清除权限缓存
+			systemRealm.clearAllCachedAuthorizationInfo();
 		}
 	}
 	
+	/**
+	 * 更新用户角色
+	 */
 	@Transactional(readOnly = false)
 	public boolean updateUserRoles(User user){
 		if (user.getId()>0){
@@ -168,11 +166,9 @@ public class SystemService extends BaseService  {
 			}else{
 				throw new ServiceException(user.getLoginName() + "No role setted!");
 			}
-			// 将当前用户同步到Activiti
-//			saveActivitiUser(user);
 			// 清除用户缓存
 			UserUtils.clearCache(user);
-//			// 清除权限缓存
+			// 清除权限缓存
 			systemRealm.clearAllCachedAuthorizationInfo();
 			return true;
 		}
@@ -181,9 +177,12 @@ public class SystemService extends BaseService  {
 		}
 	}
 	
+	/**
+	 * 更新用户基本信息
+	 * @param user
+	 */
 	@Transactional(readOnly = false)
 	public void updateUserInfo(User user) {
-//		user.preUpdate();
 		userMapper.updateUserInfo(user);
 		// 清除用户缓存
 		UserUtils.clearCache(user);
@@ -191,13 +190,15 @@ public class SystemService extends BaseService  {
 //		systemRealm.clearAllCachedAuthorizationInfo();
 	}
 	
+	/**
+	 * 逻辑删除用户
+	 * @param user
+	 */
 	@Transactional(readOnly = false)
 	public void deleteUser(User user) {
 		if (user != null) {
-//			user.setCancelDate((new java.sql.Date ( new Date().getTime())));
+			user.setCancelDate(DateUtils.formatDate(new Date()));
 			userMapper.delete(user);
-			// 同步到Activiti
-//			deleteActivitiUser(user);
 			// 清除用户缓存
 			UserUtils.clearCache(user);
 			// 清除权限缓存
@@ -205,6 +206,12 @@ public class SystemService extends BaseService  {
 		}		
 	}
 	
+	/**
+	 * 更新密码
+	 * @param id
+	 * @param loginName
+	 * @param newPassword
+	 */
 	@Transactional(readOnly = false)
 	public void updatePasswordById(int id, String loginName, String newPassword) {
 		User user = new User(id);
@@ -217,6 +224,11 @@ public class SystemService extends BaseService  {
 //		systemRealm.clearAllCachedAuthorizationInfo();
 	}
 	
+	/**
+	 * 更新密码
+	 * @param user
+	 * @param newPassword
+	 */
 	@Transactional(readOnly = false)
 	public void updatePasswordById(User user, String newPassword) {
 		user.setPassword(entryptPassword(newPassword));
@@ -227,35 +239,12 @@ public class SystemService extends BaseService  {
 		systemRealm.clearAllCachedAuthorizationInfo();
 	}
 	
-//	/**
-//	 * 获得活动会话
-//	 * @return
-//	 */
-//	public Collection<Session> getActiveSessions(){
-//		return sessionDao.getActiveSessions(false);
-//	}
-	
-		
-//	public User getUserByUsername(String username) {
-//		return userMapper.findByUsername(username);
-//	}
-	
-
-//	@Transactional(readOnly = false)
-//	public void saveUser(User user) {
-//		//need to support different types of user
-//		//add other info except account info
-//		
-//		userMapper.save(user);
-//		systemRealm.clearAllCachedAuthorizationInfo();
-//		
-//	}
-
-//	@Transactional(readOnly = false)
-//	public void deleteUser(int id) {
-//		userMapper.delete(id, DateUtils.getDate());
-//	}
-	
+	/**
+	 * 取分页角色列表
+	 * @param page
+	 * @param user
+	 * @return
+	 */
 	@Transactional(readOnly = true)
 	public Page<Role> getRolePageFromUserId (Page<Role> page, User user) {
 		Role role = new Role(user);
@@ -264,18 +253,22 @@ public class SystemService extends BaseService  {
 		return page;
 	}
 	
-//	@Transactional(readOnly = false)
-//	public void updatePasswordById(int id, String username, String newPassword) {
-//		
-//		userMapper.updatePasswordById(id, newPassword);
-//		systemRealm.clearCachedAuthorizationInfo(username);
-//	}
-	
+	/**
+	 * 取养老院
+	 * @param gero
+	 * @return
+	 */
 	@Transactional(readOnly = true)
 	public Gero getGeroById (Gero gero){
 		return geroMapper.getGero(gero.getId());
 	}
 	
+	/**
+	 * 取养老院角色分页列表
+	 * @param page
+	 * @param gero
+	 * @return
+	 */
 	@Transactional(readOnly = true)
 	public Page<Role> getRolePageFromGeroId (Page<Role> page, Gero gero) {
 		Role role = new Role();
@@ -285,21 +278,41 @@ public class SystemService extends BaseService  {
 		return page;
 	}
 	
+	/**
+	 * 添加养老院角色
+	 * @param role
+	 */
 	@Transactional(readOnly = false)
 	public void insertGeroRole (Role role) {
 		roleMapper.insert(role);
 	}
 	
+	/**
+	 * 从角色名和养老院取角色
+	 * @param role
+	 * @return
+	 */
 	@Transactional(readOnly = true)
 	public Role getRoleByNameAndGero (Role role) {
 		return roleMapper.getByNameAndGero(role);
 	}
 	
+	/**
+	 * ID取角色
+	 * @param role
+	 * @return
+	 */
 	@Transactional(readOnly = true)
 	public Role getRoleById (Role role) {
-		return roleMapper.get(role);
+		role = roleMapper.get(role);
+		return role;
 	}
 	
+	/**
+	 * 取角色权限
+	 * @param role
+	 * @return
+	 */
 	@Transactional(readOnly = true)
 	public Role getPrivilegeListByRole (Role role) {
 		Privilege privilege = new Privilege();
@@ -308,6 +321,100 @@ public class SystemService extends BaseService  {
 		return role;
 	}
 	
+	/**
+	 * 更新角色基本信息
+	 * @param role
+	 */
+	@Transactional(readOnly = false)
+	public void updateGeroRole (Role role) {
+		roleMapper.update(role);
+	}
+	
+	/**
+	 * 删除角色
+	 * @param role
+	 */
+	@Transactional(readOnly = false)
+	public void deleteGeroRole (Role role) {
+		roleMapper.delete(role);
+	}
+	
+	/**
+	 * 取权限
+	 * @param id
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Privilege getPrivilegeById (int id) {
+		return privilegeMapper.get(id);
+	}
+	
+	/**
+	 * 添加角色权限
+	 * @param role
+	 */
+	@Transactional(readOnly = false)
+	public void insertRolePrivilege (Role role) {
+		roleMapper.insertRolePrivilege(role);
+	}
+	
+	/**
+	 * 删除角色权限
+	 * @param role
+	 */
+	@Transactional(readOnly = false)
+	public void deleteRolePrivilege (Role role, Privilege privilege){
+		List<Privilege> deletePrivileges = new ArrayList<Privilege>();
+		deletePrivileges.add(privilege);
+		privilege.setParentIds(privilege.getParentIds()+privilege.getId()+',');
+		deletePrivileges.addAll(privilegeMapper.findByParentIdsLike(privilege));
+		role.setPrivilegeList(deletePrivileges);
+		roleMapper.deleteRolePrivilege(role);
+	}
+	
+	/**
+	 * 获取权限列表
+	 * @return
+	 */
+	@Transactional(readOnly=true)
+	public List<Privilege> getPrivilegeList(){
+		return privilegeMapper.findAllList(new Privilege());
+	}
+
+	/**
+	 * 添加权限
+	 * @param privilege
+	 */
+	@Transactional(readOnly = false)
+	public void insertPrivilege(Privilege privilege) {
+		privilegeMapper.insert(privilege);
+	}
+	
+	/**
+	 * 更新权限信息
+	 * @param privilege
+	 */
+	@Transactional(readOnly = false)
+	public void updatePrivilege(Privilege privilege) {
+		privilegeMapper.update(privilege);
+	}
+	
+	/**
+	 * 删除权限
+	 * @param privilege
+	 */
+	@Transactional(readOnly = false)
+	public void deletePrivilege (Privilege privilege){
+		privilege.setParentIds(privilege.getParentIds()+privilege.getId()+',');
+		privilegeMapper.deleteChildrens(privilege);
+		privilegeMapper.delete(privilege);
+	}
+	
+	@Transactional(readOnly = false)
+	public void updateRoleUser(Role role){
+		roleMapper.deleteRoleUser(role);
+		roleMapper.insertRoleUser(role);
+	}
 	
 	/**
 	 * 生成安全的密码，生成随机的16位salt并经过1024次 sha-1 hash

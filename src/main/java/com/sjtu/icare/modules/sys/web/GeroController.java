@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.sjtu.icare.common.web.BaseController;
 import com.sjtu.icare.modules.sys.entity.Gero;
 import com.sjtu.icare.modules.sys.service.GeroService;
+
+/**
+ * 测试类
+ * @author KangShiyong
+ *
+ */
 @Controller
 @RequestMapping("/test/gero")
 public class GeroController extends BaseController{

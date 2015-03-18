@@ -29,10 +29,13 @@ import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.ParamValidator;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
+import com.sjtu.icare.modules.staff.entity.StaffEntity;
 import com.sjtu.icare.modules.staff.entity.StaffSchedulePlanEntity;
 import com.sjtu.icare.modules.staff.service.IStaffDataService;
+import com.sjtu.icare.modules.sys.entity.Role;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.service.SystemService;
+import com.sjtu.icare.modules.sys.utils.UserUtils;
 
 @RestController
 @RequestMapping("/gero/{gid}/staff")
@@ -75,31 +78,45 @@ public class StaffRestController {
 			if (role == null)
 				users = staffDataService.getAllStaffs(queryUser);
 			else
-				users = staffDataService.getAllStaffs(queryUser, role);
+				users = null;
+				//users = staffDataService.getAllStaffs(queryUser, role);
+			
 			
 			for (User user : users) {
+				Map<String, Object> resultMap = new HashMap<String, Object>(); 
+				resultMap.put("id", user.getId()); 
+				resultMap.put("name", user.getName()); 
+				resultMap.put("phone", user.getPhoneNo()); 
+				resultMap.put("phone", user.getPhoneNo()); 
+				resultMap.put("email", user.getEmail()); 
+				resultMap.put("identity_no", user.getIdentityNo()); 
+				resultMap.put("birthday", user.getBirthday()); 
+				resultMap.put("gender", user.getGender()); 
+				resultMap.put("residence_address", user.getResidenceAddress()); 
+				resultMap.put("household_address", user.getHouseholdAddress()); 
 				
+				StaffEntity queryStaffEntity = new StaffEntity();
+				queryStaffEntity.setId(user.getUserId());
+				StaffEntity staffEntity = staffDataService.getStaffEntity(queryStaffEntity);
+				if (staffEntity == null)
+					throw new Exception("内部错误： user 找不到对应的 staff");
+				resultMap.put("nssf", staffEntity.getNssfId()); 
+				resultMap.put("leave_date", staffEntity.getLeaveDate()); 
+				resultMap.put("archive_id", staffEntity.getArchiveId()); 
+				
+				User tempUser = UserUtils.get(user.getId());
+				List<Role> roleList = tempUser.getRoleList();
+				List<Map<String, Object>> tempList = new ArrayList<Map<String, Object>>();
+				for (Role tempRole : roleList) {
+					Map<String, Object> tempMap = new HashMap<String, Object>();
+					tempMap.put("role_id", tempRole.getId());
+					tempMap.put("role_name", tempRole.getName());
+					tempList.add(tempMap);
+				}
+				resultMap.put("role_list", tempList);
+				
+				basicReturnedJson.addEntity(resultMap);
 			}
-			
-			
-			
-			staffDataService.g
-			
-			StaffSchedulePlanEntity queryStaffSchedulePlanEntity = new StaffSchedulePlanEntity();
-			queryStaffSchedulePlanEntity.setStaffId(staffId);
-			List<StaffSchedulePlanEntity> staffSchedulePlanEntities = staffDataService.getStaffSchedulePlans(queryStaffSchedulePlanEntity, startDate, endDate);
-
-			// 构造返回的 JSON
-			Map<String, Object> resultMap = new HashMap<String, Object>(); 
-			resultMap.put("id", staffId); 
-			     
-			List<Object> tempList = new ArrayList<Object>();
-			for (StaffSchedulePlanEntity entity : staffSchedulePlanEntities) {
-				tempList.add(entity.getWorkDate());
-			}
-			resultMap.put("work_date", tempList); 
-			  
-			basicReturnedJson.addEntity(resultMap);
 			
 			return basicReturnedJson.getMap();
 			

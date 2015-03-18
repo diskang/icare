@@ -12,9 +12,9 @@ import org.apache.shiro.authc.AuthenticationToken;
 public class StatelessToken implements AuthenticationToken {  
 	
 	private static final long serialVersionUID = 1L;
-	private String username;  
-    private Map<String, ?> params;  
-    private String clientDigest;  
+	private String username;  //用户名
+    private Map<String, ?> params;  //请求参数
+    private String clientDigest;  //摘要
     //省略部分代码  
     public StatelessToken(String username, Map<String, ?> params,
 			String clientDigest) {

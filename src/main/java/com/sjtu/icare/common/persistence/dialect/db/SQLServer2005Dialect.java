@@ -16,6 +16,11 @@ import com.sjtu.icare.common.persistence.dialect.Dialect;
  * @author poplar.yfyang
  * @version 1.0 2010-10-10 下午12:31
  * @since JDK 1.5
+ * 
+ * 原: between offset and offset+limit
+ * 现: between offset+1  and offset+limit
+ * @author kang shiyong
+ * @version 1.1 2015-3-10
  */
 public class SQLServer2005Dialect implements Dialect {
 
@@ -78,8 +83,8 @@ public class SQLServer2005Dialect implements Dialect {
                 .append(orderby)
                 .append(") as __row_number__, ")
                 .append(pagingBuilder)
-                .append(") SELECT * FROM query WHERE __row_number__ BETWEEN ")//between x and y == [x,y]
-                .append(offset + 1).append(" AND ").append(offset + limit ) 
+                .append(") SELECT * FROM query WHERE __row_number__ BETWEEN ")
+                .append(offset + 1).append(" AND ").append(offset + limit ) //between x and y == [x,y], not (x,y]
                 .append(" ORDER BY __row_number__");
 
         return result.toString();

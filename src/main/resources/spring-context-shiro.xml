@@ -38,7 +38,7 @@
 				${adminPath}/login = authc
 				${adminPath}/logout = logout
 				${adminPath}/** = user
-				/api/** = statelessAuthc
+				${api.service}/** = statelessAuthc
 		 	</value>
 		</property>
 	</bean>

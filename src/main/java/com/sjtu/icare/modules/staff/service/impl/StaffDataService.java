@@ -38,6 +38,9 @@ public class StaffDataService implements IStaffDataService {
 		return staffDAO.getStaffEntity(paramMap);
 	}
 	
+	/**
+	 * 该方法无法的到 User 中的 Role
+	 */
 	@Override
 	public User getUserEntityOfStaff(StaffEntity StaffEntity) {
 		return systemService.getUserByUserTypeAndUserId(CommonConstants.STAFF_TYPE, StaffEntity.getId());
