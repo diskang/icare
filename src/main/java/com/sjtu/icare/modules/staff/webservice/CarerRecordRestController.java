@@ -1,11 +1,11 @@
 /**
  * @Package com.sjtu.icare.modules.elder.webservice
  * @Description TODO
- * @date Mar 18, 2015 3:28:27 PM
+ * @date Mar 18, 2015 1:25:10 PM
  * @author Wang Qi
  * @version TODO
  */
-package com.sjtu.icare.modules.elder.webservice;
+package com.sjtu.icare.modules.staff.webservice;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,22 +32,22 @@ import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.ParamValidator;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
-import com.sjtu.icare.modules.op.entity.AreaworkRecordEntity;
 import com.sjtu.icare.modules.op.entity.CareworkRecordEntity;
 import com.sjtu.icare.modules.op.service.IItemRecordService;
 
+
 @RestController
-@RequestMapping("/carer/{cid}/area/{aid}/records")
-public class AreaRecordRestController {
-	private static Logger logger = Logger.getLogger(AreaRecordRestController.class);
+@RequestMapping("/carer/{cid}/elder/{eid}/records")
+public class CarerRecordRestController {
+	private static Logger logger = Logger.getLogger(CarerRecordRestController.class);
 	
 	@Autowired
 	private IItemRecordService itemRecordService;
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
-	public Object getAreaworkRecords(
+	public Object getCareworkRecords(
 			@PathVariable("cid") int carerId,
-			@PathVariable("aid") int areaId,
+			@PathVariable("eid") int elderId,
 			@RequestParam(value="start_date", required=false) String startDate,
 			@RequestParam(value="end_date", required=false) String endDate
 			) {
@@ -57,7 +57,7 @@ public class AreaRecordRestController {
 			String otherMessage = "start_date 或 end_date 不符合日期格式:" +
 					"[start_date=" + startDate + "]" +
 					"[end_date=" + endDate + "]";
-			String message = ErrorConstants.format(ErrorConstants.AREAWORK_ITEMS_GET_PARAM_INVALID, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.CAREWORK_ITEMS_GET_PARAM_INVALID, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
@@ -71,19 +71,19 @@ public class AreaRecordRestController {
 			// 获取基础的 JSON返回
 			BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
 			
-			AreaworkRecordEntity queryAreaworkRecordEntity = new AreaworkRecordEntity();
-			queryAreaworkRecordEntity.setCarerId(carerId);
-			queryAreaworkRecordEntity.setAreaId(areaId);
-			List<AreaworkRecordEntity> areaworkRecordEntities = itemRecordService.getAreaworkRecords(queryAreaworkRecordEntity, startDate, endDate);
+			CareworkRecordEntity queryCareworkRecordEntity = new CareworkRecordEntity();
+			queryCareworkRecordEntity.setCarerId(carerId);
+			queryCareworkRecordEntity.setElderId(elderId);
+			List<CareworkRecordEntity> careworkRecordEntities = itemRecordService.getCareworkRecords(queryCareworkRecordEntity, startDate, endDate);
 
 			// 构造返回的 JSON
-			for (AreaworkRecordEntity areaworkRecordEntity : areaworkRecordEntities) {
+			for (CareworkRecordEntity careworkRecordEntity : careworkRecordEntities) {
 				
 				Map<String, Object> resultMap = new HashMap<String, Object>(); 
-				resultMap.put("id", areaworkRecordEntity.getId()); 
-				resultMap.put("area_item_id", areaworkRecordEntity.getAreaItemId()); 
-				resultMap.put("area_name", areaworkRecordEntity.getItemName()); 
-				resultMap.put("finish_time", areaworkRecordEntity.getFinishTime()); 
+				resultMap.put("id", careworkRecordEntity.getId()); 
+				resultMap.put("elder_item_id", careworkRecordEntity.getElderItemId()); 
+				resultMap.put("item_name", careworkRecordEntity.getItemName()); 
+				resultMap.put("finish_time", careworkRecordEntity.getFinishTime()); 
 				
 				basicReturnedJson.addEntity(resultMap);
 			}
@@ -92,43 +92,42 @@ public class AreaRecordRestController {
 			
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
-			String message = ErrorConstants.format(ErrorConstants.AREAWORK_ITEMS_GET_SERVICE_FAILED, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.CAREWORK_ITEMS_GET_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
 	
 	}
-	
 
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
-	public Object postAreaworkRecords(
+	public Object postCareworkRecords(
 			@PathVariable("cid") int carerId,
-			@PathVariable("aid") int areaId,
+			@PathVariable("eid") int elderId,
 			@RequestBody String inJson
 			) {	
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("carerId", carerId);
-		tempRquestParamMap.put("areaId", areaId);
+		tempRquestParamMap.put("elderId", elderId);
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
 		
-		List<Map<String, Object>> areaItem;
+		List<Map<String, Object>> elderItem;
 		String finishTime;
 		
 		try {
-			areaItem = (List<Map<String, Object>>) requestParamMap.get("areaItem");
+			elderItem = (List<Map<String, Object>>) requestParamMap.get("elderItem");
 			finishTime = (String) requestParamMap.get("finishTime");
 			
 			// 参数详细验证
-			if (areaItem == null)
+			if (elderItem == null)
 				throw new Exception();
-			
+				
 			if (finishTime != null && !ParamValidator.isDate(finishTime))
 				throw new Exception();
 		} catch(Exception e) {
-			String otherMessage = "[areaItem=" + requestParamMap.get("areaItem") + "]" +
+			String otherMessage = "[elderItem=" + requestParamMap.get("elderItem") + "]" +
 					"[finishTime=" + requestParamMap.get("finishTime") + "]";
-			String message = ErrorConstants.format(ErrorConstants.AREAWORK_ITEMS_POST_PARAM_INVALID, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.CAREWORK_ITEMS_POST_PARAM_INVALID, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
@@ -144,31 +143,31 @@ public class AreaRecordRestController {
 				finishTime = DateUtils.formatDateTime(today);
 			}
 			
-			List<AreaworkRecordEntity> postEntities = new ArrayList<AreaworkRecordEntity>();
-			for (Map<String, Object> entity : areaItem) {
+			List<CareworkRecordEntity> postEntities = new ArrayList<CareworkRecordEntity>();
+			for (Map<String, Object> entity : elderItem) {
 				if (entity.get("id") == null || entity.get("name") == null)
-					throw new Exception("请求参数 area_item 错误");
-				entity.put("areaItemId", entity.get("id"));
+					throw new Exception("请求参数 elder_item 错误");
+				entity.put("elderItemId", entity.get("id"));
 				entity.remove("id");
 				entity.put("itemName", entity.get("name"));
 				entity.remove("name");
 				
-				AreaworkRecordEntity tempAreaworkRecordEntity = new AreaworkRecordEntity();
-				BeanUtils.populate(tempAreaworkRecordEntity, entity);
-				tempAreaworkRecordEntity.setFinishTime(finishTime);
-				tempAreaworkRecordEntity.setCarerId(carerId);
-				tempAreaworkRecordEntity.setAreaId(areaId);
+				CareworkRecordEntity tempCareworkRecordEntity = new CareworkRecordEntity();
+				BeanUtils.populate(tempCareworkRecordEntity, entity);
+				tempCareworkRecordEntity.setFinishTime(finishTime);
+				tempCareworkRecordEntity.setCarerId(carerId);
+				tempCareworkRecordEntity.setElderId(elderId);
 				
-				postEntities.add(tempAreaworkRecordEntity);
+				postEntities.add(tempCareworkRecordEntity);
 				
 			}
 			
-			itemRecordService.insertAreaworkRecords(postEntities);
+			itemRecordService.insertCareworkRecords(postEntities);
 			
 			
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
-			String message = ErrorConstants.format(ErrorConstants.AREAWORK_ITEMS_POST_SERVICE_FAILED, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.CAREWORK_ITEMS_POST_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
@@ -176,6 +175,5 @@ public class AreaRecordRestController {
 		return basicReturnedJson.getMap();
 		
 	}
-	
 	
 }
