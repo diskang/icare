@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -58,6 +59,8 @@ public class LoginController extends BaseController{
 		User user = UserUtils.getUser();
 		// 如果已经登录，则跳转到管理首页
 		if(user.getUsername() != null){
+			response.addCookie(new Cookie("uid", user.getId()+""));
+			response.addCookie(new Cookie("gid", user.getGeroId()+""));
 			return "module/gero_management";  
 		}
 		return "module/sys/sysLogin";
@@ -72,6 +75,8 @@ public class LoginController extends BaseController{
 		User user = UserUtils.getUser();
 		// 如果已经登录，则跳转到管理首页
 		if(user.getUsername() != null){
+			response.addCookie(new Cookie("uid", user.getId()+""));
+			response.addCookie(new Cookie("gid", user.getGeroId()+""));
 			return "redirect:"+Global.getAdminPath();
 		}
 		model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, username);
@@ -92,6 +97,9 @@ public class LoginController extends BaseController{
 		}
 //		// 登录成功后，验证码计算器清零
 		isValidateCodeLogin(user.getUsername(), false, true);
+		
+		response.addCookie(new Cookie("uid", user.getId()+""));
+		response.addCookie(new Cookie("gid", user.getGeroId()+""));
 		
 		// 登录成功后，获取上次登录的当前站点ID
 //		UserUtils.putCache("siteId", CookieUtils.getCookie(request, "siteId"));

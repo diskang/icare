@@ -1,5 +1,6 @@
 package com.sjtu.icare.modules.sys.web;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,6 +33,8 @@ public class AdminController extends BaseController{
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
 		logger.debug("admin!");
 			User user = UserUtils.getUser();
+			response.addCookie(new Cookie("uid", user.getId()+""));
+			response.addCookie(new Cookie("gid", user.getGeroId()+""));
 			// 如果已经登录，则跳转到管理首页
 			if(user.getUsername() != null){
 				logger.debug("admin");

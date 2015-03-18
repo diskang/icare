@@ -25,7 +25,7 @@ import com.sjtu.icare.modules.sys.utils.security.SystemAuthorizingRealm.UserPrin
 import com.sjtu.icare.modules.sys.webservice.UserController;
 
 @RestController
-public class SysBaseController {
+public class SysBaseController extends BasicController {
 	
 	private Logger logger = Logger.getLogger(getClass());
 	
@@ -108,29 +108,7 @@ public class SysBaseController {
 		return rolePrivileges;
 	}
 	
-	/**
-	 *  获取当前用户
-	 * @return
-	 */
-	protected User getCurrentUser(){
-		User user;
-		try {
-			Subject subject = SecurityUtils.getSubject();
-			String username;
-			if (subject.getPrincipal().equals(String.class)) {
-				username = (String) subject.getPrincipal();
-			}else {
-				username = ((UserPrincipal) subject.getPrincipal()).getUsername();
-			}
-			user = UserUtils.getByLoginName(username);
-		} catch (Exception e) {
-			String message = ErrorConstants.format(ErrorConstants.GET_USER_PRINCIPAL_FAILED,
-					"[" + "]" );
-			logger.error(message);
-			throw new RestException(HttpStatus.UNAUTHORIZED, message);
-		}
-		return user;
-	}
+	
 	
 	/**
 	 * 设置orderBy参数
