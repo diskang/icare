@@ -5,18 +5,17 @@
  * @author Wang Qi
  * @version TODO
  */
-package com.sjtu.icare.modules.gero.entity;
+package com.sjtu.icare.modules.op.entity;
 
 import java.io.Serializable;
 
-public class CareItemEntity implements Serializable{
+public class AreaItemEntity implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 	private int id;
 	private int geroId;
 	private String name;
-	private int level;			//护理等级
 	private int period;			//周期（几天为一轮）
 	private int frequency;		//频率（一天做几次）
 	private String notes;
@@ -45,18 +44,6 @@ public class CareItemEntity implements Serializable{
 	 */
 	public void setGeroId(int geroId) {
 		this.geroId = geroId;
-	}
-	/**
-	 * @return the level
-	 */
-	public int getLevel() {
-		return level;
-	}
-	/**
-	 * @param level the level to set
-	 */
-	public void setLevel(int level) {
-		this.level = level;
 	}
 	/**
 	 * @return the name

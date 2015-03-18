@@ -82,6 +82,15 @@ public class ErrorConstants {
 	public static final String DUTY_CARER_AREA_GET_PARAM_INVALID = "380003 GET 负责区域护工信息：请求参数错误";
 	public static final String DUTY_CARER_AREA_GET_SERVICE_FAILED = "380004 GET 负责区域护工信息：后台获取失败";
 	
+	// gero care item constants
+	public static final String GERO_CARE_ITEMS_GET_SERVICE_FAILED = "390001 GET 养老院护理项目：后台获取失败";
+	public static final String GERO_CARE_ITEM_GET_SERVICE_FAILED = "390002 GET 养老院护理项目：后台获取失败";
+	public static final String GERO_CARE_ITEM_DELETE_SERVICE_FAILED = "390003 GET 养老院护理项目：后台删除失败";
+	public static final String GERO_CARE_ITEM_POST_PARAM_INVALID = "390004 POST 养老院护理项目：请求参数错误";
+	public static final String GERO_CARE_ITEM_POST_SERVICE_FAILED = "390005 POST 养老院护理项目：后台插入失败";
+	public static final String GERO_CARE_ITEM_PUT_PARAM_INVALID = "390006 PUT 养老院护理项目：请求参数错误";
+	public static final String GERO_CARE_ITEM_PUT_SERVICE_FAILED = "390007 PUT 养老院护理项目：后台更新失败";
+	
 	public static String format(String errorConstant, String otherMessage) {
 		if (errorConstant == null)
 			return null;

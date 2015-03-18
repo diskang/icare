@@ -5,16 +5,16 @@
  * @author Wang Qi
  * @version TODO
  */
-package com.sjtu.icare.modules.gero.persistence;
+package com.sjtu.icare.modules.op.persistence;
 
 import java.util.List;
 import java.util.Map;
 
 import com.sjtu.icare.common.persistence.annotation.MyBatisDao;
-import com.sjtu.icare.modules.gero.entity.CareItemEntity;
+import com.sjtu.icare.modules.op.entity.CareItemEntity;
 
 @MyBatisDao
-public interface CareItemDAO {
+public interface AreaItemDAO {
 
 	CareItemEntity getCareItemEntityById(Map<String, Object> careItemEntity);
 	

@@ -241,6 +241,7 @@ public class GeroAreaRestController {
 		
 	}
 
+	// TODO 改成逻辑删除
 	@RequestMapping(value = "/{aid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteGeroArea(
 			@PathVariable("gid") int geroId,

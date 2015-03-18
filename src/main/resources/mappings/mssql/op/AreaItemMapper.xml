@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.sjtu.icare.modules.gero.persistence.AreaItemDAO">
+<mapper namespace="com.sjtu.icare.modules.op.persistence.AreaItemDAO">
 
     <cache />
     
-	<resultMap type="com.sjtu.icare.modules.gero.entity.AreaItemEntity" id="AreaItemEntityMap">
+	<resultMap type="com.sjtu.icare.modules.op.entity.AreaItemEntity" id="AreaItemMap">
 	    <id property="id" column="id" />
 	    <result property="geroId" column="gero_id" />
 	    <result property="name" column="name" />
@@ -16,7 +16,7 @@
 	    <result property="delFlag" column="del_flag" />
 	</resultMap>
   
-    <select id="getAreaItemEntityById" parameterType="Map" resultMap="AreaItemEntityMap">
+    <select id="getAreaItemEntityById" resultMap="AreaItemMap">
 
         SELECT
 			*
