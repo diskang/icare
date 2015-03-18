@@ -48,8 +48,9 @@ public class StatelessAuthcFilter extends AccessControlFilter {
 			Subject subject = getSubject(request, response);
 			logger.debug("subject getted");
 			subject.login(token);
-			String permission = getPathWithinApplication(request)+":"+GET_METHOD;
-			logger.debug(permission);
+			// 鉴权转移到controller方法去做
+//			String permission = getPathWithinApplication(request)+":"+GET_METHOD;
+//			logger.debug(permission);
 //			subject.checkPermission(permission);
 			
 	    } catch ( UnknownAccountException uae ) { 
