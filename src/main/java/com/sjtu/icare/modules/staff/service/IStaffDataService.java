@@ -36,5 +36,15 @@ public interface IStaffDataService {
 	List<StaffSchedulePlanEntity> getAllStaffPlansByGeroId(
 			StaffSchedulePlanEntity queryStaffSchedulePlanEntity,
 			String startDate, String endDate, String role);
+
+	/**
+	 * @Title getAllStaffs
+	 * @Description TODO
+	 * @param @param User
+	 * @param @return
+	 * @return List<User>
+	 * @throws
+	 */
+	List<User> getAllStaffs(User user);
 	
 }

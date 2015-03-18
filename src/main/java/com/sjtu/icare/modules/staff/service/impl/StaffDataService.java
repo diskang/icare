@@ -94,6 +94,16 @@ public class StaffDataService implements IStaffDataService {
 	
 	}
 
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.staff.service.IStaffDataService#getAllStaffs(com.sjtu.icare.modules.sys.entity.User)
+	 */
+	@Override
+	public List<User> getAllStaffs(User user) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(user);
+		paramMap.put("userType", CommonConstants.STAFF_TYPE);
+		return staffDAO.getAllStaffs(paramMap);
+	}
+
 
 
 }

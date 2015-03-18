@@ -111,6 +111,10 @@ public class ErrorConstants {
 	public static final String AREAWORK_ITEMS_GET_SERVICE_FAILED = "420002 GET 区域护工项目记录：后台获取失败";
 	public static final String AREAWORK_ITEMS_POST_PARAM_INVALID = "420003 POST 区域护工项目记录：请求参数错误";
 	public static final String AREAWORK_ITEMS_POST_SERVICE_FAILED = "420004 POST 区域护工项目记录：后台服务失败";
+	
+	// staff data constants
+	public static final String STAFF_DATA_GET_PARAM_INVALID = "430001 GET 员工信息：请求参数错误";
+	public static final String STAFF_DATA_GET_SERVICE_FAILED = "430002 GET 员工信息：后台获取失败";
 		
 	
 	
