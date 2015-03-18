@@ -6,6 +6,33 @@
 
     <cache />
   
+  	<resultMap id="UserMap" type="com.sjtu.icare.modules.sys.entity.User">
+        <id property="id" column="id" />
+        <result property="username" column="username" />
+        <result property="name" column="name" />
+        <result property="password" column="password" />
+        <result property="userType" column="user_type" />
+        <result property="registerDate" column="register_date" />
+        <result property="cancelDate" column="cancel_date" />
+        <result property="gender" column="gender" />
+        <result property="photoUrl" column="photo_url" />
+        <result property="identityNo" column="identity_no" />
+        <result property="age" column="age" />
+        <result property="nationality" column="nationality" />
+        <result property="marriage" column="marriage" />
+        <result property="nativePlace" column="native_place" />
+        <result property="birthday" column="birthday" />
+        <result property="politicalStatus" column="political_status" />
+        <result property="education" column="education" />
+        <result property="phoneNo" column="phone_no" />
+        <result property="zipCode" column="zip_code" />
+        <result property="residenceAddress" column="residence_address" />
+        <result property="householdAddress" column="household_address" />
+        <result property="email" column="email" />
+        <result property="wechatId" column="wechat_id" />
+        <result property="geroId" column="gero_id" />
+    </resultMap>
+	
 	<sql id="userColumns">
 		id,
         username,
@@ -24,12 +51,12 @@
         T_USER.username,
         T_USER.name,
         T_USER.password,
-        T_USER.user_type as userType,
-        T_USER.user_id as userId,
-        T_USER.register_date as registerDate,
-        T_USER.cancel_date as cancelDate,
-        T_USER.photo_url as photoUrl,
-        T_USER.gero_id as geroId
+        T_USER.user_type,
+        T_USER.user_id,
+        T_USER.register_date,
+        T_USER.cancel_date,
+        T_USER.photo_url,
+        T_USER.gero_id
 	</sql>
 	
 	<!-- 根据编号获得用户 -->
