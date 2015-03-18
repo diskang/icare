@@ -20,7 +20,7 @@ public class User extends DataEntity<User> {
     private int userId;//-1，gero_id, staff_id, elder_id，family_id
     private String registerDate;//注册时间（系统加）
     private String cancelDate;//注销时间（系统加，逻辑删除）
-    private char gender;	//性别（男0，女1）
+    private String gender;	//性别（男0，女1）
     private String photoUrl;	// 头像url
     private String identityNo;//身份证号
     private int age;//年龄
@@ -221,11 +221,11 @@ public class User extends DataEntity<User> {
 		this.photoUrl = photoUrl;
 	}
 	
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 

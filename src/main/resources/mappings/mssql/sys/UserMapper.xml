@@ -19,6 +19,19 @@
         gero_id as geroId
 	</sql>
 	
+	<sql id="userColumnsComplete">
+		T_USER.id,
+        T_USER.username,
+        T_USER.name,
+        T_USER.password,
+        T_USER.user_type as userType,
+        T_USER.user_id as userId,
+        T_USER.register_date as registerDate,
+        T_USER.cancel_date as cancelDate,
+        T_USER.photo_url as photoUrl,
+        T_USER.gero_id as geroId
+	</sql>
+	
 	<!-- 根据编号获得用户 -->
 	<select id="get" resultType="User">
 		SELECT
