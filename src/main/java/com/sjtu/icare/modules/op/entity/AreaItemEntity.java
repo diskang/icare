@@ -13,36 +13,37 @@ public class AreaItemEntity implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private int id;
-	private int geroId;
+	private Integer id;
+	private Integer geroId;
 	private String name;
-	private int period;			//周期（几天为一轮）
-	private int frequency;		//频率（一天做几次）
+	private Integer period;			//周期（几天为一轮）
+	private Integer frequency;		//频率（一天做几次）
 	private String notes;
 	private String delFlag;		//默认为0，删除为1
-
+	private String icon;
+	
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	/**
 	 * @return the geroId
 	 */
-	public int getGeroId() {
+	public Integer getGeroId() {
 		return geroId;
 	}
 	/**
 	 * @param geroId the geroId to set
 	 */
-	public void setGeroId(int geroId) {
+	public void setGeroId(Integer geroId) {
 		this.geroId = geroId;
 	}
 	/**
@@ -58,39 +59,27 @@ public class AreaItemEntity implements Serializable{
 		this.name = name;
 	}
 	/**
-	 * @return the delFlag
-	 */
-	public String getDelFlag() {
-		return delFlag;
-	}
-	/**
-	 * @param delFlag the delFlag to set
-	 */
-	public void setDelFlag(String delFlag) {
-		this.delFlag = delFlag;
-	}
-	/**
 	 * @return the period
 	 */
-	public int getPeriod() {
+	public Integer getPeriod() {
 		return period;
 	}
 	/**
 	 * @param period the period to set
 	 */
-	public void setPeriod(int period) {
+	public void setPeriod(Integer period) {
 		this.period = period;
 	}
 	/**
 	 * @return the frequency
 	 */
-	public int getFrequency() {
+	public Integer getFrequency() {
 		return frequency;
 	}
 	/**
 	 * @param frequency the frequency to set
 	 */
-	public void setFrequency(int frequency) {
+	public void setFrequency(Integer frequency) {
 		this.frequency = frequency;
 	}
 	/**
@@ -104,6 +93,36 @@ public class AreaItemEntity implements Serializable{
 	 */
 	public void setNotes(String notes) {
 		this.notes = notes;
+	}
+	/**
+	 * @return the delFlag
+	 */
+	public String getDelFlag() {
+		return delFlag;
+	}
+	/**
+	 * @param delFlag the delFlag to set
+	 */
+	public void setDelFlag(String delFlag) {
+		this.delFlag = delFlag;
+	}
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	/**
+	 * @return the icon
+	 */
+	public String getIcon() {
+		return icon;
+	}
+	/**
+	 * @param icon the icon to set
+	 */
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
 }

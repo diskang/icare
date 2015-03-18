@@ -151,6 +151,24 @@ public class MapListUtils {
 		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" }) 
+	public static List<Map<String, Object>> listOfBeanToListOfMap(List beanList) {
+		try {
+			
+			List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
+			
+			for (Object object : beanList) {
+				returnList.add(beanToMap(object));
+			}
+		
+			return returnList; 
+			
+		} catch(Exception e) {
+			
+			return null;
+		}
+	}
+	
 	/**
      * 将一个 Map 对象转化为一个 JavaBean
      * @param type 要转化的类型

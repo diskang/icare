@@ -5,40 +5,77 @@ import java.sql.Date;
 
 public class AreaworkEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int id;
-	private int carerId;		//护工ID
-	private int areaId;			//区域ID
+	private Integer id;
+	private Integer carerId;		//护工ID
+	private Integer areaId;			//区域ID
 	private String startDate;		//起始时间
 	private String endDate;		//终止时间
-	
-	public int getId() {
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public int getCarerId() {
+	/**
+	 * @return the carerId
+	 */
+	public Integer getCarerId() {
 		return carerId;
 	}
-	public void setCarerId(int carerId) {
+	/**
+	 * @param carerId the carerId to set
+	 */
+	public void setCarerId(Integer carerId) {
 		this.carerId = carerId;
 	}
-	public int getAreaId() {
+	/**
+	 * @return the areaId
+	 */
+	public Integer getAreaId() {
 		return areaId;
 	}
-	public void setAreaId(int areaId) {
+	/**
+	 * @param areaId the areaId to set
+	 */
+	public void setAreaId(Integer areaId) {
 		this.areaId = areaId;
 	}
+	/**
+	 * @return the startDate
+	 */
 	public String getStartDate() {
 		return startDate;
 	}
+	/**
+	 * @param startDate the startDate to set
+	 */
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
+	/**
+	 * @return the endDate
+	 */
 	public String getEndDate() {
 		return endDate;
 	}
+	/**
+	 * @param endDate the endDate to set
+	 */
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
 }

@@ -1,7 +1,7 @@
 /**
  * @Package com.sjtu.icare.modules.gero.webservice
  * @Description TODO
- * @date Mar 17, 2015 10:54:55 AM
+ * @date Mar 18, 2015 11:15:53 AM
  * @author Wang Qi
  * @version TODO
  */
@@ -27,18 +27,18 @@ import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
-import com.sjtu.icare.modules.op.entity.CareItemEntity;
+import com.sjtu.icare.modules.op.entity.AreaItemEntity;
 import com.sjtu.icare.modules.op.service.IItemService;
 
 @RestController
-@RequestMapping("/gero/{gid}/care_item")
-public class GeroCareItemRestController {
+@RequestMapping("/gero/{gid}/area_item")
+public class GeroAreaItemRestController {
 	private static Logger logger = Logger.getLogger(GeroCareItemRestController.class);
 	
 	@Autowired IItemService itemService;
-	
+
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
-	public Object getGeroCareItems(
+	public Object getGeroAreaItems(
 			@PathVariable("gid") int geroId
 			) {
 		
@@ -49,22 +49,21 @@ public class GeroCareItemRestController {
 		// 参数预处理
 		
 		try {
-			CareItemEntity queryCareItemEntity = new CareItemEntity();
-			queryCareItemEntity.setGeroId(geroId);
-			List<CareItemEntity> careItemEntities = itemService.getCareItems(queryCareItemEntity);
+			AreaItemEntity queryAreaItemEntity = new AreaItemEntity();
+			queryAreaItemEntity.setGeroId(geroId);
+			List<AreaItemEntity> areaItemEntities = itemService.getAreaItems(queryAreaItemEntity);
 			
-			// 构造返回的 JSON
-			if (careItemEntities != null) {
-				for (CareItemEntity careItemEntity : careItemEntities) {
+			if (areaItemEntities != null) {
+				// 构造返回的 JSON
+				for (AreaItemEntity areaItemEntity : areaItemEntities) {
 					Map<String, Object> resultMap = new HashMap<String, Object>(); 
-					resultMap.put("id", careItemEntity.getId()); 
-					resultMap.put("gero_id", careItemEntity.getGeroId()); 
-					resultMap.put("name", careItemEntity.getName()); 
-					resultMap.put("icon", careItemEntity.getIcon()); 
-					resultMap.put("level", careItemEntity.getLevel()); 
-					resultMap.put("period", careItemEntity.getPeriod()); 
-					resultMap.put("frequency", careItemEntity.getFrequency()); 
-					resultMap.put("notes", careItemEntity.getNotes()); 
+					resultMap.put("id", areaItemEntity.getId()); 
+					resultMap.put("gero_id", areaItemEntity.getGeroId()); 
+					resultMap.put("name", areaItemEntity.getName()); 
+					resultMap.put("icon", areaItemEntity.getIcon()); 
+					resultMap.put("period", areaItemEntity.getPeriod()); 
+					resultMap.put("frequency", areaItemEntity.getFrequency()); 
+					resultMap.put("notes", areaItemEntity.getNotes()); 
 					
 					basicReturnedJson.addEntity(resultMap);
 				}
@@ -75,15 +74,15 @@ public class GeroCareItemRestController {
 			
 		} catch (Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
-			String message = ErrorConstants.format(ErrorConstants.GERO_CARE_ITEMS_GET_SERVICE_FAILED, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREA_ITEMS_GET_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
 	
 	}
-
+	
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
-	public Object postGeroCareItem(
+	public Object postGeroAreaItem(
 			@PathVariable("gid") int geroId,
 			@RequestBody String inJson
 			) {	
@@ -95,7 +94,6 @@ public class GeroCareItemRestController {
 		
 		String name;
 		String icon;
-		Integer level;
 		Integer period;
 		Integer frequency;
 		String notes;
@@ -103,12 +101,11 @@ public class GeroCareItemRestController {
 		try {
 			name = (String) requestParamMap.get("name");
 			icon = (String) requestParamMap.get("icon");
-			level = (Integer) requestParamMap.get("level");
 			period = (Integer) requestParamMap.get("period");
 			frequency = (Integer) requestParamMap.get("frequency");
 			notes = (String) requestParamMap.get("notes");
 			
-			if (name == null || icon == null || level == null || period == null || frequency == null || notes == null)
+			if (name == null || icon == null || period == null || frequency == null || notes == null)
 				throw new Exception();
 			
 			// 参数详细验证
@@ -117,11 +114,10 @@ public class GeroCareItemRestController {
 		} catch(Exception e) {
 			String otherMessage = "[name=" + requestParamMap.get("name") + "]" +
 					"[icon=" + requestParamMap.get("icon") + "]" +
-					"[level=" + requestParamMap.get("level") + "]" +
 					"[period=" + requestParamMap.get("period") + "]" +
 					"[frequency=" + requestParamMap.get("frequency") + "]" +
 					"[notes=" + requestParamMap.get("notes") + "]";
-			String message = ErrorConstants.format(ErrorConstants.GERO_CARE_ITEM_POST_PARAM_INVALID, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREA_ITEM_POST_PARAM_INVALID, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
@@ -131,12 +127,12 @@ public class GeroCareItemRestController {
 		
 		// 插入数据
 		try {
-			CareItemEntity postEntity = new CareItemEntity(); 
+			AreaItemEntity postEntity = new AreaItemEntity(); 
 			BeanUtils.populate(postEntity, requestParamMap);
-			itemService.insertCareItem(postEntity);
+			itemService.insertAreaItem(postEntity);
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
-			String message = ErrorConstants.format(ErrorConstants.GERO_CARE_ITEM_POST_SERVICE_FAILED, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREA_ITEM_POST_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
@@ -145,10 +141,10 @@ public class GeroCareItemRestController {
 		
 	}
 	
-	@RequestMapping(value="/{itemid}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
-	public Object getGeroCareItem(
+	@RequestMapping(value="/{aid}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
+	public Object getGeroAreaItem(
 			@PathVariable("gid") int geroId,
-			@PathVariable("itemid") int itemId
+			@PathVariable("aid") int itemId
 			) {
 		
 		// 获取基础的 JSON返回
@@ -158,42 +154,41 @@ public class GeroCareItemRestController {
 		// 参数预处理
 		
 		try {
-			CareItemEntity queryCareItemEntity = new CareItemEntity();
-			queryCareItemEntity.setGeroId(geroId);
-			queryCareItemEntity.setId(itemId);
-			CareItemEntity careItemEntity = itemService.getCareItem(queryCareItemEntity);
+			AreaItemEntity queryAreaItemEntity = new AreaItemEntity();
+			queryAreaItemEntity.setGeroId(geroId);
+			queryAreaItemEntity.setId(itemId);
+			AreaItemEntity areaItemEntity = itemService.getAreaItem(queryAreaItemEntity);
 			
-			if (careItemEntity != null) {
-				
+			if (areaItemEntity != null) {
 				// 构造返回的 JSON
 				Map<String, Object> resultMap = new HashMap<String, Object>(); 
-				resultMap.put("id", careItemEntity.getId()); 
-				resultMap.put("gero_id", careItemEntity.getGeroId()); 
-				resultMap.put("name", careItemEntity.getName()); 
-				resultMap.put("icon", careItemEntity.getIcon()); 
-				resultMap.put("level", careItemEntity.getLevel()); 
-				resultMap.put("period", careItemEntity.getPeriod()); 
-				resultMap.put("frequency", careItemEntity.getFrequency()); 
-				resultMap.put("notes", careItemEntity.getNotes()); 
+				resultMap.put("id", areaItemEntity.getId()); 
+				resultMap.put("gero_id", areaItemEntity.getGeroId()); 
+				resultMap.put("name", areaItemEntity.getName()); 
+				resultMap.put("icon", areaItemEntity.getIcon()); 
+				resultMap.put("period", areaItemEntity.getPeriod()); 
+				resultMap.put("frequency", areaItemEntity.getFrequency()); 
+				resultMap.put("notes", areaItemEntity.getNotes()); 
 				
 				basicReturnedJson.addEntity(resultMap);
+				
 			}
 
 			return basicReturnedJson.getMap();
 			
 		} catch (Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
-			String message = ErrorConstants.format(ErrorConstants.GERO_CARE_ITEM_GET_SERVICE_FAILED, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREA_ITEM_GET_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
 	
 	}
 
-	@RequestMapping(value="/{itemid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
+	@RequestMapping(value="/{aid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Object putGeroCareItem(
 			@PathVariable("gid") int geroId,
-			@PathVariable("itemid") int itemId,
+			@PathVariable("aid") int itemId,
 			@RequestBody String inJson
 			) {	
 		// 将参数转化成驼峰格式的 Map
@@ -205,7 +200,6 @@ public class GeroCareItemRestController {
 		
 		String name;
 		String icon;
-		Integer level;
 		Integer period;
 		Integer frequency;
 		String notes;
@@ -213,12 +207,11 @@ public class GeroCareItemRestController {
 		try {
 			name = (String) requestParamMap.get("name");
 			icon = (String) requestParamMap.get("icon");
-			level = (Integer) requestParamMap.get("level");
 			period = (Integer) requestParamMap.get("period");
 			frequency = (Integer) requestParamMap.get("frequency");
 			notes = (String) requestParamMap.get("notes");
 			
-			if (name == null || icon == null || level == null || period == null || frequency == null || notes == null)
+			if (name == null || icon == null || period == null || frequency == null || notes == null)
 				throw new Exception();
 			
 			// 参数详细验证
@@ -227,11 +220,10 @@ public class GeroCareItemRestController {
 		} catch(Exception e) {
 			String otherMessage = "[name=" + requestParamMap.get("name") + "]" +
 					"[icon=" + requestParamMap.get("icon") + "]" +
-					"[level=" + requestParamMap.get("level") + "]" +
 					"[period=" + requestParamMap.get("period") + "]" +
 					"[frequency=" + requestParamMap.get("frequency") + "]" +
 					"[notes=" + requestParamMap.get("notes") + "]";
-			String message = ErrorConstants.format(ErrorConstants.GERO_CARE_ITEM_PUT_PARAM_INVALID, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREA_ITEM_PUT_PARAM_INVALID, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
@@ -241,12 +233,12 @@ public class GeroCareItemRestController {
 		
 		// 插入数据
 		try {
-			CareItemEntity putEntity = new CareItemEntity(); 
+			AreaItemEntity putEntity = new AreaItemEntity(); 
 			BeanUtils.populate(putEntity, requestParamMap);
-			itemService.updateCareItem(putEntity);
+			itemService.updateAreaItem(putEntity);
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
-			String message = ErrorConstants.format(ErrorConstants.GERO_CARE_ITEM_PUT_SERVICE_FAILED, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREA_ITEM_PUT_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
@@ -255,10 +247,11 @@ public class GeroCareItemRestController {
 		
 	}
 	
-	@RequestMapping(value = "/{itemid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
-	public Object deleteGeroCareItem(
+	
+	@RequestMapping(value = "/{aid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
+	public Object deleteGeroAreaItem(
 			@PathVariable("gid") int geroId,
-			@PathVariable("itemid") int itemId
+			@PathVariable("aid") int itemId
 			) {	
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
@@ -271,12 +264,12 @@ public class GeroCareItemRestController {
 		
 		// 删除数据
 		try {
-			CareItemEntity inputEntity = new CareItemEntity(); 
+			AreaItemEntity inputEntity = new AreaItemEntity(); 
 			BeanUtils.populate(inputEntity, requestParamMap);
-			itemService.deleteCareItem(inputEntity);
+			itemService.deleteAreaItem(inputEntity);
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
-			String message = ErrorConstants.format(ErrorConstants.GERO_CARE_ITEM_DELETE_SERVICE_FAILED, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREA_ITEM_DELETE_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
@@ -284,6 +277,5 @@ public class GeroCareItemRestController {
 		return basicReturnedJson.getMap();
 		
 	}
-	
 	
 }

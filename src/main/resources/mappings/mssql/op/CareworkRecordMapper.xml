@@ -6,7 +6,48 @@
 
     <cache />
     
+    <resultMap type="com.sjtu.icare.modules.op.entity.CareworkRecordEntity" id="CareworkRecordMap">
+        <id property="id" column="id" />
+        <result property="carerId" column="carer_id" />
+        <result property="elderId" column="elder_id" />
+        <result property="elderItemId" column="elder_item_id" />
+        <result property="itemName" column="item_name" />
+        <result property="finishTime" column="finish_time" />
+    </resultMap>
     
+    
+    <select id="getCareworkRecords" resultMap="CareworkRecordMap">
+        
+        SELECT
+            *
+        FROM T_CAREWORK_RECORD
+        WHERE 
+            T_CAREWORK_RECORD.carer_id = #{carerId}
+            AND T_CAREWORK_RECORD.elder_id = #{elderId}
+            <if test="startDate != null">
+                <![CDATA[
+                and #{startDate} <= convert(nvarchar(23), T_CAREWORK_RECORD.finish_time, 120)
+                ]]>
+            </if>
+            <if test="endDate != null">
+                <![CDATA[
+                and #{endDate} >= convert(nvarchar(23), T_CAREWORK_RECORD.finish_time, 120)
+                ]]>
+            </if>
+    
+    </select>
+  
+    <insert id="insertCareworkRecords">
+        insert into 
+            T_CAREWORK_RECORD(carer_id, elder_id, elder_item_id, item_name, finish_time) 
+        values
+            <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.carerId}, #{item.elderId}, #{item.elderItemId}, #{item.itemName}, #{item.finishTime})
+            </foreach>
+    </insert>
+  
+  
+    <!--
   
     <select id="getCareworkRecordEntityById" resultType="CareworkRecordEntity">
         SELECT
@@ -19,5 +60,7 @@
         FROM T_CAREWORK_RECORD
         WHERE T_CAREWORK_RECORD.id = #{id}
     </select>
+    
+    -->
     
 </mapper>

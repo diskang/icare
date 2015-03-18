@@ -6,18 +6,47 @@
 
     <cache />
     
-    
+    <resultMap type="com.sjtu.icare.modules.op.entity.AreaworkRecordEntity" id="AreaworkRecordMap">
+        <id property="id" column="id" />
+        <result property="carerId" column="carer_id" />
+        <result property="areaId" column="area_id" />
+        <result property="areaItemId" column="area_item_id" />
+        <result property="itemName" column="item_name" />
+        <result property="finishTime" column="finish_time" />
+    </resultMap>
   
-    <select id="getAreaworkRecordEntityById" resultType="AreaworkRecordEntity">
+    <select id="getAreaworkRecords" resultMap="AreaworkRecordMap">
+        
         SELECT
-			id,
-			carer_id,
-			area_id,
-			elder_item_id,
-			item_name,
-			finish_time
+            *
         FROM T_AREAWORK_RECORD
-        WHERE T_AREAWORK_RECORD.id = #{id}
+        WHERE 
+            T_AREAWORK_RECORD.carer_id = #{carerId}
+            AND T_AREAWORK_RECORD.area_id = #{areaId}
+            <if test="startDate != null">
+                <![CDATA[
+                and #{startDate} <= convert(nvarchar(23), T_AREAWORK_RECORD.finish_time, 120)
+                ]]>
+            </if>
+            <if test="endDate != null">
+                <![CDATA[
+                and #{endDate} >= convert(nvarchar(23), T_AREAWORK_RECORD.finish_time, 120)
+                ]]>
+            </if>
+            
     </select>
+    
+    <insert id="insertAreaworkRecords">
+    
+        insert into 
+            T_AREAWORK_RECORD(carer_id, area_id, area_item_id, item_name, finish_time) 
+        values
+            <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.carerId}, #{item.areaId}, #{item.areaItemId}, #{item.itemName}, #{item.finishTime})
+            </foreach>
+            
+    </insert>
+    
+    
     
 </mapper>

@@ -16,14 +16,66 @@
 	    <result property="delFlag" column="del_flag" />
 	</resultMap>
   
-    <select id="getAreaItemEntityById" resultMap="AreaItemMap">
+    <select id="getAreaItems" resultMap="AreaItemMap">
 
         SELECT
 			*
         FROM T_AREA_ITEM
         WHERE 
-            T_AREA_ITEM.id = #{Id}
+            T_AREA_ITEM.gero_id = #{geroId}
+            AND T_AREA_ITEM.del_flag = 0
   
     </select>
+    
+    <select id="getAreaItem" resultMap="AreaItemMap">
+
+        SELECT
+            *
+        FROM T_AREA_ITEM
+        WHERE 
+            T_AREA_ITEM.id = #{id}
+            AND T_AREA_ITEM.gero_id = #{geroId}
+            AND T_AREA_ITEM.del_flag = 0
+            
+    </select>
+    
+    <insert id="insertAreaItem">
+    
+        insert into 
+            T_AREA_ITEM(gero_id, name, icon, period, frequency, notes) 
+        values
+            (#{geroId}, #{name}, #{icon}, #{period}, #{frequency}, #{notes})
+            
+    </insert>
+    
+    <update id="updateAreaItem">
+    
+        UPDATE
+            T_AREA_ITEM
+        SET
+            T_AREA_ITEM.name = #{name}, 
+            T_AREA_ITEM.icon = #{icon},
+            T_AREA_ITEM.period = #{period},
+            T_AREA_ITEM.frequency = #{frequency},
+            T_AREA_ITEM.notes = #{notes}
+        WHERE
+            T_AREA_ITEM.id = #{id}
+            and T_AREA_ITEM.del_flag = 0
+    
+    </update>
+    
+    <update id="deleteAreaItem">
+    
+        UPDATE
+            T_AREA_ITEM
+        SET
+            T_AREA_ITEM.del_flag = 1
+        WHERE
+            T_AREA_ITEM.id = #{id}
+            and T_AREA_ITEM.gero_id = #{geroId}
+    
+    </update>
+    
+
     
 </mapper>

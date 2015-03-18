@@ -1,51 +1,92 @@
 package com.sjtu.icare.modules.op.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 public class AreaworkRecordEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int id;
-	private int carerId;		//护工ID
-	private int areaId;			//区域ID
-	private int areaItemId;		//区域护理项目ID
+	private Integer id;
+	private Integer carerId;		//护工ID
+	private Integer areaId;			//区域ID
+	private Integer areaItemId;		//区域护理项目ID
 	private String itemName;	//项目名
 	private String finishTime;	//完成时间
-	
-	public int getId() {
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public int getCarerId() {
+	/**
+	 * @return the carerId
+	 */
+	public Integer getCarerId() {
 		return carerId;
 	}
-	public void setCarerId(int carerId) {
+	/**
+	 * @param carerId the carerId to set
+	 */
+	public void setCarerId(Integer carerId) {
 		this.carerId = carerId;
 	}
-	public int getAreaId() {
+	/**
+	 * @return the areaId
+	 */
+	public Integer getAreaId() {
 		return areaId;
 	}
-	public void setAreaId(int areaId) {
+	/**
+	 * @param areaId the areaId to set
+	 */
+	public void setAreaId(Integer areaId) {
 		this.areaId = areaId;
 	}
-	public int getAreaItemId() {
+	/**
+	 * @return the areaItemId
+	 */
+	public Integer getAreaItemId() {
 		return areaItemId;
 	}
-	public void setAreaItemId(int areaItemId) {
+	/**
+	 * @param areaItemId the areaItemId to set
+	 */
+	public void setAreaItemId(Integer areaItemId) {
 		this.areaItemId = areaItemId;
 	}
+	/**
+	 * @return the itemName
+	 */
 	public String getItemName() {
 		return itemName;
 	}
+	/**
+	 * @param itemName the itemName to set
+	 */
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
+	/**
+	 * @return the finishTime
+	 */
 	public String getFinishTime() {
 		return finishTime;
 	}
+	/**
+	 * @param finishTime the finishTime to set
+	 */
 	public void setFinishTime(String finishTime) {
 		this.finishTime = finishTime;
 	}
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
 }

@@ -85,11 +85,36 @@ public class ErrorConstants {
 	// gero care item constants
 	public static final String GERO_CARE_ITEMS_GET_SERVICE_FAILED = "390001 GET 养老院护理项目：后台获取失败";
 	public static final String GERO_CARE_ITEM_GET_SERVICE_FAILED = "390002 GET 养老院护理项目：后台获取失败";
-	public static final String GERO_CARE_ITEM_DELETE_SERVICE_FAILED = "390003 GET 养老院护理项目：后台删除失败";
+	public static final String GERO_CARE_ITEM_DELETE_SERVICE_FAILED = "390003 DELETE 养老院护理项目：后台删除失败";
 	public static final String GERO_CARE_ITEM_POST_PARAM_INVALID = "390004 POST 养老院护理项目：请求参数错误";
 	public static final String GERO_CARE_ITEM_POST_SERVICE_FAILED = "390005 POST 养老院护理项目：后台插入失败";
 	public static final String GERO_CARE_ITEM_PUT_PARAM_INVALID = "390006 PUT 养老院护理项目：请求参数错误";
 	public static final String GERO_CARE_ITEM_PUT_SERVICE_FAILED = "390007 PUT 养老院护理项目：后台更新失败";
+	
+	// gero area item constants
+	public static final String GERO_AREA_ITEMS_GET_SERVICE_FAILED = "400001 GET 养老院区域项目：后台获取失败";
+	public static final String GERO_AREA_ITEM_POST_PARAM_INVALID = "400002 POST 养老院区域项目：请求参数错误";
+	public static final String GERO_AREA_ITEM_POST_SERVICE_FAILED = "400003 POST 养老院区域项目：后台插入失败";
+	public static final String GERO_AREA_ITEM_GET_SERVICE_FAILED = "400004 GET 养老院区域项目：后台获取失败";
+	public static final String GERO_AREA_ITEM_PUT_PARAM_INVALID = "400005 PUT 养老院区域项目：请求参数错误";
+	public static final String GERO_AREA_ITEM_PUT_SERVICE_FAILED = "400006 PUT 养老院区域项目：后台更新失败";
+	public static final String GERO_AREA_ITEM_DELETE_SERVICE_FAILED = "400007 DELETE 养老院护理项目：后台删除失败";
+	
+	// carework records constants
+	public static final String CAREWORK_ITEMS_GET_PARAM_INVALID = "410001 GET 老人护工项目记录：请求参数错误";
+	public static final String CAREWORK_ITEMS_GET_SERVICE_FAILED = "410002 GET 老人护工项目记录：后台获取失败";
+	public static final String CAREWORK_ITEMS_POST_PARAM_INVALID = "410003 POST 老人护工项目记录：请求参数错误";
+	public static final String CAREWORK_ITEMS_POST_SERVICE_FAILED = "410004 POST 老人护工项目记录：后台服务失败";
+	
+	// areawork records constants
+	public static final String AREAWORK_ITEMS_GET_PARAM_INVALID = "420001 GET 区域护工项目记录：请求参数错误";
+	public static final String AREAWORK_ITEMS_GET_SERVICE_FAILED = "420002 GET 区域护工项目记录：后台获取失败";
+	public static final String AREAWORK_ITEMS_POST_PARAM_INVALID = "420003 POST 区域护工项目记录：请求参数错误";
+	public static final String AREAWORK_ITEMS_POST_SERVICE_FAILED = "420004 POST 区域护工项目记录：后台服务失败";
+		
+	
+	
+	
 	
 	public static String format(String errorConstant, String otherMessage) {
 		if (errorConstant == null)

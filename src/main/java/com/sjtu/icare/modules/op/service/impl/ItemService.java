@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sjtu.icare.common.utils.MapListUtils;
+import com.sjtu.icare.modules.op.entity.AreaItemEntity;
 import com.sjtu.icare.modules.op.entity.CareItemEntity;
+import com.sjtu.icare.modules.op.persistence.AreaItemDAO;
 import com.sjtu.icare.modules.op.persistence.CareItemDAO;
 import com.sjtu.icare.modules.op.service.IItemService;
 
@@ -23,6 +25,8 @@ public class ItemService implements IItemService {
 
 	@Autowired
 	private CareItemDAO careItemDao;
+	@Autowired
+	private AreaItemDAO areaItemDao;
 	
 	/* (non-Javadoc)
 	 * @see com.sjtu.icare.modules.op.service.IItemService#getCareItems(com.sjtu.icare.modules.op.entity.CareItemEntity)
@@ -67,6 +71,52 @@ public class ItemService implements IItemService {
 	public void updateCareItem(CareItemEntity careItemEntity) {
 		Map<String, Object> paramMap = MapListUtils.beanToMap(careItemEntity);
 		careItemDao.updateCareItem(paramMap);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.op.service.IItemService#getAreaItems(com.sjtu.icare.modules.op.entity.AreaItemEntity)
+	 */
+	@Override
+	public List<AreaItemEntity> getAreaItems(AreaItemEntity areaItemEntity) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(areaItemEntity);
+		return areaItemDao.getAreaItems(paramMap);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.op.service.IItemService#insertAreaItem(com.sjtu.icare.modules.op.entity.AreaItemEntity)
+	 */
+	@Override
+	public void insertAreaItem(AreaItemEntity areaItemEntity) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(areaItemEntity);
+		areaItemDao.insertAreaItem(paramMap);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.op.service.IItemService#getAreaItem(com.sjtu.icare.modules.op.entity.AreaItemEntity)
+	 */
+	@Override
+	public AreaItemEntity getAreaItem(AreaItemEntity areaItemEntity) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(areaItemEntity);
+		return areaItemDao.getAreaItem(paramMap);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.op.service.IItemService#updateAreaItem(com.sjtu.icare.modules.op.entity.AreaItemEntity)
+	 */
+	@Override
+	public void updateAreaItem(AreaItemEntity areaItemEntity) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(areaItemEntity);
+		areaItemDao.updateAreaItem(paramMap);
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.op.service.IItemService#deleteAreaItem(com.sjtu.icare.modules.op.entity.AreaItemEntity)
+	 */
+	@Override
+	public void deleteAreaItem(AreaItemEntity areaItemEntity) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(areaItemEntity);
+		areaItemDao.deleteAreaItem(paramMap);
 	}
 
 }

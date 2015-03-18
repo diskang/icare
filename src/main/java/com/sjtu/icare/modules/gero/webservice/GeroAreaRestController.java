@@ -57,17 +57,20 @@ public class GeroAreaRestController {
 			queryGeroAreaEntity.setGeroId(geroId);
 			List<GeroAreaEntity> geroAreaEntities = geroAreaService.getGeroAreas(queryGeroAreaEntity);
 			
-			// 构造返回的 JSON
-			for (GeroAreaEntity geroAreaEntity : geroAreaEntities) {
-				Map<String, Object> resultMap = new HashMap<String, Object>(); 
-				resultMap.put("id", geroId); 
-				resultMap.put("parent_id", geroAreaEntity.getParentId()); 
-				resultMap.put("parent_ids", geroAreaEntity.getParentIds()); 
-				resultMap.put("type", geroAreaEntity.getType()); 
-				resultMap.put("level", geroAreaEntity.getLevel()); 
-				resultMap.put("name", geroAreaEntity.getName()); 
-
-				basicReturnedJson.addEntity(resultMap);
+			if (geroAreaEntities != null) {
+				// 构造返回的 JSON
+				for (GeroAreaEntity geroAreaEntity : geroAreaEntities) {
+					Map<String, Object> resultMap = new HashMap<String, Object>(); 
+					resultMap.put("id", geroId); 
+					resultMap.put("parent_id", geroAreaEntity.getParentId()); 
+					resultMap.put("parent_ids", geroAreaEntity.getParentIds()); 
+					resultMap.put("type", geroAreaEntity.getType()); 
+					resultMap.put("level", geroAreaEntity.getLevel()); 
+					resultMap.put("name", geroAreaEntity.getName()); 
+					
+					basicReturnedJson.addEntity(resultMap);
+				}
+				
 			}
 
 			return basicReturnedJson.getMap();
