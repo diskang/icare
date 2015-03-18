@@ -29,7 +29,7 @@
         ]]>
     </select>
  
-    <select id="getAllStaffs" resultMap="User">
+    <select id="getAllStaffs" resultMap="com.sjtu.icare.modules.sys.persistence.UserMapper.UserMap">
     
         SELECT 
             T_USER.*
@@ -47,6 +47,38 @@
 		        AND T_USER.identity_no like '%' + #{identityNo} + '%'
 		    </if>
 
+    </select>
+ 
+    <select id="getAllStaffsByRoles" resultMap="com.sjtu.icare.modules.sys.persistence.UserMapper.UserMap">
+    
+        SELECT 
+            T_USER.*
+        FROM 
+            T_USER 
+        WHERE
+            T_USER.user_type = #{userType} 
+		    <if test="name != null">
+		        AND T_USER.name = #{name}
+		    </if> 
+		    <if test="gender != null">
+		        AND T_USER.gender = #{gender}
+		    </if>
+		    <if test="identityNo != null">
+		        AND T_USER.identity_no like '%' + #{identityNo} + '%'
+		    </if>
+		    AND T_USER.id IN
+		    (
+		        SELECT DISTINCT(T_USER_ROLES.user_id)
+		        FROM
+				    (T_ROLE INNER JOIN T_USER_ROLES
+		            ON
+		                T_USER_ROLES.role_id = T_ROLE.id
+		                AND 
+		                <foreach collection="roles" item="item" index="index" open="(" close=")" separator=" OR ">
+		                    T_ROLE.name = #{item}
+		                </foreach>
+		            )
+            )
     </select>
 
 </mapper>

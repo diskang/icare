@@ -46,5 +46,16 @@ public interface IStaffDataService {
 	 * @throws
 	 */
 	List<User> getAllStaffs(User user);
+
+	/**
+	 * @Title getAllStaffs
+	 * @Description TODO
+	 * @param @param user
+	 * @param @param role
+	 * @param @return
+	 * @return List<User>
+	 * @throws
+	 */
+	List<User> getAllStaffs(User user, String role);
 	
 }

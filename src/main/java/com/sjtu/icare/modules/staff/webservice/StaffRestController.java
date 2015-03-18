@@ -78,9 +78,7 @@ public class StaffRestController {
 			if (role == null)
 				users = staffDataService.getAllStaffs(queryUser);
 			else
-				users = null;
-				//users = staffDataService.getAllStaffs(queryUser, role);
-			
+				users = staffDataService.getAllStaffs(queryUser, role);
 			
 			for (User user : users) {
 				Map<String, Object> resultMap = new HashMap<String, Object>(); 

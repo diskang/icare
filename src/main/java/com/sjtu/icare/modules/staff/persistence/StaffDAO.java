@@ -26,5 +26,15 @@ public interface StaffDAO {
 	 * @throws
 	 */
 	List<User> getAllStaffs(Map<String, Object> paramMap);
+
+	/**
+	 * @Title getAllStaffsByRoles
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @param @return
+	 * @return List<User>
+	 * @throws
+	 */
+	List<User> getAllStaffsByRoles(Map<String, Object> paramMap);
 	
 }

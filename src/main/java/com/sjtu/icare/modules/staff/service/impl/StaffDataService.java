@@ -7,6 +7,7 @@
  */
 package com.sjtu.icare.modules.staff.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -105,6 +106,21 @@ public class StaffDataService implements IStaffDataService {
 		Map<String, Object> paramMap = MapListUtils.beanToMap(user);
 		paramMap.put("userType", CommonConstants.STAFF_TYPE);
 		return staffDAO.getAllStaffs(paramMap);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.staff.service.IStaffDataService#getAllStaffs(com.sjtu.icare.modules.sys.entity.User, java.lang.String)
+	 */
+	@Override
+	public List<User> getAllStaffs(User user, String role) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(user);
+		paramMap.put("userType", CommonConstants.STAFF_TYPE);
+		List<String> roleList = Arrays.asList(role.split(","));
+		for (int i=0; i<roleList.size(); ++i) {
+			roleList.set(i, roleList.get(i).trim());
+		}
+		paramMap.put("roles", roleList);
+		return staffDAO.getAllStaffsByRoles(paramMap);
 	}
 
 
