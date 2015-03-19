@@ -59,7 +59,7 @@ public class UploadUtils {
 		this.filename = filename;
 		this.url = basicPath+innerPath+filename+postfix;
 		this.fullPath = request.getSession().getServletContext().getRealPath(basicPath+innerPath);
-		//logger.debug(fullPath);
+		logger.debug(fullPath);
 		
 		//若没有文件夹则建立相关文件夹
 		File fullPathFile = new File(fullPath);

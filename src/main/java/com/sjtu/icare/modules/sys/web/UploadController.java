@@ -132,7 +132,7 @@ public class UploadController {
 	        
 		BasicReturnedJson result = new BasicReturnedJson();
 		
-		String innerPath = "/gero/"+gid+"/document/staff/basic/";
+		String innerPath = "/gero/document/"+gid+"/staff/basic/";
 		String filename = "staff_"+sid+"_basic_"+DateUtils.getDate();
 		
 		UploadUtils uploadUtils = new UploadUtils();
@@ -161,7 +161,7 @@ public class UploadController {
 	        
 		BasicReturnedJson result = new BasicReturnedJson();
 		
-		String innerPath = "/gero/"+gid+"/document/elder/apply/";
+		String innerPath = "/gero/document/"+gid+"/elder/apply/";
 		String filename = "elder_"+eid+"_apply_"+DateUtils.getDate();
 		
 		UploadUtils uploadUtils = new UploadUtils();
@@ -190,7 +190,7 @@ public class UploadController {
 	        
 		BasicReturnedJson result = new BasicReturnedJson();
 		
-		String innerPath = "/gero/"+gid+"/document/elder/survey/";
+		String innerPath = "/gero/document/"+gid+"/elder/survey/";
 		String filename = "elder_"+eid+"_survey_"+DateUtils.getDate();
 		
 		UploadUtils uploadUtils = new UploadUtils();
@@ -219,7 +219,7 @@ public class UploadController {
 	        
 		BasicReturnedJson result = new BasicReturnedJson();
 		
-		String innerPath = "/gero/"+gid+"/document/elder/assess/";
+		String innerPath = "/gero/document/"+gid+"/elder/assess/";
 		String filename = "elder_"+eid+"_assess_"+DateUtils.getDate();
 		
 		UploadUtils uploadUtils = new UploadUtils();
@@ -248,7 +248,7 @@ public class UploadController {
 	        
 		BasicReturnedJson result = new BasicReturnedJson();
 		
-		String innerPath = "/gero/"+gid+"/document/elder/track/";
+		String innerPath = "/gero/document/"+gid+"/elder/track/";
 		String filename = "elder_"+eid+"_track_"+DateUtils.getDate();
 		
 		UploadUtils uploadUtils = new UploadUtils();

@@ -34,11 +34,15 @@
 		<property name="filterChainDefinitions">
 			<value>
 				/static/** = anon
-				/userfiles/** = anon
 				${adminPath}/login = authc
 				${adminPath}/logout = logout
 				${adminPath}/** = user
 				${api.service}/** = statelessAuthc
+				${api.web}/** = user
+				/userfiles/user/** = user
+				/userfiles/gero/document/** = user
+				/userfiles/** = anon
+				/download/** = statelessAuthc
 		 	</value>
 		</property>
 	</bean>
