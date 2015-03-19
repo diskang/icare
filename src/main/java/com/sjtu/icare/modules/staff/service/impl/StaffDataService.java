@@ -133,14 +133,6 @@ public class StaffDataService implements IStaffDataService {
 		return (Integer) staffEntity.getId();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.sjtu.icare.modules.staff.service.IStaffDataService#insertUser(com.sjtu.icare.modules.sys.entity.User)
-	 */
-	@Override
-	public Integer insertUser(User user) {
-		Map<String, Object> paramMap = MapListUtils.beanToMap(user);
-		return staffDAO.insertUser(paramMap);
-	}
 
 	/* (non-Javadoc)
 	 * @see com.sjtu.icare.modules.staff.service.IStaffDataService#updateStaff(com.sjtu.icare.modules.staff.entity.StaffEntity)
@@ -152,15 +144,6 @@ public class StaffDataService implements IStaffDataService {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.sjtu.icare.modules.staff.service.IStaffDataService#updateUser(com.sjtu.icare.modules.sys.entity.User)
-	 */
-	@Override
-	public void updateUser(User user) {
-		Map<String, Object> paramMap = MapListUtils.beanToMap(user);
-		staffDAO.updateUser(paramMap);
-	}
-
-	/* (non-Javadoc)
 	 * @see com.sjtu.icare.modules.staff.service.IStaffDataService#deleteStaff(com.sjtu.icare.modules.staff.entity.StaffEntity)
 	 */
 	@Override
@@ -169,14 +152,7 @@ public class StaffDataService implements IStaffDataService {
 		staffDAO.deleteStaff(paramMap);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.sjtu.icare.modules.staff.service.IStaffDataService#deleteUser(com.sjtu.icare.modules.sys.entity.User)
-	 */
-	@Override
-	public void deleteUser(User user) {
-		Map<String, Object> paramMap = MapListUtils.beanToMap(user);
-		staffDAO.deleteUser(paramMap);
-	}
+
 
 
 

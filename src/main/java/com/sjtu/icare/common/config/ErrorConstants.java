@@ -153,6 +153,17 @@ public class ErrorConstants {
 	public static final String STAFF_DATA_STAFF_PUT_SERVICE_FAILED = "430007 PUT 指定员工信息：后台服务失败";
 	public static final String STAFF_DATA_STAFF_DELETE_SERVICE_FAILED = "430008 DELETE 指定员工信息：后台服务失败";
 	
+	// elder info constants
+	public static final String ELDER_INFO_GET_PARAM_INVALID = "440001 GET 老人信息：请求参数错误";
+	public static final String ELDER_INFO_GET_SERVICE_FAILED = "440002 GET 老人信息：后台服务失败";
+	public static final String ELDER_INFO_POST_PARAM_INVALID = "440003 POST 老人信息：请求参数错误";
+	public static final String ELDER_INFO_POST_SERVICE_FAILED = "440004 POST 老人信息：后台服务失败";
+	public static final String ELDER_INFO_ELDER_GET_SERVICE_FAILED = "440005 GET 指定老人信息：后台服务失败";
+	public static final String ELDER_INFO_ELDER_PUT_PARAM_INVALID = "440006 PUT 老人信息：请求参数错误";
+	public static final String ELDER_INFO_ELDER_PUT_SERVICE_FAILED = "440007 PUT 老人信息：后台服务失败";
+	public static final String ELDER_INFO_ELDER_DELETE_SERVICE_FAILED = "440008 DELETE 老人信息：后台服务失败";
+	
+	
 	public static String format(String errorConstant, String otherMessage) {
 		if (errorConstant == null)
 			return null;

@@ -6,7 +6,7 @@
 
     <cache />
     
-    <resultMap type="com.sjtu.icare.modules.elder.entity.ElderEntity" id="ElderEntityMap">
+    <resultMap type="com.sjtu.icare.modules.elder.entity.ElderEntity" id="ElderMap">
 	    <id property="id" column="id" />
 	    <result property="name" column="name" />
 	    <result property="geroId" column="gero_id" />
@@ -24,7 +24,7 @@
 		<result property="padMac" column="pad_mac" />
 	</resultMap>
   
-    <select id="getElderEntity" resultType="ElderEntity">
+    <select id="getElderEntity" resultMap="ElderMap">
         SELECT
 			id,
 			name,
@@ -44,19 +44,86 @@
         WHERE T_ELDER.id = #{id}
     </select>
 
-    <select id="getNameById" resultType="String">
-        SELECT
-            name
-        FROM T_ELDER
-        WHERE T_ELDER.id = #{id}
-    </select>
+    <select id="getAllElders" resultMap="com.sjtu.icare.modules.sys.persistence.UserMapper.UserMap">
     
-    <select id="getPhotoById" resultType="String">
-        SELECT
-            photo_url
-        FROM T_ELDER
-        WHERE T_ELDER.id = #{id}
+        SELECT 
+            T_USER.*
+        FROM 
+            (T_USER INNER JOIN T_ELDER
+            ON
+                T_USER.user_type = #{userType}
+                AND T_USER.gero_id = #{geroId}
+                AND T_USER.user_id = T_ELDER.id 
+	            <if test="name != null">
+	                AND T_USER.name LIKE '%' + #{name} + '%'
+	            </if> 
+	            <if test="gender != null">
+	                AND T_USER.gender = #{gender}
+	            </if>
+	            <if test="ageMin != null">
+	                <![CDATA[
+	                AND T_USER.age >= #{ageMin}
+	                ]]> 
+	            </if>
+	            <if test="ageMax != null">
+	                <![CDATA[
+	                AND T_USER.age <= #{ageMax}
+	                ]]> 
+	            </if>
+	            <if test="careLevel != null">
+                    AND T_ELDER.care_level = #{careLevel}
+                </if>
+	            <if test="areaId != null">
+                    AND T_ELDER.area_id = #{areaId}
+                </if>
+                
+	        )    
+	  
     </select>
 
+
+    <insert id="insertElder" parameterType="ElderEntity" useGeneratedKeys="true" keyProperty="id">
+    
+        INSERT INTO
+            T_ELDER(name, nssf_id, gero_id, archive_id, area_id, care_level, checkin_date, checkout_date, apply_url, survey_url, assess_url, track_url, pad_mac) 
+        VALUES
+            (#{name}, #{nssfId}, #{geroId}, #{archiveId}, #{areaId}, #{careLevel}, #{checkinDate}, #{checkoutDate}, #{applyUrl}, #{surveyUrl}, #{assessUrl}, #{trackUrl}, #{padMac})
+            
+    </insert>
+    
+    
+    <update id="updateElder">
+    
+        UPDATE
+            T_ELDER
+        SET
+            T_ELDER.name = #{name},
+            T_ELDER.nssf_id = #{nssfId},
+            T_ELDER.archive_id = #{archiveId},
+            T_ELDER.area_id = #{areaId},
+            T_ELDER.care_level = #{careLevel},
+            T_ELDER.checkin_date = #{checkinDate},
+            T_ELDER.checkout_date = #{checkoutDate},
+            T_ELDER.apply_url = #{applyUrl},
+            T_ELDER.survey_url = #{surveyUrl},
+            T_ELDER.assess_url = #{assessUrl},
+            T_ELDER.track_url = #{trackUrl},
+            T_ELDER.pad_mac = #{padMac}
+        WHERE
+            T_ELDER.id = #{id}
+            
+    </update>
+    
+    <update id="deleteElder">
+    
+        UPDATE
+            T_ELDER
+        SET
+            T_ELDER.checkout_date = #{checkoutDate}
+        WHERE
+            T_ELDER.id = #{id}
+            
+    </update>
+    
     
 </mapper>

@@ -74,7 +74,7 @@ public interface IStaffDataService {
 	 * @return void
 	 * @throws
 	 */
-	Integer insertUser(User postUser);
+//	Integer insertUser(User postUser);
 
 	/**
 	 * @Title updateStaff
@@ -92,7 +92,7 @@ public interface IStaffDataService {
 	 * @return void
 	 * @throws
 	 */
-	void updateUser(User user);
+//	void updateUser(User user);
 
 	/**
 	 * @Title deleteStaff
@@ -110,6 +110,6 @@ public interface IStaffDataService {
 	 * @return void
 	 * @throws
 	 */
-	void deleteUser(User user);
+//	void deleteUser(User user);
 	
 }
