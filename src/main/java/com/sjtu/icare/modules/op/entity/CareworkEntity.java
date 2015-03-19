@@ -1,44 +1,90 @@
+/**
+ * @Package com.sjtu.icare.modules.op.entity
+ * @Description TODO
+ * @date Mar 16, 2015 3:21:07 PM
+ * @author Wang Qi
+ * @version TODO
+ */
 package com.sjtu.icare.modules.op.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 public class CareworkEntity implements Serializable {
+    
 	private static final long serialVersionUID = 1L;
-	private int id;
-	private int carerId;		//护工ID
-	private int elderId;		//老人ID
-	private Date startDate;		//起始时间
-	private Date endDate;		//终止时间
 	
-	public int getId() {
+    private Integer id;
+    private Integer carerId;
+    private Integer elderId;
+    private String startDate;
+    private String endDate;
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public int getCarerId() {
+	/**
+	 * @return the carerId
+	 */
+	public Integer getCarerId() {
 		return carerId;
 	}
-	public void setCarerId(int carerId) {
+	/**
+	 * @param carerId the carerId to set
+	 */
+	public void setCarerId(Integer carerId) {
 		this.carerId = carerId;
 	}
-	public int getElderId() {
+	/**
+	 * @return the elderId
+	 */
+	public Integer getElderId() {
 		return elderId;
 	}
-	public void setElderId(int elderId) {
+	/**
+	 * @param elderId the elderId to set
+	 */
+	public void setElderId(Integer elderId) {
 		this.elderId = elderId;
 	}
-	public Date getStartDate() {
+	/**
+	 * @return the startDate
+	 */
+	public String getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(Date startDate) {
+	/**
+	 * @param startDate the startDate to set
+	 */
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-	public Date getEndDate() {
+	/**
+	 * @return the endDate
+	 */
+	public String getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(Date endDate) {
+	/**
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+    
+    
+    
 }

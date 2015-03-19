@@ -13,7 +13,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sjtu.icare.common.utils.CommonUtils;
+import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.modules.gero.entity.GeroAreaEntity;
 import com.sjtu.icare.modules.gero.persistence.GeroAreaDAO;
 import com.sjtu.icare.modules.gero.service.IGeroAreaService;
@@ -26,39 +26,39 @@ public class GeroAreaService implements IGeroAreaService {
 	
 	@Override
 	public List<GeroAreaEntity> getGeroAreas(GeroAreaEntity geroAreaEntity) {
-		Map<String, Object> paramMap = CommonUtils.beanToMap(geroAreaEntity);
+		Map<String, Object> paramMap = MapListUtils.beanToMap(geroAreaEntity);
 		return geroAreaDAO.getGeroAreaEntities(paramMap);
 	}
 	
 	@Override
 	public GeroAreaEntity getGeroArea(GeroAreaEntity geroAreaEntity) {
-		Map<String, Object> paramMap = CommonUtils.beanToMap(geroAreaEntity);
+		Map<String, Object> paramMap = MapListUtils.beanToMap(geroAreaEntity);
 		return geroAreaDAO.getGeroAreaEntity(paramMap);
 	}
 	
 	@Override
 	public void insertGeroAreaRecord(GeroAreaEntity geroAreaEntity) {
-		Map<String, Object> paramMap = CommonUtils.beanToMap(geroAreaEntity);
+		Map<String, Object> paramMap = MapListUtils.beanToMap(geroAreaEntity);
 		geroAreaDAO.insertGeroAreaRecord(paramMap);
 	}
 
 	@Override
 	public List<GeroAreaEntity> getGeroSubareas(
 			GeroAreaEntity ancestorGeroAreaEntity, Integer subLevel) {
-		Map<String, Object> paramMap = CommonUtils.beanToMap(ancestorGeroAreaEntity);
+		Map<String, Object> paramMap = MapListUtils.beanToMap(ancestorGeroAreaEntity);
 		paramMap.put("subLevel", subLevel);
 		return geroAreaDAO.getGeroSubareas(paramMap);
 	}
 
 	@Override
 	public void updateGeroAreaRecord(GeroAreaEntity postEntity) {
-		Map<String, Object> paramMap = CommonUtils.beanToMap(postEntity);
+		Map<String, Object> paramMap = MapListUtils.beanToMap(postEntity);
 		geroAreaDAO.updateGeroAreaRecord(paramMap);
 	}
 
 	@Override
 	public void deleteGeroAreaRecord(GeroAreaEntity geroAreaEntity) {
-		Map<String, Object> paramMap = CommonUtils.beanToMap(geroAreaEntity);
+		Map<String, Object> paramMap = MapListUtils.beanToMap(geroAreaEntity);
 		geroAreaDAO.deleteGeroAreaRecord(paramMap);
 		
 	}

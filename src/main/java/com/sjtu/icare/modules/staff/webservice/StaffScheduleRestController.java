@@ -17,6 +17,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
-import com.sjtu.icare.common.utils.CommonUtils;
+import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.ParamValidator;
@@ -103,6 +104,7 @@ public class StaffScheduleRestController {
 		}
 	}
 	
+	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postStaffSchedulePlans(
 			@PathVariable("sid") int staffId,
@@ -111,7 +113,7 @@ public class StaffScheduleRestController {
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("staffId", staffId);
-		Map<String, Object> requestParamMap = CommonUtils.convertMapToCamelStyle(tempRquestParamMap);
+		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
 		
 		List<String> workDate;
 		List<String> noworkDate;
@@ -193,7 +195,7 @@ public class StaffScheduleRestController {
 		String endDate;
 		try {
 			// 参数预处理
-			Date thatDay = CommonUtils.getDate(date);
+			Date thatDay = MapListUtils.getDate(date);
 			startDate = DateUtils.formatDate(DateUtils.getDateStart(thatDay));
 			endDate = DateUtils.formatDate(DateUtils.getDateEnd(thatDay));
 
@@ -220,6 +222,7 @@ public class StaffScheduleRestController {
 		
 	}
 	
+	@Transactional
 	@RequestMapping(value = "/{date}", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postStaffSchedulePlan(
 			@PathVariable("sid") int staffId,
@@ -228,7 +231,7 @@ public class StaffScheduleRestController {
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
 		tempRquestParamMap.put("staffId", staffId);
-		Map<String, Object> requestParamMap = CommonUtils.convertMapToCamelStyle(tempRquestParamMap);
+		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
 
 		// 参数检查
 		if (date != null && !ParamValidator.isDate(date)) {
@@ -246,7 +249,7 @@ public class StaffScheduleRestController {
 		String endDate;
 		try {
 			// 参数预处理
-			Date thatDay = CommonUtils.getDate(date);
+			Date thatDay = MapListUtils.getDate(date);
 			startDate = DateUtils.formatDate(DateUtils.getDateStart(thatDay));
 			endDate = DateUtils.formatDate(DateUtils.getDateEnd(thatDay));
 
@@ -285,6 +288,7 @@ public class StaffScheduleRestController {
 		
 	}
 	
+	@Transactional
 	@RequestMapping(value = "/{date}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteStaffSchedulePlan(
 			@PathVariable("sid") int staffId,
@@ -293,7 +297,7 @@ public class StaffScheduleRestController {
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
 		tempRquestParamMap.put("staffId", staffId);
-		Map<String, Object> requestParamMap = CommonUtils.convertMapToCamelStyle(tempRquestParamMap);
+		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
 
 		// 参数检查
 		if (date != null && !ParamValidator.isDate(date)) {
@@ -309,7 +313,7 @@ public class StaffScheduleRestController {
 		
 		try {
 			// 参数预处理
-			Date thatDay = CommonUtils.getDate(date);
+			Date thatDay = MapListUtils.getDate(date);
 			Date today = new Date();
 			if (thatDay.after(today))
 				throw new Exception("删除的日期超过当天");

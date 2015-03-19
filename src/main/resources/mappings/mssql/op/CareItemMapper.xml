@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.icare.modules.op.persistence.CareItemDAO">
+
+    <cache />
+    
+	<resultMap type="com.sjtu.icare.modules.op.entity.CareItemEntity" id="CareItemMap">
+	    <id property="id" column="id" />
+	    <result property="geroId" column="gero_id" />
+	    <result property="name" column="name" />
+	    <result property="level" column="level" />
+	    <result property="period" column="period" />
+	    <result property="frequency" column="frequency" />
+	    <result property="notes" column="notes" />
+	    <result property="delFlag" column="del_flag" />
+	</resultMap>
+  
+    <select id="getCareItemEntitiesByGeroId" resultMap="CareItemMap">
+
+        SELECT
+			*
+        FROM T_CARE_ITEM
+        WHERE 
+            T_CARE_ITEM.gero_id = #{geroId}
+            AND T_CARE_ITEM.del_flag = 0
+  
+    </select>
+  
+    <select id="getCareItemEntityById" resultMap="CareItemMap">
+
+        SELECT
+			*
+        FROM T_CARE_ITEM
+        WHERE 
+            T_CARE_ITEM.id = #{id}
+            AND T_CARE_ITEM.gero_id = #{geroId}
+            AND T_CARE_ITEM.del_flag = 0
+            
+    </select>
+    
+    <insert id="insertCareItem">
+    
+        insert into 
+            T_CARE_ITEM(gero_id, name, icon, level, period, frequency, notes) 
+        values
+            (#{geroId}, #{name}, #{icon}, #{level}, #{period}, #{frequency}, #{notes})
+            
+    </insert>
+    
+    <update id="deleteCareItem">
+    
+        UPDATE
+            T_CARE_ITEM
+        SET
+            T_CARE_ITEM.del_flag = 1
+        WHERE
+            T_CARE_ITEM.id = #{id}
+            and T_CARE_ITEM.gero_id = #{geroId}
+    
+    </update>
+    
+    <update id="updateCareItem">
+    
+        UPDATE
+            T_CARE_ITEM
+        SET
+            T_CARE_ITEM.name = #{name}, 
+            T_CARE_ITEM.icon = #{icon},
+            T_CARE_ITEM.level = #{level},
+            T_CARE_ITEM.period = #{period},
+            T_CARE_ITEM.frequency = #{frequency},
+            T_CARE_ITEM.notes = #{notes}
+        WHERE
+            T_CARE_ITEM.id = #{id}
+            and T_CARE_ITEM.del_flag = 0
+    
+    </update>
+    
+</mapper>

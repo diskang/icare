@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
-import com.sjtu.icare.common.utils.CommonUtils;
+import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.ParamValidator;
 import com.sjtu.icare.common.web.rest.MediaTypes;
@@ -138,7 +138,7 @@ public class GeroStaffScheduleRestController {
 		for (Object map : tempRquestList) {
 			Map<String, Object> tempRequestParamMap = (Map<String, Object>) map;
 			tempRequestParamMap.put("geroId", geroId);
-			Map<String, Object> requestParamMap = CommonUtils.convertMapToCamelStyle(tempRequestParamMap);
+			Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRequestParamMap);
 			
 			List<String> workDate;
 			List<String> noworkDate;

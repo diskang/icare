@@ -36,5 +36,80 @@ public interface IStaffDataService {
 	List<StaffSchedulePlanEntity> getAllStaffPlansByGeroId(
 			StaffSchedulePlanEntity queryStaffSchedulePlanEntity,
 			String startDate, String endDate, String role);
+
+	/**
+	 * @Title getAllStaffs
+	 * @Description 该方法不能拿到 Role
+	 * @param @param User
+	 * @param @return
+	 * @return List<User>
+	 * @throws
+	 */
+	List<User> getAllStaffs(User user);
+
+	/**
+	 * @Title getAllStaffs
+	 * @Description TODO
+	 * @param @param user
+	 * @param @param role
+	 * @param @return
+	 * @return List<User>
+	 * @throws
+	 */
+	List<User> getAllStaffs(User user, String role);
+
+	/**
+	 * @Title insertStaff
+	 * @Description TODO
+	 * @param @param staffEntity
+	 * @return Integer
+	 * @throws
+	 */
+	Integer insertStaff(StaffEntity staffEntity);
+
+	/**
+	 * @Title insertUser
+	 * @Description TODO
+	 * @param @param postUser
+	 * @return void
+	 * @throws
+	 */
+	Integer insertUser(User postUser);
+
+	/**
+	 * @Title updateStaff
+	 * @Description TODO
+	 * @param @param postStaffEntity
+	 * @return void
+	 * @throws
+	 */
+	void updateStaff(StaffEntity staffEntity);
+
+	/**
+	 * @Title updateUser
+	 * @Description TODO
+	 * @param @param user
+	 * @return void
+	 * @throws
+	 */
+	void updateUser(User user);
+
+	/**
+	 * @Title deleteStaff
+	 * @Description TODO
+	 * @param @param postStaffEntity
+	 * @return void
+	 * @throws
+	 */
+	void deleteStaff(StaffEntity staffEntity);
+
+	/**
+	 * @Title deleteUser
+	 * @Description TODO
+	 * @param @param user
+	 * @return void
+	 * @throws
+	 */
+	void deleteUser(User user);
 	
 }

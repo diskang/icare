@@ -16,6 +16,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
-import com.sjtu.icare.common.utils.CommonUtils;
+import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.StringUtils;
 import com.sjtu.icare.common.web.rest.MediaTypes;
@@ -57,17 +58,20 @@ public class GeroAreaRestController {
 			queryGeroAreaEntity.setGeroId(geroId);
 			List<GeroAreaEntity> geroAreaEntities = geroAreaService.getGeroAreas(queryGeroAreaEntity);
 			
-			// 构造返回的 JSON
-			for (GeroAreaEntity geroAreaEntity : geroAreaEntities) {
-				Map<String, Object> resultMap = new HashMap<String, Object>(); 
-				resultMap.put("id", geroId); 
-				resultMap.put("parent_id", geroAreaEntity.getParentId()); 
-				resultMap.put("parent_ids", geroAreaEntity.getParentIds()); 
-				resultMap.put("type", geroAreaEntity.getType()); 
-				resultMap.put("level", geroAreaEntity.getLevel()); 
-				resultMap.put("name", geroAreaEntity.getName()); 
-
-				basicReturnedJson.addEntity(resultMap);
+			if (geroAreaEntities != null) {
+				// 构造返回的 JSON
+				for (GeroAreaEntity geroAreaEntity : geroAreaEntities) {
+					Map<String, Object> resultMap = new HashMap<String, Object>(); 
+					resultMap.put("id", geroId); 
+					resultMap.put("parent_id", geroAreaEntity.getParentId()); 
+					resultMap.put("parent_ids", geroAreaEntity.getParentIds()); 
+					resultMap.put("type", geroAreaEntity.getType()); 
+					resultMap.put("level", geroAreaEntity.getLevel()); 
+					resultMap.put("name", geroAreaEntity.getName()); 
+					
+					basicReturnedJson.addEntity(resultMap);
+				}
+				
 			}
 
 			return basicReturnedJson.getMap();
@@ -81,6 +85,7 @@ public class GeroAreaRestController {
 	
 	}
 
+	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postGeroArea(
 			@PathVariable("gid") int geroId,
@@ -89,7 +94,7 @@ public class GeroAreaRestController {
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("geroId", geroId);
-		Map<String, Object> requestParamMap = CommonUtils.convertMapToCamelStyle(tempRquestParamMap);
+		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
 		
 		Integer parentId;
 		String parentIds;
@@ -210,6 +215,7 @@ public class GeroAreaRestController {
 		
 	}
 	
+	@Transactional
 	@RequestMapping(value = "/{aid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Object putGeroArea(
 			@PathVariable("gid") int geroId,
@@ -220,7 +226,7 @@ public class GeroAreaRestController {
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("geroId", geroId);
 		tempRquestParamMap.put("id", areaId);
-		Map<String, Object> requestParamMap = CommonUtils.convertMapToCamelStyle(tempRquestParamMap);
+		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
 		
 		// 获取基础的 JSON
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
@@ -241,6 +247,8 @@ public class GeroAreaRestController {
 		
 	}
 
+	// TODO 改成逻辑删除
+	@Transactional
 	@RequestMapping(value = "/{aid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteGeroArea(
 			@PathVariable("gid") int geroId,
@@ -250,7 +258,7 @@ public class GeroAreaRestController {
 		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
 		tempRquestParamMap.put("geroId", geroId);
 		tempRquestParamMap.put("id", areaId);
-		Map<String, Object> requestParamMap = CommonUtils.convertMapToCamelStyle(tempRquestParamMap);
+		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
 		
 		// 获取基础的 JSON
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();

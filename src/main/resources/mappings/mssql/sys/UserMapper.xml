@@ -60,25 +60,25 @@
 	</sql>
 	
 	<!-- 根据编号获得用户 -->
-	<select id="get" resultType="User">
+	<select id="get" resultMap="UserMap">
 		SELECT
-			<include refid="userColumns"/>
+			*
 		FROM T_USER
 		WHERE id = #{id}
 	</select>
 	
 	<!-- 根据登录名查询用户 -->
-	<select id="getByUsername" resultType="User" parameterType="User">
+	<select id="getByUsername" resultMap="UserMap" parameterType="User">
 		SELECT
-			<include refid="userColumns"/>
+			*
 		FROM T_USER
 		WHERE username = #{username} AND cancel_date is null
 	</select>
 	
 	<!-- 根据用户类别和用户ID查询用户 -->
-	<select id="getByUserId" resultType="User" parameterType="User">
+	<select id="getByUserId" resultMap="UserMap" parameterType="User">
 		SELECT
-			<include refid="userColumns"/>
+			*
 		FROM T_USER
 		WHERE user_type = #{userType} AND user_id = #{userId} AND cancel_date is null
 	</select>
@@ -93,9 +93,9 @@
     -->
     
 	<!-- 分页查询用户信息 -->
-	<select id="findList" resultType="User">
+	<select id="findList" resultMap="UserMap">
 		SELECT
-			<include refid="userColumns"/>
+			*
 		FROM T_USER
 		WHERE cancel_date is null
 		
@@ -132,9 +132,9 @@
 	</select> -->
 	
 	<!-- 查询全部用户 -->
-	<select id="findAllList" resultType="User">
+	<select id="findAllList" resultMap="UserMap">
 		SELECT
-			<include refid="userColumns"/>
+			*
 		FROM T_USER
 		WHERE cancel_date is null
 		ORDER BY name

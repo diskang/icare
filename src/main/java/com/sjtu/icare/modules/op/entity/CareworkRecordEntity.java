@@ -1,51 +1,93 @@
 package com.sjtu.icare.modules.op.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 public class CareworkRecordEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int id;
-	private int carerId;		//护工ID
-	private int elderId;		//老人ID
-	private int elderItemId;	//老人护理项目ID
+	private Integer id;
+	private Integer carerId;		//护工ID
+	private Integer elderId;		//老人ID
+	private Integer elderItemId;	//老人护理项目ID
 	private String itemName;	//项目名
-	private Date finishTime;	//完成时间
-	
-	public int getId() {
+	private String finishTime;	//完成时间
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public int getCarerId() {
+	/**
+	 * @return the carerId
+	 */
+	public Integer getCarerId() {
 		return carerId;
 	}
-	public void setCarerId(int carerId) {
+	/**
+	 * @param carerId the carerId to set
+	 */
+	public void setCarerId(Integer carerId) {
 		this.carerId = carerId;
 	}
-	public int getElderId() {
+	/**
+	 * @return the elderId
+	 */
+	public Integer getElderId() {
 		return elderId;
 	}
-	public void setElderId(int elderId) {
+	/**
+	 * @param elderId the elderId to set
+	 */
+	public void setElderId(Integer elderId) {
 		this.elderId = elderId;
 	}
-	public int getElderItemId() {
+	/**
+	 * @return the elderItemId
+	 */
+	public Integer getElderItemId() {
 		return elderItemId;
 	}
-	public void setElderItemId(int elderItemId) {
+	/**
+	 * @param elderItemId the elderItemId to set
+	 */
+	public void setElderItemId(Integer elderItemId) {
 		this.elderItemId = elderItemId;
 	}
+	/**
+	 * @return the itemName
+	 */
 	public String getItemName() {
 		return itemName;
 	}
+	/**
+	 * @param itemName the itemName to set
+	 */
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
-	public Date getFinishTime() {
+	/**
+	 * @return the finishTime
+	 */
+	public String getFinishTime() {
 		return finishTime;
 	}
-	public void setFinishTime(Date finishTime) {
+	/**
+	 * @param finishTime the finishTime to set
+	 */
+	public void setFinishTime(String finishTime) {
 		this.finishTime = finishTime;
 	}
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+
 }

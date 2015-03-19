@@ -6,39 +6,75 @@
 
     <cache />
     
-    
-  
     <select id="getCareworkEntityById" resultType="CareworkEntity" parameterType="int">
         SELECT
-			id,
-			carer_id,
-			elder_id,
-			start_date,
-			end_date
+            id,
+            carer_id,
+            elder_id,
+            start_date,
+            end_date
         FROM T_CAREWORK
         WHERE T_CAREWORK.id = #{id}
     </select>
     
     <select id="getCareworkEntitiesByCarerid" resultType="CareworkEntity" parameterType="int">
         SELECT
-			id,
-			carer_id,
-			elder_id,
-			start_date,
-			end_date
+            id,
+            carer_id,
+            elder_id,
+            start_date,
+            end_date
         FROM T_CAREWORK
         WHERE T_CAREWORK.carer_id = #{carerId}
     </select>
     
     <select id="getCareworkEntityByElderid" resultType="CareworkEntity" parameterType="int">
         SELECT
-			id,
-			carer_id,
-			elder_id,
-			start_date,
-			end_date
+            id,
+            carer_id,
+            elder_id,
+            start_date,
+            end_date
         FROM T_CAREWORK
         WHERE T_CAREWORK.elder_id = #{elderId}
     </select>
+  
+    <select id="getStaffEntitiesByElderId" resultType="StaffEntity">
+        <![CDATA[ 
+        SELECT 
+            T_STAFF.*
+        FROM    
+            (T_STAFF inner join T_CAREWORK 
+            ON 
+                T_STAFF.id = T_CAREWORK.carer_id 
+                AND T_CAREWORK.elder_id = #{id}
+                AND convert(nvarchar(23), T_CAREWORK.start_date, 120) <= #{date}
+                AND convert(nvarchar(23), T_CAREWORK.end_date, 120) >= #{date})
+            INNER join T_STAFF_SCHEDULE_PLAN
+            ON
+                T_STAFF_SCHEDULE_PLAN.staff_id = T_STAFF.id
+                AND T_STAFF_SCHEDULE_PLAN.work_date = #{date}
+        ]]>                 
+    </select>
     
+    <select id="getStaffEntitiesByAreaId" resultType="StaffEntity">
+        <![CDATA[ 
+        SELECT 
+            T_STAFF.*
+        FROM    
+            (T_STAFF inner join T_AREAWORK 
+            ON 
+                T_STAFF.id = T_AREAWORK.carer_id 
+                AND T_AREAWORK.area_id = #{id}
+                AND convert(nvarchar(23), T_AREAWORK.start_date, 120) <= #{date}
+                AND convert(nvarchar(23), T_AREAWORK.end_date, 120) >= #{date})
+            INNER join T_STAFF_SCHEDULE_PLAN
+            ON
+                T_STAFF_SCHEDULE_PLAN.staff_id = T_STAFF.id
+                AND T_STAFF_SCHEDULE_PLAN.work_date = #{date}
+        ]]>                 
+    </select>
+    
+    
+      
 </mapper>

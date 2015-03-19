@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.icare.modules.op.persistence.AreaItemDAO">
+
+    <cache />
+    
+	<resultMap type="com.sjtu.icare.modules.op.entity.AreaItemEntity" id="AreaItemMap">
+	    <id property="id" column="id" />
+	    <result property="geroId" column="gero_id" />
+	    <result property="name" column="name" />
+	    <result property="period" column="period" />
+	    <result property="frequency" column="frequency" />
+	    <result property="notes" column="notes" />
+	    <result property="delFlag" column="del_flag" />
+	</resultMap>
+  
+    <select id="getAreaItems" resultMap="AreaItemMap">
+
+        SELECT
+			*
+        FROM T_AREA_ITEM
+        WHERE 
+            T_AREA_ITEM.gero_id = #{geroId}
+            AND T_AREA_ITEM.del_flag = 0
+  
+    </select>
+    
+    <select id="getAreaItem" resultMap="AreaItemMap">
+
+        SELECT
+            *
+        FROM T_AREA_ITEM
+        WHERE 
+            T_AREA_ITEM.id = #{id}
+            AND T_AREA_ITEM.gero_id = #{geroId}
+            AND T_AREA_ITEM.del_flag = 0
+            
+    </select>
+    
+    <insert id="insertAreaItem">
+    
+        insert into 
+            T_AREA_ITEM(gero_id, name, icon, period, frequency, notes) 
+        values
+            (#{geroId}, #{name}, #{icon}, #{period}, #{frequency}, #{notes})
+            
+    </insert>
+    
+    <update id="updateAreaItem">
+    
+        UPDATE
+            T_AREA_ITEM
+        SET
+            T_AREA_ITEM.name = #{name}, 
+            T_AREA_ITEM.icon = #{icon},
+            T_AREA_ITEM.period = #{period},
+            T_AREA_ITEM.frequency = #{frequency},
+            T_AREA_ITEM.notes = #{notes}
+        WHERE
+            T_AREA_ITEM.id = #{id}
+            and T_AREA_ITEM.del_flag = 0
+    
+    </update>
+    
+    <update id="deleteAreaItem">
+    
+        UPDATE
+            T_AREA_ITEM
+        SET
+            T_AREA_ITEM.del_flag = 1
+        WHERE
+            T_AREA_ITEM.id = #{id}
+            and T_AREA_ITEM.gero_id = #{geroId}
+    
+    </update>
+    
+
+    
+</mapper>

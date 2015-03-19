@@ -11,7 +11,7 @@ public class ElderAudioRecordEntity implements Serializable {
 	private int listenerIdentity;		//收听人身份
 	private int listenerId;				//收听人ID
 	private int elderId;				//老人ID
-	private Date recordTime;			//记录时间
+	private String recordTime;			//记录时间
 	private String url;					//链接
 	private int readTimes;				//播放次数
 	
@@ -52,10 +52,10 @@ public class ElderAudioRecordEntity implements Serializable {
 	public void setElderId(int elderId) {
 		this.elderId = elderId;
 	}
-	public Date getRecordTime() {
+	public String getRecordTime() {
 		return recordTime;
 	}
-	public void setRecordTime(Date recordTime) {
+	public void setRecordTime(String recordTime) {
 		this.recordTime = recordTime;
 	}
 	public String getUrl() {

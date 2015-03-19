@@ -2,9 +2,6 @@ package com.sjtu.icare.modules.staff.entity;
 
 
 import java.io.Serializable;
-import java.sql.Date;
-
-import com.sjtu.icare.modules.sys.entity.User;
 
 /**
  * @Description Staff Entity
@@ -13,9 +10,9 @@ import com.sjtu.icare.modules.sys.entity.User;
  */
 
 
-public class StaffEntity implements Serializable, Cloneable {
+public class StaffEntity implements Serializable {
   
-    private static long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 	
     private Integer id;
     private String name;
@@ -33,16 +30,6 @@ public class StaffEntity implements Serializable, Cloneable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
-
-
-	/**
-	 * @param serialversionuid the serialversionuid to set
-	 */
-	public static void setSerialversionuid(long serialversionuid) {
-		serialVersionUID = serialversionuid;
-	}
-
 
 
 	/**

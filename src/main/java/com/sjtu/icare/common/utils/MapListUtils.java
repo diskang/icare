@@ -22,7 +22,7 @@ import java.util.Map;
 
 import com.sjtu.icare.modules.elder.entity.ElderTemperatureEntity;
 
-public class CommonUtils {
+public class MapListUtils {
 	public static final char UNDERLINE='_';
    
 	public static String camelToUnderline(String param){
@@ -139,7 +139,7 @@ public class CommonUtils {
 					if (result != null) { 
 						returnMap.put(propertyName, result); 
 					} else { 
-						returnMap.put(propertyName, ""); 
+						returnMap.put(propertyName, null); 
 					} 
 				}
 			} 
@@ -151,6 +151,24 @@ public class CommonUtils {
 		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" }) 
+	public static List<Map<String, Object>> listOfBeanToListOfMap(List beanList) {
+		try {
+			
+			List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
+			
+			for (Object object : beanList) {
+				returnList.add(beanToMap(object));
+			}
+		
+			return returnList; 
+			
+		} catch(Exception e) {
+			
+			return null;
+		}
+	}
+	
 	/**
      * 将一个 Map 对象转化为一个 JavaBean
      * @param type 要转化的类型

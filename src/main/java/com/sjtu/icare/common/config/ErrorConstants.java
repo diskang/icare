@@ -107,6 +107,52 @@ public class ErrorConstants {
 	public static final String PHOTO_UPLOAD_RESOLUTION_ERROR = "2000003 INSERT 上传图片：上传分辨率不正确";
 	public static final String PHOTO_UPLOAD_SERVICE_ERROR = "2000004 INSERT 上传图片：后台操作错误";
 	
+	// duty carer constants
+	public static final String DUTY_CARER_ELDER_GET_PARAM_INVALID = "380001 GET 负责老人护工信息：请求参数错误";
+	public static final String DUTY_CARER_ELDER_GET_SERVICE_FAILED = "380002 GET 负责老人护工信息：后台获取失败";
+	public static final String DUTY_CARER_AREA_GET_PARAM_INVALID = "380003 GET 负责区域护工信息：请求参数错误";
+	public static final String DUTY_CARER_AREA_GET_SERVICE_FAILED = "380004 GET 负责区域护工信息：后台获取失败";
+	
+	// gero care item constants
+	public static final String GERO_CARE_ITEMS_GET_SERVICE_FAILED = "390001 GET 养老院护理项目：后台获取失败";
+	public static final String GERO_CARE_ITEM_GET_SERVICE_FAILED = "390002 GET 养老院护理项目：后台获取失败";
+	public static final String GERO_CARE_ITEM_DELETE_SERVICE_FAILED = "390003 DELETE 养老院护理项目：后台删除失败";
+	public static final String GERO_CARE_ITEM_POST_PARAM_INVALID = "390004 POST 养老院护理项目：请求参数错误";
+	public static final String GERO_CARE_ITEM_POST_SERVICE_FAILED = "390005 POST 养老院护理项目：后台插入失败";
+	public static final String GERO_CARE_ITEM_PUT_PARAM_INVALID = "390006 PUT 养老院护理项目：请求参数错误";
+	public static final String GERO_CARE_ITEM_PUT_SERVICE_FAILED = "390007 PUT 养老院护理项目：后台更新失败";
+	
+	// gero area item constants
+	public static final String GERO_AREA_ITEMS_GET_SERVICE_FAILED = "400001 GET 养老院区域项目：后台获取失败";
+	public static final String GERO_AREA_ITEM_POST_PARAM_INVALID = "400002 POST 养老院区域项目：请求参数错误";
+	public static final String GERO_AREA_ITEM_POST_SERVICE_FAILED = "400003 POST 养老院区域项目：后台插入失败";
+	public static final String GERO_AREA_ITEM_GET_SERVICE_FAILED = "400004 GET 养老院区域项目：后台获取失败";
+	public static final String GERO_AREA_ITEM_PUT_PARAM_INVALID = "400005 PUT 养老院区域项目：请求参数错误";
+	public static final String GERO_AREA_ITEM_PUT_SERVICE_FAILED = "400006 PUT 养老院区域项目：后台更新失败";
+	public static final String GERO_AREA_ITEM_DELETE_SERVICE_FAILED = "400007 DELETE 养老院护理项目：后台删除失败";
+	
+	// carework records constants
+	public static final String CAREWORK_ITEMS_GET_PARAM_INVALID = "410001 GET 老人护工项目记录：请求参数错误";
+	public static final String CAREWORK_ITEMS_GET_SERVICE_FAILED = "410002 GET 老人护工项目记录：后台获取失败";
+	public static final String CAREWORK_ITEMS_POST_PARAM_INVALID = "410003 POST 老人护工项目记录：请求参数错误";
+	public static final String CAREWORK_ITEMS_POST_SERVICE_FAILED = "410004 POST 老人护工项目记录：后台服务失败";
+	
+	// areawork records constants
+	public static final String AREAWORK_ITEMS_GET_PARAM_INVALID = "420001 GET 区域护工项目记录：请求参数错误";
+	public static final String AREAWORK_ITEMS_GET_SERVICE_FAILED = "420002 GET 区域护工项目记录：后台获取失败";
+	public static final String AREAWORK_ITEMS_POST_PARAM_INVALID = "420003 POST 区域护工项目记录：请求参数错误";
+	public static final String AREAWORK_ITEMS_POST_SERVICE_FAILED = "420004 POST 区域护工项目记录：后台服务失败";
+	
+	// staff data constants
+	public static final String STAFF_DATA_GET_PARAM_INVALID = "430001 GET 员工信息：请求参数错误";
+	public static final String STAFF_DATA_GET_SERVICE_FAILED = "430002 GET 员工信息：后台服务失败";
+	public static final String STAFF_DATA_POST_PARAM_INVALID = "430003 POST 员工信息：请求参数错误";
+	public static final String STAFF_DATA_POST_SERVICE_FAILED = "430004 POST 员工信息：后台服务失败";
+	public static final String STAFF_DATA_STAFF_GET_SERVICE_FAILED = "430005 GET 指定员工信息：后台服务失败";
+	public static final String STAFF_DATA_STAFF_PUT_PARAM_INVALID = "430006 PUT 指定员工信息：请求参数错误";
+	public static final String STAFF_DATA_STAFF_PUT_SERVICE_FAILED = "430007 PUT 指定员工信息：后台服务失败";
+	public static final String STAFF_DATA_STAFF_DELETE_SERVICE_FAILED = "430008 DELETE 指定员工信息：后台服务失败";
+	
 	public static String format(String errorConstant, String otherMessage) {
 		if (errorConstant == null)
 			return null;

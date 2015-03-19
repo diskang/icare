@@ -2,17 +2,13 @@ package com.sjtu.icare.modules.sys.webservice;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,8 +32,6 @@ import com.sjtu.icare.modules.sys.entity.Role;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.service.SystemService;
 import com.sjtu.icare.modules.sys.utils.UserUtils;
-import com.sjtu.icare.modules.sys.utils.security.SystemAuthorizingRealm.UserPrincipal;
-import com.sun.tools.javac.resources.javac;
 
 /**
 *

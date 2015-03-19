@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sjtu.icare.common.config.CommonConstants;
-import com.sjtu.icare.common.utils.CommonUtils;
+import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.modules.elder.entity.ElderBloodPressureEntity;
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
 import com.sjtu.icare.modules.elder.entity.ElderHeartRateEntity;
@@ -42,13 +42,13 @@ public class ElderHealthDataService implements IElderHealthDataService {
 
 	@Override
 	public ElderEntity getElderEntity(ElderEntity elderEntity) {
-		Map<String, Object> paramMap = CommonUtils.beanToMap(elderEntity);
+		Map<String, Object> paramMap = MapListUtils.beanToMap(elderEntity);
 		return elderDAO.getElderEntity(paramMap);
 	}
 
 	@Override
 	public List<ElderTemperatureEntity> getElderTemperatureEntities(ElderTemperatureEntity elderTemperatureEntity, String startDate, String endDate) {
-		Map<String, Object> paramMap = CommonUtils.beanToMap(elderTemperatureEntity);
+		Map<String, Object> paramMap = MapListUtils.beanToMap(elderTemperatureEntity);
 		paramMap.put("startDate", startDate);
 		paramMap.put("endDate", endDate);
 		return elderTemperatureDAO.getElderTemperatureEntitiesByElderidStartdayEndday(paramMap);
@@ -62,7 +62,7 @@ public class ElderHealthDataService implements IElderHealthDataService {
 	@Override
 	public List<ElderBloodPressureEntity> getElderBloodPressureEntities(
 			ElderBloodPressureEntity elderBloodPressureEntity, String startDate, String endDate) {
-		Map<String, Object> paramMap = CommonUtils.beanToMap(elderBloodPressureEntity);
+		Map<String, Object> paramMap = MapListUtils.beanToMap(elderBloodPressureEntity);
 		paramMap.put("startDate", startDate);
 		paramMap.put("endDate", endDate);
 		return elderBloodPressureDAO.getElderBloodPressureEntitiesByElderidStartdayEndday(paramMap);
@@ -77,7 +77,7 @@ public class ElderHealthDataService implements IElderHealthDataService {
 
 	@Override
 	public List<ElderHeartRateEntity> getElderHeartRateEntity(ElderHeartRateEntity elderHeartRateEntity, String startDate, String endDate) {
-		Map<String, Object> paramMap = CommonUtils.beanToMap(elderHeartRateEntity);
+		Map<String, Object> paramMap = MapListUtils.beanToMap(elderHeartRateEntity);
 		paramMap.put("startDate", startDate);
 		paramMap.put("endDate", endDate);
 		return elderHeartRateDAO.getElderHeartRateEntityByElderidStartdayEndday(paramMap);
