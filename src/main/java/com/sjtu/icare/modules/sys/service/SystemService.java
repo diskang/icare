@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.shiro.session.Session;
@@ -15,6 +16,7 @@ import com.sjtu.icare.common.security.Digests;
 import com.sjtu.icare.common.service.BaseService;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.Encodes;
+import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.modules.sys.entity.Gero;
 import com.sjtu.icare.modules.sys.entity.Privilege;
 import com.sjtu.icare.modules.sys.entity.Role;
@@ -436,5 +438,24 @@ public class SystemService extends BaseService  {
 		byte[] hashPassword = Digests.sha1(plainPassword.getBytes(), salt, HASH_INTERATIONS);
 		return password.equals(Encodes.encodeHex(salt)+Encodes.encodeHex(hashPassword));
 	}
+	
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.staff.service.IStaffDataService#insertUser(com.sjtu.icare.modules.sys.entity.User)
+	 */
+	public Integer insertUser(User user) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(user);
+		return userMapper.insertUser(paramMap);
+	}
+	
+	
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.staff.service.IStaffDataService#updateUser(com.sjtu.icare.modules.sys.entity.User)
+	 */
+	public void updateUser(User user) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(user);
+		userMapper.updateUser(paramMap);
+	}
+	
 	
 }

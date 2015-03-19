@@ -51,6 +51,7 @@ public class StaffRestController {
 	@Autowired
 	SystemService systemService;
 	
+	// TODO Paging
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getStaffs(
 			@PathVariable("gid") int geroId,
@@ -62,8 +63,8 @@ public class StaffRestController {
 		
 		// 参数检查
 		if (gender != null && !(gender.equals("0") || gender.equals("1"))) {
-			String otherMessage = "name 不符合格式:" +
-					"[name=" + name + "]";
+			String otherMessage = "gender 不符合格式:" +
+					"[gender=" + gender + "]";
 			String message = ErrorConstants.format(ErrorConstants.STAFF_DATA_GET_PARAM_INVALID, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
@@ -87,7 +88,7 @@ public class StaffRestController {
 			
 			for (User user : users) {
 				Map<String, Object> resultMap = new HashMap<String, Object>(); 
-				resultMap.put("id", user.getId()); 
+				resultMap.put("id", user.getUserId()); 
 				resultMap.put("name", user.getName()); 
 				resultMap.put("phone", user.getPhoneNo()); 
 				resultMap.put("email", user.getEmail()); 
@@ -139,33 +140,33 @@ public class StaffRestController {
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("geroId", geroId);
+		tempRquestParamMap.put("registerDate", DateUtils.getDateTime());
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
 		
 		try {
 			
 			if (requestParamMap.get("username") == null
 				|| requestParamMap.get("name") == null
-				|| requestParamMap.get("registerDate") == null
-				|| requestParamMap.get("gender") == null
-				|| requestParamMap.get("photoUrl") == null
 				|| requestParamMap.get("identityNo") == null
-				|| requestParamMap.get("age") == null
-				|| requestParamMap.get("nationality") == null
-				|| requestParamMap.get("marriage") == null
-				|| requestParamMap.get("nativePlace") == null
 				|| requestParamMap.get("birthday") == null
-				|| requestParamMap.get("politicalStatus") == null
-				|| requestParamMap.get("education") == null
 				|| requestParamMap.get("phoneNo") == null
-				|| requestParamMap.get("zipCode") == null
-				|| requestParamMap.get("residenceAddress") == null
-				|| requestParamMap.get("householdAddress") == null
-				|| requestParamMap.get("wechatId") == null
+//				|| requestParamMap.get("gender") == null
+//				|| requestParamMap.get("photoUrl") == null
+//				|| requestParamMap.get("age") == null
+//				|| requestParamMap.get("nationality") == null
+//				|| requestParamMap.get("marriage") == null
+//				|| requestParamMap.get("nativePlace") == null
+//				|| requestParamMap.get("politicalStatus") == null
+//				|| requestParamMap.get("education") == null
+//				|| requestParamMap.get("zipCode") == null
+//				|| requestParamMap.get("residenceAddress") == null
+//				|| requestParamMap.get("householdAddress") == null
+//				|| requestParamMap.get("wechatId") == null
 				// for Staff
-				|| requestParamMap.get("nssfId") == null
-				|| requestParamMap.get("basicUrl") == null
-				|| requestParamMap.get("leaveDate") == null
-				|| requestParamMap.get("archiveId") == null
+//				|| requestParamMap.get("nssfId") == null
+//				|| requestParamMap.get("basicUrl") == null
+//				|| requestParamMap.get("leaveDate") == null
+//				|| requestParamMap.get("archiveId") == null
 				)
 				throw new Exception();
 			
@@ -198,7 +199,7 @@ public class StaffRestController {
 			
 			User postUser = new User(); 
 			BeanUtils.populate(postUser, requestParamMap);
-			staffDataService.insertUser(postUser);
+			systemService.insertUser(postUser);
 			
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
@@ -232,22 +233,34 @@ public class StaffRestController {
 				throw new Exception("内部错误：找不到对应的 user");
 			
 			Map<String, Object> resultMap = new HashMap<String, Object>(); 
-			resultMap.put("name", user.getName()); 
-			resultMap.put("phone", user.getPhoneNo()); 
-			resultMap.put("email", user.getEmail()); 
-			resultMap.put("identity_no", user.getIdentityNo()); 
-			resultMap.put("gero_id", user.getGeroId()); 
-			resultMap.put("birthday", user.getBirthday()); 
-			resultMap.put("gender", user.getGender()); 
-			resultMap.put("residence_address", user.getResidenceAddress()); 
-			resultMap.put("household_address", user.getHouseholdAddress()); 
 			resultMap.put("user_id", user.getUserId()); 
-			resultMap.put("username", user.getUsername()); 
-			resultMap.put("register_date", user.getUsername()); 
-			resultMap.put("cancel_date", user.getCancelDate()); 
-			resultMap.put("photo_url", user.getPhotoUrl()); 
+			resultMap.put("id", user.getId()); 
 			
-			resultMap.put("nssf", staffEntity.getNssfId()); 
+			resultMap.put("age", user.getAge()); 
+			resultMap.put("birthday", user.getBirthday()); 
+			resultMap.put("cancel_date", user.getCancelDate()); 
+			resultMap.put("education", user.getEducation()); 
+			resultMap.put("email", user.getEmail()); 
+			resultMap.put("gender", user.getGender()); 
+			resultMap.put("gero_id", user.getGeroId()); 
+			resultMap.put("household_address", user.getHouseholdAddress()); 
+			resultMap.put("identity_no", user.getIdentityNo()); 
+			resultMap.put("marriage", user.getMarriage()); 
+			resultMap.put("name", user.getName()); 
+			resultMap.put("nationality", user.getNationality()); 
+			resultMap.put("native_place", user.getNativePlace()); 
+			resultMap.put("notes", user.getNotes()); 
+			resultMap.put("phone_no", user.getPhoneNo()); 
+			resultMap.put("photo_url", user.getPhotoUrl()); 
+			resultMap.put("political_status", user.getPoliticalStatus()); 
+			resultMap.put("register_date", user.getRegisterDate()); 
+			resultMap.put("residence_address", user.getResidenceAddress()); 
+			resultMap.put("user_name", user.getUsername()); 
+			resultMap.put("user_type", user.getUserType()); 
+			resultMap.put("wechat_id", user.getWechatId()); 
+			resultMap.put("zip_code", user.getZipCode()); 
+			
+			resultMap.put("nssf_id", staffEntity.getNssfId()); 
 			resultMap.put("leave_date", staffEntity.getLeaveDate()); 
 			resultMap.put("archive_id", staffEntity.getArchiveId()); 
 			
@@ -361,7 +374,7 @@ public class StaffRestController {
 			User postUser = new User(); 
 			BeanUtils.populate(postUser, requestParamMap);
 			postUser.setId(tempUser.getId());
-			staffDataService.updateUser(postUser);
+			systemService.updateUser(postUser);
 			
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
@@ -410,7 +423,7 @@ public class StaffRestController {
 			BeanUtils.populate(postUser, requestParamMap);
 			postUser.setId(tempUser.getId());
 			postUser.setCancelDate(nowDateTime);
-			staffDataService.deleteUser(postUser);
+			systemService.deleteUser(postUser);
 			
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";

@@ -1,6 +1,8 @@
 package com.sjtu.icare.modules.sys.persistence;
 
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.sjtu.icare.modules.sys.entity.User;
@@ -69,5 +71,24 @@ public interface UserMapper extends CrudMapper<User>{
 	 * @param cancelDate
 	 */
 	void delete(@Param("id")int id,@Param("cancelDate")String cancelDate);//id, cancelDate
+
+	/**
+	 * @Title insertUser
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @param @return
+	 * @return Integer
+	 * @throws
+	 */
+	public Integer insertUser(Map<String, Object> paramMap);
+
+	/**
+	 * @Title updateUser
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @return void
+	 * @throws
+	 */
+	public void updateUser(Map<String, Object> paramMap);
 
 }
