@@ -22,13 +22,26 @@ import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.UploadUtils;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 
+/**
+ * 上传文件控制器
+ * @author garfieldjty
+ *
+ */
 @RestController
 @RequestMapping("/upload")
 public class UploadController {
 	private static Logger logger = Logger.getLogger(UploadController.class);
 	
+	/**
+	 * 上传用户照片
+	 * @param uid
+	 * @param file
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value = "/user/{uid}", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
-	public Map<String, Object> getGeroRoleList(
+	public Map<String, Object> uploadUserPhoto(
 			@PathVariable("uid") int uid,
 			@RequestParam("user_photo") MultipartFile file,
 			HttpServletRequest request,
@@ -40,7 +53,206 @@ public class UploadController {
 		String filename = "user_"+uid+"_"+DateUtils.getDate();
 		
 		UploadUtils uploadUtils = new UploadUtils();
-		if( uploadUtils.uploadFile(file,request,innerPath,filename)){
+		if( uploadUtils.uploadFile(file,request,innerPath,filename,"head")){
+			result.addEntity(uploadUtils.getUrl());
+		}
+		return result.getMap();
+	}
+	
+	/**
+	 * 上传养老院图标
+	 * @param gid
+	 * @param file
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/gero/{gid}/CMS/icon", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
+	public Map<String, Object> uploadGeroIcon(
+			@PathVariable("gid") int gid,
+			@RequestParam("gero_icon") MultipartFile file,
+			HttpServletRequest request,
+			HttpServletResponse response){
+	        
+		BasicReturnedJson result = new BasicReturnedJson();
+		
+		String innerPath = "/gero/"+gid+"/CMS/icon/";
+		String filename = "gero_"+gid+"_icon_"+DateUtils.getDate();
+		
+		UploadUtils uploadUtils = new UploadUtils();
+		if( uploadUtils.uploadFile(file,request,innerPath,filename,"icon")){
+			result.addEntity(uploadUtils.getUrl());
+		}
+		return result.getMap();
+	}
+	
+	/**
+	 * 上传养老院照片
+	 * @param gid
+	 * @param file
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/gero/{gid}/CMS/picture", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
+	public Map<String, Object> uploadGeroPicture(
+			@PathVariable("gid") int gid,
+			@RequestParam("gero_picture") MultipartFile file,
+			HttpServletRequest request,
+			HttpServletResponse response){
+	        
+		BasicReturnedJson result = new BasicReturnedJson();
+		
+		String innerPath = "/gero/"+gid+"/CMS/picture/";
+		String filename = "gero_"+gid+"_picture_"+DateUtils.getDate();
+		
+		UploadUtils uploadUtils = new UploadUtils();
+		if( uploadUtils.uploadFile(file,request,innerPath,filename,"")){
+			result.addEntity(uploadUtils.getUrl());
+		}
+		return result.getMap();
+	}
+	
+	/**
+	 * 上传职工基本表
+	 * @param gid
+	 * @param sid
+	 * @param file
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/gero/{gid}/document/staff/{sid}/basic", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
+	public Map<String, Object> uploadStaffBasicForm(
+			@PathVariable("gid") int gid,
+			@PathVariable("sid") int sid,
+			@RequestParam("basic_form") MultipartFile file,
+			HttpServletRequest request,
+			HttpServletResponse response){
+	        
+		BasicReturnedJson result = new BasicReturnedJson();
+		
+		String innerPath = "/gero/"+gid+"/document/staff/basic/";
+		String filename = "staff_"+sid+"_basic_"+DateUtils.getDate();
+		
+		UploadUtils uploadUtils = new UploadUtils();
+		if( uploadUtils.uploadFile(file,request,innerPath,filename,"")){
+			result.addEntity(uploadUtils.getUrl());
+		}
+		return result.getMap();
+	}
+	
+	/**
+	 * 上传老人申请表
+	 * @param gid
+	 * @param eid
+	 * @param file
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/gero/{gid}/document/elder/{eid}/apply", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
+	public Map<String, Object> uploadElderApplyForm(
+			@PathVariable("gid") int gid,
+			@PathVariable("eid") int eid,
+			@RequestParam("apply_form") MultipartFile file,
+			HttpServletRequest request,
+			HttpServletResponse response){
+	        
+		BasicReturnedJson result = new BasicReturnedJson();
+		
+		String innerPath = "/gero/"+gid+"/document/elder/apply/";
+		String filename = "elder_"+eid+"_apply_"+DateUtils.getDate();
+		
+		UploadUtils uploadUtils = new UploadUtils();
+		if( uploadUtils.uploadFile(file,request,innerPath,filename,"")){
+			result.addEntity(uploadUtils.getUrl());
+		}
+		return result.getMap();
+	}
+	
+	/**
+	 * 上传老人调查表
+	 * @param gid
+	 * @param eid
+	 * @param file
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/gero/{gid}/document/elder/{eid}/survey", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
+	public Map<String, Object> uploadElderSurveyForm(
+			@PathVariable("gid") int gid,
+			@PathVariable("eid") int eid,
+			@RequestParam("survey_form") MultipartFile file,
+			HttpServletRequest request,
+			HttpServletResponse response){
+	        
+		BasicReturnedJson result = new BasicReturnedJson();
+		
+		String innerPath = "/gero/"+gid+"/document/elder/survey/";
+		String filename = "elder_"+eid+"_survey_"+DateUtils.getDate();
+		
+		UploadUtils uploadUtils = new UploadUtils();
+		if( uploadUtils.uploadFile(file,request,innerPath,filename,"")){
+			result.addEntity(uploadUtils.getUrl());
+		}
+		return result.getMap();
+	}
+	
+	/**
+	 * 上传老人审批表
+	 * @param gid
+	 * @param eid
+	 * @param file
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/gero/{gid}/document/elder/{eid}/assess", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
+	public Map<String, Object> uploadElderAssessForm(
+			@PathVariable("gid") int gid,
+			@PathVariable("eid") int eid,
+			@RequestParam("assess_form") MultipartFile file,
+			HttpServletRequest request,
+			HttpServletResponse response){
+	        
+		BasicReturnedJson result = new BasicReturnedJson();
+		
+		String innerPath = "/gero/"+gid+"/document/elder/assess/";
+		String filename = "elder_"+eid+"_assess_"+DateUtils.getDate();
+		
+		UploadUtils uploadUtils = new UploadUtils();
+		if( uploadUtils.uploadFile(file,request,innerPath,filename,"")){
+			result.addEntity(uploadUtils.getUrl());
+		}
+		return result.getMap();
+	}
+	
+	/**
+	 * 上传老人跟踪表
+	 * @param gid
+	 * @param eid
+	 * @param file
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/gero/{gid}/document/elder/{eid}/track", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
+	public Map<String, Object> uploadElderTrackForm(
+			@PathVariable("gid") int gid,
+			@PathVariable("eid") int eid,
+			@RequestParam("track_form") MultipartFile file,
+			HttpServletRequest request,
+			HttpServletResponse response){
+	        
+		BasicReturnedJson result = new BasicReturnedJson();
+		
+		String innerPath = "/gero/"+gid+"/document/elder/track/";
+		String filename = "elder_"+eid+"_track_"+DateUtils.getDate();
+		
+		UploadUtils uploadUtils = new UploadUtils();
+		if( uploadUtils.uploadFile(file,request,innerPath,filename,"")){
 			result.addEntity(uploadUtils.getUrl());
 		}
 		return result.getMap();

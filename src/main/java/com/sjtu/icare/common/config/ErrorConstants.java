@@ -101,6 +101,12 @@ public class ErrorConstants {
 	public static final String GERO_STAFF_SCHEDULE_PLAN_PUT_PARAM_INVALID = "370003 PUT 养老院排班信息：请求参数错误";
 	public static final String GERO_STAFF_SCHEDULE_PLAN_PUT_SERVICE_FAILED = "370004 PUT 养老院排班信息：后台获取失败";
 	
+	// upload service
+	public static final String PHOTO_UPLOAD_TYPE_ERROR = "2000001 INSERT 上传图片：上传图片格式不正确";
+	public static final String PHOTO_UPLOAD_SIZE_ERROR = "2000002 INSERT 上传图片：上传文件过大，不得大于1M";
+	public static final String PHOTO_UPLOAD_RESOLUTION_ERROR = "2000003 INSERT 上传图片：上传分辨率不正确";
+	public static final String PHOTO_UPLOAD_SERVICE_ERROR = "2000004 INSERT 上传图片：后台操作错误";
+	
 	public static String format(String errorConstant, String otherMessage) {
 		if (errorConstant == null)
 			return null;
