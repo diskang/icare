@@ -36,5 +36,44 @@ public interface StaffDAO {
 	 * @throws
 	 */
 	List<User> getAllStaffsByRoles(Map<String, Object> paramMap);
+
+	/**
+	 * @Title insertStaff
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @param @return
+	 * @return Map<String, Object>
+	 * @throws
+	 */
+	Integer insertStaff(StaffEntity staffEntity);
+
+	/**
+	 * @Title insertUser
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @param @return
+	 * @return Integer
+	 * @throws
+	 */
+	Integer insertUser(Map<String, Object> paramMap);
+
+	/**
+	 * @Title updateStaff
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @param @return
+	 * @return void
+	 * @throws
+	 */
+	void updateStaff(Map<String, Object> paramMap);
+
+	/**
+	 * @Title updateUser
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @return void
+	 * @throws
+	 */
+	void updateUser(Map<String, Object> paramMap);
 	
 }

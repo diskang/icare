@@ -37,6 +37,7 @@
             T_USER
         WHERE
             T_USER.user_type = #{userType} 
+            AND T_USER.gero_id = #{geroId}
 		    <if test="name != null">
 		        AND T_USER.name = #{name}
 		    </if> 
@@ -56,7 +57,8 @@
         FROM 
             T_USER 
         WHERE
-            T_USER.user_type = #{userType} 
+            T_USER.user_type = #{userType}
+            AND T_USER.gero_id = #{geroId} 
 		    <if test="name != null">
 		        AND T_USER.name = #{name}
 		    </if> 
@@ -80,5 +82,116 @@
 		            )
             )
     </select>
+
+    <insert id="insertStaff" parameterType="StaffEntity" useGeneratedKeys="true" keyProperty="id">
+    
+        INSERT INTO
+            T_STAFF(name, nssf_id, gero_id, basic_url, leave_date, archive_id) 
+        VALUES
+            (#{name}, #{nssfId}, #{geroId}, #{basicUrl}, #{leaveDate}, #{archiveId})
+            
+    </insert>
+    
+    <insert id="insertUser">
+    
+        INSERT INTO
+            T_USER(
+                password,
+                gero_id,
+                user_type, 
+                user_id, 
+                username, 
+                name, 
+                register_date, 
+                gender, 
+                photo_url, 
+                identity_no, 
+                age, 
+                nationality, 
+                marriage, 
+                native_place, 
+                birthday, 
+                political_status, 
+                education, 
+                phone_no, 
+                zip_code, 
+                residence_address, 
+                household_address, 
+                wechat_id) 
+        VALUES
+            (#{password},
+            #{geroId},
+            #{userType}, 
+            #{userId}, 
+            #{username}, 
+            #{name}, 
+            #{registerDate}, 
+            #{gender}, 
+            #{photoUrl}, 
+            #{identityNo}, 
+            #{age}, 
+            #{nationality}, 
+            #{marriage}, 
+            #{nativePlace}, 
+            #{birthday}, 
+            #{politicalStatus}, 
+            #{education}, 
+            #{phoneNo}, 
+            #{zipCode}, 
+            #{residenceAddress}, 
+            #{householdAddress}, 
+            #{wechatId})
+            
+    </insert>
+
+    <update id="updateStaff">
+    
+        UPDATE
+            T_STAFF
+        SET
+            T_STAFF.name = #{name},
+            T_STAFF.nssf_id = #{nssfId},
+            T_STAFF.basic_url = #{basicUrl},
+            T_STAFF.archive_id = #{archiveId}
+        WHERE
+            T_STAFF.id = #{id}
+            
+            
+    </update>
+    
+
+    <update id="updateUser">
+    
+        UPDATE
+            T_USER
+        SET
+            <if test="password != null">
+            T_USER.password = #{password},
+            </if>
+			T_USER.gero_id = #{geroId},
+			T_USER.user_type = #{userType},
+			T_USER.user_id = #{userId},
+			T_USER.username = #{username},
+			T_USER.name = #{name},
+			T_USER.register_date = #{registerDate},
+			T_USER.gender = #{gender},
+			T_USER.photo_url = #{photoUrl},
+			T_USER.identity_no = #{identityNo},
+			T_USER.age = #{age},
+			T_USER.nationality = #{nationality},
+			T_USER.marriage = #{marriage},
+			T_USER.native_place = #{nativePlace},
+			T_USER.birthday = #{birthday},
+			T_USER.political_status = #{politicalStatus},
+			T_USER.education = #{education},
+			T_USER.phone_no = #{phoneNo},
+			T_USER.zip_code = #{zipCode},
+			T_USER.residence_address = #{residenceAddress},
+			T_USER.household_address = #{householdAddress},
+			T_USER.wechat_id = #{wechatId}
+        WHERE
+            T_USER.id = #{id}
+            
+    </update>
 
 </mapper>

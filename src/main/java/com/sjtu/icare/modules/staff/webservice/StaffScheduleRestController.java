@@ -17,6 +17,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -103,6 +104,7 @@ public class StaffScheduleRestController {
 		}
 	}
 	
+	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postStaffSchedulePlans(
 			@PathVariable("sid") int staffId,
@@ -220,6 +222,7 @@ public class StaffScheduleRestController {
 		
 	}
 	
+	@Transactional
 	@RequestMapping(value = "/{date}", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postStaffSchedulePlan(
 			@PathVariable("sid") int staffId,
@@ -285,6 +288,7 @@ public class StaffScheduleRestController {
 		
 	}
 	
+	@Transactional
 	@RequestMapping(value = "/{date}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteStaffSchedulePlan(
 			@PathVariable("sid") int staffId,

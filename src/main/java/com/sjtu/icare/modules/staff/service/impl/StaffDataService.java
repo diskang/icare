@@ -123,6 +123,43 @@ public class StaffDataService implements IStaffDataService {
 		return staffDAO.getAllStaffsByRoles(paramMap);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.staff.service.IStaffDataService#insertStaff(com.sjtu.icare.modules.staff.entity.StaffEntity)
+	 */
+	@Override
+	public Integer insertStaff(StaffEntity staffEntity) {
+		// Map<String, Object> paramMap = MapListUtils.beanToMap(staffEntity);
+		staffDAO.insertStaff(staffEntity);
+		return (Integer) staffEntity.getId();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.staff.service.IStaffDataService#insertUser(com.sjtu.icare.modules.sys.entity.User)
+	 */
+	@Override
+	public Integer insertUser(User user) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(user);
+		return staffDAO.insertUser(paramMap);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.staff.service.IStaffDataService#updateStaff(com.sjtu.icare.modules.staff.entity.StaffEntity)
+	 */
+	@Override
+	public void updateStaff(StaffEntity staffEntity) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(staffEntity);
+		staffDAO.updateStaff(paramMap);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.staff.service.IStaffDataService#updateUser(com.sjtu.icare.modules.sys.entity.User)
+	 */
+	@Override
+	public void updateUser(User user) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(user);
+		staffDAO.updateUser(paramMap);
+	}
+
 
 
 }

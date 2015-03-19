@@ -16,6 +16,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,6 +85,7 @@ public class GeroAreaRestController {
 	
 	}
 
+	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postGeroArea(
 			@PathVariable("gid") int geroId,
@@ -213,6 +215,7 @@ public class GeroAreaRestController {
 		
 	}
 	
+	@Transactional
 	@RequestMapping(value = "/{aid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Object putGeroArea(
 			@PathVariable("gid") int geroId,
@@ -245,6 +248,7 @@ public class GeroAreaRestController {
 	}
 
 	// TODO 改成逻辑删除
+	@Transactional
 	@RequestMapping(value = "/{aid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteGeroArea(
 			@PathVariable("gid") int geroId,

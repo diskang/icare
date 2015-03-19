@@ -11,4 +11,6 @@ public class CommonConstants {
 	public static int ELDER_TYPE = 3;
 	public static int STAFF_TYPE = 2;
 	
+	public static String DEFAULT_PASSWORD = "password";
+	
 }

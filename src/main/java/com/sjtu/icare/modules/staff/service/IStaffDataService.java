@@ -57,5 +57,41 @@ public interface IStaffDataService {
 	 * @throws
 	 */
 	List<User> getAllStaffs(User user, String role);
+
+	/**
+	 * @Title insertStaff
+	 * @Description TODO
+	 * @param @param staffEntity
+	 * @return Integer
+	 * @throws
+	 */
+	Integer insertStaff(StaffEntity staffEntity);
+
+	/**
+	 * @Title insertUser
+	 * @Description TODO
+	 * @param @param postUser
+	 * @return void
+	 * @throws
+	 */
+	Integer insertUser(User postUser);
+
+	/**
+	 * @Title updateStaff
+	 * @Description TODO
+	 * @param @param postStaffEntity
+	 * @return void
+	 * @throws
+	 */
+	void updateStaff(StaffEntity staffEntity);
+
+	/**
+	 * @Title updateUser
+	 * @Description TODO
+	 * @param @param user
+	 * @return void
+	 * @throws
+	 */
+	void updateUser(User user);
 	
 }
