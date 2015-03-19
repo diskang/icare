@@ -75,5 +75,23 @@ public interface StaffDAO {
 	 * @throws
 	 */
 	void updateUser(Map<String, Object> paramMap);
+
+	/**
+	 * @Title deleteStaff
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @return void
+	 * @throws
+	 */
+	void deleteStaff(Map<String, Object> paramMap);
+
+	/**
+	 * @Title deleteUser
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @return void
+	 * @throws
+	 */
+	void deleteUser(Map<String, Object> paramMap);
 	
 }

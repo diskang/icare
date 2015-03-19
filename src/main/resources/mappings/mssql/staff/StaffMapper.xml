@@ -193,5 +193,28 @@
             T_USER.id = #{id}
             
     </update>
+    
+    <update id="deleteStaff">
+    
+        UPDATE
+            T_STAFF
+        SET
+            T_STAFF.leave_date = #{leaveDate}
+        WHERE
+            T_STAFF.id = #{id}
+            
+    </update>
+    
+    <update id="deleteUser">
+    
+        UPDATE
+            T_USER
+        SET
+            T_USER.cancel_date = #{cancelDate}
+        WHERE
+            T_USER.id = #{id}
+            
+    </update>
+    
 
 </mapper>

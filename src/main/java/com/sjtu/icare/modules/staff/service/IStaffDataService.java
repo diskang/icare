@@ -93,5 +93,23 @@ public interface IStaffDataService {
 	 * @throws
 	 */
 	void updateUser(User user);
+
+	/**
+	 * @Title deleteStaff
+	 * @Description TODO
+	 * @param @param postStaffEntity
+	 * @return void
+	 * @throws
+	 */
+	void deleteStaff(StaffEntity staffEntity);
+
+	/**
+	 * @Title deleteUser
+	 * @Description TODO
+	 * @param @param user
+	 * @return void
+	 * @throws
+	 */
+	void deleteUser(User user);
 	
 }

@@ -8,6 +8,7 @@
 package com.sjtu.icare.modules.staff.webservice;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sjtu.icare.common.config.CommonConstants;
 import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
+import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.web.rest.MediaTypes;
@@ -372,5 +374,52 @@ public class StaffRestController {
 		
 	}
 	
-	
+	@Transactional
+	@RequestMapping(value="/{sid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
+	public Object deleteStaff(
+			@PathVariable("gid") int geroId,
+			@PathVariable("sid") int staffId
+			) {
+		// 将参数转化成驼峰格式的 Map
+		Map<String, Object> requestParamMap = new HashMap<String, Object>();
+		requestParamMap.put("geroId", geroId);
+		requestParamMap.put("staffId", staffId);
+		
+		// 获取基础的 JSON
+		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
+		
+		// 插入数据
+		try {
+			Date now = new Date();
+			
+			String nowDateTime =  DateUtils.formatDateTime(now);
+			String nowDate =  DateUtils.formatDate(now);
+			
+			// delete Staff
+			StaffEntity postStaffEntity = new StaffEntity(); 
+			BeanUtils.populate(postStaffEntity, requestParamMap);
+			postStaffEntity.setId(staffId);
+			postStaffEntity.setLeaveDate(nowDate);
+			staffDataService.deleteStaff(postStaffEntity);
+			
+			// update USER
+			requestParamMap.put("userType", CommonConstants.STAFF_TYPE);
+			requestParamMap.put("userId", staffId);
+			User tempUser = systemService.getUserByUserTypeAndUserId(CommonConstants.STAFF_TYPE, staffId);
+			User postUser = new User(); 
+			BeanUtils.populate(postUser, requestParamMap);
+			postUser.setId(tempUser.getId());
+			postUser.setCancelDate(nowDateTime);
+			staffDataService.deleteUser(postUser);
+			
+		} catch(Exception e) {
+			String otherMessage = "[" + e.getMessage() + "]";
+			String message = ErrorConstants.format(ErrorConstants.STAFF_DATA_STAFF_DELETE_SERVICE_FAILED, otherMessage);
+			logger.error(message);
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
+		}
+
+		return basicReturnedJson.getMap();
+		
+	}
 }

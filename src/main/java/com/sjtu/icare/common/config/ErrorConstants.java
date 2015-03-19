@@ -144,7 +144,8 @@ public class ErrorConstants {
 	public static final String STAFF_DATA_POST_SERVICE_FAILED = "430004 POST 员工信息：后台服务失败";
 	public static final String STAFF_DATA_STAFF_GET_SERVICE_FAILED = "430005 GET 指定员工信息：后台服务失败";
 	public static final String STAFF_DATA_STAFF_PUT_PARAM_INVALID = "430006 PUT 指定员工信息：请求参数错误";
-	public static final String STAFF_DATA_STAFF_PUT_SERVICE_FAILED = "430006 PUT 指定员工信息：后台服务失败";
+	public static final String STAFF_DATA_STAFF_PUT_SERVICE_FAILED = "430007 PUT 指定员工信息：后台服务失败";
+	public static final String STAFF_DATA_STAFF_DELETE_SERVICE_FAILED = "430008 DELETE 指定员工信息：后台服务失败";
 	
 	
 	public static String format(String errorConstant, String otherMessage) {

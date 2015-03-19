@@ -160,6 +160,24 @@ public class StaffDataService implements IStaffDataService {
 		staffDAO.updateUser(paramMap);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.staff.service.IStaffDataService#deleteStaff(com.sjtu.icare.modules.staff.entity.StaffEntity)
+	 */
+	@Override
+	public void deleteStaff(StaffEntity staffEntity) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(staffEntity);
+		staffDAO.deleteStaff(paramMap);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.staff.service.IStaffDataService#deleteUser(com.sjtu.icare.modules.sys.entity.User)
+	 */
+	@Override
+	public void deleteUser(User user) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(user);
+		staffDAO.deleteUser(paramMap);
+	}
+
 
 
 }
