@@ -1,5 +1,6 @@
 package com.sjtu.icare.modules.sys.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
@@ -41,6 +42,8 @@ public class User extends DataEntity<User> {
 	private Role role;	// 根据角色查询用户条件
 	
 	private List<Role> roleList = Lists.newArrayList(); // 拥有角色列表
+	
+	private List<String> roles = new ArrayList<String>();
 
     public void setId(int id) {
         this.id = id;
@@ -347,5 +350,16 @@ public class User extends DataEntity<User> {
 
 	public void setGeroId(int geroId) {
 		this.geroId = geroId;
-	}	
+	}
+
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+	
+	
+	
 }

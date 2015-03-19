@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 
 import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.config.Global;
+import com.sjtu.icare.common.config.OrderByConstant;
+import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.utils.UserUtils;
 import com.sjtu.icare.modules.sys.utils.security.SystemAuthorizingRealm.UserPrincipal;
@@ -71,5 +73,24 @@ public class BasicController {
 			throw new RestException(HttpStatus.UNAUTHORIZED, message);
 		}
 		return user;
+	}
+	
+	/**
+	 * 设置orderBy参数
+	 * @param page
+	 * @param orderByTag
+	 * @return
+	 */
+	protected <T> Page<T> setOrderBy (Page<T> page, String orderByTag){
+		String orderBy = "id";
+		try {
+			orderBy = OrderByConstant.valueOf(orderByTag).getTag();
+		} catch (Exception e1) {
+			String message = ErrorConstants.format(ErrorConstants.ORDER_BY_PARAM_INVALID,"");
+			logger.error(message);
+			throw new RestException(HttpStatus.BAD_REQUEST, message);
+		}
+		page.setOrderBy(orderBy);
+		return page;
 	}
 }

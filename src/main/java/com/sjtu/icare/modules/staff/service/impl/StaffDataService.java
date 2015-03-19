@@ -103,9 +103,10 @@ public class StaffDataService implements IStaffDataService {
 	 */
 	@Override
 	public List<User> getAllStaffs(User user) {
-		Map<String, Object> paramMap = MapListUtils.beanToMap(user);
-		paramMap.put("userType", CommonConstants.STAFF_TYPE);
-		return staffDAO.getAllStaffs(paramMap);
+//		Map<String, Object> paramMap = MapListUtils.beanToMap(user);
+//		paramMap.put("userType", CommonConstants.STAFF_TYPE);
+		user.setUserType(CommonConstants.STAFF_TYPE);
+		return user.getPage().setList(staffDAO.getAllStaffs(user)).getList();
 	}
 
 	/* (non-Javadoc)
@@ -120,7 +121,9 @@ public class StaffDataService implements IStaffDataService {
 			roleList.set(i, roleList.get(i).trim());
 		}
 		paramMap.put("roles", roleList);
-		return staffDAO.getAllStaffsByRoles(paramMap);
+		user.setRoles(roleList);
+		user.setUserType(CommonConstants.STAFF_TYPE);
+		return user.getPage().setList(staffDAO.getAllStaffsByRoles(user)).getList();
 	}
 
 	/* (non-Javadoc)

@@ -27,10 +27,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sjtu.icare.common.config.CommonConstants;
 import com.sjtu.icare.common.config.ErrorConstants;
+import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
+import com.sjtu.icare.common.web.rest.BasicController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.staff.entity.StaffEntity;
@@ -43,7 +45,7 @@ import com.sjtu.icare.modules.sys.utils.UserUtils;
 
 @RestController
 @RequestMapping("/gero/{gid}/staff")
-public class StaffRestController {
+public class StaffRestController extends BasicController{
 	private static Logger logger = Logger.getLogger(StaffRestController.class);
 	
 	@Autowired
@@ -58,8 +60,15 @@ public class StaffRestController {
 			@RequestParam(value="name", required=false) String name,
 			@RequestParam(value="gender", required=false) String gender,
 			@RequestParam(value="identity_no", required=false) String identityNo,
-			@RequestParam(value="role", required=false) String role
+			@RequestParam(value="role", required=false) String role,
+			@RequestParam("page") int page,
+			@RequestParam("limit") int limit,
+			@RequestParam("order_by") String orderByTag
 			) {
+		
+		Page<User> userPage = new Page<User>(page, limit);
+		
+		userPage = setOrderBy(userPage, orderByTag);
 		
 		// 参数检查
 		if (gender != null && !(gender.equals("0") || gender.equals("1"))) {
@@ -80,6 +89,7 @@ public class StaffRestController {
 			queryUser.setGender(gender);
 			queryUser.setIdentityNo(identityNo);
 			queryUser.setGeroId(geroId);
+			queryUser.setPage(userPage);
 			List<User> users;
 			if (role == null)
 				users = staffDataService.getAllStaffs(queryUser);
@@ -124,6 +134,7 @@ public class StaffRestController {
 			return basicReturnedJson.getMap();
 			
 		} catch(Exception e) {
+			e.printStackTrace();
 			String otherMessage = "[" + e.getMessage() + "]";
 			String message = ErrorConstants.format(ErrorConstants.STAFF_DATA_GET_SERVICE_FAILED, otherMessage);
 			logger.error(message);

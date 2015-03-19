@@ -25,7 +25,7 @@ public interface StaffDAO {
 	 * @return List<User>
 	 * @throws
 	 */
-	List<User> getAllStaffs(Map<String, Object> paramMap);
+	List<User> getAllStaffs(User paramMap);
 
 	/**
 	 * @Title getAllStaffsByRoles
@@ -35,7 +35,7 @@ public interface StaffDAO {
 	 * @return List<User>
 	 * @throws
 	 */
-	List<User> getAllStaffsByRoles(Map<String, Object> paramMap);
+	List<User> getAllStaffsByRoles(User paramMap);
 
 	/**
 	 * @Title insertStaff

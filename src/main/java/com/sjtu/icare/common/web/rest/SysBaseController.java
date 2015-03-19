@@ -110,24 +110,7 @@ public class SysBaseController extends BasicController {
 	
 	
 	
-	/**
-	 * 设置orderBy参数
-	 * @param page
-	 * @param orderByTag
-	 * @return
-	 */
-	protected <T> Page<T> setOrderBy (Page<T> page, String orderByTag){
-		String orderBy = "id";
-		try {
-			orderBy = OrderByConstant.valueOf(orderByTag).getTag();
-		} catch (Exception e1) {
-			String message = ErrorConstants.format(ErrorConstants.ORDER_BY_PARAM_INVALID,"");
-			logger.error(message);
-			throw new RestException(HttpStatus.BAD_REQUEST, message);
-		}
-		page.setOrderBy(orderBy);
-		return page;
-	}
+	
 	
 	/**
 	 * user返回格式

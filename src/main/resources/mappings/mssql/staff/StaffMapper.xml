@@ -50,7 +50,7 @@
 
     </select>
  
-    <select id="getAllStaffsByRoles" resultMap="com.sjtu.icare.modules.sys.persistence.UserMapper.UserMap">
+    <select id="getAllStaffsByRoles" parameterType="User" resultMap="com.sjtu.icare.modules.sys.persistence.UserMapper.UserMap">
     
         SELECT 
             T_USER.*
@@ -77,7 +77,7 @@
 		                T_USER_ROLES.role_id = T_ROLE.id
 		                AND 
 		                <foreach collection="roles" item="item" index="index" open="(" close=")" separator=" OR ">
-		                    T_ROLE.name = #{item}
+		                    T_ROLE.name = #{roles[${index}]}
 		                </foreach>
 		            )
             )

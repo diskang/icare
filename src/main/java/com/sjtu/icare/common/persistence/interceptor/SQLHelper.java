@@ -13,6 +13,7 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.mapping.ParameterMode;
 import org.apache.ibatis.reflection.MetaObject;
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.apache.ibatis.reflection.property.PropertyTokenizer;
 import org.apache.ibatis.scripting.xmltags.ForEachSqlNode;
 import org.apache.ibatis.session.Configuration;
@@ -116,6 +117,11 @@ public class SQLHelper {
         	ps = conn.prepareStatement(countSql);
             BoundSql countBS = new BoundSql(mappedStatement.getConfiguration(), countSql,
                     boundSql.getParameterMappings(), parameterObject);
+          //需要将metaParameters赋值过去..
+            MetaObject countBsObject = SystemMetaObject.forObject(countBS);
+            MetaObject boundSqlObject = SystemMetaObject.forObject(boundSql);
+            countBsObject.setValue("metaParameters",boundSqlObject.getValue("metaParameters"));
+
             SQLHelper.setParameters(ps, mappedStatement, countBS, parameterObject);
             rs = ps.executeQuery();
             int count = 0;
