@@ -28,7 +28,6 @@ import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
 import com.sjtu.icare.modules.elder.service.IElderInfoService;
-import com.sjtu.icare.modules.staff.entity.StaffEntity;
 import com.sjtu.icare.modules.staff.service.IStaffDataService;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.service.SystemService;
@@ -84,8 +83,10 @@ public class ElderInfoController extends GeroBaseController{
 			@RequestParam(value="age_min", required=false) Integer ageMin,
 			@RequestParam(value="age_max", required=false) Integer ageMax,
 			@RequestParam(value="care_level", required=false) Integer careLevel,
-			@RequestParam(value="area_id", required=false) Integer areaId
-			
+			@RequestParam(value="area_id", required=false) Integer areaId,
+			@RequestParam("page") int page,
+			@RequestParam("limit") int limit,
+			@RequestParam("order_by") String orderByTag
 			) {
 		
 		// 参数检查
