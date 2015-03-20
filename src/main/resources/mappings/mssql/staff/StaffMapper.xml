@@ -76,8 +76,8 @@
 		            ON
 		                T_USER_ROLES.role_id = T_ROLE.id
 		                AND 
-		                <foreach collection="roles" item="item" index="index" open="(" close=")" separator=" OR ">
-		                    T_ROLE.name = #{roles[${index}]}
+		                <foreach collection="roleNameList" item="item" index="index" open="(" close=")" separator=" OR ">
+		                    T_ROLE.name = #{roleNameList[${index}]}
 		                </foreach>
 		            )
             )

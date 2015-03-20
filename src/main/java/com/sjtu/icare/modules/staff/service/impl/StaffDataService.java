@@ -121,7 +121,7 @@ public class StaffDataService implements IStaffDataService {
 			roleList.set(i, roleList.get(i).trim());
 		}
 		paramMap.put("roles", roleList);
-		user.setRoles(roleList);
+		user.setRoleNameList(roleList);
 		user.setUserType(CommonConstants.STAFF_TYPE);
 		return user.getPage().setList(staffDAO.getAllStaffsByRoles(user)).getList();
 	}

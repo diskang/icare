@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sjtu.icare.common.config.CommonConstants;
 import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
@@ -37,8 +38,8 @@ public class ElderInfoService implements IElderInfoService{
 	 * @see com.sjtu.icare.modules.elder.service.IElderInfoService#getAllElders(java.util.Map)
 	 */
 	@Override
-	public List<User> getAllElders(Map<String, Object> paramMap) {
-		return elderDao.getAllElders(paramMap);
+	public List<User> getAllElders(User user) {
+		return user.getPage().setList(elderDao.getAllElders(user)).getList();
 	}
 
 	/* (non-Javadoc)
