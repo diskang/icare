@@ -10,6 +10,8 @@ public class AreaworkRecordEntity implements Serializable {
 	private Integer areaItemId;		//区域护理项目ID
 	private String itemName;	//项目名
 	private String finishTime;	//完成时间
+	private String carerName;	//完成时间
+	private String areaFullName;	//完成时间
 	/**
 	 * @return the id
 	 */
@@ -87,6 +89,30 @@ public class AreaworkRecordEntity implements Serializable {
 	 */
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	/**
+	 * @return the carerName
+	 */
+	public String getCarerName() {
+		return carerName;
+	}
+	/**
+	 * @param carerName the carerName to set
+	 */
+	public void setCarerName(String carerName) {
+		this.carerName = carerName;
+	}
+	/**
+	 * @return the areaFullName
+	 */
+	public String getAreaFullName() {
+		return areaFullName;
+	}
+	/**
+	 * @param areaFullName the areaFullName to set
+	 */
+	public void setAreaFullName(String areaFullName) {
+		this.areaFullName = areaFullName;
 	}
 	
 }

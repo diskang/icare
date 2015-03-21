@@ -37,7 +37,7 @@ import com.sjtu.icare.modules.op.service.IItemRecordService;
 
 
 @RestController
-@RequestMapping("/carer/{cid}/elder/{eid}/records")
+@RequestMapping("/gero/{gid}/carework_record")
 public class CarerRecordRestController {
 	private static Logger logger = Logger.getLogger(CarerRecordRestController.class);
 	
@@ -46,8 +46,9 @@ public class CarerRecordRestController {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getCareworkRecords(
-			@PathVariable("cid") int carerId,
-			@PathVariable("eid") int elderId,
+			@PathVariable("gid") int geroId,
+			@RequestParam(value="sid", required=false) Integer carerId,
+			@RequestParam(value="eid", required=false) Integer elderId,
 			@RequestParam(value="start_date", required=false) String startDate,
 			@RequestParam(value="end_date", required=false) String endDate
 			) {
@@ -84,6 +85,10 @@ public class CarerRecordRestController {
 				resultMap.put("elder_item_id", careworkRecordEntity.getElderItemId()); 
 				resultMap.put("item_name", careworkRecordEntity.getItemName()); 
 				resultMap.put("finish_time", careworkRecordEntity.getFinishTime()); 
+				resultMap.put("elder_id", careworkRecordEntity.getElderId()); 
+				resultMap.put("staff_id", careworkRecordEntity.getCarerId()); 
+				resultMap.put("elder_name", careworkRecordEntity.getElderName()); 
+				resultMap.put("staff_name", careworkRecordEntity.getCarerName()); 
 				
 				basicReturnedJson.addEntity(resultMap);
 			}
@@ -101,32 +106,34 @@ public class CarerRecordRestController {
 
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postCareworkRecords(
-			@PathVariable("cid") int carerId,
-			@PathVariable("eid") int elderId,
 			@RequestBody String inJson
 			) {	
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
-		tempRquestParamMap.put("carerId", carerId);
-		tempRquestParamMap.put("elderId", elderId);
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
 		
 		List<Map<String, Object>> elderItem;
 		String finishTime;
+		Integer carerId;
+		Integer elderId;
 		
 		try {
 			elderItem = (List<Map<String, Object>>) requestParamMap.get("elderItem");
 			finishTime = (String) requestParamMap.get("finishTime");
+			carerId = (Integer) requestParamMap.get("staffId");
+			elderId = (Integer) requestParamMap.get("elderId");
 			
 			// 参数详细验证
+			if (carerId == null || elderId == null)
+				throw new Exception();
+			
 			if (elderItem == null)
 				throw new Exception();
 				
 			if (finishTime != null && !ParamValidator.isDate(finishTime))
 				throw new Exception();
 		} catch(Exception e) {
-			String otherMessage = "[elderItem=" + requestParamMap.get("elderItem") + "]" +
-					"[finishTime=" + requestParamMap.get("finishTime") + "]";
+			String otherMessage = "[" + inJson + "]";
 			String message = ErrorConstants.format(ErrorConstants.CAREWORK_ITEMS_POST_PARAM_INVALID, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);

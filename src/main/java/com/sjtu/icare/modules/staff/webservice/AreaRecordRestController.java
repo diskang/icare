@@ -37,7 +37,7 @@ import com.sjtu.icare.modules.op.entity.CareworkRecordEntity;
 import com.sjtu.icare.modules.op.service.IItemRecordService;
 
 @RestController
-@RequestMapping("/carer/{cid}/area/{aid}/records")
+@RequestMapping("/gero/{gid}/areawork_record")
 public class AreaRecordRestController {
 	private static Logger logger = Logger.getLogger(AreaRecordRestController.class);
 	
@@ -46,8 +46,9 @@ public class AreaRecordRestController {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getAreaworkRecords(
-			@PathVariable("cid") int carerId,
-			@PathVariable("aid") int areaId,
+			@PathVariable("gid") int geroId,
+			@RequestParam(value="sid", required=false) Integer carerId,
+			@RequestParam(value="aid", required=false) Integer areaId,
 			@RequestParam(value="start_date", required=false) String startDate,
 			@RequestParam(value="end_date", required=false) String endDate
 			) {
@@ -81,6 +82,10 @@ public class AreaRecordRestController {
 				
 				Map<String, Object> resultMap = new HashMap<String, Object>(); 
 				resultMap.put("id", areaworkRecordEntity.getId()); 
+				resultMap.put("staff_id", areaworkRecordEntity.getCarerId()); 
+				resultMap.put("staff_name", areaworkRecordEntity.getCarerName()); 
+				resultMap.put("area_id", areaworkRecordEntity.getAreaId()); 
+				resultMap.put("area_full_name", areaworkRecordEntity.getAreaFullName()); 
 				resultMap.put("area_item_id", areaworkRecordEntity.getAreaItemId()); 
 				resultMap.put("area_name", areaworkRecordEntity.getItemName()); 
 				resultMap.put("finish_time", areaworkRecordEntity.getFinishTime()); 
@@ -102,22 +107,25 @@ public class AreaRecordRestController {
 
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postAreaworkRecords(
-			@PathVariable("cid") int carerId,
-			@PathVariable("aid") int areaId,
 			@RequestBody String inJson
 			) {	
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
-		tempRquestParamMap.put("carerId", carerId);
-		tempRquestParamMap.put("areaId", areaId);
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
 		
 		List<Map<String, Object>> areaItem;
 		String finishTime;
+		Integer carerId;
+		Integer areaId;
 		
 		try {
 			areaItem = (List<Map<String, Object>>) requestParamMap.get("areaItem");
 			finishTime = (String) requestParamMap.get("finishTime");
+			carerId = (Integer) requestParamMap.get("staffId");
+			areaId = (Integer) requestParamMap.get("areaId");
+			
+			if (carerId == null || areaId == null)
+				throw new Exception();
 			
 			// 参数详细验证
 			if (areaItem == null)
@@ -126,8 +134,7 @@ public class AreaRecordRestController {
 			if (finishTime != null && !ParamValidator.isDate(finishTime))
 				throw new Exception();
 		} catch(Exception e) {
-			String otherMessage = "[areaItem=" + requestParamMap.get("areaItem") + "]" +
-					"[finishTime=" + requestParamMap.get("finishTime") + "]";
+			String otherMessage = "[" + inJson + "]";
 			String message = ErrorConstants.format(ErrorConstants.AREAWORK_ITEMS_POST_PARAM_INVALID, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);

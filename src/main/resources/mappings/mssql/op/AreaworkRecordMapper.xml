@@ -13,16 +13,28 @@
         <result property="areaItemId" column="area_item_id" />
         <result property="itemName" column="item_name" />
         <result property="finishTime" column="finish_time" />
+        <result property="carerName" column="carer_name" />
+        <result property="areaFullName" column="full_name" />
     </resultMap>
   
     <select id="getAreaworkRecords" resultMap="AreaworkRecordMap">
-        
         SELECT
-            *
-        FROM T_AREAWORK_RECORD
-        WHERE 
-            T_AREAWORK_RECORD.carer_id = #{carerId}
-            AND T_AREAWORK_RECORD.area_id = #{areaId}
+            T_AREAWORK_RECORD.*, T_USER_CARER.name AS carer_name, T_AREA.full_name AS full_name
+        FROM 
+            (T_AREAWORK_RECORD LEFT JOIN T_USER AS T_USER_CARER
+            ON
+                T_AREAWORK_RECORD.carer_id = T_USER_CARER.user_id
+                AND T_USER_CARER.user_type = #{staffType})
+            LEFT JOIN T_AREA
+            ON
+                T_AREAWORK_RECORD.area_id = T_AREA.id
+        <where> 
+            <if test="carerId != null">
+                T_AREAWORK_RECORD.carer_id = #{carerId}
+            </if>
+            <if test="areaId != null">
+                AND T_AREAWORK_RECORD.area_id = #{areaId}
+            </if>
             <if test="startDate != null">
                 <![CDATA[
                 and #{startDate} <= convert(nvarchar(23), T_AREAWORK_RECORD.finish_time, 120)
@@ -33,6 +45,7 @@
                 and #{endDate} >= convert(nvarchar(23), T_AREAWORK_RECORD.finish_time, 120)
                 ]]>
             </if>
+        </where>
             
     </select>
     

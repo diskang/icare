@@ -10,6 +10,8 @@ public class CareworkRecordEntity implements Serializable {
 	private Integer elderItemId;	//老人护理项目ID
 	private String itemName;	//项目名
 	private String finishTime;	//完成时间
+	private String elderName;	//完成时间
+	private String carerName;	//完成时间
 	/**
 	 * @return the id
 	 */
@@ -87,6 +89,30 @@ public class CareworkRecordEntity implements Serializable {
 	 */
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	/**
+	 * @return the elderName
+	 */
+	public String getElderName() {
+		return elderName;
+	}
+	/**
+	 * @param elderName the elderName to set
+	 */
+	public void setElderName(String elderName) {
+		this.elderName = elderName;
+	}
+	/**
+	 * @return the staffName
+	 */
+	public String getCarerName() {
+		return carerName;
+	}
+	/**
+	 * @param staffName the staffName to set
+	 */
+	public void setCarerName(String carerName) {
+		this.carerName = carerName;
 	}
 	
 
