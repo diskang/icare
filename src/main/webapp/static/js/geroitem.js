@@ -23,11 +23,14 @@ var geroItem={
             pagination:true,//分页控件 
             rownumbers:true,//行号  
             pageNumber:1,
+            pagePosition:'bottom',
+            pageSize: 10,//每页显示的记录条数，默认为20 
+            pageList: [10,20,30],//可以设置每页记录条数的列表 
             loadFilter:function(data){
             	var result={"total":0,"rows":0};
-        	   result.total=data.total;
-        	   result.rows=data.itemList;
-        	   return result;
+                result.total=data.total;
+                result.rows=data.entities[0];
+                return result;
             },
             toolbar: [{ 
                 text: '添加', 

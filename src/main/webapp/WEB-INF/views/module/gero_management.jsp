@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8">
 <title>无标题文档</title>
-<link href="/resthouse/static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="/resthouse/static/css/manager.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="css/manager.css" rel="stylesheet" type="text/css">
 <!---------------------------------响应式------------------------>
-<link href="/resthouse/static/css/conter.css" rel="stylesheet" type="text/css">
-<link href="/resthouse/static/css/jeesite.min.css" rel="stylesheet" type="text/css">
+<link href="css/conter.css" rel="stylesheet" type="text/css">
+<link href="css/jeesite.min.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="/resthouse/static/css/easyui.css">
-<link rel="stylesheet" type="text/css" href="/resthouse/static/css/icon.css">
+<link rel="stylesheet" type="text/css" href="css/easyui.css">
+<link rel="stylesheet" type="text/css" href="css/icon.css">
 </head>
 
 <body>
 <!-------------------------头部-------------------------->
 <div class="head">
   <div class="container header-s">
-    <div class="logo"><img src="/resthouse/static/images/LOGO.png" ></div>
-    <div class="dianhua"><img src="/resthouse/static/images/d_1.png"></div>
+    <div class="logo"><img src="images/LOGO.png" ></div>
+    <div class="dianhua"><img src="images/d_1.png"></div>
   </div>
 </div>
 <!--------------------------导航条-------------------------------->
@@ -35,7 +35,7 @@
   <div class="container Information">
   <!--------------------------左导航--------------------------------> 
     <div class="leftNav" id="leftNavi" >
-      <div style="background:url(/resthouse/static/images/r_1.jpg);line-height:30px;font-size:16px;color: #fff;height:30px;padding-left:20px;font-size:20px;margin:0;text-align:left;">菜单</div>
+      <div style="background:url(../images/r_1.jpg);line-height:30px;font-size:16px;color: #fff;height:30px;padding-left:20px;font-size:20px;margin:0;text-align:left;">菜单</div>
       <ul id="lefttree" style="padding-left:20px;padding-top:10px;text-align:left;">
       </ul>
     </div>
@@ -160,8 +160,8 @@
               </div>
               <div class="fc-center"><h2>2015年2月9 — 15日</h2></div>
             </div>
-            <div class="fc-view-container" style="">
-              <div class="fc-view" style="">
+            <div class="fc-view-container" >
+              <div class="fc-view" >
                 <table>
                   <thead >
                     <tr>
@@ -178,18 +178,18 @@
                   <tbody class="fc-body">
                       <tr>
                         <td class="fc-name"><span>xxx</span></td>
-                          <td ></td>
-                          <td ></td>
-                          <td ></td>
-                          <td ></td>
-                          <td ></td>
-                          <td ></td>
-                          <td ></td>
-                        </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+                        <td class="arrange-work workday"></td>
+                        <td class="arrange-work"></td>
+                        <td class="arrange-work"></td>
+                        <td class="arrange-work"></td>
+                        <td class="arrange-work"></td>
+                        <td class="arrange-work"></td>
+                        <td class="arrange-work"></td>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -245,27 +245,8 @@
       <div id="geroitemshow" class="inf hide" style="min-height:700px;">
         <div class="pers-s">养老院项目管理</div>
         <div class="old">
-          <div class="page-header">项目总表:</div>
-          <div id='aa'class="easyui-accordion" style="width:500px;height:230px;">
-            <div title="item0" style="overflow:auto;padding:10px;" data-options="tools:[{iconCls:'icon-add',handler:function(){alert('added');}}]">
-            notes
-            </div>
-            <div title="item1"  style="padding:10px;"data-options="tools:[{iconCls:'icon-add',handler:function(){alert('added');}}]">
-              The accordion allows you to provide multiple panels and display one ore more at a time. Each panel 
-            </div>
-            <div title="item4" style="padding:10px" data-options="tools:[{iconCls:'icon-add',handler:function(){alert('added');}}]">
-            notes
-            </div>
-            <div title="item4" style="padding:10px" data-options="tools:[{iconCls:'icon-add',handler:function(){alert('added');}}]">
-            notes
-            </div>
-            <div title="item4" style="padding:10px" data-options="tools:[{iconCls:'icon-add',handler:function(){alert('added');}}]">
-            notes
-            </div>
-          </div>
-       
           <div class="list" style="min-height:280px;padding-top:10px;">
-              <table id="geroitempage"  class="easyui-datagrid" title="专护项目列表" style="height:270px;" data-options="onDblClickRow:geroItem.onCareDblClickRow">
+              <table id="geroitempage"  class="easyui-datagrid" title="项目列表" style="height:270px;" data-options="onDblClickRow:geroItem.onCareDblClickRow">
                 <thead>
                   <tr>
                     <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
@@ -303,10 +284,32 @@
       <div id="authorityshow" class="inf hide" style="min-height:700px;">
         <div class="pers-s">权限中心</div>
         <div class="old">
-            <div  class="easyui-panel"  title="权限列表"style="height:600px;width:500px;padding:10px;overflow:scroll;">
+          <div  id="authoritypanel" class="easyui-panel" title="权限列表" style="height:500px;width:500px;padding:10px;margin:0;overflow:scroll;" data-options="
+            width:500,
+            tools: [{ 
+                iconCls: 'icon-add', 
+                handler: function() { 
+                  authority.addTreenode();
+                } 
+            }, '-',{ 
+                iconCls: 'icon-remove', 
+                handler: function(){ 
+                  authority.delTreenode();
+                }
+            }]">
               <ul id="authoritytree" style="padding-left:20px;text-align:left;">
               </ul>
-            </div>
+          </div>
+          <div id="authorityInfo" class="hide">
+              <li>name: <input type="text" id="pname" ></input></li>
+              <li>permission: <input type="text" id="ppermission"></input></li>
+              <li>href: <input type="text" id="phref"></input></li>
+              <li>icon: <input type="text" id="picon"></input></li>
+              <li>notes: <input type="text" id="pnotes"></input></li>
+              <div class="col-md-offset-2">
+                <button id="authoritybutton" class="btn btn-default" onclick="authority.buttonclk()" style="margin-left:180px;margin-top:10px;" >确定</button>
+              </div>
+          </div>
         </div>
       </div>
 
@@ -323,67 +326,158 @@
         fix:true,
         left:($(window).width()-700)*0.5,
         top:($(window).height()-700)*0.5,
-        draggable:false,
+        draggable:true,
         iconCls: 'icon-save',
         toolbar: [{
           text:'修改',
           iconCls:'icon-edit',
           handler:function(){
-            alert('修改')
-          }
-        },{
-          text:'删除',
-          iconCls:'icon-remove',
-          handler:function(){
-            alert('删除')
+            elder.editElderInfo();
           }
         }],
         buttons: [{
-          text:'Ok',
+          text:'确定',
           iconCls:'icon-ok',
           handler:function(){
-            $('#elder-dialog-form').dialog('close');
+            if(elder.method==='put' || elder.method==='post'  )
+            {
+              elder.buttonclk();
+            }
+            else $('#elder-dialog-form').dialog('close');
           }
         }]
       ">
-    <div id="elder-Info-card" class="info-card hide">
-      <div id="elder-Info-card-a">
+    <div id="elder-Info-card" class="info-card">
+      <div id="elder-Info-card-a" class="info-card-a">
         <ul>
-          <li>姓 名：<text>admin</text></li>
-          <li>出生年月日：<text>1980-7-10</text></li>
-          <li>性 别：<text>女</text></li>
-          <li>民 族：<text>汉</text></li>
-          <li>籍贯：<text>xxx</text></li>
-          <li>户籍所在地：<text>xxx</text></li>
-          <li>政治面貌：<text>xxx</text></li>
-          <li>教育水平：<text>xxx</text></li>
-          <li>身份证号：<text>411345398604564</text></li>
-          <li>社保卡号：<text>13761937563</text></li>
-          <li>档案编号：<text>007</text></li>
-          <li>入住床号：<text>a-2-201-3</text></li>
-          <li>联系人电话：<text>411345398604564</text></li>
-          <li>家庭地址：<text>411345398604564</text></li>
+          <li>姓    名: <input id="ename"></input></li>
+          <li>出生日期：<input id="ebirthday"></input></li>
+          <li>性    别：<input id="egender"></input></li>
+          <li>民    族：<input id="enationality"></input></li>
+          <li>籍    贯：<input id="enative_place"></input></li>
+          <li>护理等级：<input id="ecare_level"></input></li>
+          <li>户口所在地：<input id="eresidence"></input></li>
+          <li>政治面貌：<input id="epolitical_status"></input></li>
+          <li>教育水平：<input id="eeducation"></input></li>
+          <li>身份证号：<input id="eidentity_no"></input></li>
+          <li>社保卡号：<input id="enssf_id"></input></li>
+          <li>档案编号：<input id="earchive_id"></input></li>
+          <li>入住床号：<input id="earea_id"></input></li>
+          <li>联系人电话：<input id="ephone"></input></li>
+          <li>家庭地址：<input id="eaddress"></input></li>
         </ul>
       </div>
-      <div id="elder-Info-card-b"><img src="/resthouse/static/images/p_2.jpg"></div>
+      <div id="elder-Info-card-b" class="info-card-b"><img src="images/p_2.jpg"></div>
     </div>
+</div>
 
-    <div id="authority-Info-card" class="info-card hide">
+<!-----------------------员工个人信息------------------------------>
+<div id="staff-dialog-form"  class="easyui-dialog" title="员工信息详情" style="width:700px;height:600px;padding:10px"
+      data-options="
+        modal:true,
+        closed:true,
+        fix:true,
+        left:($(window).width()-700)*0.5,
+        top:($(window).height()-700)*0.5,
+        draggable:true,
+        iconCls: 'icon-save',
+        toolbar: [{
+          text:'修改',
+          iconCls:'icon-edit',
+          handler:function(){
+            staff.editStaffInfo();
+          }
+        }],
+        buttons: [{
+          text:'确定',
+          iconCls:'icon-ok',
+          handler:function(){
+            if(staff.method==='put' || staff.method==='post'  )
+            {
+              staff.buttonclk();
+            }
+            else $('#staff-dialog-form').dialog('close');
+          }
+        }]
+      ">
+    <div id="staff-Info-card" class="info-card ">
+      <div id="staff-Info-card-a" class="info-card-a">
+        <ul>
+          <li>姓    名: <input id="sname"></input></li>
+          <li>电    话: <input id="sphone"></input></li>
+          <li>电子邮箱：<input id="semail"></input></li>
+          <li>角    色：<input id="srole_list"></input></li>
+          <li>出生日期：<input id="sbirthday"></input></li>
+          <li>身份证号：<input id="sidentity_no"></input></li>
+          <li>性    别：<input id="sgender"></input></li>
+          <li>户口所在地：<input id="sresidence_address"></input></li>
+          <li>档案编号：<input id="sarchive_id"></input></li>
+          <li>社保卡号：<input id="snssf_id"></input></li>
+          <li>居住地址：<input id="shousehold_address"></input></li>
+        </ul>
+      </div>
+      <div id="staff-Info-card-b"class="info-card-b"><img src="images/p_2.jpg"></div>
+    </div>
+</div>
+
+<!-----------------------角色权限信息------------------------------>
+<div id="role-dialog-form"  class="easyui-dialog" title="角色信息" style="width:700px;height:600px;padding:10px"
+      data-options="
+        modal:true,
+        closed:true,
+        fix:true,
+        left:($(window).width()-700)*0.5,
+        top:($(window).height()-700)*0.5,
+        draggable:true,
+        iconCls: 'icon-save',
+        buttons: [{
+          text:'确定',
+          iconCls:'icon-ok',
+          handler:function(){
+            role.buttonclk();
+            $('#role-dialog-form').dialog('close');
+          }
+        }]
+      ">
+    <div id="authority-Info-card" class="info-card">
       <ul id="authoritychecktree" class="easyui-tree" style="padding-left:20px;text-align:left;" data-options="lines:true,checkbox:true">
       </ul>
     </div>    
 </div>
 
-<script type="text/javascript" src="/resthouse/static/js/jquery-1.8.3.min.js" ></script>
-<script type="text/javascript" src="/resthouse/static/js/jquery.easyui.min.js"></script>
-<script  type="text/javascript" src="/resthouse/static/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/topleftNavi.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/elder.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/staff.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/item.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/geroitem.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/role.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/authority.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/arrange.js"></script>
+<div id="rolepost-dialog-form"  class="easyui-dialog" title="角色信息" style="width:300px;height:200px;padding:10px"
+      data-options="
+        modal:true,
+        closed:true,
+        fix:true,
+        left:($(window).width()-300)*0.5,
+        top:($(window).height()-200)*0.5,
+        draggable:true,
+        iconCls: 'icon-save',
+        buttons: [{
+          text:'确定',
+          iconCls:'icon-ok',
+          handler:function(){
+            role.postrole();
+            $('#rolepost-dialog-form').dialog('close');
+          }
+        }]
+      ">
+      <p>角色名: <input type="text" id="rname" /></p>
+      <p>说  明: <input type="text" id="rnotes" /></p>  
+</div>
+
+
+<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+<script  type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/topleftNavi.js"></script>
+<script type="text/javascript" src="js/elder.js"></script>
+<script type="text/javascript" src="js/staff.js"></script>
+<script type="text/javascript" src="js/item.js"></script>
+<script type="text/javascript" src="js/geroitem.js"></script>
+<script type="text/javascript" src="js/role.js"></script>
+<script type="text/javascript" src="js/authority.js"></script>
+<script type="text/javascript" src="js/arrange.js"></script>
 </body>
 </html>

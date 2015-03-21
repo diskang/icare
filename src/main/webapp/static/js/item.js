@@ -20,10 +20,10 @@ var item={
             rownumbers:true,//行号  
             pageNumber:1,
             loadFilter:function(data){
-        	   var result={"total":0,"rows":0};
-        	   result.total=data.total;
-        	   result.rows=data.itemList;
-        	   return result;
+        	    var result={"total":0,"rows":0};
+                result.total=data.total;
+                result.rows=data.entities[0];
+                return result;
             },
             toolbar: [{ 
                 text: '添加', 
@@ -73,7 +73,7 @@ var item={
         loadFilter:function(data){
             var result={"total":0,"rows":0};
             result.total=data.total;
-            result.rows=data.itemList;
+            result.rows=data.entities[0];
             return result;
         },
         toolbar: [{ 

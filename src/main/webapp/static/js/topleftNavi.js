@@ -5,6 +5,17 @@ var righttemp;
 var temptree;
 var temptree2;
 var hrefTable=[];
+var sex=["男","女"];
+var  sexc=[];
+var showDate = new Date();
+alert(showDate.toLocaleDateString().replace(/\//g,'-'));
+// myDate.getFullYear();    //获取完整的年份(4位,1970-????)
+// myDate.getMonth();       //获取当前月份(0-11,0代表1月)
+// myDate.getDate();        //获取当前日(1-31)
+// myDate.getDay();         //获取当前星期X(0-6,0代表星期天)
+// myDate.toLocaleDateString();     //获取当前日期
+sexc["男"]=0;
+sexc["女"]=1;
 hrefTable['/gero/1/elder']='elder.drawElderList()';
 hrefTable['/gero/1/staff']='staff.drawStaffList()';
 hrefTable['/gero/1/schedule']='staff.drawScheduleList()';
@@ -18,6 +29,17 @@ hrefTable['/gero/1/schedule']='arrange.drawArrangeList()';
 var leftTop = {
     removeLefttree:function (){
      $("#lefttree li").remove();
+    },
+    
+    dealdata:function(msg){
+        if (msg.status===400)
+            window.location = "www.baidu.com" ;
+        else if(msg.status===500)
+            window.location = "www.baidu.com" ;
+        else if(msg.status===200)
+        {
+            return msg.entities[0];
+        }
     },
 
     findTreeChildren:function(id){
@@ -34,7 +56,7 @@ var leftTop = {
         this.id=node.id;
         this.text=node.name;
         this.children=[];
-        this.href=node.href;
+        this.attributes={"href":node.href,"permission":node.permission,"notes":node.notes}
         this.iconCls=node.icon;
     },
 
@@ -116,7 +138,7 @@ $(function(){
         type: "get",
         dataType: "json",
         contentType: "application/json;charset=utf-8",
-        url: "/resthouse/user/1",
+        url: "/user/1",
         success: function (msg) {
             temptree=msg.entities[0].privilege_list;
             leftTop.removeLefttree;
@@ -134,3 +156,7 @@ $('.navli-a').live('click',function(){
     var str=leftTop.createTreeData(leftTop.findTopNode($(this).text()));
     $("#lefttree").tree("loadData",str);
 });
+
+$(".arrange-work").live('click',function(){
+        $(this).toggleClass("workday");
+    })
