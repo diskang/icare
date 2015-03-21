@@ -138,7 +138,11 @@ $(function(){
         type: "get",
         dataType: "json",
         contentType: "application/json;charset=utf-8",
+<<<<<<< HEAD
         url: "/user/1",
+=======
+        url: "/resthouse/api/web/user/1",
+>>>>>>> 9384f14d73bd834335c58102eed2b2051ac09d47
         success: function (msg) {
             temptree=msg.entities[0].privilege_list;
             leftTop.removeLefttree;
