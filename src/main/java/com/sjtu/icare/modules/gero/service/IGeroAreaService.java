@@ -73,5 +73,6 @@ public interface IGeroAreaService {
 	 * @throws
 	 */
 	void deleteGeroAreaRecord(GeroAreaEntity geroAreaEntity);
-	
+
+
 }

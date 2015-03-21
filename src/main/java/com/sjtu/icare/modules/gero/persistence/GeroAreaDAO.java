@@ -73,5 +73,6 @@ public interface GeroAreaDAO {
 	 * @throws
 	 */
 	void deleteGeroAreaRecord(Map<String, Object> paramMap);
+
 	
 }

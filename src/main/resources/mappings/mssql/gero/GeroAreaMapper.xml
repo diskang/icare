@@ -15,6 +15,7 @@
 	    <result property="level" column="level" />
 	    <result property="name" column="name" />
 	    <result property="delFlag" column="del_flag" />
+	    <result property="fullName" column="full_name" />
 	</resultMap>
   
     <select id="getGeroAreaEntities" parameterType="Map" resultMap="GeroAreaEntityMap">
@@ -49,14 +50,24 @@
         ]]>
     </select>
     
+    <select id="getAncestorNames">
     
+        SELECT
+            T_AREA.name
+        FROM T_AREA
+        WHERE 
+          <foreach item="item" index="index" collection="parentIdsList" separator=" OR ">
+		      T_AREA.id = #{item}
+		  </foreach>
+		  
+    </select>
     
     
     <insert id="insertGeroAreaRecord" parameterType="GeroAreaEntity">
         insert into 
-            T_AREA(parent_id, parent_ids, gero_id, type, level, name) 
+            T_AREA(parent_id, parent_ids, gero_id, type, level, name, full_name) 
         values
-            (#{parentId}, #{parentIds}, #{geroId}, #{type}, #{level}, #{name})
+            (#{parentId}, #{parentIds}, #{geroId}, #{type}, #{level}, #{name}, #{fullName})
     </insert>
 
     <update id="updateGeroAreaRecord" parameterType="Map">
@@ -68,13 +79,15 @@
             T_AREA.id = #{id}
     </update>
 
-    <delete id="deleteGeroAreaRecord" parameterType="Map">
+    <update id="deleteGeroAreaRecord" parameterType="Map">
     
-        delete from
+        update
             T_AREA
+        set
+            T_AREA.del_flag = 1
         where
             T_AREA.id = #{id}
     
-    </delete>
+    </update>
     
 </mapper>

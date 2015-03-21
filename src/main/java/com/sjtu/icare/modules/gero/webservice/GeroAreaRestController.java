@@ -62,12 +62,13 @@ public class GeroAreaRestController {
 				// 构造返回的 JSON
 				for (GeroAreaEntity geroAreaEntity : geroAreaEntities) {
 					Map<String, Object> resultMap = new HashMap<String, Object>(); 
-					resultMap.put("id", geroId); 
+					resultMap.put("id", geroAreaEntity.getId()); 
 					resultMap.put("parent_id", geroAreaEntity.getParentId()); 
 					resultMap.put("parent_ids", geroAreaEntity.getParentIds()); 
 					resultMap.put("type", geroAreaEntity.getType()); 
 					resultMap.put("level", geroAreaEntity.getLevel()); 
 					resultMap.put("name", geroAreaEntity.getName()); 
+					resultMap.put("full_name", geroAreaEntity.getFullName()); 
 					
 					basicReturnedJson.addEntity(resultMap);
 				}
@@ -102,6 +103,8 @@ public class GeroAreaRestController {
 		Integer level;
 		String name;
 		
+		String parentFullName;
+		
 		try {
 			parentId = (Integer) requestParamMap.get("parentId");
 			parentIds = (String) requestParamMap.get("parentIds");
@@ -116,6 +119,8 @@ public class GeroAreaRestController {
 			GeroAreaEntity queryParentGeroAreaEntity = new GeroAreaEntity();
 			queryParentGeroAreaEntity.setId(parentId);
 			GeroAreaEntity parentGeroAreaEntity = geroAreaService.getGeroArea(queryParentGeroAreaEntity);
+			parentFullName = parentGeroAreaEntity.getFullName();
+			
 			// 根节点 parentId 为 0， level 从1开始
 			if (parentId == 0 && (level != 1 || !StringUtils.isBlank(parentIds)))
 				throw new Exception();
@@ -139,8 +144,9 @@ public class GeroAreaRestController {
 		
 		// 插入数据
 		try {
-			GeroAreaEntity postEntity = new GeroAreaEntity(); 
+			GeroAreaEntity postEntity = new GeroAreaEntity();
 			BeanUtils.populate(postEntity, requestParamMap);
+			postEntity.setFullName(parentFullName + name + ",");
 			geroAreaService.insertGeroAreaRecord(postEntity);
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
@@ -190,6 +196,7 @@ public class GeroAreaRestController {
 			resultMap.put("type", ancestorGeroAreaEntity.getType()); 
 			resultMap.put("level", ancestorGeroAreaEntity.getLevel()); 
 			resultMap.put("name", ancestorGeroAreaEntity.getName()); 
+			resultMap.put("full_name", ancestorGeroAreaEntity.getFullName()); 
 			
 			ArrayList<Object> tempList = new ArrayList<Object>();
 			for (GeroAreaEntity geroAreaEntity : descendantGeroAreaEntities) {
@@ -247,7 +254,6 @@ public class GeroAreaRestController {
 		
 	}
 
-	// TODO 改成逻辑删除
 	@Transactional
 	@RequestMapping(value = "/{aid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteGeroArea(
