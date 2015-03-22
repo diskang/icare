@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sjtu.icare.common.config.CommonConstants;
 import com.sjtu.icare.common.config.ErrorConstants;
+import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
@@ -89,6 +90,9 @@ public class ElderInfoController extends GeroBaseController{
 			@RequestParam("order_by") String orderByTag
 			) {
 		
+		Page<User> userPage = new Page<User>(page, limit);
+		userPage = setOrderBy(userPage, orderByTag);
+		
 		// 参数检查
 		if (gender != null && !(gender.equals("0") || gender.equals("1"))) {
 			String otherMessage = "gender 不符合格式:" +
@@ -121,7 +125,7 @@ public class ElderInfoController extends GeroBaseController{
 			queryUser.setAreaId(areaId);
 			queryUser.setUserType(CommonConstants.ELDER_TYPE);
 			queryUser.setGeroId(geroId);
-			
+			queryUser.setPage(userPage);
 			
 			
 			List<User> users;
