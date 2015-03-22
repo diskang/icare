@@ -77,6 +77,7 @@ CREATE TABLE T_AREA
 	type				int				NOT NULL,				--楼栋：1，楼层：2，房间：3，床位：4，区域：5
 	level				int				NOT NULL,				--每深一层加1
 	name				nvarchar(64)	NOT NULL,				--位置名称
+	full_name			nvarchar(500)	NOT NULL,				--位置全名
 	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
 )
 GO
