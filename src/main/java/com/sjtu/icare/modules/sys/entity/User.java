@@ -39,11 +39,18 @@ public class User extends DataEntity<User> {
     private String wechatId; //微信账号
     private int geroId;//养老院ID
     
+    // GET elders 时用到
+    private Integer ageMin;
+    private Integer ageMax;
+    private Integer areaId;
+    private Integer careLevel;
+    
+    
 	private Role role;	// 根据角色查询用户条件
 	
 	private List<Role> roleList = Lists.newArrayList(); // 拥有角色列表
 	
-	private List<String> roles = new ArrayList<String>();
+	private List<String> roleNameList = new ArrayList<String>();
 
     public void setId(int id) {
         this.id = id;
@@ -352,12 +359,74 @@ public class User extends DataEntity<User> {
 		this.geroId = geroId;
 	}
 
-	public List<String> getRoles() {
-		return roles;
+	/**
+	 * @return the ageMin
+	 */
+	public Integer getAgeMin() {
+		return ageMin;
 	}
 
-	public void setRoles(List<String> roles) {
-		this.roles = roles;
+	/**
+	 * @param ageMin the ageMin to set
+	 */
+	public void setAgeMin(Integer ageMin) {
+		this.ageMin = ageMin;
+	}
+
+	/**
+	 * @return the ageMax
+	 */
+	public Integer getAgeMax() {
+		return ageMax;
+	}
+
+	/**
+	 * @param ageMax the ageMax to set
+	 */
+	public void setAgeMax(Integer ageMax) {
+		this.ageMax = ageMax;
+	}
+
+	/**
+	 * @return the areaId
+	 */
+	public Integer getAreaId() {
+		return areaId;
+	}
+
+	/**
+	 * @param areaId the areaId to set
+	 */
+	public void setAreaId(Integer areaId) {
+		this.areaId = areaId;
+	}
+
+	/**
+	 * @return the roleNameList
+	 */
+	public List<String> getRoleNameList() {
+		return roleNameList;
+	}
+
+	/**
+	 * @param roleNameList the roleNameList to set
+	 */
+	public void setRoleNameList(List<String> roleNameList) {
+		this.roleNameList = roleNameList;
+	}
+
+	/**
+	 * @return the careLevel
+	 */
+	public Integer getCareLevel() {
+		return careLevel;
+	}
+
+	/**
+	 * @param careLevel the careLevel to set
+	 */
+	public void setCareLevel(Integer careLevel) {
+		this.careLevel = careLevel;
 	}
 	
 	

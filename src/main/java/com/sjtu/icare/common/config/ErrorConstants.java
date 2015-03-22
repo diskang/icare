@@ -163,6 +163,15 @@ public class ErrorConstants {
 	public static final String ELDER_INFO_ELDER_PUT_SERVICE_FAILED = "440007 PUT 老人信息：后台服务失败";
 	public static final String ELDER_INFO_ELDER_DELETE_SERVICE_FAILED = "440008 DELETE 老人信息：后台服务失败";
 	
+	// elder care item constants
+	public static final String ELDER_ITEM_GET_SERVICE_FAILED = "450001 GET 老人项目：后台服务失败";
+	public static final String ELDER_ITEM_POST_PARAM_INVALID = "450002 POST 老人项目：请求参数错误";
+	public static final String ELDER_ITEM_POST_SERVICE_FAILED = "450003 POST 老人项目：后台服务失败";
+	public static final String ELDER_ITEM_SPECIFIC_GET_SERVICE_FAILED = "450004 GET 指定老人项目：后台服务失败";
+	public static final String ELDER_ITEM_SPECIFIC_PUT_PARAM_INVALID = "450005 PUT 指定老人项目：请求参数错误";
+	public static final String ELDER_ITEM_SPECIFIC_PUT_SERVICE_FAILED = "450005 PUT 指定老人项目：后台服务失败";
+	public static final String ELDER_ITEM_SPECIFIC_DELETE_SERVICE_FAILED = "450006 DELETE 指定老人项目：后台服务失败";
+	
 	
 	public static String format(String errorConstant, String otherMessage) {
 		if (errorConstant == null)

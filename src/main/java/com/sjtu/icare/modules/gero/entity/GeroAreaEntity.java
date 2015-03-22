@@ -21,6 +21,7 @@ public class GeroAreaEntity implements Serializable{
 	private Integer level;
 	private String name;
 	private String delFlag;
+	private String fullName;
 	/**
 	 * @return the serialversionuid
 	 */
@@ -123,7 +124,18 @@ public class GeroAreaEntity implements Serializable{
 	public void setDelFlag(String delFlag) {
 		this.delFlag = delFlag;
 	}
-
+	/**
+	 * @return the fullName
+	 */
+	public String getFullName() {
+		return fullName;
+	}
+	/**
+	 * @param fullName the fullName to set
+	 */
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
 
 
 }

@@ -28,7 +28,6 @@ import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
 import com.sjtu.icare.modules.elder.service.IElderInfoService;
-import com.sjtu.icare.modules.staff.entity.StaffEntity;
 import com.sjtu.icare.modules.staff.service.IStaffDataService;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.service.SystemService;
@@ -84,7 +83,10 @@ public class ElderInfoController extends GeroBaseController{
 			@RequestParam(value="age_min", required=false) Integer ageMin,
 			@RequestParam(value="age_max", required=false) Integer ageMax,
 			@RequestParam(value="care_level", required=false) Integer careLevel,
-			@RequestParam(value="area_id", required=false) Integer areaId
+			@RequestParam(value="area_id", required=false) Integer areaId,
+			@RequestParam("page") int page,
+			@RequestParam("limit") int limit,
+			@RequestParam("order_by") String orderByTag
 			) {
 		
 		// 参数检查
@@ -100,18 +102,30 @@ public class ElderInfoController extends GeroBaseController{
 			// 获取基础的 JSON返回
 			BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
 			
-			Map<String, Object> requestParamMap = new HashMap<String, Object>();
-			requestParamMap.put("name", name);
-			requestParamMap.put("gender", gender);
-			requestParamMap.put("ageMin", ageMin);
-			requestParamMap.put("ageMax", ageMax);
-			requestParamMap.put("careLevel", careLevel);
-			requestParamMap.put("areaId", areaId);
-			requestParamMap.put("userType", CommonConstants.ELDER_TYPE);
-			requestParamMap.put("geroId", geroId);
+//			Map<String, Object> requestParamMap = new HashMap<String, Object>();
+//			requestParamMap.put("name", name);
+//			requestParamMap.put("gender", gender);
+//			requestParamMap.put("ageMin", ageMin);
+//			requestParamMap.put("ageMax", ageMax);
+//			requestParamMap.put("careLevel", careLevel);
+//			requestParamMap.put("areaId", areaId);
+//			requestParamMap.put("userType", CommonConstants.ELDER_TYPE);
+//			requestParamMap.put("geroId", geroId);
+			
+			User queryUser = new User();
+			queryUser.setName(name);
+			queryUser.setGender(gender);
+			queryUser.setAgeMin(ageMin);
+			queryUser.setAgeMax(ageMax);
+			queryUser.setCareLevel(careLevel);
+			queryUser.setAreaId(areaId);
+			queryUser.setUserType(CommonConstants.ELDER_TYPE);
+			queryUser.setGeroId(geroId);
+			
+			
 			
 			List<User> users;
-			users = elderInfoService.getAllElders(requestParamMap);
+			users = elderInfoService.getAllElders(queryUser);
 			
 			for (User user : users) {
 				

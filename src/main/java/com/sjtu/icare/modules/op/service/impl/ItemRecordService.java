@@ -14,6 +14,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sjtu.icare.common.config.CommonConstants;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.modules.op.entity.AreaworkRecordEntity;
 import com.sjtu.icare.modules.op.entity.CareworkRecordEntity;
@@ -40,6 +41,8 @@ public class ItemRecordService implements IItemRecordService {
 		Map<String, Object> paramMap = MapListUtils.beanToMap(careworkRecordEntity);
 		paramMap.put("startDate", startDate);
 		paramMap.put("endDate", endDate);
+		paramMap.put("staffType", CommonConstants.STAFF_TYPE);
+		paramMap.put("elderType", CommonConstants.ELDER_TYPE);
 		return careworkRecordDAO.getCareworkRecords(paramMap);
 	}
 
@@ -65,6 +68,7 @@ public class ItemRecordService implements IItemRecordService {
 		Map<String, Object> paramMap = MapListUtils.beanToMap(areaworkRecordEntity);
 		paramMap.put("startDate", startDate);
 		paramMap.put("endDate", endDate);
+		paramMap.put("staffType", CommonConstants.STAFF_TYPE);
 		return areaworkRecordDAO.getAreaworkRecords(paramMap);
 	}
 

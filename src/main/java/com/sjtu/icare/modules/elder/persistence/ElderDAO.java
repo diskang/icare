@@ -26,7 +26,7 @@ public interface ElderDAO {
 	 * @return List<User>
 	 * @throws
 	 */
-	List<User> getAllElders(Map<String, Object> paramMap);
+	List<User> getAllElders(User user);
 
 	/**
 	 * @Title insertElder

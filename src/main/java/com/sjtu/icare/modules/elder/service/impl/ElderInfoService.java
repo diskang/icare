@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
+import com.sjtu.icare.modules.elder.entity.ElderItemEntity;
 import com.sjtu.icare.modules.elder.persistence.ElderDAO;
+import com.sjtu.icare.modules.elder.persistence.ElderItemDAO;
 import com.sjtu.icare.modules.elder.service.IElderInfoService;
 import com.sjtu.icare.modules.sys.entity.User;
 
@@ -20,6 +22,8 @@ public class ElderInfoService implements IElderInfoService{
 
 	@Autowired
 	private ElderDAO elderDao;
+	@Autowired
+	private ElderItemDAO elderItemDao;
 	
 	@Override
 	public ElderEntity getElderEntity(ElderEntity elderEntity) {
@@ -37,8 +41,8 @@ public class ElderInfoService implements IElderInfoService{
 	 * @see com.sjtu.icare.modules.elder.service.IElderInfoService#getAllElders(java.util.Map)
 	 */
 	@Override
-	public List<User> getAllElders(Map<String, Object> paramMap) {
-		return elderDao.getAllElders(paramMap);
+	public List<User> getAllElders(User user) {
+		return user.getPage().setList(elderDao.getAllElders(user)).getList();
 	}
 
 	/* (non-Javadoc)
@@ -67,6 +71,51 @@ public class ElderInfoService implements IElderInfoService{
 	public void deleteElder(ElderEntity elderEntity) {
 		Map<String, Object> paramMap = MapListUtils.beanToMap(elderEntity);
 		elderDao.deleteElder(paramMap);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.elder.service.IElderInfoService#getElderItems(com.sjtu.icare.modules.elder.entity.ElderItemEntity)
+	 */
+	@Override
+	public List<ElderItemEntity> getElderItems(
+			ElderItemEntity elderItemEntity) {
+		return elderItemEntity.getPage().setList(elderItemDao.getElderItems(elderItemEntity)).getList();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.elder.service.IElderInfoService#insertElderItem(com.sjtu.icare.modules.elder.entity.ElderItemEntity)
+	 */
+	@Override
+	public void insertElderItem(ElderItemEntity elderItemEntity) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(elderItemEntity);
+		elderItemDao.insertElderItem(paramMap);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.elder.service.IElderInfoService#getElderItem(com.sjtu.icare.modules.elder.entity.ElderItemEntity)
+	 */
+	@Override
+	public ElderItemEntity getElderItem(ElderItemEntity elderItemEntity) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(elderItemEntity);
+		return elderItemDao.getElderItem(paramMap);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.elder.service.IElderInfoService#updateElderItem(com.sjtu.icare.modules.elder.entity.ElderItemEntity)
+	 */
+	@Override
+	public void updateElderItem(ElderItemEntity elderItemEntity) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(elderItemEntity);
+		elderItemDao.updateElderItem(paramMap);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.elder.service.IElderInfoService#deleteElderItem(com.sjtu.icare.modules.elder.entity.ElderItemEntity)
+	 */
+	@Override
+	public void deleteElderItem(ElderItemEntity elderItemEntity) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(elderItemEntity);
+		elderItemDao.deleteElderItem(paramMap);
 	}
 
 }
