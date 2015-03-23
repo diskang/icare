@@ -174,6 +174,7 @@ public class ElderInfoController extends GeroBaseController{
 				resultMap.put("nssf_id", elder.getNssfId()); 
 				resultMap.put("archive_id", elder.getArchiveId()); 
 				resultMap.put("area_id", elder.getAreaId()); 
+				resultMap.put("elder_id", elder.getId()); 
 				
 				basicReturnedJson.addEntity(resultMap);
 			}
@@ -333,7 +334,7 @@ public class ElderInfoController extends GeroBaseController{
 			
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
-			String message = ErrorConstants.format(ErrorConstants.ELDER_INFO_ELDER_PUT_SERVICE_FAILED, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.ELDER_INFO_ELDER_GET_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
