@@ -65,13 +65,26 @@
     
         UPDATE
             T_CARE_ITEM
-        SET
-            T_CARE_ITEM.name = #{name}, 
+        <set>
+            <if test="name != null">
+            T_CARE_ITEM.name = #{name},
+            </if>
+            <if test="icon != null"> 
             T_CARE_ITEM.icon = #{icon},
+            </if>
+            <if test="level != null">
             T_CARE_ITEM.level = #{level},
+            </if>
+            <if test="period != null">
             T_CARE_ITEM.period = #{period},
+            </if>
+            <if test="frequency != null">
             T_CARE_ITEM.frequency = #{frequency},
+            </if>
+            <if test="notes != null">
             T_CARE_ITEM.notes = #{notes}
+            </if>
+        </set>
         WHERE
             T_CARE_ITEM.id = #{id}
             and T_CARE_ITEM.del_flag = 0

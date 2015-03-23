@@ -38,7 +38,7 @@ import com.sjtu.icare.modules.staff.entity.StaffEntity;
 import com.sjtu.icare.modules.sys.entity.User;
 
 @RestController
-@RequestMapping("/elder/{eid}/care_item")
+@RequestMapping({"${api.web}/elder/{eid}/care_item", "${api.service}/elder/{eid}/care_item"})
 public class ElderCareItemRestController extends BasicController {
 	private static Logger logger = Logger.getLogger(ElderCareItemRestController.class);
 	

@@ -32,7 +32,7 @@ import com.sjtu.icare.modules.op.entity.CareItemEntity;
 import com.sjtu.icare.modules.op.service.IItemService;
 
 @RestController
-@RequestMapping("/gero/{gid}/care_item")
+@RequestMapping({"${api.web}/gero/{gid}/care_item", "${api.service}/gero/{gid}/care_item"})
 public class GeroCareItemRestController {
 	private static Logger logger = Logger.getLogger(GeroCareItemRestController.class);
 	

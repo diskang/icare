@@ -73,8 +73,11 @@
     <update id="updateGeroAreaRecord" parameterType="Map">
         update
             T_AREA
-        set
+        <set>
+            <if test="name != null">
             T_AREA.name = #{name}
+            </if>
+        </set>
         where
             T_AREA.id = #{id}
     </update>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.icare.modules.gero.persistence.GeroElderExchangeDAO">
+
+    <cache />
+    
+    <resultMap type="com.sjtu.icare.modules.gero.entity.GeroElderExchangeEntity" id="GeroElderExchangeMap">
+        <id property="id" column="id" />
+        <result property="participants" column="participants" />
+        <result property="mediators" column="mediators" />
+        <result property="description" column="description" />
+        <result property="result" column="result" />
+        <result property="recorder" column="recorder" />
+        <result property="time" column="time" />
+        <result property="geroId" column="gero_id" />
+    </resultMap>
+  
+    <select id="getGeroElderExchangeEntities" resultMap="GeroElderExchangeMap">
+
+        SELECT
+            T_GERO_ELDER_EXCHANGE.*
+        FROM T_GERO_ELDER_EXCHANGE
+        WHERE 
+            T_GERO_ELDER_EXCHANGE.gero_id = #{geroId}
+            <if test="participants != null">
+                AND T_GERO_ELDER_EXCHANGE.participants = '%' + #{participants} + '%'
+            </if>
+            <if test="mediators != null">
+                AND T_GERO_ELDER_EXCHANGE.mediators = '%' + #{mediators} + '%'
+            </if>
+            <if test="result != null">
+                AND T_GERO_ELDER_EXCHANGE.result LIKE '%' + #{result} + '%'
+            </if>
+            <if test="recorder != null">
+                AND T_GERO_ELDER_EXCHANGE.recorder = #{recorder}
+            </if>
+            <if test="time != null">
+                AND T_GERO_ELDER_EXCHANGE.time = #{time}
+            </if>
+    </select>
+    
+    <select id="getGeroElderExchangeEntity" resultMap="GeroElderExchangeMap">
+
+        SELECT
+            T_GERO_ELDER_EXCHANGE.*
+        FROM T_GERO_ELDER_EXCHANGE
+        WHERE 
+            T_GERO_ELDER_EXCHANGE.gero_id = #{geroId}
+            AND T_GERO_ELDER_EXCHANGE.id = #{id}
+            
+    </select>
+        
+    <insert id="insertGeroElderExchange">
+    
+        INSERT INTO
+            T_GERO_ELDER_EXCHANGE(participants, mediators, description, result, recorder, time, gero_id)
+        VALUES
+            (#{participants}, #{mediators}, #{description}, #{result}, #{recorder}, #{time}, #{geroId})
+    
+    </insert>
+
+    <update id="updateGeroElderExchange">
+    
+        UPDATE
+            T_GERO_ELDER_EXCHANGE
+        <set>
+            <if test="participants != null">
+                T_GERO_ELDER_EXCHANGE.participants = #{participants},
+            </if>
+            <if test="mediators != null">
+                T_GERO_ELDER_EXCHANGE.mediators = #{mediators},
+            </if>
+            <if test="description != null">
+                T_GERO_ELDER_EXCHANGE.description = #{description},
+            </if>
+            <if test="result != null">
+                T_GERO_ELDER_EXCHANGE.result = #{result},
+            </if>
+            <if test="recorder != null">
+                T_GERO_ELDER_EXCHANGE.recorder = #{recorder},
+            </if>
+            <if test="time != null">
+                T_GERO_ELDER_EXCHANGE.time = #{time}
+            </if>
+        </set>
+        WHERE
+            T_GERO_ELDER_EXCHANGE.id = #{id}
+            AND T_GERO_ELDER_EXCHANGE.gero_id = #{geroId}    
+        
+    </update>
+    
+    
+    <delete id="deleteGeroElderExchange">
+    
+        DELETE FROM
+            T_GERO_ELDER_EXCHANGE
+        WHERE
+            T_GERO_ELDER_EXCHANGE.id = #{id}
+            
+    </delete>
+</mapper>

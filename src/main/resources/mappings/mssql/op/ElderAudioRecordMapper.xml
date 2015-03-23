@@ -32,7 +32,7 @@
         WHERE T_ELDER_AUDIO_RECORD.recorder_identity = #{recorderIdentity} AND T_ELDER_AUDIO_RECORD.recorder_id = #{recorderId}
     </select>
     
-      <select id="getElderAudioRecordEntitiesByElderid" resultType="ElderAudioRecordEntity">
+    <select id="getElderAudioRecordEntitiesByElderid" resultType="ElderAudioRecordEntity">
         SELECT
 			<include refid="elderAudioRecordEntityColumns"/>
         FROM T_ELDER_AUDIO_RECORD

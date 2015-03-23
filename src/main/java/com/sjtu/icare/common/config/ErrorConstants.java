@@ -172,6 +172,15 @@ public class ErrorConstants {
 	public static final String ELDER_ITEM_SPECIFIC_PUT_SERVICE_FAILED = "450005 PUT 指定老人项目：后台服务失败";
 	public static final String ELDER_ITEM_SPECIFIC_DELETE_SERVICE_FAILED = "450006 DELETE 指定老人项目：后台服务失败";
 	
+	// gero elder exchange constants
+	public static final String GERO_ELDER_EXCHANGE_GET_SERVICE_FAILED = "460001 GET 院属互动：后台服务失败";
+	public static final String GERO_ELDER_EXCHANGE_SPECIFIC_GET_SERVICE_FAILED = "460002 GET 指定院属互动：后台服务失败";
+	public static final String GERO_ELDER_EXCHANGE_POST_PARAM_INVALID =  "460003 POST 院属互动：请求参数错误";
+	public static final String GERO_ELDER_EXCHANGE_POST_SERVICE_FAILED =  "460004 POST 院属互动：后台服务失败";
+	public static final String GERO_ELDER_EXCHANGE_PUT_PARAM_INVALID =  "460005 PUT 院属互动：请求参数错误";
+	public static final String GERO_ELDER_EXCHANGE_PUT_SERVICE_FAILED =  "460006 PUT 院属互动：后台服务失败";
+	public static final String GERO_ELDER_EXCHANGE_SPECIFIC_DELETE_SERVICE_FAILED = "460007 DELETE 院属互动：后台服务失败";
+	
 	
 	public static String format(String errorConstant, String otherMessage) {
 		if (errorConstant == null)
