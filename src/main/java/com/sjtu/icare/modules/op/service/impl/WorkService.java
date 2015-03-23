@@ -40,4 +40,23 @@ public class WorkService implements IWorkService {
 		careworkDAO.insertCarework(careworkEntity);
 	}
 
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.op.service.IWorkService#updateCarework(com.sjtu.icare.modules.op.entity.CareworkEntity)
+	 */
+	@Override
+	public void updateCarework(CareworkEntity careworkEntity) {
+		careworkDAO.updateCarework(careworkEntity);
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.op.service.IWorkService#deleteCarework(com.sjtu.icare.modules.op.entity.CareworkEntity)
+	 */
+	@Override
+	public void deleteCarework(CareworkEntity careworkEntity) {
+		careworkDAO.deleteCarework(careworkEntity);
+		
+	}
+
 }

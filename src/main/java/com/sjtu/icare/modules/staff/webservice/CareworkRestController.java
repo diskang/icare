@@ -185,6 +185,7 @@ public class CareworkRestController extends BasicController {
 			BeanUtils.populate(requestCareworkEntity, requestParamMap);
 			requestCareworkEntity.setElderIds(elderIds);
 			requestCareworkEntity.setCarerId(staffId);
+			requestCareworkEntity.setStatus(status);
 			workService.insertCarework(requestCareworkEntity);
 			
 		} catch(Exception e) {
@@ -198,5 +199,99 @@ public class CareworkRestController extends BasicController {
 		
 	}
 	
+	@Transactional
+	@RequestMapping(value="{carework_id}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
+	public Object putCarework(
+			@PathVariable("gid") int geroId,
+			@PathVariable("carework_id") int careworkId,
+			@RequestBody String inJson
+			) {
+		// 将参数转化成驼峰格式的 Map
+		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
+		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
+		requestParamMap.put("geroId", geroId);
+		requestParamMap.put("id", careworkId);
 		
+		Integer staffId = null;
+		List<Integer> elderIdsList = null;
+		String endDate = null;
+		
+		try {
+			staffId = (Integer) requestParamMap.get("staffId");
+			elderIdsList = (List<Integer>) requestParamMap.get("elderIds");
+			endDate = (String) requestParamMap.get("endDate");
+			
+			// 参数详细验证
+			if (endDate != null && !ParamValidator.isDate(endDate))
+				throw new Exception();
+		} catch(Exception e) {
+			String otherMessage = "[" + inJson + "]";
+			String message = ErrorConstants.format(ErrorConstants.GERO_CAREWOKR_PUT_PARAM_INVALID, otherMessage);
+			logger.error(message);
+			throw new RestException(HttpStatus.BAD_REQUEST, message);
+		}
+		
+		// 获取基础的 JSON
+		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
+		
+		// 插入数据
+		try {
+			
+			String elderIds = ",";
+			for (Integer integer : elderIdsList) {
+				elderIds += integer.toString() + ",";
+			}
+			
+			CareworkEntity requestCareworkEntity = new CareworkEntity();
+			BeanUtils.populate(requestCareworkEntity, requestParamMap);
+			requestCareworkEntity.setElderIds(elderIds);
+			requestCareworkEntity.setCarerId(staffId);
+			workService.updateCarework(requestCareworkEntity);
+			
+		} catch(Exception e) {
+			String otherMessage = "[" + e.getMessage() + "]";
+			String message = ErrorConstants.format(ErrorConstants.GERO_CAREWOKR_PUT_SERVICE_FAILED, otherMessage);
+			logger.error(message);
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
+		}
+
+		return basicReturnedJson.getMap();
+		
+	}
+	
+	@Transactional
+	@RequestMapping(value="{carework_id}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
+	public Object deleteCarework(
+			@PathVariable("gid") int geroId,
+			@PathVariable("carework_id") int careworkId
+			) {
+		// 将参数转化成驼峰格式的 Map
+		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
+		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
+		requestParamMap.put("geroId", geroId);
+		requestParamMap.put("id", careworkId);
+		
+		
+		// 获取基础的 JSON
+		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
+		
+		// 删除数据
+		try {
+			
+		
+			CareworkEntity requestCareworkEntity = new CareworkEntity();
+			BeanUtils.populate(requestCareworkEntity, requestParamMap);
+			workService.deleteCarework(requestCareworkEntity);
+			
+		} catch(Exception e) {
+			String otherMessage = "[" + e.getMessage() + "]";
+			String message = ErrorConstants.format(ErrorConstants.GERO_CAREWOKR_DELETE_SERVICE_FAILED, otherMessage);
+			logger.error(message);
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
+		}
+
+		return basicReturnedJson.getMap();
+		
+	}
+	
 }

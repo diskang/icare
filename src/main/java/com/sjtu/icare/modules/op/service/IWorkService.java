@@ -32,5 +32,23 @@ public interface IWorkService {
 	 * @throws
 	 */
 	void insertCarework(CareworkEntity careworkEntity);
+
+	/**
+	 * @Title updateCarework
+	 * @Description TODO
+	 * @param @param requestCareworkEntity
+	 * @return void
+	 * @throws
+	 */
+	void updateCarework(CareworkEntity careworkEntity);
+
+	/**
+	 * @Title deleteCarework
+	 * @Description TODO
+	 * @param @param requestCareworkEntity
+	 * @return void
+	 * @throws
+	 */
+	void deleteCarework(CareworkEntity careworkEntity);
 	
 }
