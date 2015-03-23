@@ -6,38 +6,15 @@
 
     <cache />
     
-    <select id="getCareworkEntityById" resultType="CareworkEntity" parameterType="int">
-        SELECT
-            id,
-            carer_id,
-            elder_id,
-            start_date,
-            end_date
-        FROM T_CAREWORK
-        WHERE T_CAREWORK.id = #{id}
-    </select>
+    <resultMap id="CareworkMap" type="com.sjtu.icare.modules.op.entity.CareworkEntity">
+        <id property="id" column="id" />
+        <result property="carerId" column="carer_id" />
+        <result property="elderIds" column="elder_ids" />
+        <result property="geroId" column="gero_id" />
+        <result property="endDate" column="end_date" />
+        <result property="status" column="status" />
+    </resultMap>
     
-    <select id="getCareworkEntitiesByCarerid" resultType="CareworkEntity" parameterType="int">
-        SELECT
-            id,
-            carer_id,
-            elder_id,
-            start_date,
-            end_date
-        FROM T_CAREWORK
-        WHERE T_CAREWORK.carer_id = #{carerId}
-    </select>
-    
-    <select id="getCareworkEntityByElderid" resultType="CareworkEntity" parameterType="int">
-        SELECT
-            id,
-            carer_id,
-            elder_id,
-            start_date,
-            end_date
-        FROM T_CAREWORK
-        WHERE T_CAREWORK.elder_id = #{elderId}
-    </select>
   
     <select id="getStaffEntitiesByElderId" resultType="StaffEntity">
         <![CDATA[ 
@@ -75,6 +52,39 @@
         ]]>                 
     </select>
     
+    <select id="getCareworkEntities" resultMap="CareworkMap">
+        
+        SELECT
+            T_CAREWORK.*
+        FROM
+            T_CAREWORK
+        WHERE
+            T_CAREWORK.gero_id = #{geroId}
+            <if test="elderIds != null">
+            AND T_CAREWORK.elder_ids LIKE '%,' + #{elderIds} + ',%'
+            </if>
+            <if test="carerId != null">
+            AND T_CAREWORK.carer_id = #{carerId}
+            </if>
+            <if test="reqStartDate != null">
+                <![CDATA[
+                AND #{reqStartDate} <= CONVERT(nvarchar(23), T_CAREWORK.end_date, 120)
+                ]]>
+            </if>
+            <if test="reqEndDate != null">
+                <![CDATA[
+                AND #{reqEndDate} >= CONVERT(nvarchar(23), T_CAREWORK.end_date, 120)
+                ]]>
+            </if>
+    </select>
+        
+    <insert id="insertCarework">
+        
+        INSERT INTO
+            T_CAREWORK(carer_id, elder_ids, gero_id, end_date, status)
+        VALUES
+            (#{carerId}, #{elderIds}, #{geroId}, #{endDate}, #{status})
     
+    </insert>
       
 </mapper>

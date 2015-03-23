@@ -53,7 +53,6 @@ public class StaffRestController extends BasicController {
 	@Autowired
 	SystemService systemService;
 	
-	// TODO Paging
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getStaffs(
 			@PathVariable("gid") int geroId,

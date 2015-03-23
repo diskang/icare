@@ -23,11 +23,7 @@ import com.sjtu.icare.modules.staff.entity.StaffEntity;
 @MyBatisDao
 public interface CareworkDAO {
 
-	CareworkEntity getCareworkEntityById(Map<String, Object> paramMap);
-	
-	List<CareworkEntity> getCareworkEntitiesByCarerid(Map<String, Object> paramMap);
-	
-	CareworkEntity getCareworkEntityByElderid(Map<String, Object> paramMap);
+
 	
 	List<StaffEntity> getStaffEntitiesByElderId(Map<String, Object> paramMap);
 
@@ -40,5 +36,24 @@ public interface CareworkDAO {
 	 * @throws
 	 */
 	List<StaffEntity> getStaffEntitiesByAreaId(Map<String, Object> paramMap);
+
+	/**
+	 * @Title getCareworkEntities
+	 * @Description TODO
+	 * @param @param careworkEntity
+	 * @param @return
+	 * @return List<CareworkEntity>
+	 * @throws
+	 */
+	List<CareworkEntity> getCareworkEntities(CareworkEntity careworkEntity);
+
+	/**
+	 * @Title insertCarework
+	 * @Description TODO
+	 * @param @param careworkEntity
+	 * @return void
+	 * @throws
+	 */
+	void insertCarework(CareworkEntity careworkEntity);
 
 }

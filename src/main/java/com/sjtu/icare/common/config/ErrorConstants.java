@@ -181,6 +181,12 @@ public class ErrorConstants {
 	public static final String GERO_ELDER_EXCHANGE_PUT_SERVICE_FAILED =  "460006 PUT 院属互动：后台服务失败";
 	public static final String GERO_ELDER_EXCHANGE_SPECIFIC_DELETE_SERVICE_FAILED = "460007 DELETE 院属互动：后台服务失败";
 	
+	// gero carework constants
+	public static final String GERO_CAREWORK_GET_PARAM_INVALID = "470001 GET 护工排班：请求参数错误";
+	public static final String GERO_CAREWORK_GET_SERVICE_FAILED = "470002 GET 护工排班：后台服务失败";
+	public static final String GERO_CAREWOKR_POST_PARAM_INVALID = "470003 POST 护工排班：请求参数错误";
+	public static final String GERO_CAREWOKR_POST_SERVICE_FAILED = "470004 POST 护工排班：后台服务失败";
+	
 	
 	public static String format(String errorConstant, String otherMessage) {
 		if (errorConstant == null)
