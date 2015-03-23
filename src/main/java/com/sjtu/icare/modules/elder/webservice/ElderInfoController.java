@@ -178,6 +178,8 @@ public class ElderInfoController extends GeroBaseController{
 				basicReturnedJson.addEntity(resultMap);
 			}
 			
+			basicReturnedJson.setTotal((int) queryUser.getPage().getCount());
+			
 			return basicReturnedJson.getMap();
 			
 		} catch(Exception e) {
