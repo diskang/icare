@@ -68,14 +68,29 @@
     
         UPDATE
             T_ELDER_ITEM
-        SET
-            T_ELDER_ITEM.elder_id = #{elderId},
-            T_ELDER_ITEM.care_item_id = #{careItemId},
-            T_ELDER_ITEM.icon = #{icon},
-            T_ELDER_ITEM.level = #{level},
-            T_ELDER_ITEM.period = #{period},
-            T_ELDER_ITEM.start_time = #{startTime},
-            T_ELDER_ITEM.end_time = #{endTime}
+        <set>
+            <if test="elderId != null">
+	            T_ELDER_ITEM.elder_id = #{elderId},
+            </if>
+            <if test="careItemId != null">
+                T_ELDER_ITEM.care_item_id = #{careItemId},
+            </if>
+            <if test="icon != null">
+                T_ELDER_ITEM.icon = #{icon},
+            </if>
+            <if test="level != null">
+                T_ELDER_ITEM.level = #{level},
+            </if>
+            <if test="period != null">
+                T_ELDER_ITEM.period = #{period},
+            </if>
+            <if test="startTime != null">
+                T_ELDER_ITEM.start_time = #{startTime},
+            </if>
+            <if test="endTime != null">
+                T_ELDER_ITEM.end_time = #{endTime}
+            </if>
+        </set>
         WHERE
             T_ELDER_ITEM.id = #{id}
             

@@ -98,11 +98,20 @@
     
         UPDATE
             T_STAFF
-        SET
+        <set>
+            <if test="name != null">
             T_STAFF.name = #{name},
+            </if>
+            <if test="nssfId != null">
             T_STAFF.nssf_id = #{nssfId},
+            </if>
+            <if test="basicUrl != null">
             T_STAFF.basic_url = #{basicUrl},
+            </if>
+            <if test="archiveId != null">
             T_STAFF.archive_id = #{archiveId}
+            </if>
+        </set>
         WHERE
             T_STAFF.id = #{id}
             
