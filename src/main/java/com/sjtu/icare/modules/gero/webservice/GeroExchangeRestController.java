@@ -37,7 +37,7 @@ import com.sjtu.icare.modules.gero.service.IGeroElderExchangeService;
 
 
 @RestController
-@RequestMapping("/gero/{gid}/exchange")
+@RequestMapping({"${api.web}/gero/{gid}/exchange", "${api.service}/gero/{gid}/exchange"})
 public class GeroExchangeRestController extends BasicController {
 	private static Logger logger = Logger.getLogger(GeroExchangeRestController.class);
 

@@ -36,7 +36,7 @@ import com.sjtu.icare.modules.staff.service.IStaffDataService;
 import com.sjtu.icare.modules.sys.entity.User;
 
 @RestController
-
+@RequestMapping({"${api.web}", "${api.service}"})
 public class DutyCarerRestContorller {
 	private static Logger logger = Logger.getLogger(DutyCarerRestContorller.class);
 	

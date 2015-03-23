@@ -44,7 +44,7 @@ import com.sjtu.icare.modules.sys.service.SystemService;
 import com.sjtu.icare.modules.sys.utils.UserUtils;
 
 @RestController
-@RequestMapping("/gero/{gid}/staff")
+@RequestMapping({"${api.web}/gero/{gid}/staff", "${api.service}/gero/{gid}/staff"})
 public class StaffRestController extends BasicController {
 	private static Logger logger = Logger.getLogger(StaffRestController.class);
 	

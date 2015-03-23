@@ -39,7 +39,7 @@ import com.sjtu.icare.modules.sys.entity.User;
 
 
 @RestController
-@RequestMapping("/elder/{eid}/temperature")
+@RequestMapping({"${api.web}/elder/{eid}/temperature", "${api.service}/elder/{eid}/temperature"})
 public class ElderTemperatureRestController {
 	private static Logger logger = Logger.getLogger(ElderTemperatureRestController.class);
 

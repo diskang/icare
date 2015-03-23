@@ -37,7 +37,7 @@ import com.sjtu.icare.modules.op.entity.CareworkRecordEntity;
 import com.sjtu.icare.modules.op.service.IItemRecordService;
 
 @RestController
-@RequestMapping("/gero/{gid}/areawork_record")
+@RequestMapping({"${api.web}/gero/{gid}/areawork_record", "${api.service}/gero/{gid}/areawork_record"})
 public class AreaRecordRestController {
 	private static Logger logger = Logger.getLogger(AreaRecordRestController.class);
 	
