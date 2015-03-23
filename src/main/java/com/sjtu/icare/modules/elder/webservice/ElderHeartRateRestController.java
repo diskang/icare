@@ -40,7 +40,7 @@ import com.sjtu.icare.modules.sys.entity.User;
 
 
 @RestController
-@RequestMapping("/elder/{eid}/heart_rate")
+@RequestMapping({"${api.web}/elder/{eid}/heart_rate", "${api.service}/elder/{eid}/heart_rate"})
 public class ElderHeartRateRestController {
 	private static Logger logger = Logger.getLogger(ElderHeartRateRestController.class);
 

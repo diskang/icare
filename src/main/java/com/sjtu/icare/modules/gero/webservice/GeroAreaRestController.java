@@ -35,7 +35,7 @@ import com.sjtu.icare.modules.gero.entity.GeroAreaEntity;
 import com.sjtu.icare.modules.gero.service.IGeroAreaService;
 
 @RestController
-@RequestMapping("/gero/{gid}/area")
+@RequestMapping({"${api.web}/gero/{gid}/area", "${api.service}/gero/{gid}/area"})
 public class GeroAreaRestController {
 	private static Logger logger = Logger.getLogger(GeroAreaRestController.class);
 

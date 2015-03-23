@@ -96,19 +96,44 @@
     
         UPDATE
             T_ELDER
-        SET
+        <set>
+            <if test="name != null">
             T_ELDER.name = #{name},
+            </if>
+            <if test="nssfId != null">
             T_ELDER.nssf_id = #{nssfId},
+            </if>
+            <if test="archiveId != null">
             T_ELDER.archive_id = #{archiveId},
+            </if>
+            <if test="areaId != null">
             T_ELDER.area_id = #{areaId},
+            </if>
+            <if test="careLevel != null">
             T_ELDER.care_level = #{careLevel},
+            </if>
+            <if test="checkinDate != null">
             T_ELDER.checkin_date = #{checkinDate},
+            </if>
+            <if test="checkoutDate != null">
             T_ELDER.checkout_date = #{checkoutDate},
+            </if>
+            <if test="applyUrl != null">
             T_ELDER.apply_url = #{applyUrl},
+            </if>
+            <if test="surveyUrl != null">
             T_ELDER.survey_url = #{surveyUrl},
+            </if>
+            <if test="assessUrl != null">
             T_ELDER.assess_url = #{assessUrl},
+            </if>
+            <if test="trackUrl != null">
             T_ELDER.track_url = #{trackUrl},
+            </if>
+            <if test="padMac != null">
             T_ELDER.pad_mac = #{padMac}
+            </if>
+        </set>
         WHERE
             T_ELDER.id = #{id}
             

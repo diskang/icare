@@ -52,12 +52,23 @@
     
         UPDATE
             T_AREA_ITEM
-        SET
-            T_AREA_ITEM.name = #{name}, 
+        <set>
+            <if test="name != null">
+            T_AREA_ITEM.name = #{name},
+            </if>
+            <if test="icon != null"> 
             T_AREA_ITEM.icon = #{icon},
+            </if>
+            <if test="period != null">
             T_AREA_ITEM.period = #{period},
+            </if>
+            <if test="frequency != null">
             T_AREA_ITEM.frequency = #{frequency},
+            </if>
+            <if test="notes != null">
             T_AREA_ITEM.notes = #{notes}
+            </if>
+        </set>
         WHERE
             T_AREA_ITEM.id = #{id}
             and T_AREA_ITEM.del_flag = 0

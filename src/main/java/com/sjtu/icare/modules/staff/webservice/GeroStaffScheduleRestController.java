@@ -36,7 +36,7 @@ import com.sjtu.icare.modules.staff.service.impl.StaffDataService;
 import com.sjtu.icare.modules.sys.entity.User;
 
 @RestController
-@RequestMapping("/gero/{gid}/schedule")
+@RequestMapping({"${api.web}/gero/{gid}/schedule", "${api.service}/gero/{gid}/schedule"})
 public class GeroStaffScheduleRestController {
 	private static Logger logger = Logger.getLogger(GeroStaffScheduleRestController.class);
 	

@@ -39,7 +39,7 @@ import com.sjtu.icare.modules.staff.service.IStaffDataService;
 import com.sjtu.icare.modules.sys.entity.User;
 
 @RestController
-@RequestMapping("/elder/{eid}/blood_pressure")
+@RequestMapping({"${api.web}/elder/{eid}/blood_pressure", "${api.service}/elder/{eid}/blood_pressure"})
 public class ElderBloodPressureRestController {
 	private static Logger logger = Logger.getLogger(ElderBloodPressureRestController.class);
 

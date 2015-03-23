@@ -37,7 +37,7 @@ import com.sjtu.icare.modules.op.service.IItemRecordService;
 
 
 @RestController
-@RequestMapping("/gero/{gid}/carework_record")
+@RequestMapping({"${api.web}/gero/{gid}/carework_record", "${api.service}/gero/{gid}/carework_record"})
 public class CarerRecordRestController {
 	private static Logger logger = Logger.getLogger(CarerRecordRestController.class);
 	

@@ -44,8 +44,8 @@ import com.sjtu.icare.modules.sys.service.SystemService;
 import com.sjtu.icare.modules.sys.utils.UserUtils;
 
 @RestController
-@RequestMapping("/gero/{gid}/staff")
-public class StaffRestController extends BasicController{
+@RequestMapping({"${api.web}/gero/{gid}/staff", "${api.service}/gero/{gid}/staff"})
+public class StaffRestController extends BasicController {
 	private static Logger logger = Logger.getLogger(StaffRestController.class);
 	
 	@Autowired
@@ -67,7 +67,6 @@ public class StaffRestController extends BasicController{
 			) {
 		
 		Page<User> userPage = new Page<User>(page, limit);
-		
 		userPage = setOrderBy(userPage, orderByTag);
 		
 		// 参数检查
