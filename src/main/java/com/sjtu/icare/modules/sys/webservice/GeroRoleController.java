@@ -61,7 +61,7 @@ public class GeroRoleController extends GeroBaseController {
 	public Map<String, Object> getGeroRoleList(
 			@PathVariable("gid") int gid,
 			@RequestParam("page") int page,
-			@RequestParam("limit") int limit,
+			@RequestParam("rows") int limit,
 			@RequestParam("order_by") String orderByTag){
 		
 //		 检查用户是否有访问此养老院权限

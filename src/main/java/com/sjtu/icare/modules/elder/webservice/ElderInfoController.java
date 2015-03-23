@@ -86,7 +86,7 @@ public class ElderInfoController extends GeroBaseController{
 			@RequestParam(value="care_level", required=false) Integer careLevel,
 			@RequestParam(value="area_id", required=false) Integer areaId,
 			@RequestParam("page") int page,
-			@RequestParam("limit") int limit,
+			@RequestParam("rows") int limit,
 			@RequestParam("order_by") String orderByTag
 			) {
 		

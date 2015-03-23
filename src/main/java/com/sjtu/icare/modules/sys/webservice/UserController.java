@@ -55,7 +55,7 @@ public class UserController extends SysBaseController{
 	public Map<String, Object> getUserInfoList(
 			HttpServletRequest request,
 			@RequestParam("page") int page,
-			@RequestParam("limit") int limit,
+			@RequestParam("rows") int limit,
 			@RequestParam("order_by") String orderByTag
 			){
 		checkPermission(request);
