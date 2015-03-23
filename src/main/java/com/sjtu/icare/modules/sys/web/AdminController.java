@@ -30,22 +30,15 @@ public class AdminController extends BaseController{
 	 * 管理登录
 	 */
 	@RequestMapping(value = "${adminPath}", method = RequestMethod.GET)
-	@ResponseBody
-//	@RequiresPermissions("/user/{uid}#GET")
-//	@RequiresRoles("gero:1")
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
-		
 		logger.debug("admin!");
-		SecurityUtils.getSubject().hasRole("gero:1");
 			User user = UserUtils.getUser();
 			response.addCookie(new Cookie("uid", user.getId()+""));
 			response.addCookie(new Cookie("gid", user.getGeroId()+""));
 			// 如果已经登录，则跳转到管理首页
 			if(user.getUsername() != null){
-				if (SecurityUtils.getSubject().isPermitted("admin")){
-					logger.debug("admin");
-					return "redirect:"+Global.getAdminPath();
-				}
+				logger.debug("admin");
+				return "module/gero_management";
 			}
 //		}
 		return "module/sys/sysLogin";
