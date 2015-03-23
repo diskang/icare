@@ -9,20 +9,28 @@ package com.sjtu.icare.modules.op.entity;
 
 import java.io.Serializable;
 
-public class CareworkEntity implements Serializable {
+import com.opensymphony.module.sitemesh.Page;
+import com.sjtu.icare.common.persistence.DataEntity;
+
+public class CareworkEntity extends DataEntity<CareworkEntity> implements Serializable {
     
 	private static final long serialVersionUID = 1L;
 	
     private Integer id;
     private Integer carerId;
-    private Integer elderId;
-    private String startDate;
+    private String elderIds;
     private String endDate;
+    private Integer status;
+    private Integer geroId;
+    
+    private String reqStartDate;
+    private String reqEndDate;
+    
 	/**
 	 * @return the id
 	 */
-	public Integer getId() {
-		return id;
+	public int getId() {
+		return super.getId();
 	}
 	/**
 	 * @param id the id to set
@@ -43,28 +51,16 @@ public class CareworkEntity implements Serializable {
 		this.carerId = carerId;
 	}
 	/**
-	 * @return the elderId
+	 * @return the elderIds
 	 */
-	public Integer getElderId() {
-		return elderId;
+	public String getElderIds() {
+		return elderIds;
 	}
 	/**
-	 * @param elderId the elderId to set
+	 * @param elderIds the elderIds to set
 	 */
-	public void setElderId(Integer elderId) {
-		this.elderId = elderId;
-	}
-	/**
-	 * @return the startDate
-	 */
-	public String getStartDate() {
-		return startDate;
-	}
-	/**
-	 * @param startDate the startDate to set
-	 */
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public void setElderIds(String elderIds) {
+		this.elderIds = elderIds;
 	}
 	/**
 	 * @return the endDate
@@ -79,12 +75,66 @@ public class CareworkEntity implements Serializable {
 		this.endDate = endDate;
 	}
 	/**
+	 * @return the status
+	 */
+	public Integer getStatus() {
+		return status;
+	}
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	/**
 	 * @return the serialversionuid
 	 */
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-    
-    
-    
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.common.persistence.BaseEntity#preDelete()
+	 */
+	@Override
+	public void preDelete() {
+		// TODO Auto-generated method stub
+		
+	}
+	/**
+	 * @return the geroId
+	 */
+	public Integer getGeroId() {
+		return geroId;
+	}
+	/**
+	 * @param geroId the geroId to set
+	 */
+	public void setGeroId(Integer geroId) {
+		this.geroId = geroId;
+	}
+	/**
+	 * @return the reqStartDate
+	 */
+	public String getReqStartDate() {
+		return reqStartDate;
+	}
+	/**
+	 * @param reqStartDate the reqStartDate to set
+	 */
+	public void setReqStartDate(String reqStartDate) {
+		this.reqStartDate = reqStartDate;
+	}
+	/**
+	 * @return the reqEndDate
+	 */
+	public String getReqEndDate() {
+		return reqEndDate;
+	}
+	/**
+	 * @param reqEndDate the reqEndDate to set
+	 */
+	public void setReqEndDate(String reqEndDate) {
+		this.reqEndDate = reqEndDate;
+	}
+	
 }
