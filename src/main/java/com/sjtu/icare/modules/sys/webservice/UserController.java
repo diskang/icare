@@ -56,7 +56,7 @@ public class UserController extends SysBaseController{
 			HttpServletRequest request,
 			@RequestParam("page") int page,
 			@RequestParam("rows") int limit,
-			@RequestParam("order_by") String orderByTag
+			@RequestParam("sort") String orderByTag
 			){
 		checkPermission(request);
 		

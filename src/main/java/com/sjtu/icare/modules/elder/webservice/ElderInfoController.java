@@ -87,7 +87,7 @@ public class ElderInfoController extends GeroBaseController{
 			@RequestParam(value="area_id", required=false) Integer areaId,
 			@RequestParam("page") int page,
 			@RequestParam("rows") int limit,
-			@RequestParam("order_by") String orderByTag
+			@RequestParam("sort") String orderByTag
 			) {
 		
 		Page<User> userPage = new Page<User>(page, limit);

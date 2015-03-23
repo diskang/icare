@@ -63,7 +63,7 @@ public class StaffRestController extends BasicController {
 			@RequestParam(value="role", required=false) String role,
 			@RequestParam("page") int page,
 			@RequestParam("rows") int limit,
-			@RequestParam("order_by") String orderByTag
+			@RequestParam("sort") String orderByTag
 			) {
 		
 		Page<User> userPage = new Page<User>(page, limit);
