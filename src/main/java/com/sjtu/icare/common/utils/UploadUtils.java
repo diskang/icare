@@ -125,7 +125,7 @@ public class UploadUtils {
 		float rate = (float)height/width;
 		if ((width > max_width && max_width != 0) ||
 				(height > max_height && max_height !=0) ||
-				(rate > max_rate && max_rate != 0) ) {
+				(rate < max_rate && max_rate != 0) ) {
 			String message = ErrorConstants.format(ErrorConstants.PHOTO_UPLOAD_RESOLUTION_ERROR,
 					"[type=" + type + "]" + 
 					"["+"w:"+bufferedImage.getWidth()+"h:"+bufferedImage.getHeight()+ "]" );

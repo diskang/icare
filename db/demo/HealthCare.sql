@@ -277,24 +277,47 @@ CREATE TABLE T_STAFF_SCHEDULE_PLAN
 GO
 
 -- CREATE TABLE T_CAREWORK_SCHEDULE_DETAIL
+--CREATE TABLE T_CAREWORK
+--(
+--	id					int				PRIMARY KEY IDENTITY,
+--	carer_id			int				NOT NULL,				--
+--	elder_id			int				NOT NULL,				--
+--	start_date			date			NOT NULL,				--
+--	end_date			date			NOT NULL,				--
+--)
+--GO
+
 CREATE TABLE T_CAREWORK
 (
 	id					int				PRIMARY KEY IDENTITY,
-	carer_id			int				NOT NULL,				--
-	elder_id			int				NOT NULL,				--
-	start_date			date			NOT NULL,				--
-	end_date			date			NOT NULL,				--
+	carer_id			int				NOT NULL,				--护工id
+	elder_ids			varchar(1000)	NOT NULL,				--负责老人id列表(,开始,以逗号分割)
+	gero_id				int				NOT NULL,
+	end_date			date			,						--结束日期
+	status				int				NOT NULL,				--状态（按顺序增加）
 )
 GO
 
+
 -- CREATE TABLE T_AREAWORK_SCHEDULE_DETAIL
+-- CREATE TABLE T_AREAWORK
+-- (
+	-- id					int				PRIMARY KEY IDENTITY,
+	-- carer_id			int				NOT NULL,				--
+	-- area_id				int				NOT NULL,				--
+	-- start_date			date			NOT NULL,				--
+	-- end_date			date			NOT NULL,				--
+-- )
+-- GO
+
 CREATE TABLE T_AREAWORK
 (
 	id					int				PRIMARY KEY IDENTITY,
-	carer_id			int				NOT NULL,				--
-	area_id				int				NOT NULL,				--
-	start_date			date			NOT NULL,				--
-	end_date			date			NOT NULL,				--
+	carer_id			int				NOT NULL,				--护工id
+	area_ids			varchar(1000)	NOT NULL,				--负责区域id列表(,开始,以逗号分割)
+	gero_id				int				NOT NULL,
+	end_date			date			,						--结束日期
+	status				int				NOT NULL,				--状态（按顺序增加）
 )
 GO
 
@@ -596,8 +619,8 @@ GO
 
 ALTER TABLE T_CAREWORK
 ADD CONSTRAINT fk_CAREWORK_elder_id
-FOREIGN KEY (elder_id)
-REFERENCES T_ELDER(id)
+FOREIGN KEY (gero_id)
+REFERENCES T_GERO(id)
 GO
 
 ALTER TABLE T_AREAWORK
@@ -608,8 +631,8 @@ GO
 
 ALTER TABLE T_AREAWORK
 ADD CONSTRAINT fk_AREAWORK_area_id
-FOREIGN KEY (area_id)
-REFERENCES T_AREA(id)
+FOREIGN KEY (gero_id)
+REFERENCES T_GERO(id)
 GO
 
 ALTER TABLE T_ROLE
