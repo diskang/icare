@@ -62,7 +62,7 @@ public class GeroRoleController extends GeroBaseController {
 			@PathVariable("gid") int gid,
 			@RequestParam("page") int page,
 			@RequestParam("rows") int limit,
-			@RequestParam("order_by") String orderByTag){
+			@RequestParam("sort") String orderByTag){
 		
 //		 检查用户是否有访问此养老院权限
 //		checkGero(gid);
