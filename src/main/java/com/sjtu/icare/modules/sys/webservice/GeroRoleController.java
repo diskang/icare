@@ -41,7 +41,7 @@ import com.sjtu.icare.modules.sys.utils.UserUtils;
 * @author jty
 */
 @RestController
-@RequestMapping("/admin/gero")
+@RequestMapping({"${api.web}/gero","${api.service}/gero"})
 public class GeroRoleController extends GeroBaseController {
 	
 	private static Logger logger = Logger.getLogger(GeroRoleController.class);
