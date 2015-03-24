@@ -3,18 +3,27 @@ package com.sjtu.icare.modules.op.entity;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class AreaworkEntity implements Serializable {
+import com.sjtu.icare.common.persistence.DataEntity;
+
+public class AreaworkEntity extends DataEntity<AreaworkEntity> implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
+	
 	private Integer id;
-	private Integer carerId;		//护工ID
-	private Integer areaId;			//区域ID
-	private String startDate;		//起始时间
-	private String endDate;		//终止时间
+	private Integer carerId;
+	private String areaIds;
+	private Integer geroId;
+	private String endDate;
+	private Integer status;
+	
+	private String reqStartDate;
+	private String reqEndDate;
+	
 	/**
 	 * @return the id
 	 */
-	public Integer getId() {
-		return id;
+	public int getId() {
+		return super.getId();
 	}
 	/**
 	 * @param id the id to set
@@ -35,28 +44,28 @@ public class AreaworkEntity implements Serializable {
 		this.carerId = carerId;
 	}
 	/**
-	 * @return the areaId
+	 * @return the areaIds
 	 */
-	public Integer getAreaId() {
-		return areaId;
+	public String getAreaIds() {
+		return areaIds;
 	}
 	/**
-	 * @param areaId the areaId to set
+	 * @param areaIds the areaIds to set
 	 */
-	public void setAreaId(Integer areaId) {
-		this.areaId = areaId;
+	public void setAreaIds(String areaIds) {
+		this.areaIds = areaIds;
 	}
 	/**
-	 * @return the startDate
+	 * @return the geroId
 	 */
-	public String getStartDate() {
-		return startDate;
+	public Integer getGeroId() {
+		return geroId;
 	}
 	/**
-	 * @param startDate the startDate to set
+	 * @param geroId the geroId to set
 	 */
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public void setGeroId(Integer geroId) {
+		this.geroId = geroId;
 	}
 	/**
 	 * @return the endDate
@@ -71,11 +80,57 @@ public class AreaworkEntity implements Serializable {
 		this.endDate = endDate;
 	}
 	/**
+	 * @return the status
+	 */
+	public Integer getStatus() {
+		return status;
+	}
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	/**
 	 * @return the serialversionuid
 	 */
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.common.persistence.BaseEntity#preDelete()
+	 */
+	@Override
+	public void preDelete() {
+		// TODO Auto-generated method stub
+		
+	}
+	/**
+	 * @return the reqStartDate
+	 */
+	public String getReqStartDate() {
+		return reqStartDate;
+	}
+	/**
+	 * @param reqStartDate the reqStartDate to set
+	 */
+	public void setReqStartDate(String reqStartDate) {
+		this.reqStartDate = reqStartDate;
+	}
+	/**
+	 * @return the reqEndDate
+	 */
+	public String getReqEndDate() {
+		return reqEndDate;
+	}
+	/**
+	 * @param reqEndDate the reqEndDate to set
+	 */
+	public void setReqEndDate(String reqEndDate) {
+		this.reqEndDate = reqEndDate;
+	}
+	
+
 	
 	
 }

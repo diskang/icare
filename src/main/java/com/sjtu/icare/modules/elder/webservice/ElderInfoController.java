@@ -24,6 +24,7 @@ import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
+import com.sjtu.icare.common.utils.StringUtils;
 import com.sjtu.icare.common.web.rest.GeroBaseController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
@@ -357,7 +358,10 @@ public class ElderInfoController extends GeroBaseController{
 		
 		try {
 			// 参数详细验证
-			// TODO
+//			if (requestParamMap.get("areaId") != null && StringUtils.isBlank((CharSequence) requestParamMap.get("areaId")))
+//				throw new Exception();
+			
+			
 		} catch(Exception e) {
 			String otherMessage = "[" + inJson + "]";
 			String message = ErrorConstants.format(ErrorConstants.ELDER_INFO_ELDER_PUT_PARAM_INVALID , otherMessage);

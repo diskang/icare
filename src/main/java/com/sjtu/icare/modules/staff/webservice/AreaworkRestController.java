@@ -1,7 +1,7 @@
 /**
  * @Package com.sjtu.icare.modules.staff.webservice
  * @Description TODO
- * @date Mar 23, 2015 7:27:10 PM
+ * @date Mar 24, 2015 3:32:12 PM
  * @author Wang Qi
  * @version TODO
  */
@@ -34,24 +34,24 @@ import com.sjtu.icare.common.utils.StringUtils;
 import com.sjtu.icare.common.web.rest.BasicController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
-import com.sjtu.icare.modules.op.entity.CareworkEntity;
+import com.sjtu.icare.modules.op.entity.AreaworkEntity;
 import com.sjtu.icare.modules.op.service.IWorkService;
 
 @RestController
-@RequestMapping({"${api.web}/gero/{gid}/carework", "${api.service}/gero/{gid}/carework"})
-public class CareworkRestController extends BasicController {
-	private static Logger logger = Logger.getLogger(CareworkRestController.class);
+@RequestMapping({"${api.web}/gero/{gid}/areawork", "${api.service}/gero/{gid}/areawork"})
+public class AreaworkRestController extends BasicController {
+	private static Logger logger = Logger.getLogger(AreaworkRestController.class);
 	
 	
 	@Autowired
 	private IWorkService workService; 
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
-	public Object getCareworks(
+	public Object getAreaworks(
 			@PathVariable("gid") int geroId,
 			@RequestParam(value="start_date", required=false) String startDate,
 			@RequestParam(value="end_date", required=false) String endDate,
-			@RequestParam(value="eid", required=false) Integer elderId,
+			@RequestParam(value="aid", required=false) Integer areaId,
 			@RequestParam(value="sid", required=false) Integer staffId,
 			@RequestParam("page") int page,
 			@RequestParam("limit") int limit,
@@ -64,16 +64,16 @@ public class CareworkRestController extends BasicController {
 			String otherMessage = "start_date 或 end_date 不符合日期格式:" +
 					"[start_date=" + startDate + "]" +
 					"[end_date=" + endDate + "]";
-			String message = ErrorConstants.format(ErrorConstants.GERO_CAREWORK_GET_PARAM_INVALID, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREAWORK_GET_PARAM_INVALID, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
 		
 		try {
 			// 参数预处理
-			String elderIds = null;
-			if (elderId != null)
-				elderIds = "" + elderId;
+			String areaIds = null;
+			if (areaId != null)
+				areaIds = "" + areaId;
 			
 			Map<String, String> tempMap = ParamUtils.getDateOfStartDateAndEndDate(startDate, endDate);
 			startDate = tempMap.get("startDate");
@@ -82,49 +82,46 @@ public class CareworkRestController extends BasicController {
 			// 获取基础的 JSON返回
 			BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
 			
-			CareworkEntity requestCareworkEntity = new CareworkEntity();
-			requestCareworkEntity.setGeroId(geroId);
-			requestCareworkEntity.setElderIds(elderIds);
-			requestCareworkEntity.setCarerId(staffId);
+			AreaworkEntity requestAreaworkEntity = new AreaworkEntity();
+			requestAreaworkEntity.setGeroId(geroId);
+			requestAreaworkEntity.setAreaIds(areaIds);
+			requestAreaworkEntity.setCarerId(staffId);
 			
-			Page<CareworkEntity> pages = new Page<CareworkEntity>(page, limit);
+			Page<AreaworkEntity> pages = new Page<AreaworkEntity>(page, limit);
 			pages = setOrderBy(pages, orderByTag);
-			requestCareworkEntity.setPage(pages);
+			requestAreaworkEntity.setPage(pages);
 			
-			requestCareworkEntity.setReqStartDate(startDate);
-			requestCareworkEntity.setReqEndDate(endDate);
+			requestAreaworkEntity.setReqStartDate(startDate);
+			requestAreaworkEntity.setReqEndDate(endDate);
 			
-			List<CareworkEntity> careworkEntities = workService.getCareworkEntities(requestCareworkEntity);
-			basicReturnedJson.setTotal((int) requestCareworkEntity.getPage().getCount());
+			List<AreaworkEntity> areaworkEntities = workService.getAreaworkEntities(requestAreaworkEntity);
+			basicReturnedJson.setTotal((int) requestAreaworkEntity.getPage().getCount());
 			
-			
-			for (CareworkEntity careworkEntity : careworkEntities) {
+			for (AreaworkEntity areaworkEntity : areaworkEntities) {
 				Map<String, Object> resultMap = new HashMap<String, Object>(); 
-				resultMap.put("id", careworkEntity.getId()); 
-				resultMap.put("staff_id", careworkEntity.getCarerId()); 
-				resultMap.put("end_date", careworkEntity.getEndDate()); 
-				resultMap.put("status", careworkEntity.getStatus());
+				resultMap.put("id", areaworkEntity.getId()); 
+				resultMap.put("staff_id", areaworkEntity.getCarerId()); 
+				resultMap.put("end_date", areaworkEntity.getEndDate()); 
+				resultMap.put("status", areaworkEntity.getStatus());
 				
-				List<Integer> elderIdsList = new ArrayList<Integer>();
-				String[] tempStrings = careworkEntity.getElderIds().split(",");
+				List<Integer> areaIdsList = new ArrayList<Integer>();
+				String[] tempStrings = areaworkEntity.getAreaIds().split(",");
 				for (String string : tempStrings)
 					if (StringUtils.isNotBlank(string)) {
-						elderIdsList.add(Integer.parseInt(string.trim()));
+						areaIdsList.add(Integer.parseInt(string.trim()));
 					}
 				
-				resultMap.put("elder_ids", elderIdsList); 
+				resultMap.put("area_ids", areaIdsList); 
 				
 				basicReturnedJson.addEntity(resultMap);
 			}
-			
-			
 			
 			return basicReturnedJson.getMap();
 			
 		} catch(Exception e) {
 			e.printStackTrace();
 			String otherMessage = "[" + e.getMessage() + "]";
-			String message = ErrorConstants.format(ErrorConstants.GERO_CAREWORK_GET_SERVICE_FAILED, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREAWORK_GET_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
@@ -132,7 +129,7 @@ public class CareworkRestController extends BasicController {
 	
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
-	public Object postCarework(
+	public Object postAreawork(
 			@PathVariable("gid") int geroId,
 			@RequestBody String inJson
 			) {
@@ -142,17 +139,17 @@ public class CareworkRestController extends BasicController {
 		requestParamMap.put("geroId", geroId);
 		
 		Integer staffId = null;
-		List<Integer> elderIdsList = null;
+		List<Integer> areaIdsList = null;
 		String endDate = null;
 		Integer status = 0;
 		
 		try {
 			staffId = (Integer) requestParamMap.get("staffId");
-			elderIdsList = (List<Integer>) requestParamMap.get("elderIds");
+			areaIdsList = (List<Integer>) requestParamMap.get("areaIds");
 			endDate = (String) requestParamMap.get("endDate");
 			
 			if (requestParamMap.get("staffId") == null
-				|| requestParamMap.get("elderIds") == null
+				|| requestParamMap.get("areaIds") == null
 				)
 				throw new Exception();
 			
@@ -161,7 +158,7 @@ public class CareworkRestController extends BasicController {
 				throw new Exception();
 		} catch(Exception e) {
 			String otherMessage = "[" + inJson + "]";
-			String message = ErrorConstants.format(ErrorConstants.GERO_CAREWOKR_POST_PARAM_INVALID, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREAWORK_POST_PARAM_INVALID, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
@@ -172,21 +169,21 @@ public class CareworkRestController extends BasicController {
 		// 插入数据
 		try {
 			
-			String elderIds = ",";
-			for (Integer integer : elderIdsList) {
-				elderIds += integer.toString() + ",";
+			String areaIds = ",";
+			for (Integer integer : areaIdsList) {
+				areaIds += integer.toString() + ",";
 			}
 			
-			CareworkEntity requestCareworkEntity = new CareworkEntity();
-			BeanUtils.populate(requestCareworkEntity, requestParamMap);
-			requestCareworkEntity.setElderIds(elderIds);
-			requestCareworkEntity.setCarerId(staffId);
-			requestCareworkEntity.setStatus(status);
-			workService.insertCarework(requestCareworkEntity);
+			AreaworkEntity requestAreaworkEntity = new AreaworkEntity();
+			BeanUtils.populate(requestAreaworkEntity, requestParamMap);
+			requestAreaworkEntity.setAreaIds(areaIds);
+			requestAreaworkEntity.setCarerId(staffId);
+			requestAreaworkEntity.setStatus(status);
+			workService.insertAreawork(requestAreaworkEntity);
 			
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
-			String message = ErrorConstants.format(ErrorConstants.GERO_CAREWOKR_POST_SERVICE_FAILED, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREAWORK_POST_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
@@ -196,25 +193,25 @@ public class CareworkRestController extends BasicController {
 	}
 	
 	@Transactional
-	@RequestMapping(value="{carework_id}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
-	public Object putCarework(
+	@RequestMapping(value="{areawork_id}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
+	public Object putAreawork(
 			@PathVariable("gid") int geroId,
-			@PathVariable("carework_id") int careworkId,
+			@PathVariable("areawork_id") int areaworkId,
 			@RequestBody String inJson
 			) {
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
 		requestParamMap.put("geroId", geroId);
-		requestParamMap.put("id", careworkId);
+		requestParamMap.put("id", areaworkId);
 		
 		Integer staffId = null;
-		List<Integer> elderIdsList = null;
+		List<Integer> areaIdsList = null;
 		String endDate = null;
 		
 		try {
 			staffId = (Integer) requestParamMap.get("staffId");
-			elderIdsList = (List<Integer>) requestParamMap.get("elderIds");
+			areaIdsList = (List<Integer>) requestParamMap.get("areaIds");
 			endDate = (String) requestParamMap.get("endDate");
 			
 			// 参数详细验证
@@ -222,7 +219,7 @@ public class CareworkRestController extends BasicController {
 				throw new Exception();
 		} catch(Exception e) {
 			String otherMessage = "[" + inJson + "]";
-			String message = ErrorConstants.format(ErrorConstants.GERO_CAREWOKR_PUT_PARAM_INVALID, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREAWORK_PUT_PARAM_INVALID, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
@@ -233,23 +230,23 @@ public class CareworkRestController extends BasicController {
 		// 插入数据
 		try {
 			
-			String elderIds = null;
-			if (elderIdsList != null) {
-				elderIds = ",";
-				for (Integer integer : elderIdsList) {
-					elderIds += integer.toString() + ",";
+			String areaIds = null;
+			if (areaIdsList != null) {
+				areaIds = ",";
+				for (Integer integer : areaIdsList) {
+					areaIds += integer.toString() + ",";
 				}
 			}
 			
-			CareworkEntity requestCareworkEntity = new CareworkEntity();
-			BeanUtils.populate(requestCareworkEntity, requestParamMap);
-			requestCareworkEntity.setElderIds(elderIds);
-			requestCareworkEntity.setCarerId(staffId);
-			workService.updateCarework(requestCareworkEntity);
+			AreaworkEntity requestAreaworkEntity = new AreaworkEntity();
+			BeanUtils.populate(requestAreaworkEntity, requestParamMap);
+			requestAreaworkEntity.setAreaIds(areaIds);
+			requestAreaworkEntity.setCarerId(staffId);
+			workService.updateAreawork(requestAreaworkEntity);
 			
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
-			String message = ErrorConstants.format(ErrorConstants.GERO_CAREWOKR_PUT_SERVICE_FAILED, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREAWORK_PUT_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
@@ -259,16 +256,16 @@ public class CareworkRestController extends BasicController {
 	}
 	
 	@Transactional
-	@RequestMapping(value="{carework_id}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
+	@RequestMapping(value="{areawork_id}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteCarework(
 			@PathVariable("gid") int geroId,
-			@PathVariable("carework_id") int careworkId
+			@PathVariable("areawork_id") int areaworkId
 			) {
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
 		requestParamMap.put("geroId", geroId);
-		requestParamMap.put("id", careworkId);
+		requestParamMap.put("id", areaworkId);
 		
 		
 		// 获取基础的 JSON
@@ -276,15 +273,14 @@ public class CareworkRestController extends BasicController {
 		
 		// 删除数据
 		try {
-			
 		
-			CareworkEntity requestCareworkEntity = new CareworkEntity();
-			BeanUtils.populate(requestCareworkEntity, requestParamMap);
-			workService.deleteCarework(requestCareworkEntity);
+			AreaworkEntity requestAreaworkEntity = new AreaworkEntity();
+			BeanUtils.populate(requestAreaworkEntity, requestParamMap);
+			workService.deleteAreawork(requestAreaworkEntity);
 			
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
-			String message = ErrorConstants.format(ErrorConstants.GERO_CAREWOKR_DELETE_SERVICE_FAILED, otherMessage);
+			String message = ErrorConstants.format(ErrorConstants.GERO_AREAWORK_DELETE_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
@@ -292,5 +288,4 @@ public class CareworkRestController extends BasicController {
 		return basicReturnedJson.getMap();
 		
 	}
-	
 }
