@@ -28,7 +28,7 @@ import com.sjtu.icare.modules.sys.service.SystemService;
  *
  */
 @RestController
-@RequestMapping("/privilege")
+@RequestMapping({"${api.web}/privilege","${api.service}/privilege"})
 public class PrivilegeController extends SysBaseController{
 	
 	private static Logger logger = Logger.getLogger(PrivilegeController.class);

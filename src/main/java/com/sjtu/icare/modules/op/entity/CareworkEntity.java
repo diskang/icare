@@ -9,7 +9,6 @@ package com.sjtu.icare.modules.op.entity;
 
 import java.io.Serializable;
 
-import com.opensymphony.module.sitemesh.Page;
 import com.sjtu.icare.common.persistence.DataEntity;
 
 public class CareworkEntity extends DataEntity<CareworkEntity> implements Serializable {

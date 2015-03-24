@@ -62,8 +62,8 @@ public class ElderInfoController extends GeroBaseController{
 			@RequestParam(value="care_level", required=false) Integer careLevel,
 			@RequestParam(value="area_id", required=false) Integer areaId,
 			@RequestParam("page") int page,
-			@RequestParam("limit") int limit,
-			@RequestParam("order_by") String orderByTag
+			@RequestParam("rows") int limit,
+			@RequestParam("sort") String orderByTag
 			) {
 		
 		Page<User> userPage = new Page<User>(page, limit);
@@ -181,6 +181,8 @@ public class ElderInfoController extends GeroBaseController{
 				
 				basicReturnedJson.addEntity(resultMap);
 			}
+			
+			basicReturnedJson.setTotal((int) queryUser.getPage().getCount());
 			
 			return basicReturnedJson.getMap();
 			

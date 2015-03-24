@@ -124,6 +124,7 @@ public class SysBaseController extends BasicController {
 		userMap.put("username", user.getLoginName());
 		userMap.put("user_type", user.getUserType());
 		userMap.put("user_id", user.getUserId());
+		userMap.put("gero_id", user.getGeroId());
 		ArrayList<Object> roleList = new ArrayList<Object>();
 		for (Role role : user.getRoleList()){
 			Map<String, Object> roleMap = new HashMap<String, Object>();

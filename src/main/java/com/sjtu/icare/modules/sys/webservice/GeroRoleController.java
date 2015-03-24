@@ -41,7 +41,7 @@ import com.sjtu.icare.modules.sys.utils.UserUtils;
 * @author jty
 */
 @RestController
-@RequestMapping("/admin/gero")
+@RequestMapping({"${api.web}/gero","${api.service}/gero"})
 public class GeroRoleController extends GeroBaseController {
 	
 	private static Logger logger = Logger.getLogger(GeroRoleController.class);
@@ -61,8 +61,8 @@ public class GeroRoleController extends GeroBaseController {
 	public Map<String, Object> getGeroRoleList(
 			@PathVariable("gid") int gid,
 			@RequestParam("page") int page,
-			@RequestParam("limit") int limit,
-			@RequestParam("order_by") String orderByTag){
+			@RequestParam("rows") int limit,
+			@RequestParam("sort") String orderByTag){
 		
 //		 检查用户是否有访问此养老院权限
 //		checkGero(gid);

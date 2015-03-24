@@ -61,8 +61,8 @@ public class StaffRestController extends BasicController {
 			@RequestParam(value="identity_no", required=false) String identityNo,
 			@RequestParam(value="role", required=false) String role,
 			@RequestParam("page") int page,
-			@RequestParam("limit") int limit,
-			@RequestParam("order_by") String orderByTag
+			@RequestParam("rows") int limit,
+			@RequestParam("sort") String orderByTag
 			) {
 		
 		Page<User> userPage = new Page<User>(page, limit);
@@ -128,6 +128,8 @@ public class StaffRestController extends BasicController {
 				
 				basicReturnedJson.addEntity(resultMap);
 			}
+			
+			basicReturnedJson.setTotal((int) queryUser.getPage().getCount());
 			
 			return basicReturnedJson.getMap();
 			
