@@ -405,7 +405,7 @@ public class GeroRoleController extends GeroBaseController {
 					exist = true;
 //					throw new RestException();
 				}
-				if (inputPrivilege.getParentId() == privilege.getId()) {
+				if (inputPrivilege.getParentId() == privilege.getId() && inputPrivilege.getParentId() == 0) {
 					// 父节点不存在
 					parentExist = true;
 				}

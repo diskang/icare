@@ -20,6 +20,7 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 
 import com.alibaba.fastjson.JSONObject;
+import com.sjtu.icare.common.utils.BasicReturnedJson;
 
 /**
  * 无状态验证过滤类
@@ -85,6 +86,9 @@ public class StatelessAuthcFilter extends AccessControlFilter {
 	    JSONObject errorJsonObject = new JSONObject();
 	    errorJsonObject.put("errno", HttpServletResponse.SC_UNAUTHORIZED+"");
 	    errorJsonObject.put("error", errorString);
+	    BasicReturnedJson result = null;
+	    result.setError(errorString);
+	    result.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	    httpResponse.getWriter().write(errorJsonObject.toJSONString());  
 	}
 }
