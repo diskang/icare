@@ -7,38 +7,76 @@
     <cache />
     
     
+    <resultMap id="AreaworkMap" type="com.sjtu.icare.modules.op.entity.AreaworkEntity">
+        <id property="id" column="id" />
+        <result property="carerId" column="carer_id" />
+        <result property="areaIds" column="area_ids" />
+        <result property="geroId" column="gero_id" />
+        <result property="endDate" column="end_date" />
+        <result property="status" column="status" />
+    </resultMap>
   
-    <select id="getAreaworkEntityById" resultType="AreaworkEntity" parameterType="int">
+    <select id="getAreaworkEntities" resultMap="AreaworkMap">
+        
         SELECT
-			id,
-			carer_id,
-			area_id,
-			start_date,
-			end_date
-        FROM T_AREAWORK
-        WHERE T_AREAWORK.id = #{id}
+            T_AREAWORK.*
+        FROM
+            T_AREAWORK
+        WHERE
+            T_AREAWORK.gero_id = #{geroId}
+            <if test="areaIds != null">
+            AND T_AREAWORK.area_ids LIKE '%,' + #{areaIds} + ',%'
+            </if>
+            <if test="carerId != null">
+            AND T_AREAWORK.carer_id = #{carerId}
+            </if>
+            <if test="reqStartDate != null">
+                <![CDATA[
+                AND #{reqStartDate} <= CONVERT(nvarchar(23), T_AREAWORK.end_date, 120)
+                ]]>
+            </if>
+            <if test="reqEndDate != null">
+                <![CDATA[
+                AND #{reqEndDate} >= CONVERT(nvarchar(23), T_AREAWORK.end_date, 120)
+                ]]>
+            </if>
     </select>
+        
+    <insert id="insertAreawork">
+        
+        INSERT INTO
+            T_AREAWORK(carer_id, area_ids, gero_id, end_date, status)
+        VALUES
+            (#{carerId}, #{areaIds}, #{geroId}, #{endDate}, #{status})
     
-    <select id="getAreaworkEntitiesByCarerid" resultType="AreaworkEntity" parameterType="int">
-        SELECT
-			id,
-			carer_id,
-			area_id,
-			start_date,
-			end_date
-        FROM T_AREAWORK
-        WHERE T_AREAWORK.carer_id = #{carerId}
-    </select>
+    </insert>
     
-    <select id="getAreaworkEntityByElderid" resultType="AreaworkEntity" parameterType="int">
-        SELECT
-			id,
-			carer_id,
-			area_id,
-			start_date,
-			end_date
-        FROM T_AREAWORK
-        WHERE T_AREAWORK.elder_id = #{elderId}
-    </select>
+    <update id="updateAreawork">
+        UPDATE
+            T_AREAWORK
+        <set>
+            <if test="carerId != null">
+            T_AREAWORK.carer_id = #{carerId},
+            </if>
+            <if test="areaIds != null">
+            T_AREAWORK.area_ids = #{areaIds},
+            </if>
+            <if test="endDate != null">
+            T_AREAWORK.end_date = #{endDate},
+            </if>
+            <if test="status != null">
+            T_AREAWORK.status = #{status}
+            </if>
+        </set>
+        WHERE
+            T_AREAWORK.id = #{id}
+    </update>
+    
+    <delete id="deleteAreawork">
+        DELETE FROM
+            T_AREAWORK
+        WHERE
+            T_AREAWORK.id = #{id}
+    </delete>
     
 </mapper>

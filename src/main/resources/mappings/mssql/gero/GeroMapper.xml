@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.icare.modules.gero.persistence.GeroDAO">
+
+    <cache />
+    
+    <resultMap type="com.sjtu.icare.modules.gero.entity.GeroEntity" id="GeroMap">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="city" column="city" />
+        <result property="district" column="district" />
+        <result property="address" column="address" />
+        <result property="contact" column="contact" />
+        <result property="licence" column="licence" />
+        <result property="scale" column="scale" />
+        <result property="careLevel" column="care_level" />
+        <result property="contactId" column="contact_id" />
+        <result property="logoUrl" column="logo_url" />
+        <result property="photoUrl" column="photo_url" />
+        <result property="registerDate" column="register_date" />
+        <result property="cancelDate" column="cancel_date" />
+    </resultMap>
+  
+    <select id="getGeros" resultMap="GeroMap">
+
+        SELECT
+            T_GERO.*
+        FROM T_GERO
+  
+    </select>
+    
+    
+    
+    
+   
+</mapper>

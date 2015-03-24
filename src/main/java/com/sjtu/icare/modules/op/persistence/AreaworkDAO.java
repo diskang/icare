@@ -14,11 +14,41 @@ import com.sjtu.icare.modules.op.entity.AreaworkEntity;
 
 @MyBatisDao
 public interface AreaworkDAO {
+	/**
+	 * @Title getAreaworkEntities
+	 * @Description TODO
+	 * @param @param areaworkEntity
+	 * @param @return
+	 * @return List<AreaworkEntity>
+	 * @throws
+	 */
+	List<AreaworkEntity> getAreaworkEntities(AreaworkEntity areaworkEntity);
 
-	AreaworkEntity getCareworkEntityById(Map<String, Object> AreaworkEntity);
-	
-	List<AreaworkEntity> getCareworkEntitiesByCarerid(Map<String, Object> AreaworkEntity);
-	
-	AreaworkEntity getCareworkEntityByElderid(Map<String, Object> AreaworkEntity);
+	/**
+	 * @Title insertAreawork
+	 * @Description TODO
+	 * @param @param areaworkEntity
+	 * @return void
+	 * @throws
+	 */
+	void insertAreawork(AreaworkEntity areaworkEntity);
+
+	/**
+	 * @Title updateAreawork
+	 * @Description TODO
+	 * @param @param areaworkEntity
+	 * @return void
+	 * @throws
+	 */
+	void updateAreawork(AreaworkEntity areaworkEntity);
+
+	/**
+	 * @Title deleteAreawork
+	 * @Description TODO
+	 * @param @param areaworkEntity
+	 * @return void
+	 * @throws
+	 */
+	void deleteAreawork(AreaworkEntity areaworkEntity);
 	
 }

@@ -56,4 +56,22 @@ public interface CareworkDAO {
 	 */
 	void insertCarework(CareworkEntity careworkEntity);
 
+	/**
+	 * @Title updateCarework
+	 * @Description TODO
+	 * @param @param careworkEntity
+	 * @return void
+	 * @throws
+	 */
+	void updateCarework(CareworkEntity careworkEntity);
+
+	/**
+	 * @Title deleteCarework
+	 * @Description TODO
+	 * @param @param careworkEntity
+	 * @return void
+	 * @throws
+	 */
+	void deleteCarework(CareworkEntity careworkEntity);
+
 }
