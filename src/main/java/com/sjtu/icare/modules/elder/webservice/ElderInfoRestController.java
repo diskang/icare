@@ -39,9 +39,9 @@ import com.sjtu.icare.modules.sys.service.SystemService;
 
 @RestController
 @RequestMapping({"${api.web}/gero/{gid}/elder", "${api.service}/gero/{gid}/elder"})
-public class ElderInfoController extends GeroBaseController{
+public class ElderInfoRestController extends GeroBaseController{
 	
-	private static Logger logger = Logger.getLogger(ElderInfoController.class);
+	private static Logger logger = Logger.getLogger(ElderInfoRestController.class);
 	
 	@Autowired
 	private IElderInfoService elderInfoService;
