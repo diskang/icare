@@ -74,7 +74,12 @@ public class UserUtils {
 		User user = (User)CacheUtils.get(USER_CACHE, USER_CACHE_LOGIN_NAME_ + loginName);
 		if (user == null){
 			logger.debug("to get user");
-			user = userMapper.getByUsername(new User(-1, loginName));
+			try {
+				user = userMapper.getByUsername(new User(-1, loginName));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			logger.debug("getted user");
 			if (user == null){
 				return null;

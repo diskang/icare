@@ -14,6 +14,8 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 
+import com.alibaba.fastjson.JSON;
+
 
 public class BasicReturnedJson {
 	private HashMap<String, Object> map = new HashMap<String, Object>();
@@ -70,6 +72,11 @@ public class BasicReturnedJson {
 	public Map<String, Object> getMap() {
 		return map;
 	}
+	
+	public String toString() {
+		return JSON.toJSONString(map);
+	}
+	
 }
 
 

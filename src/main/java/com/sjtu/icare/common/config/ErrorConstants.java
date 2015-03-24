@@ -199,6 +199,9 @@ public class ErrorConstants {
 	public static final String GERO_AREAWORK_PUT_SERVICE_FAILED = "480006 PUT 房间护工：后台服务失败";
 	public static final String GERO_AREAWORK_DELETE_SERVICE_FAILED = "480007 DELETE 房间护工：后台服务失败";
 	
+	// gero constants
+	public static final String GERO_GET_SERVICE_FAILED = "490001 GET 养老院：后台服务失败";
+	
 	
 	public static String format(String errorConstant, String otherMessage) {
 		if (errorConstant == null)
