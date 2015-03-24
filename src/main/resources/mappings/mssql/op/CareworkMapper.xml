@@ -86,5 +86,33 @@
             (#{carerId}, #{elderIds}, #{geroId}, #{endDate}, #{status})
     
     </insert>
+    
+    <update id="updateCarework">
+        UPDATE
+            T_CAREWORK
+        <set>
+            <if test="carerId != null">
+            T_CAREWORK.carer_id = #{carerId},
+            </if>
+            <if test="elderIds != null">
+            T_CAREWORK.elder_ids = #{elderIds},
+            </if>
+            <if test="endDate != null">
+            T_CAREWORK.end_date = #{endDate},
+            </if>
+            <if test="status != null">
+            T_CAREWORK.status = #{status}
+            </if>
+        </set>
+        WHERE
+            T_CAREWORK.id = #{id}
+    </update>
+    
+    <delete id="deleteCarework">
+        DELETE FROM
+            T_CAREWORK
+        WHERE
+            T_CAREWORK.id = #{id}
+    </delete>
       
 </mapper>

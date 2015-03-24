@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import com.sjtu.icare.common.security.Digests;
 import com.sjtu.icare.common.security.HmacSHA256Utils;
+import com.sjtu.icare.common.utils.Encodes;
 import com.sjtu.icare.common.utils.SpringContextHolder;
 import com.sjtu.icare.common.utils.StringUtils;
 import com.sjtu.icare.common.web.rest.RestException;
@@ -52,8 +54,9 @@ public class StatelessRealm extends AuthorizingRealm {
         String username = statelessToken.getUsername();
         logger.debug(username);
         String key = getKey(username);//根据用户名获取密钥（和客户端的一样）
+        String keyDigest = Encodes.encodeHex(Digests.sha1(key.getBytes()));
         //在服务器端生成客户端参数消息摘要
-        String serverDigest = HmacSHA256Utils.digest(key, statelessToken.getParams());
+        String serverDigest = HmacSHA256Utils.digest(keyDigest, statelessToken.getParams());
         logger.debug(serverDigest);
         //然后进行客户端消息摘要和服务器端消息摘要的匹配
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(

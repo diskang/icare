@@ -44,6 +44,7 @@ public class User extends DataEntity<User> {
     private Integer ageMax;
     private Integer areaId;
     private Integer careLevel;
+    private List<Integer> areaIds;
     
     
 	private Role role;	// 根据角色查询用户条件
@@ -427,6 +428,20 @@ public class User extends DataEntity<User> {
 	 */
 	public void setCareLevel(Integer careLevel) {
 		this.careLevel = careLevel;
+	}
+
+	/**
+	 * @return the areaIds
+	 */
+	public List<Integer> getAreaIds() {
+		return areaIds;
+	}
+
+	/**
+	 * @param areaIds the areaIds to set
+	 */
+	public void setAreaIds(List<Integer> areaIds) {
+		this.areaIds = areaIds;
 	}
 	
 	

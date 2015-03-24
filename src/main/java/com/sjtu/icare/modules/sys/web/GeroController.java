@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sjtu.icare.common.web.BaseController;
 import com.sjtu.icare.modules.sys.entity.Gero;
-import com.sjtu.icare.modules.sys.service.GeroService;
+import com.sjtu.icare.modules.sys.service.GeroTestService;
 
 /**
  * 测试类
@@ -21,7 +21,7 @@ import com.sjtu.icare.modules.sys.service.GeroService;
 @RequestMapping("/test/gero")
 public class GeroController extends BaseController{
 	@Autowired
-	private GeroService geroService;
+	private GeroTestService geroService;
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String insertGero( Gero gero, BindingResult result, Model model){
