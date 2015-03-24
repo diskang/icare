@@ -387,6 +387,7 @@ public class GeroRoleController extends GeroBaseController {
 		
 		// 遍历排序过的权限列表
 		for (Map.Entry<String, String> entry : inputPrivilegeMap.entrySet()){
+			List<Privilege> insertPrivileges = new ArrayList<Privilege>();
 			int id = Integer.parseInt(entry.getKey());
 			logger.debug(entry.getKey() + " " + entry.getValue());
 			Privilege inputPrivilege = new Privilege();
@@ -399,13 +400,16 @@ public class GeroRoleController extends GeroBaseController {
 			//判断权限是否存在，父节点是否存在
 			Boolean parentExist = false;
 			Boolean exist = false;
+			if (inputPrivilege.getParentId() == 0) {
+				parentExist = true;
+			}
 			for (Privilege privilege : rolePrivileges){
 				if (privilege.getId() == id) {
 					// 已存在该权限
 					exist = true;
 //					throw new RestException();
 				}
-				if (inputPrivilege.getParentId() == privilege.getId() && inputPrivilege.getParentId() == 0) {
+				if (inputPrivilege.getParentId() == privilege.getId()) {
 					// 父节点不存在
 					parentExist = true;
 				}
@@ -420,12 +424,16 @@ public class GeroRoleController extends GeroBaseController {
 				throw new RestException(HttpStatus.BAD_REQUEST, message);
 			}
 			if (exist == false) {
+				insertPrivileges.add(inputPrivilege);
 				rolePrivileges.add(inputPrivilege);
 			}
+			role.setPrivilegeList(insertPrivileges);
+			if (insertPrivileges.size() > 0)
+				systemService.insertRolePrivilege(role);
+			
 		}
 		
-		role.setPrivilegeList(rolePrivileges);
-		systemService.insertRolePrivilege(role);
+		
 		
 		return result.getMap();
 	}

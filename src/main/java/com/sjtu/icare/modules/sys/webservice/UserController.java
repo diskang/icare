@@ -104,7 +104,7 @@ public class UserController extends SysBaseController{
 	public Map<String, Object> getUserInfoFromUserId(
 			HttpServletRequest request,
 			@PathVariable("uid") int uid){
-		checkPermission(request);
+//		checkPermission(request);
 		
 		BasicReturnedJson result = new BasicReturnedJson();
 		
