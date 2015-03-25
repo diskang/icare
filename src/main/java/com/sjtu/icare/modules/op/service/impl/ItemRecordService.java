@@ -38,12 +38,17 @@ public class ItemRecordService implements IItemRecordService {
 	public List<CareworkRecordEntity> getCareworkRecords(
 			CareworkRecordEntity careworkRecordEntity, String startDate,
 			String endDate) {
-		Map<String, Object> paramMap = MapListUtils.beanToMap(careworkRecordEntity);
-		paramMap.put("startDate", startDate);
-		paramMap.put("endDate", endDate);
-		paramMap.put("staffType", CommonConstants.STAFF_TYPE);
-		paramMap.put("elderType", CommonConstants.ELDER_TYPE);
-		return careworkRecordDAO.getCareworkRecords(paramMap);
+//		Map<String, Object> paramMap = MapListUtils.beanToMap(careworkRecordEntity);
+//		paramMap.put("startDate", startDate);
+//		paramMap.put("endDate", endDate);
+//		paramMap.put("staffType", CommonConstants.STAFF_TYPE);
+//		paramMap.put("elderType", CommonConstants.ELDER_TYPE);
+		careworkRecordEntity.setStartDate(startDate);
+		careworkRecordEntity.setEndDate(endDate);
+		careworkRecordEntity.setStaffType(CommonConstants.STAFF_TYPE);
+		careworkRecordEntity.setElderType(CommonConstants.ELDER_TYPE);
+		
+		return careworkRecordEntity.getPage().setList(careworkRecordDAO.getCareworkRecords(careworkRecordEntity)).getList();
 	}
 
 
@@ -65,11 +70,17 @@ public class ItemRecordService implements IItemRecordService {
 	public List<AreaworkRecordEntity> getAreaworkRecords(
 			AreaworkRecordEntity areaworkRecordEntity, String startDate,
 			String endDate) {
-		Map<String, Object> paramMap = MapListUtils.beanToMap(areaworkRecordEntity);
-		paramMap.put("startDate", startDate);
-		paramMap.put("endDate", endDate);
-		paramMap.put("staffType", CommonConstants.STAFF_TYPE);
-		return areaworkRecordDAO.getAreaworkRecords(paramMap);
+//		Map<String, Object> paramMap = MapListUtils.beanToMap(areaworkRecordEntity);
+//		paramMap.put("startDate", startDate);
+//		paramMap.put("endDate", endDate);
+//		paramMap.put("staffType", CommonConstants.STAFF_TYPE);
+		
+		areaworkRecordEntity.setStartDate(startDate);
+		areaworkRecordEntity.setEndDate(endDate);
+		areaworkRecordEntity.setStaffType(CommonConstants.STAFF_TYPE);
+		
+		return areaworkRecordEntity.getPage().setList(areaworkRecordDAO.getAreaworkRecords(areaworkRecordEntity)).getList();
+		
 	}
 
 

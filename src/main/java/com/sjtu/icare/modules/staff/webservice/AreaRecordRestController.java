@@ -25,20 +25,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sjtu.icare.common.config.ErrorConstants;
+import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.ParamValidator;
+import com.sjtu.icare.common.web.rest.BasicController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.op.entity.AreaworkRecordEntity;
-import com.sjtu.icare.modules.op.entity.CareworkRecordEntity;
 import com.sjtu.icare.modules.op.service.IItemRecordService;
 
 @RestController
 @RequestMapping({"${api.web}/gero/{gid}/areawork_record", "${api.service}/gero/{gid}/areawork_record"})
-public class AreaRecordRestController {
+public class AreaRecordRestController extends BasicController {
 	private static Logger logger = Logger.getLogger(AreaRecordRestController.class);
 	
 	@Autowired
@@ -47,10 +48,13 @@ public class AreaRecordRestController {
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getAreaworkRecords(
 			@PathVariable("gid") int geroId,
-			@RequestParam(value="sid", required=false) Integer carerId,
-			@RequestParam(value="aid", required=false) Integer areaId,
+			@RequestParam(value="staff_id", required=false) Integer carerId,
+			@RequestParam(value="area_id", required=false) Integer areaId,
 			@RequestParam(value="start_date", required=false) String startDate,
-			@RequestParam(value="end_date", required=false) String endDate
+			@RequestParam(value="end_date", required=false) String endDate,
+			@RequestParam("page") int page,
+			@RequestParam("rows") int rows,
+			@RequestParam("sort") String sort
 			) {
 		
 		// 参数检查
@@ -75,7 +79,14 @@ public class AreaRecordRestController {
 			AreaworkRecordEntity queryAreaworkRecordEntity = new AreaworkRecordEntity();
 			queryAreaworkRecordEntity.setCarerId(carerId);
 			queryAreaworkRecordEntity.setAreaId(areaId);
+			
+			Page<AreaworkRecordEntity> pages = new Page<AreaworkRecordEntity>(page, rows);
+			pages = setOrderBy(pages, sort);
+			queryAreaworkRecordEntity.setPage(pages);
+			
 			List<AreaworkRecordEntity> areaworkRecordEntities = itemRecordService.getAreaworkRecords(queryAreaworkRecordEntity, startDate, endDate);
+			
+			basicReturnedJson.setTotal((int) queryAreaworkRecordEntity.getPage().getCount());
 
 			// 构造返回的 JSON
 			for (AreaworkRecordEntity areaworkRecordEntity : areaworkRecordEntities) {
