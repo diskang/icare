@@ -38,7 +38,7 @@ import com.sjtu.icare.modules.staff.entity.StaffEntity;
 import com.sjtu.icare.modules.sys.entity.User;
 
 @RestController
-@RequestMapping({"${api.web}/elder/{eid}/care_item", "${api.service}/elder/{eid}/care_item"})
+@RequestMapping({"${api.web}/gero/{gid}/elder/{eid}/care_item", "${api.service}/gero/{gid}/elder/{eid}/care_item"})
 public class ElderCareItemRestController extends BasicController {
 	private static Logger logger = Logger.getLogger(ElderCareItemRestController.class);
 	
@@ -49,8 +49,8 @@ public class ElderCareItemRestController extends BasicController {
 	public Object getElderItems(
 			@PathVariable("eid") int elderId,
 			@RequestParam("page") int page,
-			@RequestParam("limit") int limit,
-			@RequestParam("order_by") String orderByTag
+			@RequestParam("rows") int limit,
+			@RequestParam("sort") String orderByTag
 			) {
 		Page<ElderItemEntity> elderItemEntityPage = new Page<ElderItemEntity>(page, limit);
 		elderItemEntityPage = setOrderBy(elderItemEntityPage, orderByTag);
@@ -68,21 +68,25 @@ public class ElderCareItemRestController extends BasicController {
 			queyrElderItemEntity.setPage(elderItemEntityPage);
 			List<ElderItemEntity> elderItemEntities;
 			elderItemEntities = elderInfoService.getElderItems(queyrElderItemEntity);
+			basicReturnedJson.setTotal((int) queyrElderItemEntity.getPage().getCount());
 			
-			for (ElderItemEntity elderItemEntity : elderItemEntities) {
-				
-				Map<String, Object> resultMap = new HashMap<String, Object>(); 
-				resultMap.put("id", elderItemEntity.getId()); 
-				resultMap.put("care_item_id", elderItemEntity.getCareItemId()); 
-				resultMap.put("care_item_name", elderItemEntity.getCareItemName()); 
-				resultMap.put("icon", elderItemEntity.getIcon()); 
-				resultMap.put("level", elderItemEntity.getLevel()); 
-				resultMap.put("period", elderItemEntity.getPeriod()); 
-				resultMap.put("start_time", elderItemEntity.getStartTime()); 
-				resultMap.put("end_time", elderItemEntity.getEndTime()); 
-				
-				basicReturnedJson.addEntity(resultMap);
+			if (elderItemEntities != null) {
+				for (ElderItemEntity elderItemEntity : elderItemEntities) {
+					
+					Map<String, Object> resultMap = new HashMap<String, Object>(); 
+					resultMap.put("id", elderItemEntity.getId()); 
+					resultMap.put("care_item_id", elderItemEntity.getCareItemId()); 
+					resultMap.put("care_item_name", elderItemEntity.getCareItemName()); 
+					resultMap.put("icon", elderItemEntity.getIcon()); 
+					resultMap.put("level", elderItemEntity.getLevel()); 
+					resultMap.put("period", elderItemEntity.getPeriod()); 
+					resultMap.put("start_time", elderItemEntity.getStartTime()); 
+					resultMap.put("end_time", elderItemEntity.getEndTime()); 
+					
+					basicReturnedJson.addEntity(resultMap);
+				}
 			}
+			
 			
 			return basicReturnedJson.getMap();
 			

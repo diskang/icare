@@ -124,7 +124,7 @@ public class GeroCareItemRestController extends BasicController {
 			frequency = (Integer) requestParamMap.get("frequency");
 			notes = (String) requestParamMap.get("notes");
 			
-			if (name == null || icon == null || level == null || period == null || frequency == null || notes == null)
+			if (name == null || level == null)
 				throw new Exception();
 			
 			// 参数详细验证
@@ -294,6 +294,7 @@ public class GeroCareItemRestController extends BasicController {
 			itemService.deleteCareItem(inputEntity);
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
+			
 			String message = ErrorConstants.format(ErrorConstants.GERO_CARE_ITEM_DELETE_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
