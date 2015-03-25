@@ -4,45 +4,51 @@ var arrange={
 	subres:[],
 	addsubres:function(id,date){
 		var flag=true;
+		arrange.changed=true;
 		for(var i in arrange.subres){
 			if (arrange.subres[i].staff_id===id){
 				flag=false;
 				arrange.subres[i].work_date.push(date);
+				arrange.subres[i].nowork_date.pop(date);
 			}
 		}
 		if(flag){
-			var sub={staff_id:date,work_date:[],nowork_date:[]};
+			var sub={"staff_id":id,work_date:[],nowork_date:[]};
 			sub.work_date.push(date);
 			arrange.subres.push(sub);
 		}
 	},
 	delsubres:function(id,date){
 		var flag=true;
+		arrange.changed=true;
 		for(var i in arrange.subres){
 			if (arrange.subres[i].staff_id===id){
 				flag=false;
-				arrange.subres[i].nowork_date.pop(date);
+				arrange.subres[i].nowork_date.push(date);
+				arrange.subres[i].work_date.pop(date);
 			}
 		}
 		if(flag){
-			var sub={staff_id:date,work_date:[],nowork_date:[]};
+			var sub={"staff_id":id,work_date:[],nowork_date:[]};
 			sub.nowork_date.push(date);
 			arrange.subres.push(sub);
 		}
 	},
 	putarrange:function(){
-		var infoUrl=rhurl.origin+'/gero/1/schedule';
+		var infoUrl=rhurl.origin+'/gero/'+2+'/schedule';
 		if (arrange.allow){
-			$.ajax({
-            	url: infoUrl, 
-            	type:'put', 
-            	data:JSON.stringify(arrange.subres), 
-            	dataType: 'json', 
-            	contentType: "application/json;charset=utf-8",
-            	timeout: 1000, 
-            	error: function(){alert('Error');}, 
-            	success: function(result){arrange.drawArrangeList();} 
-            }); 
+			if(window.confirm('你确定要提交修改吗？')){
+                 $.ajax({
+            			url: infoUrl, 
+        	    		type:'put', 
+            			data:JSON.stringify(arrange.subres), 
+            			dataType: 'json', 
+            			contentType: "application/json;charset=utf-8",
+           		 		timeout: 1000, 
+            			error: function(e){alert('Error');}, 
+            			success: function(result){arrange.subres=[];arrange.drawArrangeList();arrange.changed=false;} 
+            		}); 
+             }
 		}
 	},
 	allowchange:function(){
@@ -50,13 +56,16 @@ var arrange={
 	},
 	prev:function(){
 		Sundate.setTime(Sundate.getTime()-7*24*60*60*1000);
-		arrange.drawArrangeList();
+		if(arrange.changed)arrange.putarrange();
+		else arrange.drawArrangeList();
 	},
 	next:function(){
 		Sundate.setTime(Sundate.getTime()+7*24*60*60*1000);
-		arrange.drawArrangeList();
+		if(arrange.changed)arrange.putarrange();
+		else arrange.drawArrangeList();
 	},
 	today:function(){
+		arrange.putarrange();
 		Sundate.setTime(todayms);
 		arrange.drawArrangeList();
 	},
@@ -110,7 +119,7 @@ var arrange={
         	data: {start_date:weekstr[0],end_date:weekstr[6]},
         	dataType: "json",
         	contentType: "application/json;charset=utf-8",
-        	url:rhurl.origin+"/gero/2/schedule",
+        	url:rhurl.origin+"/gero/"+2+"/schedule",
         	success: function (msg) {
             	var staffsch=leftTop.dealdata(msg);
             	for (var i in staffsch){

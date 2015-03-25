@@ -213,6 +213,13 @@ a:hover{ color:#d71318;}
   text-align: left;
   font-size:20px;
 }
+.easyui-dialog table tr{
+  min-width:400px;
+  height:35px;
+  margin:0px;
+  text-align: left;
+  font-size:20px;
+}
 .td1{
   width:130px;
 }

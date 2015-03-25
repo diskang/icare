@@ -93,7 +93,7 @@ var elder={
     },
     delElderInfo: function(){
         var eldert = $('#elderpage').datagrid('getSelected');
-        infoUrl=rhurl.origin+"/gero/1/elder/" + eldert.elder_id;
+        infoUrl=rhurl.origin+"/gero/"+gid+"/elder/" + eldert.elder_id;
         $.ajax({
             url: infoUrl,
             type: 'DELETE',
@@ -107,7 +107,7 @@ var elder={
     onElderDblClickRow:function(index){
                 var eldert = $('#elderpage').datagrid('getSelected');
                 elder.eid='/'+eldert.elder_id;
-                infoUrl=rhurl.origin+"/gero/2/elder" + elder.eid;
+                infoUrl=rhurl.origin+"/gero/"+gid+"/elder" + elder.eid;
                 $.ajax({
         			type: "get",
         			dataType: "json",
@@ -153,8 +153,12 @@ var elder={
             success: function(result){elder.drawElderList();} 
         }); 
     },
-    dosearch:function(){
-
+    doSearch:function(){
+        $('#elderpage').datagrid('load',{           
+                    name: $('#elder_name').val(),
+                    area_id: $('#elder_areaid').val(),
+                    care_level: $('#elder_care_level').val(),
+                });
     }
 
 }

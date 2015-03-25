@@ -17,6 +17,8 @@ var Fridate = new Date();
 var Satdate = new Date();
 var weekstr=[];
 var todayms=Sundate.getTime();
+var gid=$.cookie('gid');
+var uid=$.cookie('uid');
 Sundate.setTime(Sundate.getTime()-Sundate.getDay()*24*60*60*1000);
 sexc["男"]=0;
 sexc["女"]=1;
@@ -174,9 +176,9 @@ $(".arrange-work").live('click',function(){
     if(arrange.allow){
         $(this).toggleClass("workday");
         if ($(this).hasClass("workday")){
-            arrange.addsubres($(this).pid,$(this).num);
+            arrange.addsubres(parseInt($(this).attr("pid")),$(this).attr("num"));
         }else{
-            arrange.delsubres($(this).pid,$(this).num);
+            arrange.delsubres(parseInt($(this).attr("pid")),$(this).attr("num"));
         }
     }
 })

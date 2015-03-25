@@ -1,5 +1,4 @@
 var geroItem={
-
     drawGeroCareItemList:function(){
 	   $(".inf").addClass('hide');
 	   $("#gerocareitemshow").removeClass('hide');
@@ -13,7 +12,7 @@ var geroItem={
             border: true, 
             collapsible:false,//是否可折叠的 
             fit: true,//自动大小 
-            url:rhurl.origin+'/gero/2/care_item',  
+            url:rhurl.origin+'/gero/'+gid+'/care_item',  
             method:'get',
             remoteSort:false,  
             singleSelect:true,//是否单选 
@@ -33,13 +32,13 @@ var geroItem={
                 text: '添加', 
                 iconCls: 'icon-add', 
                 handler: function() { 
-                    
+                    geroItem.addGeroCareItemInfo();
                 } 
             }, '-',{ 
             text: '删除', 
                 iconCls: 'icon-remove', 
                 handler: function(){ 
-                    //delElderInfo(); 
+                    geroItem.delGeroCareItemInfo();
                 }
             }]
         }); 
@@ -48,7 +47,44 @@ var geroItem={
             displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录', 
         });
     },
+    addGeroCareItemInfo: function(){
+        $("#gerocareitempost-dialog-form").dialog("open");
+        $("#gerocareitempost-dialog-form").dialog("center");
+        $("#gerocareitempost-dialog-form input").attr("value",' ');
+    },
+    delGeroCareItemInfo: function(){
+        var itemt = $('#gerocareitempage').datagrid('getSelected');
+        var infoUrl=rhurl.origin+"/gero/"+gid+"/care_item/" + itemt.id;
+        $.ajax({
+            url: infoUrl,
+            type: 'DELETE',
+            success:function(){
+                geroItem.drawGeroCareItemList();
+            }
+        })
 
+    },
+    postcareitem:function(){
+        var obj={
+            name:document.getElementById("gciname").value,
+            level:parseInt(document.getElementById("gcilevel").value),
+            notes:document.getElementById("gcinotes").value,
+            period:parseInt(document.getElementById("gciperiod").value),
+            frequence:parseInt(document.getElementById("gcifrequence").value),
+        }
+        var infoUrl=rhurl.origin+'/gero/'+gid+'/care_item';
+        $.ajax({
+            url: infoUrl, 
+            type: 'post', 
+            data:JSON.stringify(obj), 
+            dataType: 'json', 
+            contentType: "application/json;charset=utf-8",
+            timeout: 1000, 
+            error: function(){alert('Error');}, 
+            success: function(result){geroItem.drawGeroCareItemList();} 
+        }); 
+
+    },
 
 
 
@@ -56,8 +92,8 @@ var geroItem={
 
 
     drawGeroAreaItemList:function(){
-       $(".inf").addClass('hide');
-       $("#geroareaitemshow").removeClass('hide');
+        $(".inf").addClass('hide');
+        $("#geroareaitemshow").removeClass('hide');
         $('#geroareaitempage').datagrid({ 
             title:'专护项目列表', 
             iconCls:'icon-edit',//图标 
@@ -68,7 +104,7 @@ var geroItem={
             border: true, 
             collapsible:false,//是否可折叠的 
             fit: true,//自动大小 
-            url:rhurl.origin+'/gero/2/area_item',  
+            url:rhurl.origin+'/gero/'+gid+'/area_item',  
             method:'get',
             remoteSort:false,  
             singleSelect:true,//是否单选 
@@ -88,13 +124,13 @@ var geroItem={
                 text: '添加', 
                 iconCls: 'icon-add', 
                 handler: function() { 
-                    
+                    geroItem.addGeroAreaItemInfo();
                 } 
             }, '-',{ 
             text: '删除', 
                 iconCls: 'icon-remove', 
                 handler: function(){ 
-                    //delElderInfo(); 
+                    geroItem.delGeroAreaItemInfo(); 
                 }
             }]
         }); 
@@ -102,5 +138,41 @@ var geroItem={
         pager.pagination({
             displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录', 
         });
+    },
+    addGeroAreaItemInfo: function(){
+        $("#geroareaitempost-dialog-form").dialog("open");
+        $("#geroareaitempost-dialog-form").dialog("center");
+        $("#geroareaitempost-dialog-form input").attr("value",' ');
+    },
+    delGeroAreaItemInfo: function(){
+        var itemt = $('#gerocareitempage').datagrid('getSelected');
+        var infoUrl=rhurl.origin+"/gero/"+gid+"/area_item/" + itemt.id;
+        $.ajax({
+            url: infoUrl,
+            type: 'DELETE',
+            success:function(){
+                geroItem.drawGeroAreaItemList();
+            }
+        })
+
+    },
+    postareaitem:function(){
+          var obj={
+            name:document.getElementById("gainame").value,
+            notes:document.getElementById("gainotes").value,
+            period:parseInt(document.getElementById("gaiperiod").value),
+            frequence:parseInt(document.getElementById("gaifrequence").value),
+        }
+        var infoUrl=rhurl.origin+'/gero/'+gid+'/area_item';
+        $.ajax({
+            url: infoUrl, 
+            type: 'post', 
+            data:JSON.stringify(obj), 
+            dataType: 'json', 
+            contentType: "application/json;charset=utf-8",
+            timeout: 1000, 
+            error: function(){alert('Error');}, 
+            success: function(result){geroItem.drawGeroAreaItemList();} 
+        }); 
     }
 }

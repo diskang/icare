@@ -14,7 +14,7 @@
             striped: true, 
             border: true, 
             collapsible:false,//是否可折叠的 
-            url:rhurl.origin+'/gero/1/staff',  
+            url:rhurl.origin+'/gero/2/staff',  
             method:'get',
             remoteSort:true,  
             sortName:'ID',
@@ -100,7 +100,7 @@
     },
     delStaffInfo: function(){
         var stafft = $('#staffpage').datagrid('getSelected');
-        var infoUrl=rhurl.origin+"/gero/1/staff/" + stafft.id;
+        var infoUrl=rhurl.origin+"/gero/2/staff/" + stafft.id;
         $.ajax({
             url: infoUrl,
             type: 'DELETE',
@@ -114,7 +114,7 @@
 
     onStaffDblClickRow:function(index){
                 var stafft = $('#staffpage').datagrid('getSelected');
-                infoUrl=rhurl.origin+"/gero/1/staff/" + stafft.id;
+                infoUrl=rhurl.origin+"/gero/2/staff/" + stafft.id;
                 $.ajax({
                     type: "get",
                     dataType: "json",
@@ -144,7 +144,7 @@
             birthday:document.getElementById("sbirthday").value,
             residence_address:document.getElementById("sresidence_address").value,
         }
-        var infoUrl=rhurl.origin+'/gero/1/staff'+staff.sid;
+        var infoUrl=rhurl.origin+'/gero/2/staff'+staff.sid;
         $.ajax({
             url: infoUrl, 
             type: staff.method, 
@@ -155,5 +155,12 @@
             error: function(){alert('Error');}, 
             success: function(result){staff.drawStaffList();} 
         }); 
+    },
+    doSearch:function(){
+        $('#staffpage').datagrid('load',{           
+                    name: $('#staff_name').val(),
+                    role: $('#staff_role').val(),
+                    identity_no: $('#staff_identity_no').val(),
+                });
     }
 }

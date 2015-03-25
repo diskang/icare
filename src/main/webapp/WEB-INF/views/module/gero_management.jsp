@@ -60,7 +60,7 @@
             <div class="form-group group">
               <label class="col-ssm-1" for="name">房间:</label>
               <div class="col-smm-2">
-                <input id="elder_bedid" class="form-control"  value=""></input>
+                <input id="elder_areaid" class="form-control"  value=""></input>
               </div>
             </div>
             <div class="form-group group">
@@ -107,19 +107,25 @@
             <div class="form-group group">
               <label class="control">姓名:</label>
               <div class="col-smm-2">
-                <input id="elder_name" class="form-control"  value=""></input>
+                <input id="staff_name" class="form-control"  value=""></input>
               </div>
             </div>
             <div class="form-group group">
-              <label class="col-smm-1">角色:</label>
+              <label class="control">身份证:</label>
               <div class="col-smm-2">
-                <select id="elder_care_level" class="form-control"  value="">
-                </select>
+                <input id="staff_identity_no" class="form-control"  value=""></input>
+              </div>
+            </div>
+            <div class="form-group group">
+              <label class="control">角色:</label>
+              <div class="col-smm-2">
+                <input id="staff_role" class="form-control"  value="">
+                </input>
               </div>
             </div>
             <div class="form-group group"> 
               <div class="col-md-offset-2">
-                <button id="elder-search" class="btn btn-default" onclick="doSearch()" style="margin-left:30px;" >搜索</button>
+                <button id="elder-search" class="btn btn-default" onclick="staff.doSearch()" style="margin-left:30px;" >搜索</button>
               </div>
             </div>
           </div>
@@ -445,7 +451,6 @@
       </ul>
     </div>    
 </div>
-
 <div id="rolepost-dialog-form"  class="easyui-dialog" title="角色信息" style="width:300px;height:200px;padding:10px"
       data-options="
         modal:true,
@@ -464,13 +469,72 @@
           }
         }]
       ">
-      <p>角色名: <input type="text" id="rname" /></p>
-      <p>说  明: <input type="text" id="rnotes" /></p>  
+      <table>
+        <tr><td>角色名:</td><td><input type="text" id="rname" /></td></tr>
+        <tr><td>说  明:</td><td><input type="text" id="rnotes" /></td></tr>
+      </table> 
 </div>
 
 
+
+
+
+<!-----------------------项目信息------------------------------>
+<div id="gerocareitempost-dialog-form"  class="easyui-dialog" title="角色信息" style="width:300px;height:300px;padding:10px"
+      data-options="
+        modal:true,
+        closed:true,
+        fix:true,
+        left:($(window).width()-300)*0.5,
+        top:($(window).height()-200)*0.5,
+        draggable:true,
+        iconCls: 'icon-save',
+        buttons: [{
+          text:'确定',
+          iconCls:'icon-ok',
+          handler:function(){
+            geroItem.postcareitem();
+            $('#gerocareitempost-dialog-form').dialog('close');
+          }
+        }]
+      ">
+      <table>
+        <tr><td>项目名: </td><td><input type="text" id="gciname" /></td></tr>
+        <tr><td>护理等级: </td><td><input type="text" id="gcilevel" /></td></tr>
+        <tr><td>周期: </td><td><input type="text" id="gciperiod" /></td></tr>
+        <tr><td>频率: </td><td><input type="text" id="gcifrequence" /></td></tr>
+        <tr><td>说明: </td><td><input type="text" id="gcinotes" /></td></tr>
+      </table>
+</div>
+<div id="geroareaitempost-dialog-form"  class="easyui-dialog" title="角色信息" style="width:300px;height:250px;padding:10px"
+      data-options="
+        modal:true,
+        closed:true,
+        fix:true,
+        left:($(window).width()-300)*0.5,
+        top:($(window).height()-200)*0.5,
+        draggable:true,
+        iconCls: 'icon-save',
+        buttons: [{
+          text:'确定',
+          iconCls:'icon-ok',
+          handler:function(){
+            geroItem.postareaitem();
+            $('#geroareaitempost-dialog-form').dialog('close');
+          }
+        }]
+      ">
+      <table>
+        <tr><td>项目名: </td><td><input type="text" id="gainame" /></td></tr>
+        <tr><td>周期: </td><td><input type="text" id="gaiperiod" /></td></tr>
+        <tr><td>频率: </td><td><input type="text" id="gaifrequence" /></td></tr>
+        <tr><td>说明: </td><td><input type="text" id="gainotes" /></td></tr>
+      </table>
+</div>
+
 <script type="text/javascript" src="/resthouse/static/js/jquery-1.8.3.min.js" ></script>
 <script type="text/javascript" src="/resthouse/static/js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/cookie.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/topleftNavi.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/elder.js"></script>
