@@ -82,7 +82,8 @@ public class StatelessAuthcFilter extends AccessControlFilter {
 	//登录失败时默认返回401状态码  
 	private void onLoginFail(ServletResponse response,String errorString) throws IOException {  
 	    HttpServletResponse httpResponse = (HttpServletResponse) response;  
-	    httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);  
+	    httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+	    httpResponse.setHeader("WWW-Authenticate", "Basic realm='fake'");
 //	    JSONObject errorJsonObject = new JSONObject();
 //	    errorJsonObject.put("errno", HttpServletResponse.SC_UNAUTHORIZED+"");
 //	    errorJsonObject.put("error", errorString);

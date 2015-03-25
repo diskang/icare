@@ -36,7 +36,7 @@ public class AdminController extends BaseController{
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
 		
 		logger.debug("admin!");
-		SecurityUtils.getSubject().hasRole("gero:1");
+//		SecurityUtils.getSubject().hasRole("gero:1");
 			User user = UserUtils.getUser();
 			response.addCookie(new Cookie("uid", user.getId()+""));
 			response.addCookie(new Cookie("gid", user.getGeroId()+""));
