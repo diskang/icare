@@ -25,6 +25,7 @@ public class Privilege extends DataEntity<Privilege>{
 	private String icon; 	// 图标
 	private String notes;	//权限备注
 	private String permission; // 权限标识
+	private String api;
 	
 	private int userId;
 	
@@ -168,5 +169,14 @@ public class Privilege extends DataEntity<Privilege>{
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}
-		
+
+	public String getApi() {
+		return api;
+	}
+
+	public void setApi(String api) {
+		this.api = api;
+	}
+	
+	
 }

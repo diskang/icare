@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.dozer.fieldmap.HintContainer;
 import org.springframework.http.HttpStatus;
 
 import com.sjtu.icare.common.config.ErrorConstants;
@@ -43,9 +44,24 @@ public class BasicController {
 				urlList[i] = "{date}";
 			}
 		}
-		String requestPermission = StringUtils.join(urlList,"/") + "#" + requestMethod;
+		String requestPermission = StringUtils.join(urlList,"/") + ":" + requestMethod;
 		logger.debug(requestPermission);
 		SecurityUtils.getSubject().checkPermission(requestPermission);
+	}
+	
+	protected void checkUser(int uid){
+		User user = getCurrentUser();
+		User queryUser = UserUtils.get(uid);
+		if (user.getUserType() == 0){
+			return;
+		}else if (user.getId() == uid) {
+			return;
+		}else if (SecurityUtils.getSubject().isPermitted("sth")) {
+			return;
+		}else {
+			logger.debug("here");
+		}
+		
 	}
 	
 	/**

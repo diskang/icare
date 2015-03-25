@@ -17,14 +17,15 @@ import com.sjtu.icare.common.security.Digests;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.Encodes;
 import com.sjtu.icare.common.utils.ParamUtils;
+import com.sjtu.icare.common.web.rest.BasicController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.service.SystemService;
 
 @RestController
-@RequestMapping({"/user/{uid}/digest"})
-public class DigestController {
+@RequestMapping({"/user/digest"})
+public class DigestController extends BasicController{
 	private static Logger logger = Logger.getLogger(DigestController.class);
 	
 	@Autowired
@@ -33,7 +34,6 @@ public class DigestController {
 	@SuppressWarnings("static-access")
 	@RequestMapping(value = "", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> insertGeroRole(
-			@PathVariable("uid") int uid,
 			@RequestBody String inJson
 			){
 		BasicReturnedJson result = new BasicReturnedJson();

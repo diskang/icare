@@ -105,6 +105,7 @@ public class UserController extends SysBaseController{
 			HttpServletRequest request,
 			@PathVariable("uid") int uid){
 		checkPermission(request);
+		checkUser(uid);
 		
 		BasicReturnedJson result = new BasicReturnedJson();
 		
@@ -125,9 +126,12 @@ public class UserController extends SysBaseController{
 	 */
 	@RequestMapping(value = "/{uid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> updateUserInfoFromUserId(
+			HttpServletRequest request,
 			@PathVariable("uid") int uid,
 			@RequestBody String inJson
 			){
+		checkPermission(request);
+		checkUser(uid);
 		Map<String, Object> requestBodyParamMap = ParamUtils.getMapByJson(inJson, logger);
 		String name;
 		String photoUrl;
@@ -182,9 +186,12 @@ public class UserController extends SysBaseController{
 	 */
 	@RequestMapping(value = "/{uid}/password", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> updateUserPasswordFromUserId(
+			HttpServletRequest request,
 			@PathVariable("uid") int uid,
 			@RequestBody String inJson
 			){
+		checkPermission(request);
+		checkUser(uid);
 		Map<String, Object> requestBodyParamMap = ParamUtils.getMapByJson(inJson, logger);
 		String password;
 		
@@ -232,9 +239,12 @@ public class UserController extends SysBaseController{
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/{uid}/role", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> updateUserRoleFromUserId(
+			HttpServletRequest request,
 			@PathVariable("uid") int uid,
 			@RequestBody String inJson
 			){
+		checkPermission(request);
+		checkUser(uid);
 		Map<String, Object> requestBodyParamMap = ParamUtils.getMapByJson(inJson, logger);
 		List<Integer> roleIds;
 
@@ -287,7 +297,11 @@ public class UserController extends SysBaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/{uid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
-	public Map<String, Object> deleteUserFromUserId(@PathVariable("uid") int uid){
+	public Map<String, Object> deleteUserFromUserId(
+			HttpServletRequest request,
+			@PathVariable("uid") int uid){
+		checkPermission(request);
+		checkUser(uid);
 		User user = getUserFromId(uid);
 		BasicReturnedJson result = new BasicReturnedJson();
 

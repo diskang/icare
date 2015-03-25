@@ -69,6 +69,7 @@ public class PrivilegeController extends SysBaseController{
 		String href;
 		String icon;
 		String notes;
+		String api;
 		
 		// 输入参数检查
 		try {
@@ -78,6 +79,7 @@ public class PrivilegeController extends SysBaseController{
 			href = (String) requestBodyParamMap.get("href");
 			icon = (String) requestBodyParamMap.get("icon");
 			notes = (String) requestBodyParamMap.get("notes");
+			api = (String) requestBodyParamMap.get("api");
 			if (name == null || name.length()<1 || parentId<0 ) {
 				throw new Exception();
 			}
@@ -122,6 +124,7 @@ public class PrivilegeController extends SysBaseController{
 		newPrivilege.setHref(href);
 		newPrivilege.setIcon(icon);
 		newPrivilege.setNotes(notes);
+		newPrivilege.setApi(api);
 		
 		// 插入新节点
 		try {
@@ -159,6 +162,7 @@ public class PrivilegeController extends SysBaseController{
 		String href;
 		String icon;
 		String notes;
+		String api;
 		
 		// 输入参数检查
 		try {
@@ -167,6 +171,7 @@ public class PrivilegeController extends SysBaseController{
 			href = (String) requestBodyParamMap.get("href");
 			icon = (String) requestBodyParamMap.get("icon");
 			notes = (String) requestBodyParamMap.get("notes");
+			api = (String) requestBodyParamMap.get("api");
 			if (name == null || name.length()<1 ) {
 				throw new Exception();
 			}
@@ -188,6 +193,7 @@ public class PrivilegeController extends SysBaseController{
 		privilege.setHref(href);
 		privilege.setIcon(icon);
 		privilege.setNotes(notes);
+		privilege.setApi(api);
 		
 		// 修改信息
 		try {

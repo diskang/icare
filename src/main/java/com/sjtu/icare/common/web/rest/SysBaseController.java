@@ -158,6 +158,7 @@ public class SysBaseController extends BasicController {
 		privilegeMap.put("permission", privilege.getPermission());
 		privilegeMap.put("href", privilege.getHref());
 		privilegeMap.put("icon", privilege.getIcon());
+		privilegeMap.put("api", privilege.getApi());
 		return privilegeMap;
 	}
 	
