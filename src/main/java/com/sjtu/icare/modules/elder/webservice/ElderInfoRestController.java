@@ -317,7 +317,7 @@ public class ElderInfoRestController extends GeroBaseController{
 			resultMap.put("political_status", user.getPoliticalStatus()); 
 			resultMap.put("register_date", user.getRegisterDate()); 
 			resultMap.put("residence_address", user.getResidenceAddress()); 
-			resultMap.put("user_name", user.getUsername()); 
+			resultMap.put("username", user.getUsername()); 
 			resultMap.put("user_type", user.getUserType()); 
 			resultMap.put("wechat_id", user.getWechatId()); 
 			resultMap.put("zip_code", user.getZipCode()); 
