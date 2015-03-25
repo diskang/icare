@@ -9,7 +9,9 @@ package com.sjtu.icare.modules.op.entity;
 
 import java.io.Serializable;
 
-public class CareItemEntity implements Serializable{
+import com.sjtu.icare.common.persistence.DataEntity;
+
+public class CareItemEntity extends DataEntity<CareItemEntity> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -25,8 +27,8 @@ public class CareItemEntity implements Serializable{
 	/**
 	 * @return the id
 	 */
-	public Integer getId() {
-		return id;
+	public int getId() {
+		return super.getId();
 	}
 	/**
 	 * @param id the id to set
@@ -135,6 +137,14 @@ public class CareItemEntity implements Serializable{
 	 */
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.common.persistence.BaseEntity#preDelete()
+	 */
+	@Override
+	public void preDelete() {
+		// TODO Auto-generated method stub
+		
 	}
 
 

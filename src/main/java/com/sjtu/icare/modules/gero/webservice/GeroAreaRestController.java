@@ -186,31 +186,39 @@ public class GeroAreaRestController {
 			queryGeroAreaEntity.setGeroId(geroId);
 			queryGeroAreaEntity.setId(areaId);
 			GeroAreaEntity ancestorGeroAreaEntity = geroAreaService.getGeroArea(queryGeroAreaEntity);
-			List<GeroAreaEntity> descendantGeroAreaEntities = geroAreaService.getGeroSubareas(ancestorGeroAreaEntity, subLevel);
 			
-			// 构造返回的 JSON
-			Map<String, Object> resultMap = new HashMap<String, Object>();
-			resultMap.put("id", geroId); 
-			resultMap.put("parent_id", ancestorGeroAreaEntity.getParentId()); 
-			resultMap.put("parent_ids", ancestorGeroAreaEntity.getParentIds()); 
-			resultMap.put("type", ancestorGeroAreaEntity.getType()); 
-			resultMap.put("level", ancestorGeroAreaEntity.getLevel()); 
-			resultMap.put("name", ancestorGeroAreaEntity.getName()); 
-			resultMap.put("full_name", ancestorGeroAreaEntity.getFullName()); 
-			
-			ArrayList<Object> tempList = new ArrayList<Object>();
-			for (GeroAreaEntity geroAreaEntity : descendantGeroAreaEntities) {
-				Map<String, Object> tempMap = new HashMap<String, Object>();
-				tempMap.put("id", geroId); 
-				tempMap.put("parent_id", geroAreaEntity.getParentId()); 
-				tempMap.put("parent_ids", geroAreaEntity.getParentIds()); 
-				tempMap.put("type", geroAreaEntity.getType()); 
-				tempMap.put("level", geroAreaEntity.getLevel()); 
-				tempMap.put("name", geroAreaEntity.getName()); 
-				tempList.add(tempMap);
+			if (ancestorGeroAreaEntity != null) {
+				List<GeroAreaEntity> descendantGeroAreaEntities = geroAreaService.getGeroSubareas(ancestorGeroAreaEntity, subLevel);
+				
+				// 构造返回的 JSON
+				Map<String, Object> resultMap = new HashMap<String, Object>();
+				resultMap.put("id", geroId); 
+				resultMap.put("parent_id", ancestorGeroAreaEntity.getParentId()); 
+				resultMap.put("parent_ids", ancestorGeroAreaEntity.getParentIds()); 
+				resultMap.put("type", ancestorGeroAreaEntity.getType()); 
+				resultMap.put("level", ancestorGeroAreaEntity.getLevel()); 
+				resultMap.put("name", ancestorGeroAreaEntity.getName()); 
+				resultMap.put("full_name", ancestorGeroAreaEntity.getFullName()); 
+				
+				ArrayList<Object> tempList = new ArrayList<Object>();
+				
+				if (descendantGeroAreaEntities != null) {
+					for (GeroAreaEntity geroAreaEntity : descendantGeroAreaEntities) {
+						Map<String, Object> tempMap = new HashMap<String, Object>();
+						tempMap.put("id", geroId); 
+						tempMap.put("parent_id", geroAreaEntity.getParentId()); 
+						tempMap.put("parent_ids", geroAreaEntity.getParentIds()); 
+						tempMap.put("type", geroAreaEntity.getType()); 
+						tempMap.put("level", geroAreaEntity.getLevel()); 
+						tempMap.put("name", geroAreaEntity.getName()); 
+						tempList.add(tempMap);
+					}
+				}
+				
+				resultMap.put("area_list", tempList); 
+				basicReturnedJson.addEntity(resultMap);
 			}
-			resultMap.put("area_list", tempList); 
-			basicReturnedJson.addEntity(resultMap);
+			
 			return basicReturnedJson.getMap();
 			
 		} catch (Exception e) {
