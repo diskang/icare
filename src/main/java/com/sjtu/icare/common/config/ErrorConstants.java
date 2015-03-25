@@ -186,6 +186,27 @@ public class ErrorConstants {
 	public static final String GERO_CAREWORK_GET_SERVICE_FAILED = "470002 GET 护工排班：后台服务失败";
 	public static final String GERO_CAREWOKR_POST_PARAM_INVALID = "470003 POST 护工排班：请求参数错误";
 	public static final String GERO_CAREWOKR_POST_SERVICE_FAILED = "470004 POST 护工排班：后台服务失败";
+	public static final String GERO_CAREWOKR_PUT_PARAM_INVALID = "470005 PUT 护工排班：请求参数错误";
+	public static final String GERO_CAREWOKR_PUT_SERVICE_FAILED = "470006 PUT 护工排班：后台服务失败";
+	public static final String GERO_CAREWOKR_DELETE_SERVICE_FAILED = "470007 DELETE 护工排班：后台服务失败";
+	
+	// gero areawork constants
+	public static final String GERO_AREAWORK_GET_PARAM_INVALID = "480001 GET 房间护工：请求参数错误";
+	public static final String GERO_AREAWORK_GET_SERVICE_FAILED = "480002 GET 房间护工：后台服务失败";
+	public static final String GERO_AREAWORK_POST_PARAM_INVALID = "480003 POST 房间护工：请求参数错误";
+	public static final String GERO_AREAWORK_POST_SERVICE_FAILED = "480004 POST 房间护工：后台服务失败";
+	public static final String GERO_AREAWORK_PUT_PARAM_INVALID = "480005 PUT 房间护工：请求参数错误";
+	public static final String GERO_AREAWORK_PUT_SERVICE_FAILED = "480006 PUT 房间护工：后台服务失败";
+	public static final String GERO_AREAWORK_DELETE_SERVICE_FAILED = "480007 DELETE 房间护工：后台服务失败";
+	
+	// gero constants
+	public static final String GERO_GET_SERVICE_FAILED = "490001 GET 养老院：后台服务失败";
+	public static final String GERO_POST_PARAM_INVALID = "490002 POST 养老院：请求参数错误";
+	public static final String GERO_POST_SERVICE_FAILED = "490003 POST 养老院：后台服务失败";
+	public static final String GERO_GET_SPECIFIC_SERVICE_FAILED = "490004 GET 指定养老院：后台服务失败";
+	public static final String GERO_PUT_PARAM_INVALID = "490005 PUT 养老院：请求参数错误";
+	public static final String GERO_PUT_SERVICE_FAILED = "490006 PUT 养老院：后台服务失败";
+	public static final String GERO_DELETE_SPECIFIC_SERVICE_FAILED = "490007 DELETE 养老院：后台服务失败";
 	
 	
 	public static String format(String errorConstant, String otherMessage) {

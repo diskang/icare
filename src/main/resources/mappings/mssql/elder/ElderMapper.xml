@@ -74,7 +74,10 @@
                     AND T_ELDER.care_level = #{careLevel}
                 </if>
 	            <if test="areaId != null">
-                    AND T_ELDER.area_id = #{areaId}
+                    AND T_ELDER.area_id IN 
+                    <foreach item="item" index="index" collection="areaIds" open="(" close=")" separator=",">
+                         #{areaIds[${index}]}
+                    </foreach>
                 </if>
                 
 	        )    

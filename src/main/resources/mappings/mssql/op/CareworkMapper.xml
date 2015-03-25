@@ -21,11 +21,10 @@
         SELECT 
             T_STAFF.*
         FROM    
-            (T_STAFF inner join T_CAREWORK 
+            (T_STAFF INNER JOIN T_CAREWORK 
             ON 
                 T_STAFF.id = T_CAREWORK.carer_id 
-                AND T_CAREWORK.elder_id = #{id}
-                AND convert(nvarchar(23), T_CAREWORK.start_date, 120) <= #{date}
+                AND T_CAREWORK.elder_id LIKE '%,' + CAST(#{id} AS VARCHAR(1000)) + ',%'
                 AND convert(nvarchar(23), T_CAREWORK.end_date, 120) >= #{date})
             INNER join T_STAFF_SCHEDULE_PLAN
             ON
@@ -43,7 +42,6 @@
             ON 
                 T_STAFF.id = T_AREAWORK.carer_id 
                 AND T_AREAWORK.area_id = #{id}
-                AND convert(nvarchar(23), T_AREAWORK.start_date, 120) <= #{date}
                 AND convert(nvarchar(23), T_AREAWORK.end_date, 120) >= #{date})
             INNER join T_STAFF_SCHEDULE_PLAN
             ON
@@ -86,5 +84,35 @@
             (#{carerId}, #{elderIds}, #{geroId}, #{endDate}, #{status})
     
     </insert>
+    
+    <update id="updateCarework">
+        UPDATE
+            T_CAREWORK
+        <set>
+            <if test="carerId != null">
+            T_CAREWORK.carer_id = #{carerId},
+            </if>
+            <if test="elderIds != null">
+            T_CAREWORK.elder_ids = #{elderIds},
+            </if>
+            <if test="endDate != null">
+            T_CAREWORK.end_date = #{endDate},
+            </if>
+            <if test="status != null">
+            T_CAREWORK.status = #{status}
+            </if>
+        </set>
+        WHERE
+            T_CAREWORK.id = #{id}
+    </update>
+    
+    <delete id="deleteCarework">
+    
+        DELETE FROM
+            T_CAREWORK
+        WHERE
+            T_CAREWORK.id = #{id}
+            
+    </delete>
       
 </mapper>

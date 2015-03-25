@@ -1,5 +1,6 @@
 package com.sjtu.icare.modules.elder.webservice;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,20 +25,23 @@ import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
+import com.sjtu.icare.common.utils.StringUtils;
 import com.sjtu.icare.common.web.rest.GeroBaseController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
 import com.sjtu.icare.modules.elder.service.IElderInfoService;
+import com.sjtu.icare.modules.gero.entity.GeroAreaEntity;
+import com.sjtu.icare.modules.gero.service.IGeroAreaService;
 import com.sjtu.icare.modules.staff.service.IStaffDataService;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.service.SystemService;
 
 @RestController
 @RequestMapping({"${api.web}/gero/{gid}/elder", "${api.service}/gero/{gid}/elder"})
-public class ElderInfoController extends GeroBaseController{
+public class ElderInfoRestController extends GeroBaseController{
 	
-	private static Logger logger = Logger.getLogger(ElderInfoController.class);
+	private static Logger logger = Logger.getLogger(ElderInfoRestController.class);
 	
 	@Autowired
 	private IElderInfoService elderInfoService;
@@ -45,36 +49,8 @@ public class ElderInfoController extends GeroBaseController{
 	IStaffDataService staffDataService;
 	@Autowired
 	SystemService systemService;
-	
-	/*
-	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
-	public Object getElderList(
-			@PathVariable("eid") int eid,
-			@PathVariable("gid") int gid,
-			@RequestParam(value="name", required=false) String name,
-			@RequestParam(value="gender", required=false) String gender,
-			@RequestParam(value="age", required=false) String age,
-			@RequestParam(value="care_level", required=false) String care_level,
-			@RequestParam(value="area_id", required=false) String areaId,
-			@RequestParam(value="page", required=false) int page,
-			@RequestParam(value="limit", required=false) int limit,
-			@RequestParam(value="order_by", required=false) String orderByTag
-			){
-		
-//		 检查用户是否有访问此养老院权限
-//		checkGero(gid);
-		
-		BasicReturnedJson result = new BasicReturnedJson();
-		
-		Gero gero = getGeroFromId(gid);
-		
-		Page<ElderEntity> elderPage = new Page<ElderEntity>(page,limit);
-		elderPage = setOrderBy(elderPage,orderByTag);
-		
-		return "";
-	}
-	*/
-	
+	@Autowired
+	IGeroAreaService geroAreaService;
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getElders(
@@ -122,11 +98,38 @@ public class ElderInfoController extends GeroBaseController{
 			queryUser.setAgeMin(ageMin);
 			queryUser.setAgeMax(ageMax);
 			queryUser.setCareLevel(careLevel);
-			queryUser.setAreaId(areaId);
 			queryUser.setUserType(CommonConstants.ELDER_TYPE);
 			queryUser.setGeroId(geroId);
 			queryUser.setPage(userPage);
 			
+			if (areaId == null)
+				queryUser.setAreaId(areaId);
+			else {
+				
+				List<Integer> areaIds = new ArrayList<Integer>();
+				
+				GeroAreaEntity queryGeroAreaEntity = new GeroAreaEntity();
+				queryGeroAreaEntity.setGeroId(geroId);
+				queryGeroAreaEntity.setId(areaId);
+				GeroAreaEntity ancestorGeroAreaEntity = geroAreaService.getGeroArea(queryGeroAreaEntity);
+				if (ancestorGeroAreaEntity == null)
+					throw new Exception("找不到 area_id 对应的信息");
+				Integer subLevel = 99999;
+				List<GeroAreaEntity> descendantGeroAreaEntities = geroAreaService.getGeroSubareas(ancestorGeroAreaEntity, subLevel);
+				
+				if (descendantGeroAreaEntities == null)
+					queryUser.setAreaId(null);
+				else {
+					queryUser.setAreaId(areaId);
+					areaIds.add(ancestorGeroAreaEntity.getId());
+					for (GeroAreaEntity geroAreaEntity : descendantGeroAreaEntities) {
+						areaIds.add(geroAreaEntity.getId());
+					}
+					queryUser.setAreaIds(areaIds);
+					
+				}
+				
+			}
 			
 			List<User> users;
 			users = elderInfoService.getAllElders(queryUser);
@@ -156,7 +159,7 @@ public class ElderInfoController extends GeroBaseController{
 				resultMap.put("political_status", user.getPoliticalStatus()); 
 				resultMap.put("register_date", user.getRegisterDate()); 
 				resultMap.put("residence_address", user.getResidenceAddress()); 
-				resultMap.put("user_name", user.getUsername()); 
+				resultMap.put("username", user.getUsername()); 
 				resultMap.put("user_type", user.getUserType()); 
 				resultMap.put("wechat_id", user.getWechatId()); 
 				resultMap.put("zip_code", user.getZipCode()); 
@@ -359,7 +362,10 @@ public class ElderInfoController extends GeroBaseController{
 		
 		try {
 			// 参数详细验证
-			// TODO
+//			if (requestParamMap.get("areaId") != null && StringUtils.isBlank((CharSequence) requestParamMap.get("areaId")))
+//				throw new Exception();
+			
+			
 		} catch(Exception e) {
 			String otherMessage = "[" + inJson + "]";
 			String message = ErrorConstants.format(ErrorConstants.ELDER_INFO_ELDER_PUT_PARAM_INVALID , otherMessage);
