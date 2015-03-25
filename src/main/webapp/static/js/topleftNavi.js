@@ -6,24 +6,28 @@ var temptree;
 var temptree2;
 var hrefTable=[];
 var sex=["男","女"];
-var  sexc=[];
-var showDate = new Date();
-alert(showDate.toLocaleDateString().replace(/\//g,'-'));
-// myDate.getFullYear();    //获取完整的年份(4位,1970-????)
-// myDate.getMonth();       //获取当前月份(0-11,0代表1月)
-// myDate.getDate();        //获取当前日(1-31)
-// myDate.getDay();         //获取当前星期X(0-6,0代表星期天)
-// myDate.toLocaleDateString();     //获取当前日期
+var sexc=[];
+var Searchdate = new Date();
+var Sundate = new Date();
+var Mondate = new Date();
+var Tuedate = new Date();
+var Weddate = new Date();
+var Thudate = new Date();
+var Fridate = new Date();
+var Satdate = new Date();
+var weekstr=[];
+var todayms=Sundate.getTime();
+Sundate.setTime(Sundate.getTime()-Sundate.getDay()*24*60*60*1000);
 sexc["男"]=0;
 sexc["女"]=1;
 hrefTable['/gero/1/elder']='elder.drawElderList()';
 hrefTable['/gero/1/staff']='staff.drawStaffList()';
 hrefTable['/gero/1/schedule']='staff.drawScheduleList()';
 hrefTable['/item']='item.drawItemList()';
-hrefTable['/gero/1/care_item']='geroItem.drawGeroItemList()';
-hrefTable['/gero/1/area_item']='geroItem.drawGeroItemList()';
+hrefTable['/gero/1/care_item']='geroItem.drawGeroCareItemList()';
+hrefTable['/gero/1/area_item']='geroItem.drawGeroAreaItemList()';
 hrefTable['/gero/1/role']='role.drawGeroRoleList()';
-hrefTable['/users/test']='authority.drawAuthorityList()';
+hrefTable['/user/1']='authority.drawAuthorityList()';
 hrefTable['/gero/1/schedule']='arrange.drawArrangeList()';
 
 var leftTop = {
@@ -38,10 +42,19 @@ var leftTop = {
             window.location = "www.baidu.com" ;
         else if(msg.status===200)
         {
-            return msg.entities[0];
+            return msg.entities;
         }
     },
 
+    findTreeChildrenEx:function(id){
+        var result=[];
+        for(var i in temptree){
+            if(temptree[i].parent_id===id && temptree[i].href!=='no'){
+                result.push(temptree[i]);
+            }
+        }
+        return result;
+    },
     findTreeChildren:function(id){
         var result=[];
         for(var i in temptree){
@@ -62,11 +75,11 @@ var leftTop = {
 
     createTreeData:function(node){
         var result=[];
-        var childs= leftTop.findTreeChildren(node.id);
+        var childs= leftTop.findTreeChildrenEx(node.id);
         if (childs.length!==0){
             for(var i in childs){
                 var temp= new leftTop.createTreeNode(childs[i]);
-                if (leftTop.findTreeChildren(childs[i].id).length!==0){
+                if (leftTop.findTreeChildrenEx(childs[i].id).length!==0){
                     temp.children=leftTop.createTreeData(childs[i]);
                     result.push(temp);
                 }
@@ -95,11 +108,11 @@ var leftTop = {
     },
 
     dealtree:function(msg){
-        toptree = leftTop.findTreeChildren(0);
+        toptree = leftTop.findTreeChildren(1);
         for(var i in toptree){
             $("#topNavi").append('<li class="navli-a" ><a href="#">'+toptree[i].name+'<a></li>');
         }
-        temptree2=[{"id":0,"text":"权限列表","children":[]}]
+        temptree2=[{"id":1,"text":"权限列表","children":[]}]
         temptree2[0].children=leftTop.createTreeData2(temptree2[0]);
         $("#authoritychecktree").tree("loadData",temptree2);
         return leftTop.createTreeData(toptree[0]);
@@ -129,8 +142,9 @@ $(function(){
     $("#lefttree").tree({
         onClick:function(node){
             var url=leftTop.findNode(node.id).href;
-            if (url!==""){
+            if (url!==""){              
                 eval(hrefTable[url]);
+                //authority.drawAuthorityList()
             }
         }
     })
@@ -138,20 +152,15 @@ $(function(){
         type: "get",
         dataType: "json",
         contentType: "application/json;charset=utf-8",
-<<<<<<< HEAD
-        url: "/user/1",
-=======
-        url: "/resthouse/api/web/user/1",
->>>>>>> 9384f14d73bd834335c58102eed2b2051ac09d47
+        url:rhurl.origin+"/user/1",
         success: function (msg) {
             temptree=msg.entities[0].privilege_list;
             leftTop.removeLefttree;
             var str=leftTop.dealtree(temptree);
             $("#lefttree").tree("loadData",str);
-            
         },
         error: function(e) {
-            alert(e);
+            alert("ajax error");
         }
     });
 });
@@ -162,5 +171,18 @@ $('.navli-a').live('click',function(){
 });
 
 $(".arrange-work").live('click',function(){
+    if(arrange.allow){
         $(this).toggleClass("workday");
-    })
+        if ($(this).hasClass("workday")){
+            arrange.addsubres($(this).pid,$(this).num);
+        }else{
+            arrange.delsubres($(this).pid,$(this).num);
+        }
+    }
+})
+
+$('.fc-prev-button').live('click',function(){arrange.prev()});
+$('.fc-next-button').live('click',function(){arrange.next()});
+$('.fc-today-button').live('click',function(){arrange.today()});
+$('.fc-allow-button').live('click',function(){arrange.allowchange()});
+$('.fc-submit-button').live('click',function(){arrange.putarrange()});

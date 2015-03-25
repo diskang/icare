@@ -17,7 +17,7 @@ var authority={
 		    type: "get",
             dataType: "json",
             contentType: "application/json;charset=utf-8",
-            url: "/user/1",
+            url: rhurl.origin+"/user/1",
             success: function (msg) {
         	//temptree2=msg.entities[0].privilege_list;
                 authority.removeAuthTree();
@@ -63,25 +63,35 @@ var authority={
         authority.obj.permission=document.getElementById("ppermission").value;
         authority.obj.href=document.getElementById("phref").value;
         authority.obj.icon=document.getElementById("picon").value;
-        var infoUrl='/privilege'+authority.pid;
+        var infoUrl=rhurl.origin+'/privilege'+authority.pid;
         $.ajax({
             url: infoUrl, 
-            type: authority.method, 
-            data:authority.obj, 
-            dataType: 'json', 
-            timeout: 1000, 
-            error: function(){alert('Error');}, 
-            success: function(result){authority.drawAuthorityList();} 
+            type:authority.method, 
+            data:JSON.stringify(authority.obj), 
+            dataType:"json",
+            contentType: "application/json;charset=utf-8",
+            error: function(e){
+                alert("error");
+            }, 
+            success: function(result){
+                temptree=result.entities;
+                temptree2=[{"id":1,"text":"权限列表","children":[]}]
+                temptree2[0].children=leftTop.createTreeData2(temptree2[0]);
+                authority.drawAuthorityList();
+            } 
         }); 
     },
     delTreenode:function(){
         var node=$("#authoritytree").tree('getSelected');
         if (node){
-            var infoUrl="/privilege/"+node.id;
+            var infoUrl=rhurl.origin+"/privilege/"+node.id;
             $.ajax({
                 url: infoUrl,
                 type: 'DELETE',
-                success:function(){
+                success:function(result){
+                    temptree=result.entities;
+                    temptree2=[{"id":1,"text":"权限列表","children":[]}]
+                    temptree2[0].children=leftTop.createTreeData2(temptree2[0]);
                     authority.drawAuthorityList();
                 }
             })
