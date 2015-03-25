@@ -46,6 +46,7 @@ public class CustomSimpleMappingExceptionResolver extends SimpleMappingException
                 }
                 
                 try {
+                	response.setStatus(HttpStatus.UNAUTHORIZED.value());
                     response.setContentType("application/json");
                     response.getWriter().write(errorJson.toJSONString());
                 } catch (IOException e) {

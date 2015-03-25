@@ -43,7 +43,7 @@ public class BasicController {
 				urlList[i] = "{date}";
 			}
 		}
-		String requestPermission = StringUtils.join(urlList,"/") + "#" + requestMethod;
+		String requestPermission = StringUtils.join(urlList,"/") + ":" + requestMethod;
 		logger.debug(requestPermission);
 		SecurityUtils.getSubject().checkPermission(requestPermission);
 	}

@@ -89,6 +89,7 @@ public class StatelessAuthcFilter extends AccessControlFilter {
 	    BasicReturnedJson result = new BasicReturnedJson();
 	    result.setError(errorString);
 	    result.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+	    httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	    httpResponse.getWriter().write(result.toString());  
 	}
 }
