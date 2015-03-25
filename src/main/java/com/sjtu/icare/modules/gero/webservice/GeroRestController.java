@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sjtu.icare.common.config.CommonConstants;
 import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
@@ -34,10 +33,8 @@ import com.sjtu.icare.common.utils.StringUtils;
 import com.sjtu.icare.common.web.rest.BasicController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
-import com.sjtu.icare.modules.elder.entity.ElderEntity;
 import com.sjtu.icare.modules.gero.entity.GeroEntity;
 import com.sjtu.icare.modules.gero.service.IGeroService;
-import com.sjtu.icare.modules.sys.entity.User;
 
 @RestController
 @RequestMapping({"${api.web}/gero", "${api.service}/gero"})
