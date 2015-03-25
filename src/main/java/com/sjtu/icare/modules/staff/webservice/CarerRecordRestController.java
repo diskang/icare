@@ -25,20 +25,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sjtu.icare.common.config.ErrorConstants;
+import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.ParamValidator;
+import com.sjtu.icare.common.web.rest.BasicController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
+import com.sjtu.icare.modules.op.entity.CareItemEntity;
 import com.sjtu.icare.modules.op.entity.CareworkRecordEntity;
 import com.sjtu.icare.modules.op.service.IItemRecordService;
 
 
 @RestController
 @RequestMapping({"${api.web}/gero/{gid}/carework_record", "${api.service}/gero/{gid}/carework_record"})
-public class CarerRecordRestController {
+public class CarerRecordRestController extends BasicController {
 	private static Logger logger = Logger.getLogger(CarerRecordRestController.class);
 	
 	@Autowired
@@ -47,10 +50,13 @@ public class CarerRecordRestController {
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getCareworkRecords(
 			@PathVariable("gid") int geroId,
-			@RequestParam(value="sid", required=false) Integer carerId,
-			@RequestParam(value="eid", required=false) Integer elderId,
+			@RequestParam(value="staff_id", required=false) Integer carerId,
+			@RequestParam(value="elder_id", required=false) Integer elderId,
 			@RequestParam(value="start_date", required=false) String startDate,
-			@RequestParam(value="end_date", required=false) String endDate
+			@RequestParam(value="end_date", required=false) String endDate,
+			@RequestParam("page") int page,
+			@RequestParam("rows") int rows,
+			@RequestParam("sort") String sort
 			) {
 		
 		// 参数检查
@@ -75,8 +81,16 @@ public class CarerRecordRestController {
 			CareworkRecordEntity queryCareworkRecordEntity = new CareworkRecordEntity();
 			queryCareworkRecordEntity.setCarerId(carerId);
 			queryCareworkRecordEntity.setElderId(elderId);
+			
+			Page<CareworkRecordEntity> pages = new Page<CareworkRecordEntity>(page, rows);
+			pages = setOrderBy(pages, sort);
+			queryCareworkRecordEntity.setPage(pages);
+			
 			List<CareworkRecordEntity> careworkRecordEntities = itemRecordService.getCareworkRecords(queryCareworkRecordEntity, startDate, endDate);
 
+			basicReturnedJson.setTotal((int) queryCareworkRecordEntity.getPage().getCount());
+			
+			
 			// 构造返回的 JSON
 			for (CareworkRecordEntity careworkRecordEntity : careworkRecordEntities) {
 				

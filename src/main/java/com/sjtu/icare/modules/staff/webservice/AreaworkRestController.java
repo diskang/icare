@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
+import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.ParamValidator;
@@ -50,20 +51,18 @@ public class AreaworkRestController extends BasicController {
 	public Object getAreaworks(
 			@PathVariable("gid") int geroId,
 			@RequestParam(value="start_date", required=false) String startDate,
-			@RequestParam(value="end_date", required=false) String endDate,
-			@RequestParam(value="aid", required=false) Integer areaId,
-			@RequestParam(value="sid", required=false) Integer staffId,
+			@RequestParam(value="area_id", required=false) Integer areaId,
+			@RequestParam(value="staff_id", required=false) Integer staffId,
 			@RequestParam("page") int page,
-			@RequestParam("limit") int limit,
-			@RequestParam("order_by") String orderByTag
+			@RequestParam("rows") int limit,
+			@RequestParam("sort") String orderByTag
 			) {
 		
 		
 		// 参数检查
-		if ((startDate != null && !ParamValidator.isDate(startDate)) || (endDate != null && !ParamValidator.isDate(endDate))) {
-			String otherMessage = "start_date 或 end_date 不符合日期格式:" +
-					"[start_date=" + startDate + "]" +
-					"[end_date=" + endDate + "]";
+		if (startDate != null && !ParamValidator.isDate(startDate)) {
+			String otherMessage = "start_date 不符合日期格式:" +
+					"[start_date=" + startDate + "]";
 			String message = ErrorConstants.format(ErrorConstants.GERO_AREAWORK_GET_PARAM_INVALID, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
@@ -75,9 +74,8 @@ public class AreaworkRestController extends BasicController {
 			if (areaId != null)
 				areaIds = "" + areaId;
 			
-			Map<String, String> tempMap = ParamUtils.getDateOfStartDateAndEndDate(startDate, endDate);
-			startDate = tempMap.get("startDate");
-			endDate = tempMap.get("endDate");
+			if (startDate == null)
+				startDate = DateUtils.getDate();
 			
 			// 获取基础的 JSON返回
 			BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
@@ -92,7 +90,6 @@ public class AreaworkRestController extends BasicController {
 			requestAreaworkEntity.setPage(pages);
 			
 			requestAreaworkEntity.setReqStartDate(startDate);
-			requestAreaworkEntity.setReqEndDate(endDate);
 			
 			List<AreaworkEntity> areaworkEntities = workService.getAreaworkEntities(requestAreaworkEntity);
 			basicReturnedJson.setTotal((int) requestAreaworkEntity.getPage().getCount());

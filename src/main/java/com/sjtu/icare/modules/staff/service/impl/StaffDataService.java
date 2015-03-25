@@ -57,6 +57,16 @@ public class StaffDataService implements IStaffDataService {
 		return staffSchedulePlanDAO.getStaffSchedulePlans(paramMap);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.staff.service.IStaffDataService#getStaffScehdulePlan(com.sjtu.icare.modules.staff.entity.StaffSchedulePlanEntity)
+	 */
+	@Override
+	public StaffSchedulePlanEntity getStaffScehdulePlan(
+			StaffSchedulePlanEntity staffSchedulePlanEntity) {
+		Map<String, Object> paramMap = MapListUtils.beanToMap(staffSchedulePlanEntity);
+		return staffSchedulePlanDAO.getStaffSchedulePlan(paramMap);
+	}
+	
 	@Override
 	public void insertStaffSchedulePlans(
 			StaffSchedulePlanEntity staffSchedulePlanEntity,
@@ -154,6 +164,8 @@ public class StaffDataService implements IStaffDataService {
 		Map<String, Object> paramMap = MapListUtils.beanToMap(staffEntity);
 		staffDAO.deleteStaff(paramMap);
 	}
+
+
 
 
 

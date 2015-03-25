@@ -174,10 +174,32 @@ public class GeroStaffScheduleRestController {
 			
 			// 插入数据
 			try {
+				// 预处理 workdate，防止重复插入
+				Map<String, String> tempMap = new HashMap<String, String>();
+				for (String date : workDate) {
+					tempMap.put(date, "1");
+				}
+				workDate.clear();
+				
+				for (String date: tempMap.keySet())
+					workDate.add(date);
+				
+				List<String> filteredWorkDates = new ArrayList<String>();
+				for (String date : workDate) {
+					StaffSchedulePlanEntity requestStaffSchedulePlanEntity = new StaffSchedulePlanEntity();
+					requestStaffSchedulePlanEntity.setStaffId(staffId);
+					requestStaffSchedulePlanEntity.setWorkDate(date);
+					if (staffDataService.getStaffScehdulePlan(requestStaffSchedulePlanEntity) == null) {
+						filteredWorkDates.add(date);
+					}
+				}
 				
 				StaffSchedulePlanEntity postEntity = new StaffSchedulePlanEntity(); 
 				BeanUtils.populate(postEntity, requestParamMap);
 				postEntity.setGeroId(geroId);
+				
+				workDate = filteredWorkDates;
+				
 				if (!workDate.isEmpty())
 					staffDataService.insertStaffSchedulePlans(postEntity, workDate);
 				if (!noworkDate.isEmpty())

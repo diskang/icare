@@ -2,7 +2,9 @@ package com.sjtu.icare.modules.op.entity;
 
 import java.io.Serializable;
 
-public class CareworkRecordEntity implements Serializable {
+import com.sjtu.icare.common.persistence.DataEntity;
+
+public class CareworkRecordEntity extends DataEntity<CareworkRecordEntity> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Integer carerId;		//护工ID
@@ -12,11 +14,18 @@ public class CareworkRecordEntity implements Serializable {
 	private String finishTime;	//完成时间
 	private String elderName;	//完成时间
 	private String carerName;	//完成时间
+	
+	// request params
+	private String startDate;
+	private String endDate;
+	private Integer staffType;
+	private Integer elderType;
+	
 	/**
 	 * @return the id
 	 */
-	public Integer getId() {
-		return id;
+	public int getId() {
+		return super.getId();
 	}
 	/**
 	 * @param id the id to set
@@ -113,6 +122,62 @@ public class CareworkRecordEntity implements Serializable {
 	 */
 	public void setCarerName(String carerName) {
 		this.carerName = carerName;
+	}
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.common.persistence.BaseEntity#preDelete()
+	 */
+	@Override
+	public void preDelete() {
+		// TODO Auto-generated method stub
+		
+	}
+	/**
+	 * @return the startDate
+	 */
+	public String getStartDate() {
+		return startDate;
+	}
+	/**
+	 * @param startDate the startDate to set
+	 */
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	/**
+	 * @return the endDate
+	 */
+	public String getEndDate() {
+		return endDate;
+	}
+	/**
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	/**
+	 * @return the staffType
+	 */
+	public Integer getStaffType() {
+		return staffType;
+	}
+	/**
+	 * @param staffType the staffType to set
+	 */
+	public void setStaffType(Integer staffType) {
+		this.staffType = staffType;
+	}
+	/**
+	 * @return the elderType
+	 */
+	public Integer getElderType() {
+		return elderType;
+	}
+	/**
+	 * @param elderType the elderType to set
+	 */
+	public void setElderType(Integer elderType) {
+		this.elderType = elderType;
 	}
 	
 
