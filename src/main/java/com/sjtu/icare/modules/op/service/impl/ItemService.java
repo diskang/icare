@@ -33,8 +33,7 @@ public class ItemService implements IItemService {
 	 */
 	@Override
 	public List<CareItemEntity> getCareItems(CareItemEntity careItemEntity) {
-		Map<String, Object> paramMap = MapListUtils.beanToMap(careItemEntity);
-		return careItemDao.getCareItemEntitiesByGeroId(paramMap);
+		return careItemEntity.getPage().setList(careItemDao.getCareItemEntitiesByGeroId(careItemEntity)).getList();
 	}
 
 	/* (non-Javadoc)
