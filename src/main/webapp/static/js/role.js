@@ -28,6 +28,7 @@ var role={
         pageSize: 10,//每页显示的记录条数，默认为20 
         pageList: [10,20,30],//可以设置每页记录条数的列表 
         loadFilter:function(data){
+            leftTop.dealdata(data);
         	var result={"total":0,"rows":0};
             result.total=data.total;
             result.rows=data.entities;
@@ -82,12 +83,16 @@ var role={
     },
     delRoleInfo: function(){
         var rolet = $('#gerorolepage').datagrid('getSelected');
-        var infoUrl=rhurl.origin+"/gero/1/role/" + rolet.id;
+        var infoUrl=rhurl.origin+"/gero/"+gid+"/role/" + rolet.id;
         $.ajax({
             url: infoUrl,
             type: 'DELETE',
+            timeout:1000,
             success:function(){
                 role.drawGeroRoleList();
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
             }
         })
 
@@ -102,12 +107,13 @@ var role={
             dataType: "json",
             contentType: "application/json;charset=utf-8",
             url: infoUrl,
+            timeout:1000,
             success: function (msg) {
                 var data=leftTop.dealdata(msg);
                 role.drawRoleInfo(data[0]);
             },
-            error: function(e) {
-                alert(e);
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
             }
         });
     },
@@ -123,7 +129,7 @@ var role={
         for(var i in temp) {
             if(temp2.indexOf(temp[i])===-1) delete_privilege_ids.push(temp[i]);
         }
-        var infoUrl=rhurl.origin+'/gero/1/role'+role.rid+'/privilege';
+        var infoUrl=rhurl.origin+'/gero/'+gid+'/role'+role.rid+'/privilege';
     if(insert_privilege_ids.length>=1){
         $.ajax({
             url: infoUrl, 
@@ -132,7 +138,7 @@ var role={
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
             timeout: 1000, 
-            error: function(){alert('Error');}, 
+            error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){role.drawGeroRoleList();} 
         }); 
     }
@@ -144,7 +150,7 @@ var role={
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
             timeout: 1000, 
-            error: function(){alert('Error');}, 
+            error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){role.drawGeroRoleList();} 
         }); 
     }
@@ -162,7 +168,7 @@ var role={
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
             timeout: 1000, 
-            error: function(){alert('Error');}, 
+            error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){role.drawGeroRoleList();} 
         }); 
     }

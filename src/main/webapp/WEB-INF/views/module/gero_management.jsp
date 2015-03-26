@@ -29,6 +29,10 @@
     <ul id="topNavi">
       <li class="navli" href="#">首页</li>
     </ul>
+    <div class="btn-group pull-right">
+      <a id="login" class="btn" href="/resthouse/admin/logout"> 退出 </a>
+    </div>
+    <text id="welcome" class="pull-right" ></text>
   </div>
 </div>
 
