@@ -17,7 +17,8 @@ var authority={
 		    type: "get",
             dataType: "json",
             contentType: "application/json;charset=utf-8",
-            url: rhurl.origin+"/user/1",
+            url: rhurl.origin+"/user/"+uid,
+            timeout:1000,
             success: function (msg) {
         	//temptree2=msg.entities[0].privilege_list;
                 authority.removeAuthTree();
@@ -25,8 +26,8 @@ var authority={
                 $('.panel').css("margin-right",0)
             
             },
-            error: function(e) {
-        	   alert(e);
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+        	   leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
             }
 	   });
     },
@@ -70,8 +71,9 @@ var authority={
             data:JSON.stringify(authority.obj), 
             dataType:"json",
             contentType: "application/json;charset=utf-8",
-            error: function(e){
-                alert("error");
+            timeout:1000,
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
             }, 
             success: function(result){
                 temptree=result.entities;
@@ -88,11 +90,15 @@ var authority={
             $.ajax({
                 url: infoUrl,
                 type: 'DELETE',
+                timeout:1000,
                 success:function(result){
                     temptree=result.entities;
                     temptree2=[{"id":1,"text":"权限列表","children":[]}]
                     temptree2[0].children=leftTop.createTreeData2(temptree2[0]);
                     authority.drawAuthorityList();
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                    leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
                 }
             })
         }

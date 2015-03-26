@@ -26,6 +26,7 @@
             pageSize: 10,//每页显示的记录条数，默认为20 
             pageList: [10,20,30],//可以设置每页记录条数的列表 
             loadFilter:function(data){
+                leftTop.dealdata(data);
         	    var result={"total":0,"rows":0};
                 result.total=data.total;
                 result.rows=data.entities;
@@ -110,6 +111,9 @@
             type: 'DELETE',
             success:function(){
                 staff.drawstaffList();
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
             }
         })
 
@@ -128,14 +132,14 @@
                         var data=leftTop.dealdata(msg);
                         staff.drawStaffInfo(data[0]);
                     },
-                    error: function(e) {
-                        alert(e);
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        leftTop.error(XMLHttpRequest, textStatus, errorThrown);
                     }
                 });
     },
 
     buttonclk:function(){
-        /*var obj={
+        var obj={
             name:document.getElementById("sname").value,
             gender:sexc[document.getElementById("sgender").value],
             household_address:document.getElementById("shousehold_address").value,
@@ -155,9 +159,9 @@
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
             timeout: 1000, 
-            error: function(){alert('Error');}, 
+            error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){staff.drawStaffList();} 
-        }); */
+        }); 
         var roleobj={ids:[]};
         var parentBox = document.getElementById("role-check");
         var inputs = parentBox.getElementsByTagName("INPUT");
@@ -173,7 +177,7 @@
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
             timeout: 1000, 
-            error: function(){alert('Error');}, 
+            error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){staff.drawStaffList();} 
         }); 
     },

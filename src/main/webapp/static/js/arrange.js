@@ -46,7 +46,7 @@ var arrange={
             			dataType: 'json', 
             			contentType: "application/json;charset=utf-8",
            		 		timeout: 1000, 
-            			error: function(e){alert('Error');}, 
+            			error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             			success: function(result){arrange.subres=[];arrange.drawArrangeList();arrange.changed=false;} 
             		}); 
              }
@@ -124,6 +124,7 @@ var arrange={
         	dataType: "json",
         	contentType: "application/json;charset=utf-8",
         	url:rhurl.origin+"/gero/"+gid+"/schedule",
+        	timeout:1000,
         	success: function (msg) {
         		staffrec=[];
             	var staffsch=leftTop.dealdata(msg);
@@ -148,8 +149,8 @@ var arrange={
             	}
             	arrange.fillall();
         	},
-        	error: function(e) {
-            	alert(e);
+        	error: function(XMLHttpRequest, textStatus, errorThrown) {
+            	leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
         	}
     	});
 	},
@@ -160,6 +161,7 @@ var arrange={
         	dataType: "json",
         	contentType: "application/json;charset=utf-8",
         	url:rhurl.origin+'/gero/'+gid+'/staff',
+        	timeout:1000,
         	success: function (msg) {
             	var staffsch=leftTop.dealdata(msg);
             	for (var i in staffsch){
@@ -182,8 +184,8 @@ var arrange={
             		}
             	}
         	},
-        	error: function(e) {
-            	alert("ajax error");
+        	error: function(XMLHttpRequest, textStatus, errorThrown) {
+            	leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
         	}
    		});
 	}
