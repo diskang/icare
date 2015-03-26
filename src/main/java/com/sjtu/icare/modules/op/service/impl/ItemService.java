@@ -77,8 +77,7 @@ public class ItemService implements IItemService {
 	 */
 	@Override
 	public List<AreaItemEntity> getAreaItems(AreaItemEntity areaItemEntity) {
-		Map<String, Object> paramMap = MapListUtils.beanToMap(areaItemEntity);
-		return areaItemDao.getAreaItems(paramMap);
+		return areaItemEntity.getPage().setList(areaItemDao.getAreaItems(areaItemEntity)).getList();
 	}
 
 	/* (non-Javadoc)

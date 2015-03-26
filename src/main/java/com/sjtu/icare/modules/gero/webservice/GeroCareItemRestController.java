@@ -31,7 +31,7 @@ import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
-import com.sjtu.icare.common.web.rest.BasicController;
+import com.sjtu.icare.common.web.rest.GeroBaseController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.op.entity.CareItemEntity;
@@ -39,7 +39,7 @@ import com.sjtu.icare.modules.op.service.IItemService;
 
 @RestController
 @RequestMapping({"${api.web}/gero/{gid}/care_item", "${api.service}/gero/{gid}/care_item"})
-public class GeroCareItemRestController extends BasicController {
+public class GeroCareItemRestController extends GeroBaseController {
 	private static Logger logger = Logger.getLogger(GeroCareItemRestController.class);
 	
 	@Autowired IItemService itemService;

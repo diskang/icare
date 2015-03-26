@@ -24,7 +24,7 @@ public interface AreaItemDAO {
 	 * @return List<AreaItemEntity>
 	 * @throws
 	 */
-	List<AreaItemEntity> getAreaItems(Map<String, Object> paramMap);
+	List<AreaItemEntity> getAreaItems(AreaItemEntity areaItemEntity);
 
 	/**
 	 * @Title insertAreaItem
@@ -62,4 +62,7 @@ public interface AreaItemDAO {
 	 * @throws
 	 */
 	void deleteAreaItem(Map<String, Object> paramMap);
+
+	List<AreaItemEntity> getCareItemEntitiesByGeroId(
+			AreaItemEntity areaItemEntity);
 }

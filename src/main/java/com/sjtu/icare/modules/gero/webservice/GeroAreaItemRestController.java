@@ -23,29 +23,35 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sjtu.icare.common.config.ErrorConstants;
+import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
-import com.sjtu.icare.common.web.rest.BasicController;
+import com.sjtu.icare.common.web.rest.GeroBaseController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.op.entity.AreaItemEntity;
+import com.sjtu.icare.modules.op.entity.CareItemEntity;
 import com.sjtu.icare.modules.op.service.IItemService;
 
 @RestController
 @RequestMapping({"${api.web}/gero/{gid}/area_item", "${api.service}/gero/{gid}/area_item"})
-public class GeroAreaItemRestController extends BasicController{
-	private static Logger logger = Logger.getLogger(GeroCareItemRestController.class);
+public class GeroAreaItemRestController extends GeroBaseController {
+	private static Logger logger = Logger.getLogger(GeroAreaItemRestController.class);
 	
 	@Autowired IItemService itemService;
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getGeroAreaItems(
 			HttpServletRequest request,
-			@PathVariable("gid") int geroId
+			@PathVariable("gid") int geroId,
+			@RequestParam("page") int page,
+			@RequestParam("rows") int rows,
+			@RequestParam("sort") String sort
 			) {
 		checkApi(request);
 		List<String> permissions = new ArrayList<String>();
@@ -60,9 +66,16 @@ public class GeroAreaItemRestController extends BasicController{
 		// 参数预处理
 		
 		try {
+			Page<AreaItemEntity> pages = new Page<AreaItemEntity>(page, rows);
+			pages = setOrderBy(pages, sort);
+			
 			AreaItemEntity queryAreaItemEntity = new AreaItemEntity();
 			queryAreaItemEntity.setGeroId(geroId);
+			queryAreaItemEntity.setPage(pages);
+			
 			List<AreaItemEntity> areaItemEntities = itemService.getAreaItems(queryAreaItemEntity);
+			
+			basicReturnedJson.setTotal((int) queryAreaItemEntity.getPage().getCount());
 			
 			if (areaItemEntities != null) {
 				// 构造返回的 JSON
@@ -211,7 +224,7 @@ public class GeroAreaItemRestController extends BasicController{
 
 	@Transactional
 	@RequestMapping(value="/{aid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
-	public Object putGeroCareItem(
+	public Object putGeroAreaItem(
 			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("aid") int itemId,
