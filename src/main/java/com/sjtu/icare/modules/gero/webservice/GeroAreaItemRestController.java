@@ -7,9 +7,12 @@
  */
 package com.sjtu.icare.modules.gero.webservice;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
@@ -44,11 +47,17 @@ public class GeroAreaItemRestController extends GeroBaseController {
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getGeroAreaItems(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestParam("page") int page,
 			@RequestParam("rows") int rows,
 			@RequestParam("sort") String sort
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":area_item:read");
+		permissions.add("carer:"+getCurrentUser().getUserId()+":gero:"+geroId+":area_item:read");
+		checkPermissions(permissions);
 		
 		// 获取基础的 JSON返回
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
@@ -99,9 +108,15 @@ public class GeroAreaItemRestController extends GeroBaseController {
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postGeroAreaItem(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestBody String inJson
 			) {	
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":area_item:add");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("geroId", geroId);
@@ -159,9 +174,15 @@ public class GeroAreaItemRestController extends GeroBaseController {
 	
 	@RequestMapping(value="/{aid}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getGeroAreaItem(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("aid") int itemId
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":area_item:read");
+		permissions.add("carer:"+getCurrentUser().getUserId()+":gero:"+geroId+":area_item:read");
+		checkPermissions(permissions);
 		
 		// 获取基础的 JSON返回
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
@@ -204,10 +225,16 @@ public class GeroAreaItemRestController extends GeroBaseController {
 	@Transactional
 	@RequestMapping(value="/{aid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Object putGeroAreaItem(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("aid") int itemId,
 			@RequestBody String inJson
 			) {	
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":area_item:update");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("geroId", geroId);
@@ -267,9 +294,15 @@ public class GeroAreaItemRestController extends GeroBaseController {
 	@Transactional
 	@RequestMapping(value = "/{aid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteGeroAreaItem(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("aid") int itemId
 			) {	
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":area_item:delete");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
 		tempRquestParamMap.put("geroId", geroId);

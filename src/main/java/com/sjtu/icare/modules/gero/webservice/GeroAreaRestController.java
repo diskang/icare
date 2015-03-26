@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.StringUtils;
+import com.sjtu.icare.common.web.rest.BasicController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.gero.entity.GeroAreaEntity;
@@ -36,7 +39,7 @@ import com.sjtu.icare.modules.gero.service.IGeroAreaService;
 
 @RestController
 @RequestMapping({"${api.web}/gero/{gid}/area", "${api.service}/gero/{gid}/area"})
-public class GeroAreaRestController {
+public class GeroAreaRestController extends BasicController{
 	private static Logger logger = Logger.getLogger(GeroAreaRestController.class);
 
 	@Autowired
@@ -44,8 +47,14 @@ public class GeroAreaRestController {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getGeroAreas(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":area:read");
+		permissions.add("staff:"+getCurrentUser().getUserId()+":gero:"+geroId+":area:read");
+		checkPermissions(permissions);
 		
 		// 获取基础的 JSON返回
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
@@ -89,9 +98,15 @@ public class GeroAreaRestController {
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postGeroArea(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestBody String inJson
 			) {	
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":area:add");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("geroId", geroId);
@@ -161,10 +176,16 @@ public class GeroAreaRestController {
 	
 	@RequestMapping(value = "/{aid}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getGeroAreaAndSubareas(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("aid") int areaId,
 			@RequestParam(value="sub_level", required=false) Integer subLevel
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":area:read");
+		permissions.add("staff:"+getCurrentUser().getUserId()+":gero:"+geroId+":area:read");
+		checkPermissions(permissions);
 		
 		// 获取基础的 JSON返回
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
@@ -233,10 +254,16 @@ public class GeroAreaRestController {
 	@Transactional
 	@RequestMapping(value = "/{aid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Object putGeroArea(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("aid") int areaId,
 			@RequestBody String inJson
 			) {	
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":area:update");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("geroId", geroId);
@@ -265,9 +292,15 @@ public class GeroAreaRestController {
 	@Transactional
 	@RequestMapping(value = "/{aid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteGeroArea(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("aid") int areaId
 			) {	
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":area:delete");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
 		tempRquestParamMap.put("geroId", geroId);
