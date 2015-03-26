@@ -252,6 +252,23 @@ a:hover{ color:#d71318;}
 	height: auto;
 	text-align:left;
 }
+.info-card-c{
+  border: 1px dashed #bcbcbc;
+  width: 27%;
+  margin-top:20px;
+  margin-right:40px;
+  float: right;
+  height: auto;
+  text-align:left;
+}
+.info-card-c li{
+  width:auto;
+  margin-left:15px;
+}
+.info-card-c input{
+  width:auto;
+}
+
 .Register{
 	width: 85%;
 	float: left;

@@ -152,6 +152,21 @@
       <div id="arrangeshow" class="inf hide" style="min-height:700px;">
         <div class="pers-s">员工排班</div>
         <div class="old">
+          <div class="page-header">查询:</div>
+          <div class="Inquiry">
+            <div class="form-group group">
+              <label class="control" for="name">角色:</label>
+              <div class="col-smm-2">
+                <select id="arrange_role" class="form-control">
+                </select>
+              </div>
+            </div>
+            <div class="form-group group"> 
+              <div class="col-md-offset-2">
+                <button id="elder-search" class="btn btn-default" onclick="arrange.drawArrangeList()" style="margin-left:30px;" >搜索</button>
+              </div>
+            </div>
+          </div>
           <div id="calendar" class="fc fc-ltr fc-unthemed">
             <div class="fc-toolbar">
               <div class="fc-left">
@@ -423,7 +438,12 @@
           <tr><td class="td1"><text>居住地址：</text></td><td class="td2"><input id="shousehold_address"></input></td></tr>
         </table>
       </div>
-      <div id="staff-Info-card-b"class="info-card-b"><img src="images/p_2.jpg"></div>
+      <div id="staff-Info-card-b" class="info-card-b"><img src="images/p_2.jpg"></div>
+      <div id="staff-Info-card-c" class="info-card-c">
+        <text style="font-size:20px;">角色设置</text>
+        <ul id="role-check">
+        </ul>
+      </div>
     </div>
 </div>
 

@@ -16,7 +16,7 @@ var role={
         border: true, 
         collapsible:false,//是否可折叠的 
         fit:false,//自动大小 
-        url:rhurl.origin+'/gero/1/role',  
+        url:rhurl.origin+'/gero/'+gid+'/role',  
         method:'get',
         remoteSort:true,  
         sortName:'ID',  
@@ -96,7 +96,7 @@ var role={
     onRoleDblClickRow:function(index){
         var rolet = $('#gerorolepage').datagrid('getSelected');
                 role.rid="/"+rolet.id;
-        var infoUrl=rhurl.origin+"/gero/1/role" + role.rid;
+        var infoUrl=rhurl.origin+"/gero/"+gid+"/role" + role.rid;
         $.ajax({
             type: "get",
             dataType: "json",

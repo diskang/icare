@@ -165,6 +165,37 @@ $(function(){
             alert("ajax error");
         }
     });
+    $.ajax({
+        type: "get",
+        data:{page:1,rows:65535,sort:'ID'},
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        url:rhurl.origin+'/gero/'+gid+'/role',
+        success: function (msg) {
+            var parent=document.getElementById("arrange_role");
+            for(var i in msg.entities){
+                var dt=document.createElement('option');
+                dt.setAttribute('value',msg.entities[i].name);
+                dt.innerHTML=msg.entities[i].name;
+                parent.appendChild(dt);
+            }
+            var parent=document.getElementById("role-check");
+            for(var i in msg.entities){
+                var li=document.createElement('li');
+                // var dt=document.createElement('input');
+                // dt.setAttribute('type','checkbox');
+                // dt.setAttribute('value','checkbox');
+                // dt.setAttribute('class','checkrole');
+                // dt.setAttribute('id','check-'+msg.entities[i].name);
+                li.innerHTML="<input type='checkbox' class='checkrole' disabled=true rid='"+msg.entities[i].id+"'>"+msg.entities[i].name+"</input>";
+                parent.appendChild(li);
+            }
+        },
+        error: function(e) {
+            alert("ajax error");
+        }
+    });
+
 });
 
 $('.navli-a').live('click',function(){
@@ -182,7 +213,6 @@ $(".arrange-work").live('click',function(){
         }
     }
 })
-
 $('.fc-prev-button').live('click',function(){arrange.prev()});
 $('.fc-next-button').live('click',function(){arrange.next()});
 $('.fc-today-button').live('click',function(){arrange.today()});

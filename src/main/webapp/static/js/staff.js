@@ -68,7 +68,6 @@
         $("#staff-Info-card-a").find('.validatebox-text').validatebox('disableValidation');
         $('#sname').attr('value',data.name);
         $('#semail').attr('value',data.email);
-        $('#srole_list').attr('value',rolestr);
         $('#sbirthday').attr('value',data.birthday);
         $('#sgender').attr('value',sex[data.gender]);
         $('#shousehold_address').attr('value',data.household_address);
@@ -140,7 +139,6 @@
             archive_id:document.getElementById("sarchive_id").value,
             email:document.getElementById("semail").value,
             phone:document.getElementById("sphone").value,
-            role_list:document.getElementById("srole_list").value,
             birthday:document.getElementById("sbirthday").value,
             residence_address:document.getElementById("sresidence_address").value,
         }
