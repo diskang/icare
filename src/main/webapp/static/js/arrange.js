@@ -36,7 +36,7 @@ var arrange={
 		}
 	},
 	putarrange:function(){
-		var infoUrl=rhurl.origin+'/gero/'+2+'/schedule';
+		var infoUrl=rhurl.origin+'/gero/'+gid+'/schedule';
 		if (arrange.allow){
 			if(window.confirm('你确定要提交修改吗？')){
                  $.ajax({
@@ -123,7 +123,7 @@ var arrange={
         	data: datat,
         	dataType: "json",
         	contentType: "application/json;charset=utf-8",
-        	url:rhurl.origin+"/gero/"+2+"/schedule",
+        	url:rhurl.origin+"/gero/"+gid+"/schedule",
         	success: function (msg) {
         		staffrec=[];
             	var staffsch=leftTop.dealdata(msg);
@@ -159,7 +159,7 @@ var arrange={
         	data:{page:1,rows:65535,sort:'ID',role:document.getElementById("arrange_role").value},
         	dataType: "json",
         	contentType: "application/json;charset=utf-8",
-        	url:rhurl.origin+'/gero/'+2+'/staff',
+        	url:rhurl.origin+'/gero/'+gid+'/staff',
         	success: function (msg) {
             	var staffsch=leftTop.dealdata(msg);
             	for (var i in staffsch){

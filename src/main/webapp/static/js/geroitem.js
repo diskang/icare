@@ -14,7 +14,8 @@ var geroItem={
             fit: true,//自动大小 
             url:rhurl.origin+'/gero/'+gid+'/care_item',  
             method:'get',
-            remoteSort:false,  
+            remoteSort:true,  
+            sortName:'ID',
             singleSelect:true,//是否单选 
             pagination:true,//分页控件 
             rownumbers:true,//行号  
@@ -106,7 +107,8 @@ var geroItem={
             fit: true,//自动大小 
             url:rhurl.origin+'/gero/'+gid+'/area_item',  
             method:'get',
-            remoteSort:false,  
+            remoteSort:true,  
+            sortName:'ID',  
             singleSelect:true,//是否单选 
             pagination:true,//分页控件 
             rownumbers:true,//行号  

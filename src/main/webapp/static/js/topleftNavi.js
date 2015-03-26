@@ -154,7 +154,7 @@ $(function(){
         type: "get",
         dataType: "json",
         contentType: "application/json;charset=utf-8",
-        url:rhurl.origin+"/user/1",
+        url:rhurl.origin+"/user/"+uid,
         success: function (msg) {
             temptree=msg.entities[0].privilege_list;
             leftTop.removeLefttree;
@@ -182,12 +182,7 @@ $(function(){
             var parent=document.getElementById("role-check");
             for(var i in msg.entities){
                 var li=document.createElement('li');
-                // var dt=document.createElement('input');
-                // dt.setAttribute('type','checkbox');
-                // dt.setAttribute('value','checkbox');
-                // dt.setAttribute('class','checkrole');
-                // dt.setAttribute('id','check-'+msg.entities[i].name);
-                li.innerHTML="<input type='checkbox' class='checkrole' disabled=true rid='"+msg.entities[i].id+"'>"+msg.entities[i].name+"</input>";
+                li.innerHTML="<input type='checkbox' class='checkrole' disabled=true id='chkrole"+msg.entities[i].id+"' rid='"+msg.entities[i].id+"'>"+msg.entities[i].name+"</input>";
                 parent.appendChild(li);
             }
         },

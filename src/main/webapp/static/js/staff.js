@@ -14,7 +14,7 @@
             striped: true, 
             border: true, 
             collapsible:false,//是否可折叠的 
-            url:rhurl.origin+'/gero/2/staff',  
+            url:rhurl.origin+'/gero/'+gid+'/staff',  
             method:'get',
             remoteSort:true,  
             sortName:'ID',
@@ -60,8 +60,10 @@
      drawStaffInfo: function(data){
         staff.sid="/"+data.id;
         var rolestr='';
-        for(var i in data.role_list)
-            rolestr=rolestr+data.role_list[i].role_name+',';
+        $('.checkrole').attr("checked",false);
+        for(var i in data.role_list){
+            $("#chkrole"+data.role_list[i].role_id).attr("checked","true");
+        };
         $("#staff-dialog-form").dialog("open");
         $("#staff-dialog-form").dialog("center");
         $('#staff-Info-card-a input').attr('disabled','disabled');
@@ -85,6 +87,8 @@
         staff.method='post';
         $("#staff-dialog-form").dialog("open");
         $("#staff-dialog-form").dialog("center");
+        $('.checkrole').attr("checked",false);
+        $('.checkrole').attr("disabled",false);
         $('#staff-Info-card-a input').attr('value'," ").removeAttr('disabled','');
         $("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
         $('#staff-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
@@ -95,11 +99,12 @@
         $("#staff-dialog-form").dialog("open");
         $("#staff-dialog-form").dialog("center");
         $('#staff-Info-card-a input').removeAttr('disabled','');
+        $('.checkrole').attr("disabled",false);
         $("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
     },
     delStaffInfo: function(){
         var stafft = $('#staffpage').datagrid('getSelected');
-        var infoUrl=rhurl.origin+"/gero/2/staff/" + stafft.id;
+        var infoUrl=rhurl.origin+"/gero/"+gid+"/staff/" + stafft.id;
         $.ajax({
             url: infoUrl,
             type: 'DELETE',
@@ -113,7 +118,7 @@
 
     onStaffDblClickRow:function(index){
                 var stafft = $('#staffpage').datagrid('getSelected');
-                infoUrl=rhurl.origin+"/gero/2/staff/" + stafft.id;
+                infoUrl=rhurl.origin+"/gero/"+gid+"/staff/" + stafft.id;
                 $.ajax({
                     type: "get",
                     dataType: "json",
@@ -130,7 +135,7 @@
     },
 
     buttonclk:function(){
-        var obj={
+        /*var obj={
             name:document.getElementById("sname").value,
             gender:sexc[document.getElementById("sgender").value],
             household_address:document.getElementById("shousehold_address").value,
@@ -142,11 +147,29 @@
             birthday:document.getElementById("sbirthday").value,
             residence_address:document.getElementById("sresidence_address").value,
         }
-        var infoUrl=rhurl.origin+'/gero/2/staff'+staff.sid;
+        var infoUrl=rhurl.origin+'/gero/'+gid+'/staff'+staff.sid;
         $.ajax({
             url: infoUrl, 
             type: staff.method, 
             data:JSON.stringify(obj), 
+            dataType: 'json', 
+            contentType: "application/json;charset=utf-8",
+            timeout: 1000, 
+            error: function(){alert('Error');}, 
+            success: function(result){staff.drawStaffList();} 
+        }); */
+        var roleobj={ids:[]};
+        var parentBox = document.getElementById("role-check");
+        var inputs = parentBox.getElementsByTagName("INPUT");
+        for(var i=0;i<inputs.length;i++){
+            if(inputs[i].type=="checkbox" && inputs[i].checked){
+                roleobj.ids.push(parseInt(inputs[i].getAttribute("rid")));
+            }
+        }
+        $.ajax({
+            url: rhurl.origin+'/user'+staff.sid+'/role', 
+            type: 'put', 
+            data: JSON.stringify(roleobj), 
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
             timeout: 1000, 

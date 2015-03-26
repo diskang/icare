@@ -16,7 +16,7 @@ var elder={
         collapsible:false,//是否可折叠的 
         fit: true,//自动大小 
         pageNumber:1,
-        url:rhurl.origin+'/gero/1/elder',  
+        url:rhurl.origin+'/gero/'+gid+'/elder',  
         method:'get',
         remoteSort:true,  
         sortName:'ID',
@@ -141,7 +141,7 @@ var elder={
             education:document.getElementById("eeducation").value,
             residence:document.getElementById("eresidence").value,
         }
-        var infoUrl=rhurl.origin+'/gero/2/elder'+elder.eid;
+        var infoUrl=rhurl.origin+'/gero/'+gid+'/elder'+elder.eid;
         $.ajax({
             url: infoUrl, 
             type: elder.method, 
