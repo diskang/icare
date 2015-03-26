@@ -9,7 +9,9 @@ package com.sjtu.icare.modules.op.entity;
 
 import java.io.Serializable;
 
-public class AreaItemEntity implements Serializable{
+import com.sjtu.icare.common.persistence.DataEntity;
+
+public class AreaItemEntity extends DataEntity<AreaItemEntity> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -25,8 +27,8 @@ public class AreaItemEntity implements Serializable{
 	/**
 	 * @return the id
 	 */
-	public Integer getId() {
-		return id;
+	public int getId() {
+		return super.getId();
 	}
 	/**
 	 * @param id the id to set
@@ -123,6 +125,11 @@ public class AreaItemEntity implements Serializable{
 	 */
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+	@Override
+	public void preDelete() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
