@@ -7,9 +7,12 @@
  */
 package com.sjtu.icare.modules.gero.webservice;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
@@ -47,11 +50,12 @@ public class GeroRestController extends BasicController {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getGeros(
+			HttpServletRequest request,
 			@RequestParam("page") int page,
 			@RequestParam("rows") int rows,
 			@RequestParam("sort") String sort
 			) {
-		
+		checkApi(request);
   		
 		try {
 			// 获取基础的 JSON返回
@@ -99,8 +103,11 @@ public class GeroRestController extends BasicController {
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postGero(
+			HttpServletRequest request,
 			@RequestBody String inJson
 			) {
+		checkApi(request);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
@@ -147,9 +154,13 @@ public class GeroRestController extends BasicController {
 
 	@RequestMapping(value="/{gid}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getGero(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId
 			) {
-		
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+"info:read");
+		checkPermissions(permissions);
   		
 		try {
 			// 获取基础的 JSON返回
@@ -188,9 +199,15 @@ public class GeroRestController extends BasicController {
 	@Transactional
 	@RequestMapping(value="/{gid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Object putGero(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestBody String inJson
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":info:update");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
@@ -232,8 +249,10 @@ public class GeroRestController extends BasicController {
 	
 	@RequestMapping(value="/{gid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteGero(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId
 			) {
+		checkApi(request);
 		
 		try {
 			// 获取基础的 JSON返回
