@@ -8,6 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,13 +61,15 @@ public class GeroRoleController extends GeroBaseController {
 	 */
 	@RequestMapping(value = "/{gid}/role", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> getGeroRoleList(
+			HttpServletRequest request,
 			@PathVariable("gid") int gid,
 			@RequestParam("page") int page,
 			@RequestParam("rows") int limit,
 			@RequestParam("sort") String orderByTag){
-		
-//		 检查用户是否有访问此养老院权限
-//		checkGero(gid);
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+gid+":role:read");
+		checkPermissions(permissions);
 		
 		BasicReturnedJson result = new BasicReturnedJson();
 		
@@ -109,11 +113,15 @@ public class GeroRoleController extends GeroBaseController {
 	 */
 	@RequestMapping(value = "/{gid}/role", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> insertGeroRole(
+			HttpServletRequest request,			
 			@PathVariable("gid") int gid,
 			@RequestBody String inJson
 			){
 		
-//		checkGero(gid);
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+gid+":role:add");
+		checkPermissions(permissions);
 		
 		BasicReturnedJson result = new BasicReturnedJson();
 		
@@ -178,11 +186,15 @@ public class GeroRoleController extends GeroBaseController {
 	 */
 	@RequestMapping(value = "/{gid}/role/{rid}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> getGeroRole(
+			HttpServletRequest request,			
 			@PathVariable("rid") int rid,
 			@PathVariable("gid") int gid
 			){
 		
-//		checkGero(gid);
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+gid+":role:read");
+		checkPermissions(permissions);
 		
 		BasicReturnedJson result = new BasicReturnedJson();
 		
@@ -213,12 +225,16 @@ public class GeroRoleController extends GeroBaseController {
 	 */
 	@RequestMapping(value = "/{gid}/role/{rid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> updateGeroRoleInfo(
+			HttpServletRequest request,			
 			@PathVariable("rid") int rid,
 			@PathVariable("gid") int gid,
 			@RequestBody String inJson
 			){
 		
-//		checkGero(gid);
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+gid+":role:update");
+		checkPermissions(permissions);
 		
 		BasicReturnedJson result = new BasicReturnedJson();
 		
@@ -285,11 +301,15 @@ public class GeroRoleController extends GeroBaseController {
 	 */
 	@RequestMapping(value = "/{gid}/role/{rid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> deleteGeroRole(
+			HttpServletRequest request,
 			@PathVariable("rid") int rid,
 			@PathVariable("gid") int gid
 			){
 		
-//		checkGero(gid);
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+gid+":role:update");
+		checkPermissions(permissions);
 		
 		BasicReturnedJson result = new BasicReturnedJson();
 		
@@ -318,12 +338,16 @@ public class GeroRoleController extends GeroBaseController {
 	 */
 	@RequestMapping(value = "/{gid}/role/{rid}/privilege", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> insertGeroRolePrivilege(
+			HttpServletRequest request,
 			@PathVariable("rid") int rid,
 			@PathVariable("gid") int gid,
 			@RequestBody String inJson
 			){
 
-//		checkGero(gid);
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+gid+":role:update");
+		checkPermissions(permissions);
 		
 		BasicReturnedJson result = new BasicReturnedJson();
 		
@@ -387,6 +411,7 @@ public class GeroRoleController extends GeroBaseController {
 		
 		// 遍历排序过的权限列表
 		for (Map.Entry<String, String> entry : inputPrivilegeMap.entrySet()){
+			List<Privilege> insertPrivileges = new ArrayList<Privilege>();
 			int id = Integer.parseInt(entry.getKey());
 			logger.debug(entry.getKey() + " " + entry.getValue());
 			Privilege inputPrivilege = new Privilege();
@@ -399,6 +424,9 @@ public class GeroRoleController extends GeroBaseController {
 			//判断权限是否存在，父节点是否存在
 			Boolean parentExist = false;
 			Boolean exist = false;
+			if (inputPrivilege.getParentId() == 0) {
+				parentExist = true;
+			}
 			for (Privilege privilege : rolePrivileges){
 				if (privilege.getId() == id) {
 					// 已存在该权限
@@ -420,12 +448,16 @@ public class GeroRoleController extends GeroBaseController {
 				throw new RestException(HttpStatus.BAD_REQUEST, message);
 			}
 			if (exist == false) {
+				insertPrivileges.add(inputPrivilege);
 				rolePrivileges.add(inputPrivilege);
 			}
+			role.setPrivilegeList(insertPrivileges);
+			if (insertPrivileges.size() > 0)
+				systemService.insertRolePrivilege(role);
+			
 		}
 		
-		role.setPrivilegeList(rolePrivileges);
-		systemService.insertRolePrivilege(role);
+		
 		
 		return result.getMap();
 	}
@@ -439,12 +471,16 @@ public class GeroRoleController extends GeroBaseController {
 	 */
 	@RequestMapping(value = "/{gid}/role/{rid}/privilege", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> deleteGeroRolePrivilege(
+			HttpServletRequest request,
 			@PathVariable("rid") int rid,
 			@PathVariable("gid") int gid,
 			@RequestBody String inJson
 			){
 
-//		checkGero(gid);
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+gid+":role:update");
+		checkPermissions(permissions);
 		
 		BasicReturnedJson result = new BasicReturnedJson();
 		
@@ -515,12 +551,16 @@ public class GeroRoleController extends GeroBaseController {
 	 */
 	@RequestMapping(value = "/{gid}/role/{rid}/user", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> updateRoleUser(
+			HttpServletRequest request,
 			@PathVariable("rid") int rid,
 			@PathVariable("gid") int gid,
 			@RequestBody String inJson
 			){
 
-//		checkGero(gid);
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+gid+":role:update");
+		checkPermissions(permissions);
 		
 		BasicReturnedJson result = new BasicReturnedJson();
 		

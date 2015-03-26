@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,7 @@ import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.ParamValidator;
-import com.sjtu.icare.common.web.rest.BasicController;
+import com.sjtu.icare.common.web.rest.GeroBaseController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.op.entity.AreaworkRecordEntity;
@@ -39,7 +41,7 @@ import com.sjtu.icare.modules.op.service.IItemRecordService;
 
 @RestController
 @RequestMapping({"${api.web}/gero/{gid}/areawork_record", "${api.service}/gero/{gid}/areawork_record"})
-public class AreaRecordRestController extends BasicController {
+public class AreaRecordRestController extends GeroBaseController{
 	private static Logger logger = Logger.getLogger(AreaRecordRestController.class);
 	
 	@Autowired
@@ -47,6 +49,7 @@ public class AreaRecordRestController extends BasicController {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getAreaworkRecords(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestParam(value="staff_id", required=false) Integer carerId,
 			@RequestParam(value="area_id", required=false) Integer areaId,
@@ -56,6 +59,11 @@ public class AreaRecordRestController extends BasicController {
 			@RequestParam("rows") int rows,
 			@RequestParam("sort") String sort
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":areawork_record:read");
+		permissions.add("carer:"+carerId+":gero:"+geroId+":areawork_record:read");
+		checkPermissions(permissions);
 		
 		// 参数检查
 		if ((startDate != null && !ParamValidator.isDate(startDate)) || (endDate != null && !ParamValidator.isDate(endDate))) {
@@ -118,8 +126,11 @@ public class AreaRecordRestController extends BasicController {
 
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postAreaworkRecords(
+			HttpServletRequest request,
+			@PathVariable("gid") int geroId,
 			@RequestBody String inJson
 			) {	
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
@@ -150,6 +161,12 @@ public class AreaRecordRestController extends BasicController {
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
+		
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":areawork_record:add");
+		permissions.add("carer:"+carerId+":gero:"+geroId+":areawork_record:add");
+		checkPermissions(permissions);
 		
 		// 获取基础的 JSON
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();

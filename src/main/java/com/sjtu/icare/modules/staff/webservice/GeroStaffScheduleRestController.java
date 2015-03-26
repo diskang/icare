@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.ParamValidator;
+import com.sjtu.icare.common.web.rest.GeroBaseController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.staff.entity.StaffEntity;
@@ -37,7 +40,7 @@ import com.sjtu.icare.modules.sys.entity.User;
 
 @RestController
 @RequestMapping({"${api.web}/gero/{gid}/schedule", "${api.service}/gero/{gid}/schedule"})
-public class GeroStaffScheduleRestController {
+public class GeroStaffScheduleRestController extends GeroBaseController{
 	private static Logger logger = Logger.getLogger(GeroStaffScheduleRestController.class);
 	
 	@Autowired
@@ -46,11 +49,16 @@ public class GeroStaffScheduleRestController {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getStaffSchedulePlans(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestParam(value="start_date", required=false) String startDate,
 			@RequestParam(value="end_date", required=false) String endDate,
 			@RequestParam(value="role", required=false) String role
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":schedule:read");
+		checkPermissions(permissions);
 		
 		// 参数检查
 		if ((startDate != null && !ParamValidator.isDate(startDate)) || (endDate != null && !ParamValidator.isDate(endDate))) {
@@ -126,9 +134,15 @@ public class GeroStaffScheduleRestController {
 	
 	@RequestMapping(method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Object putStaffSchedulePlans(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestBody String inJson
 			) {	
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":schedule:update");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		List<Object> tempRquestList = ParamUtils.getListByJson(inJson, logger);
 		
