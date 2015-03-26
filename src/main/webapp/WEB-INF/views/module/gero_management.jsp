@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>无标题文档</title>
+<title>养老院管理</title>
 <link href="/resthouse/static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="/resthouse/static/css/manager.css" rel="stylesheet" type="text/css">
 <!---------------------------------响应式------------------------>
