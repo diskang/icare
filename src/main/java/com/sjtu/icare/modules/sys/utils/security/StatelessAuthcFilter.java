@@ -83,7 +83,7 @@ public class StatelessAuthcFilter extends AccessControlFilter {
 	private void onLoginFail(ServletResponse response,String errorString) throws IOException {  
 	    HttpServletResponse httpResponse = (HttpServletResponse) response;  
 	    httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-	    httpResponse.setHeader("WWW-Authenticate", "Basic realm='fake'");
+//	    httpResponse.setHeader("WWW-Authenticate", "Basic realm='fake'");
 //	    JSONObject errorJsonObject = new JSONObject();
 //	    errorJsonObject.put("errno", HttpServletResponse.SC_UNAUTHORIZED+"");
 //	    errorJsonObject.put("error", errorString);
