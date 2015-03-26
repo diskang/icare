@@ -14,9 +14,10 @@
             striped: true, 
             border: true, 
             collapsible:false,//是否可折叠的 
-            url:'/gero/1/staff',  
+            url:rhurl.origin+'/gero/2/staff',  
             method:'get',
-            remoteSort:false,  
+            remoteSort:true,  
+            sortName:'ID',
             singleSelect:true,//是否单选 
             pagination:true,//分页控件 
             rownumbers:true,//行号  
@@ -27,7 +28,7 @@
             loadFilter:function(data){
         	    var result={"total":0,"rows":0};
                 result.total=data.total;
-                result.rows=data.entities[0];
+                result.rows=data.entities;
                 for (var i in result.rows) result.rows[i].gender=sex[result.rows[i].gender];
                 return result;
             },
@@ -58,12 +59,16 @@
 
      drawStaffInfo: function(data){
         staff.sid="/"+data.id;
+        var rolestr='';
+        for(var i in data.role_list)
+            rolestr=rolestr+data.role_list[i].role_name+',';
         $("#staff-dialog-form").dialog("open");
         $("#staff-dialog-form").dialog("center");
         $('#staff-Info-card-a input').attr('disabled','disabled');
+        $("#staff-Info-card-a").find('.validatebox-text').validatebox('disableValidation');
         $('#sname').attr('value',data.name);
         $('#semail').attr('value',data.email);
-        $('#srole_list').attr('value',data.role_list);
+        $('#srole_list').attr('value',rolestr);
         $('#sbirthday').attr('value',data.birthday);
         $('#sgender').attr('value',sex[data.gender]);
         $('#shousehold_address').attr('value',data.household_address);
@@ -73,7 +78,7 @@
         $('#sidentity_no').attr('value',data.identity_no);
         $('#sphone').attr('value',data.phone);
         if(data.photo_url!==undefined) $('#staff-Info-card-b img').attr("src",data.photo_url).attr("width","178px").attr("height","220px");
-        else $('#staff-Info-card-b img').attr("src","/images/p_2.jpg").attr("width","178px").attr("height","220px");
+        else $('#staff-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
 
     addStaffInfo: function(){
@@ -82,7 +87,8 @@
         $("#staff-dialog-form").dialog("open");
         $("#staff-dialog-form").dialog("center");
         $('#staff-Info-card-a input').attr('value'," ").removeAttr('disabled','');
-        $('#staff-Info-card-b img').attr("src","/images/p_2.jpg").attr("width","178px").attr("height","220px");
+        $("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
+        $('#staff-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
 
     editStaffInfo: function(){
@@ -90,10 +96,11 @@
         $("#staff-dialog-form").dialog("open");
         $("#staff-dialog-form").dialog("center");
         $('#staff-Info-card-a input').removeAttr('disabled','');
+        $("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
     },
     delStaffInfo: function(){
         var stafft = $('#staffpage').datagrid('getSelected');
-        var infoUrl="gero/1/staff/" + stafft.id;
+        var infoUrl=rhurl.origin+"/gero/2/staff/" + stafft.id;
         $.ajax({
             url: infoUrl,
             type: 'DELETE',
@@ -107,7 +114,7 @@
 
     onStaffDblClickRow:function(index){
                 var stafft = $('#staffpage').datagrid('getSelected');
-                infoUrl="gero/1/staff/" + stafft.id;
+                infoUrl=rhurl.origin+"/gero/2/staff/" + stafft.id;
                 $.ajax({
                     type: "get",
                     dataType: "json",
@@ -115,7 +122,7 @@
                     url: infoUrl,
                     success: function (msg) {
                         var data=leftTop.dealdata(msg);
-                        staff.drawStaffInfo(data);
+                        staff.drawStaffInfo(data[0]);
                     },
                     error: function(e) {
                         alert(e);
@@ -137,15 +144,23 @@
             birthday:document.getElementById("sbirthday").value,
             residence_address:document.getElementById("sresidence_address").value,
         }
-        var infoUrl='/gero/1/staff'+staff.sid;
+        var infoUrl=rhurl.origin+'/gero/2/staff'+staff.sid;
         $.ajax({
             url: infoUrl, 
             type: staff.method, 
-            data:obj, 
+            data:JSON.stringify(obj), 
             dataType: 'json', 
+            contentType: "application/json;charset=utf-8",
             timeout: 1000, 
             error: function(){alert('Error');}, 
             success: function(result){staff.drawStaffList();} 
         }); 
+    },
+    doSearch:function(){
+        $('#staffpage').datagrid('load',{           
+                    name: $('#staff_name').val(),
+                    role: $('#staff_role').val(),
+                    identity_no: $('#staff_identity_no').val(),
+                });
     }
 }

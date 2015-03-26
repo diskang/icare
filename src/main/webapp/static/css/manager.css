@@ -43,7 +43,7 @@ a:hover{ color:#d71318;}
 }
 .header-s {
   height:142px;
-  background-image: url(../images/b_1.png);
+  background-image: url(/resthouse/static/images/b_1.png);
   background-repeat: no-repeat;
   background-position: right center;
 }
@@ -73,7 +73,7 @@ a:hover{ color:#d71318;}
 .daohang{
 	height: 41px;
 	width: 100%;
-	background-image: url(../images/d_1.jpg);
+	background-image: url(/resthouse/static/images/d_1.jpg);
 	background-repeat: repeat-x;
 }
 .Navigation{
@@ -86,7 +86,7 @@ a:hover{ color:#d71318;}
 	line-height: 41px;
 	text-align: center;
 	font-size: 16px;
-	background-image: url(../images/d_2.jpg);
+	background-image: url(/resthouse/static/images/d_2.jpg);
 	background-repeat: no-repeat;
 	background-position: right;
 }
@@ -98,18 +98,18 @@ a:hover{ color:#d71318;}
 	text-align: center;
 	font-size: 16px;
 	
-	background-image: url(../images/d_2.jpg);
+	background-image: url(/resthouse/static/images/d_2.jpg);
 	background-repeat: no-repeat;
 	background-position: right;}
 .Navigation .navli{
-  background-image:url(../images/d_3.jpg);
+  background-image:url(/resthouse/static/images/d_3.jpg);
   background-repeat: no-repeat;
 	background-position: center;
 }
 .Navigation .navli a:hover,.Navigation .navli-b a:hover,.Navigation .navli-a a:hover{
   color:#333;
   text-decoration: none;
-  background-image:url(../images/d_3.jpg);
+  background-image:url(/resthouse/static/images/d_3.jpg);
   background-repeat: no-repeat;
 	background-position: center;
 	display:block;
@@ -118,7 +118,7 @@ a:hover{ color:#d71318;}
 
 .Navigation li a:focus,
 .Navigation li a:focus{
-	background-image: url(../images/d_3.jpg);
+	background-image: url(/resthouse/static/images/d_3.jpg);
 	background-repeat: no-repeat;
 	background-position: center center;
 	text-decoration: none;
@@ -190,7 +190,7 @@ a:hover{ color:#d71318;}
 .pers-s{
 	height: 41px;
 	width: 100%;
-	background: url(../images/r_1.jpg);
+	background: url(/resthouse/static/images/r_1.jpg);
 	height: 41px;
 	float: left;
 	line-height: 41px;
@@ -202,33 +202,49 @@ a:hover{ color:#d71318;}
 .info-card{
   margin-top:5px;
   width:100%;
-  height:450px;
+  height:auto;
   float:left;
   background: #ffe;
 }
-#elder-Info-card-a{
+.info-card-a tr{
+  min-width:400px;
+  height:35px;
+  margin:0px;
+  text-align: left;
+  font-size:20px;
+}
+.easyui-dialog table tr{
+  min-width:400px;
+  height:35px;
+  margin:0px;
+  text-align: left;
+  font-size:20px;
+}
+.td1{
+  width:130px;
+}
+.td2{
+  width:200px;
+}
+.info-card-a{
 	width: 60%;
-  margin-top:5px;
+  margin-top:2px;
 	padding-left: 20px;
 	line-height: 20px;
 	font-size: 14px;
 	float: left;
 	height: auto;
 }
-#elder-Info-card-a li{
+#rolepost-dialog-form p{
   height:30px;
-  margin:2px;
-  text-align: left;
+  margin-left:20px;
   font-size:20px;
+  text-align: 20px
 }
-#elder-Info-card-a li text{
-  position: relative;
-  height:20px;
-  width:55%;
-  text-align:left;
-  font-size:18px;
+.workday{
+  background: #7f5;
 }
-#elder-Info-card-b{
+.info-card-b{
 	width: 27%;
   margin-top:20px;
   margin-right:40px;
@@ -386,7 +402,7 @@ a:hover{ color:#d71318;}
   font-size:14px;
 }
 .table-tr1{
-   text-align: center;
+  text-align: center;
   background-color:#fff;
   height:39px;
   line-hgiehg:39px;
@@ -513,6 +529,21 @@ a:hover{ color:#d71318;}
   color:#fff;
   display:block;
   
+}
+
+#authorityInfo{
+  width:300px;
+  height:200px;
+  position:absolute;
+  background:url('/resthouse/static/css/images/q_1.jpg');
+  top:300px;
+  right:10%;
+}
+
+#authorityInfo li{
+  height:40px;
+  padding:10px;
+
 }
 /*---------------------------------------老人登记中心*/
 .col-sm-{
@@ -671,7 +702,7 @@ a:hover{ color:#d71318;}
 	background-color: #f3f3f3;
 	padding-top: 20px;
 	padding-bottom: 20px;
-	background-image: url(../images/f_1.png);
+	background-image: url(/resthouse/static/images/f_1.png);
 	background-repeat: repeat-x;
 	background-position: center bottom;
 }
@@ -1070,6 +1101,7 @@ body .fc { /* extra precedence to overcome jqui */
   border-style: solid;
   border-width: 1px;
   height:35px;
+  width:100px;
   padding: 0;
   vertical-align: top;
 }
@@ -1078,7 +1110,7 @@ body .fc { /* extra precedence to overcome jqui */
   border-style: double; /* overcome neighboring borders */
 }
 .fc-name{
-  width:100px;
+  width:80px;
   text-align:center;
 }
 .fc button::-moz-focus-inner { margin: 0; padding: 0; }
