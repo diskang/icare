@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,7 @@ public class CareworkRestController extends BasicController {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getCareworks(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestParam(value="start_date", required=false) String startDate,
 			@RequestParam(value="end_date", required=false) String endDate,
@@ -57,7 +60,10 @@ public class CareworkRestController extends BasicController {
 			@RequestParam("limit") int limit,
 			@RequestParam("order_by") String orderByTag
 			) {
-		
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":carework:read");
+		checkPermissions(permissions);
 		
 		// 参数检查
 		if ((startDate != null && !ParamValidator.isDate(startDate)) || (endDate != null && !ParamValidator.isDate(endDate))) {
@@ -133,9 +139,15 @@ public class CareworkRestController extends BasicController {
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postCarework(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestBody String inJson
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":carework:add");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
@@ -198,10 +210,16 @@ public class CareworkRestController extends BasicController {
 	@Transactional
 	@RequestMapping(value="{carework_id}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Object putCarework(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("carework_id") int careworkId,
 			@RequestBody String inJson
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":carework:update");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
@@ -261,9 +279,15 @@ public class CareworkRestController extends BasicController {
 	@Transactional
 	@RequestMapping(value="{carework_id}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteCarework(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("carework_id") int careworkId
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":carework:delete");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);

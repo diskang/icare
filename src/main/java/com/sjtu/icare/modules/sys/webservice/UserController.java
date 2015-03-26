@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,7 +59,7 @@ public class UserController extends SysBaseController{
 			@RequestParam("rows") int limit,
 			@RequestParam("sort") String orderByTag
 			){
-		checkPermission(request);
+		checkApi(request);
 		
 		BasicReturnedJson result = new BasicReturnedJson();
 		
@@ -100,12 +101,15 @@ public class UserController extends SysBaseController{
 	 * @param uid
 	 * @return
 	 */
+	@SuppressWarnings("null")
 	@RequestMapping(value = "/{uid}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> getUserInfoFromUserId(
 			HttpServletRequest request,
 			@PathVariable("uid") int uid){
-		checkPermission(request);
-		checkUser(uid);
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("user:"+uid+":info:read");
+		checkPermissions(permissions);
 		
 		BasicReturnedJson result = new BasicReturnedJson();
 		
@@ -130,7 +134,7 @@ public class UserController extends SysBaseController{
 			@PathVariable("uid") int uid,
 			@RequestBody String inJson
 			){
-		checkPermission(request);
+		checkApi(request);
 		checkUser(uid);
 		Map<String, Object> requestBodyParamMap = ParamUtils.getMapByJson(inJson, logger);
 		String name;
@@ -190,8 +194,14 @@ public class UserController extends SysBaseController{
 			@PathVariable("uid") int uid,
 			@RequestBody String inJson
 			){
-		checkPermission(request);
-		checkUser(uid);
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("user:"+uid+":info:read");
+		permissions.add("admin:gero:"+getGeroId()+":staff:info:update");
+		permissions.add("admin:gero:"+getGeroId()+":elder:info:update");
+		checkPermissions(permissions);
+		checkUserInGero(uid, getGeroId());
+		
 		Map<String, Object> requestBodyParamMap = ParamUtils.getMapByJson(inJson, logger);
 		String password;
 		
@@ -243,8 +253,12 @@ public class UserController extends SysBaseController{
 			@PathVariable("uid") int uid,
 			@RequestBody String inJson
 			){
-		checkPermission(request);
-		checkUser(uid);
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+getGeroId()+":user:role:update");
+		checkPermissions(permissions);
+		checkUserInGero(uid, getGeroId());
+
 		Map<String, Object> requestBodyParamMap = ParamUtils.getMapByJson(inJson, logger);
 		List<Integer> roleIds;
 
@@ -300,8 +314,7 @@ public class UserController extends SysBaseController{
 	public Map<String, Object> deleteUserFromUserId(
 			HttpServletRequest request,
 			@PathVariable("uid") int uid){
-		checkPermission(request);
-		checkUser(uid);
+		checkApi(request);
 		User user = getUserFromId(uid);
 		BasicReturnedJson result = new BasicReturnedJson();
 

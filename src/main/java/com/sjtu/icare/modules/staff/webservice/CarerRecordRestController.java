@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,7 @@ import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.ParamValidator;
+import com.sjtu.icare.common.web.rest.GeroBaseController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.op.entity.CareworkRecordEntity;
@@ -38,7 +41,7 @@ import com.sjtu.icare.modules.op.service.IItemRecordService;
 
 @RestController
 @RequestMapping({"${api.web}/gero/{gid}/carework_record", "${api.service}/gero/{gid}/carework_record"})
-public class CarerRecordRestController {
+public class CarerRecordRestController extends GeroBaseController{
 	private static Logger logger = Logger.getLogger(CarerRecordRestController.class);
 	
 	@Autowired
@@ -46,12 +49,18 @@ public class CarerRecordRestController {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getCareworkRecords(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestParam(value="sid", required=false) Integer carerId,
 			@RequestParam(value="eid", required=false) Integer elderId,
 			@RequestParam(value="start_date", required=false) String startDate,
 			@RequestParam(value="end_date", required=false) String endDate
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":carework_record:read");
+		permissions.add("carer:"+carerId+":gero:"+geroId+":carework_record:read");
+		checkPermissions(permissions);
 		
 		// 参数检查
 		if ((startDate != null && !ParamValidator.isDate(startDate)) || (endDate != null && !ParamValidator.isDate(endDate))) {
@@ -106,8 +115,11 @@ public class CarerRecordRestController {
 
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postCareworkRecords(
+			HttpServletRequest request,
+			@PathVariable("gid") int geroId,
 			@RequestBody String inJson
 			) {	
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
@@ -138,6 +150,12 @@ public class CarerRecordRestController {
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
+		
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":carework_record:add");
+		permissions.add("carer:"+carerId+":gero:"+geroId+":carework_record:add");
+		checkPermissions(permissions);
 		
 		// 获取基础的 JSON
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();

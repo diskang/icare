@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,7 +43,9 @@ public class PrivilegeController extends SysBaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
-	public Map<String, Object> getPrivilegeListController(){
+	public Map<String, Object> getPrivilegeListController(
+			HttpServletRequest request){
+		checkApi(request);
 		
 		BasicReturnedJson result = new BasicReturnedJson();
 		
@@ -57,8 +61,10 @@ public class PrivilegeController extends SysBaseController{
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> insertPrivilege(
+			HttpServletRequest request,
 			@RequestBody String inJson
 			){
+		checkApi(request);
 		
 		BasicReturnedJson result = new BasicReturnedJson();
 		
@@ -150,9 +156,11 @@ public class PrivilegeController extends SysBaseController{
 	 */
 	@RequestMapping(value = "{pid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> updatePrivilege(
+			HttpServletRequest request,
 			@PathVariable("pid") int pid,
 			@RequestBody String inJson
 			){
+		checkApi(request);
 
 		BasicReturnedJson result = new BasicReturnedJson();
 		
@@ -217,8 +225,10 @@ public class PrivilegeController extends SysBaseController{
 	
 	@RequestMapping(value = "{pid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> deletePrivilege(
+			HttpServletRequest request,
 			@PathVariable("pid") int pid
 			){
+		checkApi(request);
 		
 		BasicReturnedJson result = new BasicReturnedJson();
 		

@@ -1,5 +1,7 @@
 package com.sjtu.icare.common.web.rest;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
@@ -21,8 +23,11 @@ public class BasicController {
 	
 	private static Logger logger = Logger.getLogger(BasicController.class);
 	
-	protected void checkPermission(HttpServletRequest request){
+	protected void checkApi(HttpServletRequest request){
 		User user = getCurrentUser();
+		if (user.getUserType() == 0) {
+			return;
+		}
 		String requestUrl = request.getRequestURI();
 		String requestMethod = request.getMethod();
 		String webAPIPath = Global.getWebAPIPath();
@@ -49,19 +54,38 @@ public class BasicController {
 		SecurityUtils.getSubject().checkPermission(requestPermission);
 	}
 	
+	protected void checkPermissions(List<String> permissions) {
+		if (getCurrentUser().getUserType() == 0) {
+			return;
+		}
+		for (String permission : permissions) {
+			if (SecurityUtils.getSubject().isPermitted(permission)) {
+				return;
+			}
+		}
+		if (getCurrentUser().getUserType() != 0) {
+			SecurityUtils.getSubject().checkPermission("no permission");
+		}
+	}
+	
 	protected void checkUser(int uid){
 		User user = getCurrentUser();
-		User queryUser = UserUtils.get(uid);
 		if (user.getUserType() == 0){
 			return;
 		}else if (user.getId() == uid) {
 			return;
-		}else if (SecurityUtils.getSubject().isPermitted("sth")) {
-			return;
 		}else {
-			logger.debug("here");
+			SecurityUtils.getSubject().checkPermission("no permission");
+		}		
+	}
+	
+	protected void checkUserInGero(int uid, int gid){
+		if (getCurrentUser().getUserType() == 0) {
+			return;
 		}
-		
+		if (UserUtils.get(uid).getGeroId() != gid && getCurrentUser().getUserType() != 0) {
+			SecurityUtils.getSubject().checkPermission("no permission");
+		}
 	}
 	
 	/**
@@ -89,6 +113,10 @@ public class BasicController {
 			throw new RestException(HttpStatus.UNAUTHORIZED, message);
 		}
 		return user;
+	}
+	
+	protected Integer getGeroId(){
+		return getCurrentUser().getGeroId();
 	}
 	
 	/**
