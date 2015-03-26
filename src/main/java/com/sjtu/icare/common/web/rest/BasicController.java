@@ -36,8 +36,8 @@ public class BasicController {
 			requestUrl = requestUrl.substring((requestUrl.indexOf(serviceAPIPath)+serviceAPIPath.length()));
 		else
 			requestUrl = requestUrl.substring((requestUrl.indexOf(webAPIPath)+webAPIPath.length()));
-		logger.debug(requestUrl);
-		logger.debug(requestMethod);
+//		logger.debug(requestUrl);
+//		logger.debug(requestMethod);
 		if (user.getUserType()==0)
 			return;
 		String[] urlList = requestUrl.split("/");
@@ -50,7 +50,7 @@ public class BasicController {
 			}
 		}
 		String requestPermission = StringUtils.join(urlList,"/") + ":" + requestMethod;
-		logger.debug(requestPermission);
+		logger.debug("request permission:"+requestPermission);
 		SecurityUtils.getSubject().checkPermission(requestPermission);
 	}
 	
