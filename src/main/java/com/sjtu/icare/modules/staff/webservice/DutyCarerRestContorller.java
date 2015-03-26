@@ -116,7 +116,7 @@ public class DutyCarerRestContorller extends GeroBaseController{
 	@RequestMapping(value="/gero/{gid}/area/{aid}/duty_carer", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getAreaDutyCarer(
 			HttpServletRequest request,
-			@PathVariable("aid") int geroId,
+			@PathVariable("gid") int geroId,
 			@PathVariable("aid") int areaId,
 			@RequestParam(value="date", required=false) String date
 			) {
