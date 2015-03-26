@@ -36,7 +36,6 @@ import com.sjtu.icare.modules.staff.service.IStaffDataService;
 import com.sjtu.icare.modules.sys.entity.User;
 
 @RestController
-@RequestMapping({"${api.web}", "${api.service}"})
 public class DutyCarerRestContorller {
 	private static Logger logger = Logger.getLogger(DutyCarerRestContorller.class);
 	
@@ -45,7 +44,7 @@ public class DutyCarerRestContorller {
 	@Autowired
 	IStaffDataService staffDataService;
 	
-	@RequestMapping(value="/elder/{eid}/duty_carer", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
+	@RequestMapping(value={"${api.web}/gero/{gid}/elder/{eid}/duty_carer", "${api.service}/gero/{gid}/elder/{eid}/duty_carer"}, method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getElderDutyCarer(
 			@PathVariable("eid") int elderId,
 			@RequestParam(value="date", required=false) String date
@@ -89,7 +88,7 @@ public class DutyCarerRestContorller {
 				resultMap.put("phone", user.getPhoneNo());
 				resultMap.put("gender", user.getGender());
 				resultMap.put("photo_url", user.getPhotoUrl());
-				resultMap.put("work_date", date);
+				resultMap.put("end_date", date);
 				  
 				basicReturnedJson.addEntity(resultMap);
 			}
@@ -105,7 +104,7 @@ public class DutyCarerRestContorller {
 		}
 	}
 	
-	@RequestMapping(value="/area/{aid}/duty_carer", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
+	@RequestMapping(value={"${api.web}/gero/{gid}/area/{aid}/duty_carer", "${api.service}/gero/{gid}/area/{aid}/duty_carer"}, method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getAreaDutyCarer(
 			@PathVariable("aid") int areaId,
 			@RequestParam(value="date", required=false) String date

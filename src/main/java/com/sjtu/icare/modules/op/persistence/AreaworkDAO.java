@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.sjtu.icare.common.persistence.annotation.MyBatisDao;
 import com.sjtu.icare.modules.op.entity.AreaworkEntity;
+import com.sjtu.icare.modules.staff.entity.StaffEntity;
 
 /**
  * @Description 房间护工工作职责的 Mapper
@@ -50,5 +51,15 @@ public interface AreaworkDAO {
 	 * @throws
 	 */
 	void deleteAreawork(AreaworkEntity areaworkEntity);
+
+	/**
+	 * @Title getStaffEntitiesByAreaId
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @param @return
+	 * @return List<StaffEntity>
+	 * @throws
+	 */
+	List<StaffEntity> getStaffEntitiesByAreaId(Map<String, Object> paramMap);
 	
 }
