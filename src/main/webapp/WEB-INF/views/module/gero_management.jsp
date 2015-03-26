@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>无标题文档</title>
+<title>resthouse管理界面</title>
 <link href="/resthouse/static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="/resthouse/static/css/manager.css" rel="stylesheet" type="text/css">
 <!---------------------------------响应式------------------------>
@@ -428,7 +428,6 @@
           <tr><td class="td1"><text>姓名: </text></td><td class="td2"><input id="sname"></input></td></tr>
           <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="sphone" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
           <tr><td class="td1"><text>电子邮箱：</text></td><td class="td2"><input id="semail"></input></td></tr>
-          <tr><td class="td1"><text>角    色：</text></td><td class="td2"><input id="srole_list"></input></td></tr>
           <tr><td class="td1"><text>出生日期：</text></td><td class="td2"><input id="sbirthday"></input></td></tr>
           <tr><td class="td1"><text>身份证号：</text></td><td class="td2"><input id="sidentity_no"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'idcard'"></input></td></tr>
           <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input id="sgender"></input></td></tr>

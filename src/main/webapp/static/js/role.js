@@ -124,6 +124,7 @@ var role={
             if(temp2.indexOf(temp[i])===-1) delete_privilege_ids.push(temp[i]);
         }
         var infoUrl=rhurl.origin+'/gero/1/role'+role.rid+'/privilege';
+    if(insert_privilege_ids.length>=1){
         $.ajax({
             url: infoUrl, 
             type: 'post', 
@@ -134,7 +135,8 @@ var role={
             error: function(){alert('Error');}, 
             success: function(result){role.drawGeroRoleList();} 
         }); 
-
+    }
+    if(delete_privilege_ids.length>=1){
         $.ajax({
             url: infoUrl, 
             type: 'delete', 
@@ -145,13 +147,14 @@ var role={
             error: function(){alert('Error');}, 
             success: function(result){role.drawGeroRoleList();} 
         }); 
+    }
     },
     postrole:function(){
         var obj={
             name:document.getElementById("rname").value,
             notes:document.getElementById("rnotes").value,
         }
-        var infoUrl=rhurl.origin+'/gero/1/role';
+        var infoUrl=rhurl.origin+'/gero/'+gid+'/role';
         $.ajax({
             url: infoUrl, 
             type: 'post', 
