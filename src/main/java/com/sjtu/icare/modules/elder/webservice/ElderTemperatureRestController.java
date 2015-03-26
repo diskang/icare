@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.ParamValidator;
+import com.sjtu.icare.common.web.rest.GeroBaseController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
@@ -39,8 +42,8 @@ import com.sjtu.icare.modules.sys.entity.User;
 
 
 @RestController
-@RequestMapping({"${api.web}/elder/{eid}/temperature", "${api.service}/elder/{eid}/temperature"})
-public class ElderTemperatureRestController {
+@RequestMapping({"${api.web}/gero/{gid}/elder/{eid}/temperature", "${api.service}/gero/{gid}/elder/{eid}/temperature"})
+public class ElderTemperatureRestController extends GeroBaseController{
 	private static Logger logger = Logger.getLogger(ElderTemperatureRestController.class);
 
 	@Autowired
@@ -50,10 +53,18 @@ public class ElderTemperatureRestController {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getElderTemperature(
+			HttpServletRequest request,
+			@PathVariable("gid") int geroId,
 			@PathVariable("eid") int elderId,
 			@RequestParam(value="start_date", required=false) String startDate,
 			@RequestParam(value="end_date", required=false) String endDate
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":elder:health:read");
+		permissions.add("elder:"+elderId+"health:read");
+		permissions.add("doctor:"+getCurrentUser().getUserId()+":gero:"+geroId+":elder:health:read");
+		checkPermissions(permissions);
 		
 		// 参数检查
 		if ((startDate != null && !ParamValidator.isDate(startDate)) || (endDate != null && !ParamValidator.isDate(endDate))) {
@@ -141,9 +152,16 @@ public class ElderTemperatureRestController {
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postElderTemperature(
+			HttpServletRequest request,
+			@PathVariable("gid") int geroId,
 			@PathVariable("eid") int elderId,
 			@RequestBody String inJson
 			) {	
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":elder:health:add");
+		permissions.add("doctor:"+getCurrentUser().getUserId()+":gero:"+geroId+":elder:health:add");
+		checkPermissions(permissions);	
 		
 		Map<String, Object> requestBodyParamMap = ParamUtils.getMapByJson(inJson, logger);
 

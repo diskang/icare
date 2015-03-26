@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +56,7 @@ public class ElderInfoRestController extends GeroBaseController{
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getElders(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestParam(value="name", required=false) String name,
 			@RequestParam(value="gender", required=false) String gender,
@@ -65,6 +68,10 @@ public class ElderInfoRestController extends GeroBaseController{
 			@RequestParam("rows") int limit,
 			@RequestParam("sort") String orderByTag
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":elder:info:read");
+		checkPermissions(permissions);
 		
 		Page<User> userPage = new Page<User>(page, limit);
 		userPage = setOrderBy(userPage, orderByTag);
@@ -197,9 +204,15 @@ public class ElderInfoRestController extends GeroBaseController{
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postElder(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestBody String inJson
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":elder:info:add");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
@@ -277,9 +290,15 @@ public class ElderInfoRestController extends GeroBaseController{
 	
 	@RequestMapping(value="/{eid}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getElder(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("eid") int elderId
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":elder:info:read");
+		permissions.add("staff:"+getCurrentUser().getUserId()+":gero:"+geroId+":elder:read");
+		
 		
 		try {
 			// 获取基础的 JSON返回
@@ -293,6 +312,9 @@ public class ElderInfoRestController extends GeroBaseController{
 			User user = systemService.getUserByUserTypeAndUserId(CommonConstants.ELDER_TYPE, elderId);
 			if (user == null)
 				throw new Exception("内部错误：找不到对应的 user");
+			
+			permissions.add("user:"+user.getId()+":info:read");
+			checkPermissions(permissions);
 			
 			Map<String, Object> resultMap = new HashMap<String, Object>(); 
 			resultMap.put("user_id", user.getUserId()); 
@@ -350,10 +372,15 @@ public class ElderInfoRestController extends GeroBaseController{
 	@Transactional
 	@RequestMapping(value="/{eid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Object putStaff(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("eid") int elderId,
 			@RequestBody String inJson
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":elder:info:update");
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("geroId", geroId);
@@ -388,6 +415,10 @@ public class ElderInfoRestController extends GeroBaseController{
 			requestParamMap.put("userType", CommonConstants.ELDER_TYPE);
 			requestParamMap.put("userId", elderId);
 			User tempUser = systemService.getUserByUserTypeAndUserId(CommonConstants.ELDER_TYPE, elderId);
+			
+			permissions.add("user:"+tempUser.getId()+":info:read");
+			checkPermissions(permissions);
+			
 			User postUser = new User(); 
 			BeanUtils.populate(postUser, requestParamMap);
 			postUser.setId(tempUser.getId());
@@ -407,9 +438,15 @@ public class ElderInfoRestController extends GeroBaseController{
 	@Transactional
 	@RequestMapping(value="/{eid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteStaff(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("eid") int elderId
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":elder:info:add");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> requestParamMap = new HashMap<String, Object>();
 		requestParamMap.put("geroId", geroId);
