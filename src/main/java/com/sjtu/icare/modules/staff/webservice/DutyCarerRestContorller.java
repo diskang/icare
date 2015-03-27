@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,8 @@ import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.ParamValidator;
+import com.sjtu.icare.common.web.rest.BasicController;
+import com.sjtu.icare.common.web.rest.GeroBaseController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
@@ -37,7 +41,7 @@ import com.sjtu.icare.modules.sys.entity.User;
 
 @RestController
 @RequestMapping({"${api.web}", "${api.service}"})
-public class DutyCarerRestContorller {
+public class DutyCarerRestContorller extends GeroBaseController{
 	private static Logger logger = Logger.getLogger(DutyCarerRestContorller.class);
 	
 	@Autowired
@@ -45,11 +49,15 @@ public class DutyCarerRestContorller {
 	@Autowired
 	IStaffDataService staffDataService;
 	
-	@RequestMapping(value="/elder/{eid}/duty_carer", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
+	@RequestMapping(value="/gero/{gid}/elder/{eid}/duty_carer", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getElderDutyCarer(
+			HttpServletRequest request,
+			@PathVariable("gid") int geroId,
 			@PathVariable("eid") int elderId,
 			@RequestParam(value="date", required=false) String date
 			) {
+		checkApi(request);
+		checkGero(geroId);
 		
 		// 参数检查
 		if (date != null && !ParamValidator.isDate(date)) {
@@ -89,7 +97,7 @@ public class DutyCarerRestContorller {
 				resultMap.put("phone", user.getPhoneNo());
 				resultMap.put("gender", user.getGender());
 				resultMap.put("photo_url", user.getPhotoUrl());
-				resultMap.put("work_date", date);
+				resultMap.put("end_date", date);
 				  
 				basicReturnedJson.addEntity(resultMap);
 			}
@@ -105,11 +113,15 @@ public class DutyCarerRestContorller {
 		}
 	}
 	
-	@RequestMapping(value="/area/{aid}/duty_carer", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
+	@RequestMapping(value="/gero/{gid}/area/{aid}/duty_carer", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getAreaDutyCarer(
+			HttpServletRequest request,
+			@PathVariable("gid") int geroId,
 			@PathVariable("aid") int areaId,
 			@RequestParam(value="date", required=false) String date
 			) {
+		checkApi(request);
+		checkGero(geroId);
 		
 		// 参数检查
 		if (date != null && !ParamValidator.isDate(date)) {

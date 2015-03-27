@@ -15,42 +15,33 @@
         <result property="status" column="status" />
     </resultMap>
     
-  
     <select id="getStaffEntitiesByElderId" resultType="StaffEntity">
         <![CDATA[ 
         SELECT 
-            T_STAFF.*
+            DISTINCT T_STAFF.id, T_STAFF.*
         FROM    
-            (T_STAFF inner join T_CAREWORK 
-            ON 
-                T_STAFF.id = T_CAREWORK.carer_id 
-                AND T_CAREWORK.elder_id = #{id}
-                AND convert(nvarchar(23), T_CAREWORK.start_date, 120) <= #{date}
-                AND convert(nvarchar(23), T_CAREWORK.end_date, 120) >= #{date})
-            INNER join T_STAFF_SCHEDULE_PLAN
+            (
+            T_STAFF INNER JOIN T_STAFF_SCHEDULE_PLAN
             ON
                 T_STAFF_SCHEDULE_PLAN.staff_id = T_STAFF.id
                 AND T_STAFF_SCHEDULE_PLAN.work_date = #{date}
+            ) INNER JOIN (
+                SELECT 
+                    MIN(T_CAREWORK.end_date) AS min_date, T_CAREWORK.carer_id AS carer_id
+                FROM 
+                    T_CAREWORK
+                WHERE
+                    CONVERT(nvarchar(23), T_CAREWORK.end_date, 120) >= '2015-03-24'
+                    AND T_CAREWORK.elder_ids LIKE '%,' + CAST(#{id} AS VARCHAR(1000)) + ',%'
+                GROUP BY
+                    T_CAREWORK.carer_id
+            ) AS T1
+            ON
+                T_STAFF.id = T1.carer_id
+    
         ]]>                 
     </select>
     
-    <select id="getStaffEntitiesByAreaId" resultType="StaffEntity">
-        <![CDATA[ 
-        SELECT 
-            T_STAFF.*
-        FROM    
-            (T_STAFF inner join T_AREAWORK 
-            ON 
-                T_STAFF.id = T_AREAWORK.carer_id 
-                AND T_AREAWORK.area_id = #{id}
-                AND convert(nvarchar(23), T_AREAWORK.start_date, 120) <= #{date}
-                AND convert(nvarchar(23), T_AREAWORK.end_date, 120) >= #{date})
-            INNER join T_STAFF_SCHEDULE_PLAN
-            ON
-                T_STAFF_SCHEDULE_PLAN.staff_id = T_STAFF.id
-                AND T_STAFF_SCHEDULE_PLAN.work_date = #{date}
-        ]]>                 
-    </select>
     
     <select id="getCareworkEntities" resultMap="CareworkMap">
         
@@ -109,10 +100,12 @@
     </update>
     
     <delete id="deleteCarework">
+    
         DELETE FROM
             T_CAREWORK
         WHERE
             T_CAREWORK.id = #{id}
+            
     </delete>
       
 </mapper>

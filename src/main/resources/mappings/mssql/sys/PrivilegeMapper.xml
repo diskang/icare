@@ -12,7 +12,8 @@
 		a.href,
 		a.icon,
 		a.notes,
-		a.permission
+		a.permission,
+		a.api
 	</sql>
 	
 	<sql id="privilegeJoins">
@@ -76,7 +77,8 @@
 			href, 
 			icon,
 			permission, 
-			notes
+			notes,
+			api
 		) VALUES (
 			#{parent.id}, 
 			#{parentIds}, 
@@ -84,7 +86,8 @@
 			#{href}, 
 			#{icon}, 
 			#{permission}, 
-			#{notes}
+			#{notes},
+			#{api}
 		)
 	</insert>
 	
@@ -96,7 +99,8 @@
 			href = #{href}, 
 			icon = #{icon}, 
 			permission = #{permission}, 
-			notes = #{notes}
+			notes = #{notes},
+			api = #{api}
 		WHERE id = #{id}
 	</update>
 	

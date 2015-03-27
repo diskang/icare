@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
+import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.ParamValidator;
@@ -48,22 +51,24 @@ public class CareworkRestController extends BasicController {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getCareworks(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestParam(value="start_date", required=false) String startDate,
-			@RequestParam(value="end_date", required=false) String endDate,
-			@RequestParam(value="eid", required=false) Integer elderId,
-			@RequestParam(value="sid", required=false) Integer staffId,
+			@RequestParam(value="elder_id", required=false) Integer elderId,
+			@RequestParam(value="staff_id", required=false) Integer staffId,
 			@RequestParam("page") int page,
-			@RequestParam("limit") int limit,
-			@RequestParam("order_by") String orderByTag
+			@RequestParam("rows") int limit,
+			@RequestParam("sort") String orderByTag
 			) {
-		
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":carework:read");
+		checkPermissions(permissions);
 		
 		// 参数检查
-		if ((startDate != null && !ParamValidator.isDate(startDate)) || (endDate != null && !ParamValidator.isDate(endDate))) {
-			String otherMessage = "start_date 或 end_date 不符合日期格式:" +
-					"[start_date=" + startDate + "]" +
-					"[end_date=" + endDate + "]";
+		if (startDate != null && !ParamValidator.isDate(startDate)) {
+			String otherMessage = "start_date 不符合日期格式:" +
+					"[start_date=" + startDate + "]";
 			String message = ErrorConstants.format(ErrorConstants.GERO_CAREWORK_GET_PARAM_INVALID, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
@@ -74,10 +79,8 @@ public class CareworkRestController extends BasicController {
 			String elderIds = null;
 			if (elderId != null)
 				elderIds = "" + elderId;
-			
-			Map<String, String> tempMap = ParamUtils.getDateOfStartDateAndEndDate(startDate, endDate);
-			startDate = tempMap.get("startDate");
-			endDate = tempMap.get("endDate");
+			if (startDate == null)
+				startDate = DateUtils.getDate();
 			
 			// 获取基础的 JSON返回
 			BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
@@ -92,8 +95,7 @@ public class CareworkRestController extends BasicController {
 			requestCareworkEntity.setPage(pages);
 			
 			requestCareworkEntity.setReqStartDate(startDate);
-			requestCareworkEntity.setReqEndDate(endDate);
-			
+			 
 			List<CareworkEntity> careworkEntities = workService.getCareworkEntities(requestCareworkEntity);
 			basicReturnedJson.setTotal((int) requestCareworkEntity.getPage().getCount());
 			
@@ -133,9 +135,15 @@ public class CareworkRestController extends BasicController {
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postCarework(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestBody String inJson
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":carework:add");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
@@ -198,10 +206,16 @@ public class CareworkRestController extends BasicController {
 	@Transactional
 	@RequestMapping(value="{carework_id}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Object putCarework(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("carework_id") int careworkId,
 			@RequestBody String inJson
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":carework:update");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
@@ -261,9 +275,15 @@ public class CareworkRestController extends BasicController {
 	@Transactional
 	@RequestMapping(value="{carework_id}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteCarework(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("carework_id") int careworkId
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":carework:delete");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);

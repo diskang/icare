@@ -61,7 +61,7 @@ public class LoginController extends BaseController{
 		if(user.getUsername() != null){
 			response.addCookie(new Cookie("uid", user.getId()+""));
 			response.addCookie(new Cookie("gid", user.getGeroId()+""));
-			return "redirect:"+Global.getAdminPath();  
+			return "module/gero_management";  
 		}
 		return "module/sys/sysLogin";
 	}

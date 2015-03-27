@@ -19,6 +19,16 @@ public interface StaffSchedulePlanDAO {
 	List<StaffSchedulePlanEntity> getStaffSchedulePlans(
 			Map<String, Object> paramMap);
 
+	/**
+	 * @Title getStaffScehdulePlan
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @param @return
+	 * @return StaffSchedulePlanEntity
+	 * @throws
+	 */
+	StaffSchedulePlanEntity getStaffSchedulePlan(Map<String, Object> paramMap);
+	
 	void insertStaffSchedulePlans(Map<String, Object> paramMap);
 
 	void deleteStaffSchedulePlans(Map<String, Object> paramMap);
@@ -28,5 +38,6 @@ public interface StaffSchedulePlanDAO {
 
 	List<StaffSchedulePlanEntity> getAllStaffSchedulePlansByGeroIdAndRole(
 			Map<String, Object> paramMap);
+
 	
 }

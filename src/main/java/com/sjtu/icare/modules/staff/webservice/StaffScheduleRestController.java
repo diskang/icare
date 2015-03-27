@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +29,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
-import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.DateUtils;
+import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.ParamValidator;
+import com.sjtu.icare.common.web.rest.BasicController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.staff.entity.StaffEntity;
@@ -39,7 +42,7 @@ import com.sjtu.icare.modules.staff.service.IStaffDataService;
 
 @RestController
 @RequestMapping({"${api.web}/gero/{gid}/staff/{sid}/schedule", "${api.service}/gero/{gid}/staff/{sid}/schedule"})
-public class StaffScheduleRestController {
+public class StaffScheduleRestController extends BasicController{
 	private static Logger logger = Logger.getLogger(StaffScheduleRestController.class);
 	
 	@Autowired
@@ -47,10 +50,15 @@ public class StaffScheduleRestController {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getStaffSchedulePlans(
+			HttpServletRequest request,
 			@PathVariable("sid") int staffId,
 			@RequestParam(value="start_date", required=false) String startDate,
 			@RequestParam(value="end_date", required=false) String endDate
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("staff:"+staffId+":schedule:read");
+		checkPermissions(permissions);
 		
 		// 参数检查
 		if ((startDate != null && !ParamValidator.isDate(startDate)) || (endDate != null && !ParamValidator.isDate(endDate))) {
@@ -107,9 +115,11 @@ public class StaffScheduleRestController {
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postStaffSchedulePlans(
+			HttpServletRequest request,
 			@PathVariable("sid") int staffId,
 			@RequestBody String inJson
 			) {	
+		checkApi(request);
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("staffId", staffId);
@@ -175,9 +185,11 @@ public class StaffScheduleRestController {
 	
 	@RequestMapping(value = "/{date}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getStaffSchedulePlan(
+			HttpServletRequest request,
 			@PathVariable("sid") Integer staffId,
 			@PathVariable("date") String date
 			) {
+		checkApi(request);
 		
 		// 参数检查
 		if (date != null && !ParamValidator.isDate(date)) {
@@ -225,9 +237,11 @@ public class StaffScheduleRestController {
 	@Transactional
 	@RequestMapping(value = "/{date}", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postStaffSchedulePlan(
+			HttpServletRequest request,
 			@PathVariable("sid") int staffId,
 			@PathVariable("date") String date
 			) {	
+		checkApi(request);
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
 		tempRquestParamMap.put("staffId", staffId);
@@ -291,9 +305,11 @@ public class StaffScheduleRestController {
 	@Transactional
 	@RequestMapping(value = "/{date}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteStaffSchedulePlan(
+			HttpServletRequest request,
 			@PathVariable("sid") int staffId,
 			@PathVariable("date") String date
 			) {	
+		checkApi(request);
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
 		tempRquestParamMap.put("staffId", staffId);

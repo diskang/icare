@@ -39,7 +39,7 @@
             T_USER.user_type = #{userType} 
             AND T_USER.gero_id = #{geroId}
 		    <if test="name != null">
-		        AND T_USER.name = #{name}
+		        AND T_USER.name LIKE '%' + #{name} + '%'
 		    </if> 
 		    <if test="gender != null">
 		        AND T_USER.gender = #{gender}
@@ -60,7 +60,7 @@
             T_USER.user_type = #{userType}
             AND T_USER.gero_id = #{geroId} 
 		    <if test="name != null">
-		        AND T_USER.name = #{name}
+		        AND T_USER.name LIKE '%' + #{name} + '%'
 		    </if> 
 		    <if test="gender != null">
 		        AND T_USER.gender = #{gender}

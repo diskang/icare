@@ -1,0 +1,291 @@
+@charset "utf-8";
+
+/* ----------------------- */
+@media  (max-width: 767px){
+.logo {
+  padding-left:15px;
+}
+.col-xxs-7{
+  width:75%;
+}
+.col-xxs-6{
+  width:25%;
+}
+.Personal{
+	background-color: #FFFFFF;
+	float: left;
+	width: 100%;
+	border: 1px solid #bdbdbd;
+    height:auto;
+}
+.Personal .peli{
+	background-image: url(../images/q_2.jpg);
+	height: 43px;
+	font-size: 14px;
+	line-height: 45px;
+	color: #FFF;
+	background-repeat: repeat-x;
+	margin-bottom: 5px;
+	font-weight: bold;
+	border: 1px solid #2d75c1;
+}
+.Navigation .navli-a,.Navigation .navli-b{
+	display:none;
+}
+.Personal li{
+  padding-left:5px;
+  margin-top:5px;
+  padding-right:5px;
+  width:99%;
+}
+.navli-c{
+	width: 100px;
+	height: auto;
+	float:right;
+	line-height: 41px;
+	text-align: center;
+	font-size: 16px;
+}
+.Personal .peli-a text{
+  width:35%;
+  float:left;
+ }
+.Personal-s{
+	width:100%;
+	height: auto;
+	font-family: 微软雅黑;
+	text-align: left;
+}
+.Personal .peli span{
+	width: 8%;
+	height: 20px;
+	float: left;
+	text-align:right;
+	padding-right: auto;
+}
+.Personal .peli span img{
+  width:20px;
+  height:100%;
+}
+.Personal .peli text{
+  width:25%;
+  height:auto;
+  float:left;
+  text-align:left;
+  margin-left:10px;
+
+}
+
+.fotter-b{
+  width:100%;
+  text-align:center;
+  padding-left:10px;
+  padding-right:10px;
+}
+.Accessory .span1{
+  margin-left:20px;
+  width:20%;
+  float:left;
+}
+.fotter-a{
+	display:none;
+}
+.dianhua{
+	display:none;
+}
+.col-sm-6{
+  width:70%;
+}
+.control-label{
+  width:30%;
+  text-align:right;
+}
+.off{
+	margin-left:30%;
+}
+.list-header text{
+  font-size:14px;
+  font-family:宋体;
+  text-align:left;
+  width:50%;
+  float:left;
+}
+.xs .col-xxs-7{
+  width:60%;
+}
+/*---------------------------------员工入职登记*/
+.col-sm{
+  width: 50%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #c8c8c8;
+  float:left;
+}
+/*--------------------------------共用CSS*/
+#nav {
+	width: 100%;
+	line-height: 24px;
+	list-style-type: none;
+	text-align: left;
+	font-size: 18px;    /*定义整个ul菜单的行高和背景色*/
+	font-family: "微软雅黑";
+	float: left;
+	height: auto;
+	color: #00000;
+}
+#PARENT{
+	width: 100%;
+	float: right;
+	height: auto;
+
+}
+#nav a {
+ width: 92%; 
+ display: block;
+ padding-left:10px;
+ color:#00000;
+ /*Width(一定要)，否则下面的Li会变形*/
+}
+#nav .d {
+	background: #f6f6f6;/*一级目录的背景色*/
+	color: #000000;
+	border-bottom: #bbbbbb 1px solid; /*下面的一条白边*/
+	float: left; /*float：left,本不应该设置，但由于在Firefox不能正常显示 继承Nav的width,限制宽度，li自动向下延伸*/
+	line-height: 70px;
+	width: 100%;
+	height: auto;
+	float:right;
+}
+#nav .navli-d{
+  width:12%;
+  float:right;
+  height:auto;
+  margin-top:-40px;
+  background-color:none;
+}
+#nav .d a:hover{
+	width: 100%;
+	color: #fff;
+	background-color: #c1bfbf;
+}
+
+#nav a:link  {
+ color:#000000; text-decoration:none;
+}
+#nav a:visited  {
+ color:#000000;text-decoration:none;
+}
+#nav a:hover  {
+ color:#000000;text-decoration:none;font-weight:bold;
+}
+/*==================二级目录===================*/
+#nav li ul {
+ list-style:none;
+ text-align:left;
+}
+#nav li ul li{ 
+ width:100%;
+ float:left;
+ height:70%;
+ border-bottom: #bbbbbb 1px solid;
+ color:#000000; /*二级目录的背景色*/
+}
+#nav li ul li {
+	background: #f6f6f6;/*一级目录的背景色*/
+	color: #000000;
+	border-bottom: #bbbbbb 1px solid; /*下面的一条白边*/
+	float: left; /*float：left,本不应该设置，但由于在Firefox不能正常显示 继承Nav的width,限制宽度，li自动向下延伸*/
+	line-height: 70px;
+	width: 100%;
+	height: auto;
+	float:right;
+}
+#nav li ul a{
+         padding-left:20px;
+         width:100%;
+		 color:#fff;
+		 
+ /* padding-left二级目录中文字向右移动，但Width必须重新设置=(总宽度-padding-left)*/
+}
+/*下面是二级目录的链接样式*/
+#nav li ul a:link  {
+ color:#666; text-decoration:none;
+}
+#nav li ul a:visited  {
+ color:#666;text-decoration:none;
+}
+#nav li ul a:hover {
+ color:#F3F3F3;
+ text-decoration:none;
+ font-weight:normal;
+ background:#CC0000;
+ /* 二级onmouseover的字体颜色、背景色*/
+}
+/*==============================*/
+#nav li:hover ul {
+ left: auto;
+}
+#nav li.sfhover ul {
+ left: auto;
+}
+#content {
+ clear: left; 
+}
+#nav ul.collapsed {
+ display: none;
+}
+.col-xxs-7{
+  width:100%;
+  float:left;
+ }
+.col-xxs-6{
+	width:100%;
+	float:left;
+}
+}
+@media (min-width:768px){
+.Navigation .navli-c,#nav,collapsed{
+	display:none;
+}
+.navli-c a:hover{
+	display:none;
+}
+.collapsed li{
+	display:none;
+}
+#PARENT{
+	display:none;
+}
+.navli-d,#nav li {
+	display:none;
+}
+}
+@media(min-width:1200px){
+.Navigation .navli-c,#nav,collapsed{
+	display:none;
+}
+.navli-c a:hover{
+	display:none;
+}
+.collapsed li{
+	display:none;
+}
+#PARENT{
+	display:none;
+}
+.navli-d,#nav li {
+	display:none;
+}
+.xs .col-xxs-6{
+  width:40%;
+  float:left;
+}
+}
+
+
+

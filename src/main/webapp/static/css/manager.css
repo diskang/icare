@@ -1,0 +1,1170 @@
+@charset "utf-8";
+/* 共用CSS*/
+*{ margin:0;  padding:0;}
+html,body,div,p,ul,ol,li,h1,h2,h3,h4,h5,h6,span,code,em,strong,dl,dt,dd,img{ border:0;}
+body{font-size: 12px;color: #666;
+	font-family: "微软雅黑""宋体";
+	text-align: center;
+	background-color: #fff;
+}
+html,body{ height:100%;}
+select{ border:1px solid #ccc;}
+li{ list-style:none;}
+.left{ float:left;}
+.right{ float:right;} 
+/* ----- clear fix for floats ----- */
+/* these styles instruct non-IE browsers to render container elements so that they fully enclose floats */		
+/* without this class applied, a float might hang over the bottom border of it's container */
+.clearfix:after {content:"."; width:0; height:0; line-height:0; font-size:0; display:block; clear:both; visibility:hidden; overflow:hidden;margin:0;}
+.clearfix {display:inline-block;}
+/* Hides from IE-mac \*/
+* html .clearfix {height:1%;}
+.clearfix {display:block;}
+/* End hide from IE-mac */
+.clear{ clear:both; height:0; font-size:0; line-height:0; overflow:hidden;}
+.clearboth{ clear:both;}
+a{ color:#666; text-decoration:none; blr:expression(this.onFocus=this.blur()); outline: none; }
+area { blr:expression(this.onFocus=this.blur());}
+a:hover{ color:#d71318;}
+.box{ width:1000px; margin:0 auto; text-align:left;}
+/*--------------------首页CSS*/
+.container {
+  margin: 0 auto;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 0px;
+  padding-right: 0px;
+
+}
+.head {
+  height: auto;
+  width: 100%;
+  background-collor: #d84444;
+}
+.header-s {
+  height:142px;
+  background-image: url(/resthouse/static/images/b_1.png);
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+.logo {
+  margin-top: 63px;
+  float: left;
+  width: 50%;
+  text-align:left;
+  height: 58px;
+}
+.logo img{
+  width:239px;
+  height:58px;
+}
+.dianhua {
+  width: 50%;
+  height: 64px;
+  float: right;
+  text-align:right;
+  margin-top: 50px;
+}
+.dianhua img{
+  width:240px;
+  height:64px;
+}
+/*--------------------------------------导航条*/
+.daohang{
+	height: 41px;
+	width: 100%;
+	background-image: url(/resthouse/static/images/d_1.jpg);
+	background-repeat: repeat-x;
+}
+.Navigation{
+  font-family:微软雅黑;
+}
+.Navigation .navli,.Navigation .navli-a{
+	width: 100px;
+	height: auto;
+	float: left;
+	line-height: 41px;
+	text-align: center;
+	font-size: 16px;
+	background-image: url(/resthouse/static/images/d_2.jpg);
+	background-repeat: no-repeat;
+	background-position: right;
+}
+.Navigation .navli-b{
+  width: 100px;
+	height: auto;
+	float: right;
+	line-height: 41px;
+	text-align: center;
+	font-size: 16px;
+	
+	background-image: url(/resthouse/static/images/d_2.jpg);
+	background-repeat: no-repeat;
+	background-position: right;}
+.Navigation .navli{
+  background-image:url(/resthouse/static/images/d_3.jpg);
+  background-repeat: no-repeat;
+	background-position: center;
+}
+.Navigation .navli a:hover,.Navigation .navli-b a:hover,.Navigation .navli-a a:hover{
+  color:#333;
+  text-decoration: none;
+  background-image:url(/resthouse/static/images/d_3.jpg);
+  background-repeat: no-repeat;
+	background-position: center;
+	display:block;
+ }
+.Navigation li a:hover
+
+.Navigation li a:focus,
+.Navigation li a:focus{
+	background-image: url(/resthouse/static/images/d_3.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	text-decoration: none;
+}
+.di{
+	height: auto;
+	width: 100%;
+	background-color: #f3f3f3;
+	padding-top: 20px;
+	border: 1px solid #a9a9a9;
+}
+/*-----------------------------左边的导航条*/
+
+
+@media (min-width: 1200px) {
+	.leftNav{
+	height:700px;
+  overflow:auto;
+}
+
+}
+.Information{
+  background-color:#fff;
+  margin-bottom:20px;
+  padding-top:10px;
+  padding-bottom:10px;
+  height:700px;
+  overflow-y:hide;
+}
+
+.leftNav{
+	background-color: #FFFFFF;
+	float: left;
+	width: 22.5%;
+	border: 1px solid #bdbdbd;
+	padding:0;
+  margin-left: 0.5%;
+	margin-bottom: 20px;
+}
+.show{
+  display:inline-block;
+}
+
+.hide{
+  display:none;
+}
+.rightNav{
+	width: 75.5%;
+  margin-right: 0.5%;
+	height: 700px;
+	float: right;
+	font-family: 微软雅黑;
+	text-align: left;
+}
+.inf{
+	width: 100%;
+	float: left;
+	height: 700px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-right-color: #bcbcbc;
+	border-bottom-color: #bcbcbc;
+	border-left-color: #bcbcbc;
+}
+.pers-s{
+	height: 41px;
+	width: 100%;
+	background: url(/resthouse/static/images/r_1.jpg);
+	height: 41px;
+	float: left;
+	line-height: 41px;
+	font-size: 16px;
+	color: #fff;
+	text-indent: 15px;
+	border: 1px solid #679f1c;
+}
+.info-card{
+  margin-top:5px;
+  width:100%;
+  height:auto;
+  float:left;
+  background: #ffe;
+}
+.info-card-a tr{
+  min-width:400px;
+  height:35px;
+  margin:0px;
+  text-align: left;
+  font-size:20px;
+}
+.easyui-dialog table tr{
+  min-width:400px;
+  height:35px;
+  margin:0px;
+  text-align: left;
+  font-size:20px;
+}
+.td1{
+  width:130px;
+}
+.td2{
+  width:200px;
+}
+.info-card-a{
+	width: 60%;
+  margin-top:2px;
+	padding-left: 20px;
+	line-height: 20px;
+	font-size: 14px;
+	float: left;
+	height: auto;
+}
+#rolepost-dialog-form p{
+  height:30px;
+  margin-left:20px;
+  font-size:20px;
+  text-align: 20px
+}
+.workday{
+  background: #7f5;
+}
+.info-card-b{
+	width: 27%;
+  margin-top:20px;
+  margin-right:40px;
+	float: right;
+	height: auto;
+	text-align:left;
+}
+.info-card-c{
+  border: 1px dashed #bcbcbc;
+  width: 27%;
+  margin-top:20px;
+  margin-right:40px;
+  float: right;
+  height: auto;
+  text-align:left;
+}
+.info-card-c li{
+  width:auto;
+  margin-left:15px;
+}
+.info-card-c input{
+  width:auto;
+}
+
+.Register{
+	width: 85%;
+	float: left;
+	height: 40px;
+	border: 1px dashed #bcbcbc;
+	line-height:40px;
+	padding-left:15px;
+	font-weight:bold;
+	color:#c94403;
+	font-size:16px;
+	margin-bottom:10px;
+	background-color:#ececec;
+	margin-left:20px;
+}
+.Accessory{
+	width:100%;
+	height:auto;
+	line-height:40px;
+	float:left;
+ }
+.Accessory .span1{
+  margin-left:20px;
+  width:13%;
+  float:left;
+}
+.Accessory .span2{
+  width:5%;
+  float:left;
+  height:auto;
+}
+.Accessory .span3{
+  width:75%
+  float:left;
+  height:40px;
+}
+/*-------------------------------------底部*/
+.fotter{
+ line-height:30px;
+ font-size:14px;
+ hieght:160px;
+ padding-top:30px;
+ clear:both;
+}
+.fotter-a{
+  float:left;
+  width:30%;
+  height:120px;
+}
+.fotter-b{
+  text-align:left;
+  width:65%;
+  float:right;
+}
+/*-----------------------------修改员工信息*/
+.basic{
+  width:100%;
+  float:left;
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+ paddin-top:20px;
+
+}
+.control-label{
+	line-height:150%;
+	font-family:微软雅黑;
+	font-size:16px;
+	float:left;
+	font-weight:normal;
+	color:#333333;
+	
+}
+.reqField{
+  color:#f90202;
+}
+.group{
+  margin-top:20px;
+  flaot:left;
+}
+.col-smm-3{
+  width:19%;
+  float:left;
+}
+.col-smm-2{
+  width:15%;
+  float:left;
+}
+.col-smm-3{
+  width:20%;
+  float:left;
+  margin-right:5px;
+}
+.Inquiry{
+  width:100%;
+}
+.col-smm-1{
+  font-family: "宋体";
+	line-height: 1.8;
+	font-size: 14px;
+	width: 15%;
+	float: left;
+	text-align: center;
+}
+.mal{
+  line-height:250%;
+  font-size:16px;
+  font-weight:normal;
+  color:#333333;
+}
+.form-horizontal,tab-content{
+  width:100%;
+}
+.off{
+  margin-left: 19%;
+}
+.list{
+  width:90%;
+  padding-bottom:20px;
+}
+.list .list-header{
+  font-size:14px;
+  font-family:宋体;
+  line-height:50px;
+  margin-top:10px;
+  height:50px;
+  font-weight:bold;
+  text-align:left;
+  width:100%;
+}
+.list-header text{
+  font-size:14px;
+  font-family:宋体;
+  text-align:left;
+  width:50%;
+  float:left;
+  }
+.list-table{
+  width:100%;
+}
+.list-table .table{
+	 bborder: 1px solid #679f1c;
+  }
+.table-tr{
+  text-align: center;
+  background-color:#ebebeb;
+  height:39px;
+  line-hgiehg:39px;
+  font-size:14px;
+}
+.table-tr1{
+  text-align: center;
+  background-color:#fff;
+  height:39px;
+  line-hgiehg:39px;
+  font-size:14px;
+  }
+.table-tr1 :hover {
+  background-color:#eff0fd;
+}
+.col-xxs-1{
+  width:5%;
+}
+.col-sms-1{
+  width:10%;
+  float:left;
+}
+/*----------------------------------老人信息中心*/
+.old{
+  width:100%;
+  padding-left:19px;
+  padding-top:19px;
+  padding-right:19px;
+  max-height:690px;
+}
+.old .page-header{
+  font-family:宋体;
+  font-weight:bold;
+  font-size:14px;
+}
+.control{
+	font-family: "宋体";
+	line-height: 1.8;
+	font-size: 14px;
+	width: 8%;
+	float: left;
+	text-align: center;
+	font-weight: bold;
+}
+.col-ssm-1{
+	font-family: "宋体";
+	line-height: 1.8;
+	font-size: 14px;
+	width: 10%;
+	float: left;
+	text-align: center;
+}
+.xs{
+	margin-top: 10px;
+	width: 100%;
+	margin-bottom: 10px;
+	height: auto;
+	float: left;
+}
+.xs .col-xxs-6{
+	float: left;
+	width: 40%;
+	height: auto;
+	margin-bottom: 10px;
+}
+.xs .col-xxs-7{
+	float: right;
+	width: 55%;
+	height: auto;
+	margin-bottom: 10px;
+}
+.col-xs-6 .span1{
+  width:20%;
+  float:left;
+}
+/*------------------页码*/
+.pagerr{
+	width: 100%;
+	height: auto;
+	font-family: 微软雅黑;
+	float: left;
+  margin-left: 90px;
+}
+.pagerr .li{
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+	width: 8%;
+	float: left;
+	border: 1px solid #c0c0c1;
+	margin-right: 5px;
+	background-color: #eff0fd;
+}
+.pagerr .pageli{
+	width: 12%;
+	float: left;
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+	border: 1px solid #c0c0c1;
+	margin-right: 5px;
+	background-color: #eff0fd;
+	margin-right: 5px;
+	padding-right: 3px;
+	padding-left: 3px;
+}
+.page-sel{
+	width: 100%;
+}
+..page-sel{}
+.page-rl{
+	width: 15%;
+	float: left;
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+	border: 1px solid #c0c0c1;
+	margin-right: 5px;
+	
+	margin-right: 5px;
+	padding-right: 3px;
+	padding-left: 3px;
+	 }
+.pagerr .pageli a:hover{
+  background-color:#428bca;
+  color:#fff;
+  display:block;
+  }
+.pagerr .li a:hover{
+  background-color:#428bca;
+  color:#fff;
+  display:block;
+  
+}
+
+#authorityInfo{
+  width:300px;
+  height:200px;
+  position:absolute;
+  background:url('/resthouse/static/css/images/q_1.jpg');
+  top:300px;
+  right:10%;
+}
+
+#authorityInfo li{
+  height:40px;
+  padding:10px;
+
+}
+/*---------------------------------------老人登记中心*/
+.col-sm-{
+  width:16.88%;
+}
+.label-s{
+  line-height:1.8;
+  font-size:14px;
+  font-family:宋体;
+  width:15%;
+  float:left;
+}
+
+/*--------------------------------------身体报告*/
+.old{
+  width:100%;
+  height:auto;
+}
+.old  .shousu{
+  width:100%;
+  font-size:14px;
+  font-family:宋体;
+  line-height:35px;
+  margin-bottom:5px;
+}
+.odd{
+  float:left;
+  padding-left:0px;
+}
+
+.shen-old{
+  width:100%;
+  height:auto;
+}
+.shen-old-s{
+  width:100%;
+  height:auto;
+  line-height:35px;
+  font-size:14px;
+  backoground-color:#e5e5e5;
+  border: 1px solid #c0c0c1;
+  margin-top:20px;
+  padding-left:15px;
+  font-family:宋体;
+  margin-bottom:10px;
+}
+
+/*---------------------员工入职登记*/
+
+.col-sm{
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  float:left;
+}
+.col-ssmm-1{
+  width:12.5%;
+  float:left;
+}
+
+
+
+/*--------------------------------------------护士管理*/
+.pers-ss{
+	heihgt: 41px;
+	width: 100%;
+	height: 41px;
+	float: left;
+	line-height: 41px;
+	font-size: 16px;
+	text-indent: 15px;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-color: #bebebe;
+	border-bottom-color: #bebebe;
+}
+.table-s{
+
+  float:left;
+}
+.margin{
+	margin-top: 20px;
+	float: left;
+	width: 100%;
+}
+.button{
+  width:auto;
+  float:right;
+}
+.shuoming{
+  width:100%;
+  height:auto;
+  line-height:35px;
+  font-size:14px;
+  float:left;
+}
+
+.guanli{
+  width:100%;
+  float:left;
+  height:auto;
+  margin-bottom:20px;
+  margin-top:20px;
+}
+.col-ss-6{
+  width:50%;
+  float:left;
+  text-align:center;
+  
+}
+/*----------------------------------------权限*/
+.zhongxin{
+  width:100%;
+  float:left;
+  heiht:auto;
+}
+.zhongxin-a{
+  width:33.333%;
+  float:left;
+  line-height:30px;
+}
+.xin-a{
+  font-size:14px;
+  width:100%;
+}
+.xin-a .span2,.xin-a .span1,.xin-b .span2,.xin-b .span1{
+	width: 10%;
+	flaot: left;
+	float: left;
+}
+/*--------------------------------登录*/
+.daohang-a{
+  height:4px;
+  background-color:#2f425c;
+}
+.Log{
+	height: 440px;
+	margin-top: 20px;
+	border: 1px solid #bbbbbb;
+	background-color: #fff;
+	font-family: 微软雅黑;
+	margin-bottom: 50px;
+	text-align: left;
+}
+.bei{
+	height: auto;
+	width: 100%;
+	background-color: #f3f3f3;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-image: url(/resthouse/static/images/f_1.png);
+	background-repeat: repeat-x;
+	background-position: center bottom;
+}
+.in{
+	height: auto;
+	width: 50%;
+	flaot: left;
+
+
+  f;
+	margin-top: 120px;
+	margin-right: auto;
+	margin-left: auto;
+}
+.in .span1{
+  font-size:18px;
+  line-height:30px;
+}
+.in .span2{
+  margin-top:5px;
+  margin-bottom:5px;
+  width:100%;
+  float:left;
+}
+.col-xxs-6{
+  width:50%;
+  float:left;
+}
+/*---- -------------------------按钮*/
+.btn-orange{
+ padding: 7px 14px;  
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.8;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;/*灰色边框按钮*/
+  touch-action: manipulation;
+  color: #fff;
+  background-color: #e94d1c;
+  border-color: #e94d1c;
+  
+}
+
+.btn-orange:hover, /*-------------链接为深灰色*/
+.btn-orange:focus, 
+.btn-orange.focus, 
+.btn-Orange:active, 
+.btn-orange.active {
+	color: #ffffff;
+	background-color: #e94d1c;
+	border-color: #e94d1c;
+}
+.btn-orange:hover,
+.btn-orange:focus,
+.btn-orange.focus,
+.btn-orange:active,
+.btn-orange.active,
+.open > .dropdown-toggle.btn-default {
+  color: #ffffff;
+  background-color: #e94d1c;
+  border-color: #e94d1c;
+}
+
+.btn-Green{
+  padding: 7px 14px;  
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.8;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;/*灰色边框按钮*/
+  touch-action: manipulation;
+  color: #fff;
+  background-color: #4cb72e;
+  border-color: #3da321;
+}
+.btn-blue:hover, /*-------------链接为深灰色*/
+.btn-blue:focus, 
+.btn-blue.focus, 
+.btn-blue:active, 
+.btn-blue.active {
+	color: #ffffff;
+	background-color: #61d741;
+	border-color: #3da321;
+}
+.btn-blue{
+ padding: 7px 14px;  
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.8;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;/*灰色边框按钮*/
+  touch-action: manipulation;
+  color: #fff;
+  background-color: #68a3e3;
+  border-color: #2660a0;
+  
+}
+.btn-blue:hover, /*-------------链接为深灰色*/
+.btn-blue:focus, 
+.btn-blue.focus, 
+.btn-blue:active, 
+.btn-blue.active {
+	color: #ffffff;
+	background-color: #68a3e3;
+	border-color: #2660a0;
+}
+.btn-a {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 0px;
+}
+.btn-a:focus,
+.btn-a:active:focus,
+.btn-a.active:focus,
+.btn-s.focus,
+.btn-a:active.focus,
+.btn-a.active.focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.btn:hover,
+.btn:focus,
+.btn.focus {
+  color: #333;
+  text-decoration: none;
+}
+.btn:active,
+.btn.active {
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+}
+
+/*------------------------红色按钮*/
+.btn-Red {
+  padding: 7px 14px;  
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.8;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;/*灰色边框按钮*/
+  touch-action: manipulation;
+  color: #fff;
+  background-color: #fa4d2d;
+  border-color: #fa4d2d;
+}
+.btn-Red:hover,
+.btn-Red:focus,
+.btn-Red.focus,
+.btn-Red:active,
+.btn-Red.active,
+.open > .dropdown-toggle.btn-default {
+  color: #fff;
+  background-color: #ba341c;
+  border-color: #ba341c;
+  
+}
+.btn-default:active,
+.btn-default.active,
+.open > .dropdown-toggle.btn-default {
+  background-image: none;
+}
+
+
+/*---------------------排班信息-----*/
+.fc-toolbar {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.fc-toolbar .fc-left {
+  float: left;
+}
+
+.fc-toolbar .fc-right {
+  float: right;
+}
+
+.fc-toolbar .fc-center {
+  display: inline-block;
+}
+
+/* the things within each left/right/center section */
+.fc .fc-toolbar > * > * { /* extra precedence to override button border margins */
+  float: left;
+  margin-left: .75em;
+}
+
+/* the first thing within each left/center/right section */
+.fc .fc-toolbar > * > :first-child { /* extra precedence to override button border margins */
+  margin-left: 0;
+}
+  
+/* title text */
+
+.fc-toolbar h2 {
+  margin: 0;
+}
+
+/* button layering (for border precedence) */
+
+.fc-toolbar button {
+  position: relative;
+}
+
+.fc-toolbar .fc-state-hover,
+.fc-toolbar .ui-state-hover {
+  z-index: 2;
+}
+  
+.fc-toolbar .fc-state-down {
+  z-index: 3;
+}
+
+.fc-toolbar .fc-state-active,
+.fc-toolbar .ui-state-active {
+  z-index: 4;
+}
+
+.fc-toolbar button:focus {
+  z-index: 5;
+}
+
+
+.fc {
+  direction: ltr;
+  text-align: left;
+}
+body .fc { /* extra precedence to overcome jqui */
+  font-size: 1em;
+}
+.fc-ltr .fc-popover .fc-header .fc-title,
+.fc-rtl .fc-popover .fc-header .fc-close {
+  float: left;
+}
+
+.fc-rtl .fc-popover .fc-header .fc-title,
+.fc-ltr .fc-popover .fc-header .fc-close {
+  float: right;
+}
+
+.fc-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1em;
+  font-size: 1em;
+  text-align: center;
+  overflow: hidden;
+  font-family: "Courier New", Courier, monospace;
+}
+.fc-icon:after {
+  position: relative;
+  margin: 0 -1em; /* ensures character will be centered, regardless of width */
+}
+
+.fc-icon-left-single-arrow:after {
+  content: "\02039";
+  font-weight: bold;
+  font-size: 200%;
+  top: -7%;
+  left: 3%;
+}
+
+.fc-icon-right-single-arrow:after {
+  content: "\0203A";
+  font-weight: bold;
+  font-size: 200%;
+  top: -7%;
+  left: -3%;
+}
+.fc-unthemed th,
+.fc-unthemed td,
+.fc-unthemed thead,
+.fc-unthemed tbody,
+.fc-unthemed .fc-divider,
+.fc-unthemed .fc-row,
+.fc-unthemed .fc-popover {
+  border-color: #ddd;
+}
+
+.fc-unthemed .fc-popover {
+  background-color: #fff;
+}
+
+.fc-unthemed .fc-divider,
+.fc-unthemed .fc-popover .fc-header {
+  background: #eee;
+}
+
+.fc-unthemed .fc-popover .fc-header .fc-close {
+  color: #666;
+}
+
+.fc-unthemed .fc-today {
+  background: #fcf8e3;
+}
+
+.fc-toolbar .fc-left {
+  float: left;
+}
+.fc-toolbar .fc-center {
+  display: inline-block;
+}
+
+.fc-button-group {
+  display: inline-block;
+}
+
+.fc .fc-button-group > * { /* extra precedence b/c buttons have margin set to zero */
+  float: left;
+  margin: 0 0 0 -1px;
+}
+
+.fc .fc-button-group > :first-child { /* same */
+  margin-left: 0;
+}
+
+.fc button::-moz-focus-inner { margin: 0; padding: 0; }
+  
+.fc-state-default { /* non-theme */
+  border: 1px solid;
+}
+
+.fc-state-default.fc-corner-left { /* non-theme */
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.fc-state-default.fc-corner-right { /* non-theme */
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+/* icons in buttons */
+
+.fc button .fc-icon { /* non-theme */
+  position: relative;
+  top: -0.05em; /* seems to be a good adjustment across browsers */
+  margin: 0 .2em;
+  vertical-align: middle;
+}
+
+
+.fc-view, /* scope positioning and z-index's for everything within the view */
+.fc-view > table { /* so dragged elements can be above the view's main element */
+  position: relative;
+  z-index: 1;
+}
+.fc table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 17px; /* normalize cross-browser */
+  line-height: 35px;
+}
+.fc th {
+  text-align: center;
+}
+.fc td {
+  text-align: center;
+}
+.fc th,
+.fc td {
+  border-style: solid;
+  border-width: 1px;
+  height:35px;
+  width:100px;
+  padding: 0;
+  vertical-align: top;
+}
+
+.fc td.fc-today {
+  border-style: double; /* overcome neighboring borders */
+}
+.fc-name{
+  width:80px;
+  text-align:center;
+}
+.fc button::-moz-focus-inner { margin: 0; padding: 0; }
+  
+.fc-state-default { /* non-theme */
+  border: 1px solid;
+}
+
+.fc-state-default.fc-corner-left { /* non-theme */
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.fc-state-default.fc-corner-right { /* non-theme */
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.fc-view-container *,
+.fc-view-container *:before,
+.fc-view-container *:after {
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+}
+
+
+.fc-state-default {
+  background-color: #f5f5f5;
+  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+  background-repeat: repeat-x;
+  border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  color: #333;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}

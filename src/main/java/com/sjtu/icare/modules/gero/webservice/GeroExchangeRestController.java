@@ -7,9 +7,12 @@
  */
 package com.sjtu.icare.modules.gero.webservice;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
@@ -47,6 +50,7 @@ public class GeroExchangeRestController extends BasicController {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getGeroElderExchanges(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestParam(value="participants", required=false) String participants,
 			@RequestParam(value="mediators", required=false) String mediators,
@@ -57,6 +61,10 @@ public class GeroExchangeRestController extends BasicController {
 			@RequestParam("limit") int limit,
 			@RequestParam("order_by") String orderByTag
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":exchange:read");
+		checkPermissions(permissions);
 		
 		// 获取基础的 JSON返回
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
@@ -112,9 +120,14 @@ public class GeroExchangeRestController extends BasicController {
 
 	@RequestMapping(value="/{eid}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getGeroElderExchange(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("eid") int geroElderExchangeId
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":exchange:read");
+		checkPermissions(permissions);		
 		
 		// 获取基础的 JSON返回
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
@@ -161,9 +174,15 @@ public class GeroExchangeRestController extends BasicController {
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postGeroArea(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestBody String inJson
 			) {	
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":exchange:add");
+		checkPermissions(permissions);		
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("geroId", geroId);
@@ -218,10 +237,16 @@ public class GeroExchangeRestController extends BasicController {
 	@Transactional
 	@RequestMapping(value="/{eid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Object postGeroArea(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("eid") int geroElderExchangeId,
 			@RequestBody String inJson
 			) {	
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":exchange:update");
+		checkPermissions(permissions);		
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("geroId", geroId);
@@ -267,9 +292,14 @@ public class GeroExchangeRestController extends BasicController {
 
 	@RequestMapping(value="/{eid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteGeroElderExchange(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("eid") int geroElderExchangeId
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":exchange:delete");
+		checkPermissions(permissions);				
 		
 		// 获取基础的 JSON返回
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();

@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.StringUtils;
+import com.sjtu.icare.common.web.rest.BasicController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.gero.entity.GeroAreaEntity;
@@ -36,7 +39,7 @@ import com.sjtu.icare.modules.gero.service.IGeroAreaService;
 
 @RestController
 @RequestMapping({"${api.web}/gero/{gid}/area", "${api.service}/gero/{gid}/area"})
-public class GeroAreaRestController {
+public class GeroAreaRestController extends BasicController{
 	private static Logger logger = Logger.getLogger(GeroAreaRestController.class);
 
 	@Autowired
@@ -44,8 +47,14 @@ public class GeroAreaRestController {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getGeroAreas(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":area:read");
+		permissions.add("staff:"+getCurrentUser().getUserId()+":gero:"+geroId+":area:read");
+		checkPermissions(permissions);
 		
 		// 获取基础的 JSON返回
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
@@ -89,9 +98,15 @@ public class GeroAreaRestController {
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postGeroArea(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestBody String inJson
 			) {	
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":area:add");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("geroId", geroId);
@@ -112,22 +127,28 @@ public class GeroAreaRestController {
 			level = (Integer) requestParamMap.get("level");
 			name = (String) requestParamMap.get("name");
 			
-			if (parentId == null || parentIds == null || type == null || level == null || name == null)
+			if (parentId == null || type == null || level == null || name == null)
 				throw new Exception();
 			
 			// 参数详细验证
 			GeroAreaEntity queryParentGeroAreaEntity = new GeroAreaEntity();
 			queryParentGeroAreaEntity.setId(parentId);
 			GeroAreaEntity parentGeroAreaEntity = geroAreaService.getGeroArea(queryParentGeroAreaEntity);
-			parentFullName = parentGeroAreaEntity.getFullName();
+			if (parentGeroAreaEntity != null)
+				parentFullName = parentGeroAreaEntity.getFullName();
+			else
+				parentFullName = "";
 			
 			// 根节点 parentId 为 0， level 从1开始
-			if (parentId == 0 && (level != 1 || !StringUtils.isBlank(parentIds)))
-				throw new Exception();
-			
-			if (parentId != 0 && (parentGeroAreaEntity.getLevel() + 1 != level || !parentIds.equals(parentGeroAreaEntity.getParentIds() + parentId + ",")))
-				throw new Exception();
-			
+			if ( parentId == 0 ){
+				if (level != 1 || !StringUtils.isBlank(parentIds)) {
+					throw new Exception();
+				}
+			}else {
+				if (parentGeroAreaEntity.getLevel() + 1 != level || !parentIds.equals(parentGeroAreaEntity.getParentIds() + parentId + ",")) {
+					throw new Exception();
+				}
+			}			
 		} catch(Exception e) {
 			String otherMessage = "[parent_id=" + requestParamMap.get("parentId") + "]" +
 					"[parent_ids=" + requestParamMap.get("parentIds") + "]" +
@@ -161,10 +182,16 @@ public class GeroAreaRestController {
 	
 	@RequestMapping(value = "/{aid}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getGeroAreaAndSubareas(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("aid") int areaId,
 			@RequestParam(value="sub_level", required=false) Integer subLevel
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":area:read");
+		permissions.add("staff:"+getCurrentUser().getUserId()+":gero:"+geroId+":area:read");
+		checkPermissions(permissions);
 		
 		// 获取基础的 JSON返回
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
@@ -186,31 +213,39 @@ public class GeroAreaRestController {
 			queryGeroAreaEntity.setGeroId(geroId);
 			queryGeroAreaEntity.setId(areaId);
 			GeroAreaEntity ancestorGeroAreaEntity = geroAreaService.getGeroArea(queryGeroAreaEntity);
-			List<GeroAreaEntity> descendantGeroAreaEntities = geroAreaService.getGeroSubareas(ancestorGeroAreaEntity, subLevel);
 			
-			// 构造返回的 JSON
-			Map<String, Object> resultMap = new HashMap<String, Object>();
-			resultMap.put("id", geroId); 
-			resultMap.put("parent_id", ancestorGeroAreaEntity.getParentId()); 
-			resultMap.put("parent_ids", ancestorGeroAreaEntity.getParentIds()); 
-			resultMap.put("type", ancestorGeroAreaEntity.getType()); 
-			resultMap.put("level", ancestorGeroAreaEntity.getLevel()); 
-			resultMap.put("name", ancestorGeroAreaEntity.getName()); 
-			resultMap.put("full_name", ancestorGeroAreaEntity.getFullName()); 
-			
-			ArrayList<Object> tempList = new ArrayList<Object>();
-			for (GeroAreaEntity geroAreaEntity : descendantGeroAreaEntities) {
-				Map<String, Object> tempMap = new HashMap<String, Object>();
-				tempMap.put("id", geroId); 
-				tempMap.put("parent_id", geroAreaEntity.getParentId()); 
-				tempMap.put("parent_ids", geroAreaEntity.getParentIds()); 
-				tempMap.put("type", geroAreaEntity.getType()); 
-				tempMap.put("level", geroAreaEntity.getLevel()); 
-				tempMap.put("name", geroAreaEntity.getName()); 
-				tempList.add(tempMap);
+			if (ancestorGeroAreaEntity != null) {
+				List<GeroAreaEntity> descendantGeroAreaEntities = geroAreaService.getGeroSubareas(ancestorGeroAreaEntity, subLevel);
+				
+				// 构造返回的 JSON
+				Map<String, Object> resultMap = new HashMap<String, Object>();
+				resultMap.put("id", geroId); 
+				resultMap.put("parent_id", ancestorGeroAreaEntity.getParentId()); 
+				resultMap.put("parent_ids", ancestorGeroAreaEntity.getParentIds()); 
+				resultMap.put("type", ancestorGeroAreaEntity.getType()); 
+				resultMap.put("level", ancestorGeroAreaEntity.getLevel()); 
+				resultMap.put("name", ancestorGeroAreaEntity.getName()); 
+				resultMap.put("full_name", ancestorGeroAreaEntity.getFullName()); 
+				
+				ArrayList<Object> tempList = new ArrayList<Object>();
+				
+				if (descendantGeroAreaEntities != null) {
+					for (GeroAreaEntity geroAreaEntity : descendantGeroAreaEntities) {
+						Map<String, Object> tempMap = new HashMap<String, Object>();
+						tempMap.put("id", geroId); 
+						tempMap.put("parent_id", geroAreaEntity.getParentId()); 
+						tempMap.put("parent_ids", geroAreaEntity.getParentIds()); 
+						tempMap.put("type", geroAreaEntity.getType()); 
+						tempMap.put("level", geroAreaEntity.getLevel()); 
+						tempMap.put("name", geroAreaEntity.getName()); 
+						tempList.add(tempMap);
+					}
+				}
+				
+				resultMap.put("area_list", tempList); 
+				basicReturnedJson.addEntity(resultMap);
 			}
-			resultMap.put("area_list", tempList); 
-			basicReturnedJson.addEntity(resultMap);
+			
 			return basicReturnedJson.getMap();
 			
 		} catch (Exception e) {
@@ -225,10 +260,16 @@ public class GeroAreaRestController {
 	@Transactional
 	@RequestMapping(value = "/{aid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Object putGeroArea(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("aid") int areaId,
 			@RequestBody String inJson
 			) {	
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":area:update");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("geroId", geroId);
@@ -257,9 +298,15 @@ public class GeroAreaRestController {
 	@Transactional
 	@RequestMapping(value = "/{aid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteGeroArea(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("aid") int areaId
 			) {	
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":area:delete");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
 		tempRquestParamMap.put("geroId", geroId);

@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
+import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.ParamValidator;
 import com.sjtu.icare.common.utils.StringUtils;
 import com.sjtu.icare.common.web.rest.BasicController;
+import com.sjtu.icare.common.web.rest.GeroBaseController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.op.entity.AreaworkEntity;
@@ -39,7 +43,7 @@ import com.sjtu.icare.modules.op.service.IWorkService;
 
 @RestController
 @RequestMapping({"${api.web}/gero/{gid}/areawork", "${api.service}/gero/{gid}/areawork"})
-public class AreaworkRestController extends BasicController {
+public class AreaworkRestController extends GeroBaseController {
 	private static Logger logger = Logger.getLogger(AreaworkRestController.class);
 	
 	
@@ -48,22 +52,24 @@ public class AreaworkRestController extends BasicController {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getAreaworks(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestParam(value="start_date", required=false) String startDate,
-			@RequestParam(value="end_date", required=false) String endDate,
-			@RequestParam(value="aid", required=false) Integer areaId,
-			@RequestParam(value="sid", required=false) Integer staffId,
+			@RequestParam(value="area_id", required=false) Integer areaId,
+			@RequestParam(value="staff_id", required=false) Integer staffId,
 			@RequestParam("page") int page,
-			@RequestParam("limit") int limit,
-			@RequestParam("order_by") String orderByTag
+			@RequestParam("rows") int limit,
+			@RequestParam("sort") String orderByTag
 			) {
-		
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":areawork:read");
+		checkPermissions(permissions);
 		
 		// 参数检查
-		if ((startDate != null && !ParamValidator.isDate(startDate)) || (endDate != null && !ParamValidator.isDate(endDate))) {
-			String otherMessage = "start_date 或 end_date 不符合日期格式:" +
-					"[start_date=" + startDate + "]" +
-					"[end_date=" + endDate + "]";
+		if (startDate != null && !ParamValidator.isDate(startDate)) {
+			String otherMessage = "start_date 不符合日期格式:" +
+					"[start_date=" + startDate + "]";
 			String message = ErrorConstants.format(ErrorConstants.GERO_AREAWORK_GET_PARAM_INVALID, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
@@ -75,9 +81,8 @@ public class AreaworkRestController extends BasicController {
 			if (areaId != null)
 				areaIds = "" + areaId;
 			
-			Map<String, String> tempMap = ParamUtils.getDateOfStartDateAndEndDate(startDate, endDate);
-			startDate = tempMap.get("startDate");
-			endDate = tempMap.get("endDate");
+			if (startDate == null)
+				startDate = DateUtils.getDate();
 			
 			// 获取基础的 JSON返回
 			BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
@@ -92,7 +97,6 @@ public class AreaworkRestController extends BasicController {
 			requestAreaworkEntity.setPage(pages);
 			
 			requestAreaworkEntity.setReqStartDate(startDate);
-			requestAreaworkEntity.setReqEndDate(endDate);
 			
 			List<AreaworkEntity> areaworkEntities = workService.getAreaworkEntities(requestAreaworkEntity);
 			basicReturnedJson.setTotal((int) requestAreaworkEntity.getPage().getCount());
@@ -130,9 +134,15 @@ public class AreaworkRestController extends BasicController {
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postAreawork(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestBody String inJson
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":areawork:add");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
@@ -195,10 +205,16 @@ public class AreaworkRestController extends BasicController {
 	@Transactional
 	@RequestMapping(value="{areawork_id}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Object putAreawork(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("areawork_id") int areaworkId,
 			@RequestBody String inJson
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":areawork:update");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
@@ -258,9 +274,15 @@ public class AreaworkRestController extends BasicController {
 	@Transactional
 	@RequestMapping(value="{areawork_id}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteCarework(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("areawork_id") int areaworkId
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":areawork:delete");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
