@@ -1,4 +1,10 @@
-﻿<!doctype html>
+﻿<%@page import="com.sjtu.icare.modules.sys.utils.UserUtils"%>
+<%@page import="com.sjtu.icare.modules.sys.entity.User"%>
+<%@page import="com.sjtu.icare.modules.sys.utils.security.SystemAuthorizingRealm.UserPrincipal"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="org.apache.shiro.SecurityUtils"%>
+<%@ page import="org.apache.shiro.subject.Subject"%>
+<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -16,6 +22,29 @@
 </head>
 
 <body>
+<%
+	User user = UserUtils.getUser();
+	String username = user.getUsername();
+	int geroId = user.getGeroId();
+	int userType = user.getUserType();
+	int userId = user.getUserId();
+	int id = user.getId();
+%>
+<script language="JavaScript"> 
+	function getUser(){ 
+	   var user = new Object();
+	   user.id = <%=id%>;
+	   user.gero_id = <%=geroId %>;
+	   user.user_type = <%=userType %>;
+	   user.user_id = <%=userId %>;
+	   return user;
+	}
+	function test(){
+		var user = getUser();
+		alert(user.id);
+	}
+</script> 
+
 <!-------------------------头部-------------------------->
 <div class="head">
   <div class="container header-s">

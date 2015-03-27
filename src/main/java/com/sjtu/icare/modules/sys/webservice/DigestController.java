@@ -1,5 +1,6 @@
 package com.sjtu.icare.modules.sys.webservice;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -20,12 +21,13 @@ import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.web.rest.BasicController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
+import com.sjtu.icare.common.web.rest.SysBaseController;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.service.SystemService;
 
 @RestController
-@RequestMapping({"/user/digest"})
-public class DigestController extends BasicController{
+@RequestMapping({"/pad/login"})
+public class DigestController extends SysBaseController{
 	private static Logger logger = Logger.getLogger(DigestController.class);
 	
 	@Autowired
@@ -72,8 +74,11 @@ public class DigestController extends BasicController{
 		}else {
 			String digest = Encodes.encodeHex(Digests.sha1(user.getPassword().getBytes()));
 			logger.debug("user:"+username+"digest:"+digest);
-			result.addEntity(digest);
+			Map<String, String> digestMap = new HashMap<String, String>();
+			digestMap.put("digest", digest);
+			result.addEntity(digestMap);
 		}
+		result.addEntity(getUserMapFromUser(user));
 		
 		return result.getMap();
 	}
