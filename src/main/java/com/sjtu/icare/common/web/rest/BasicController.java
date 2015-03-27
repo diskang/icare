@@ -100,7 +100,7 @@ public class BasicController {
 			}
 			Subject subject = SecurityUtils.getSubject();
 			String username;
-			if (subject.getPrincipal().equals(String.class)) {
+			if (subject.getPrincipal().getClass().equals(String.class)) {
 				username = (String) subject.getPrincipal();
 			}else {
 				username = ((UserPrincipal) subject.getPrincipal()).getUsername();

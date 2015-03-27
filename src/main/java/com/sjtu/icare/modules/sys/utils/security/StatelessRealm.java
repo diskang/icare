@@ -85,10 +85,20 @@ public class StatelessRealm extends AuthorizingRealm {
             for (Privilege privilege : list){
                 if (StringUtils.isNotBlank(privilege.getPermission())){
                     // 添加基于Permission的权限信息
-                    for (String permission : StringUtils.split(privilege.getPermission(),",")){
-                    	logger.debug("stateless_permission:"+permission);
-                        info.addStringPermission(permission);
-                    }
+                	String permission = privilege.getPermission();
+                	permission = permission.replace("{uid}", user.getId()+"");
+                	permission = permission.replace("{gid}", user.getGeroId()+"");
+                	permission = permission.replace("{sid}", user.getUserId()+"");
+                	permission = permission.replace("{eid}", user.getUserId()+"");
+                	permission = permission.replace("{cid}", user.getUserId()+"");
+                	logger.debug("permission:"+permission);
+                    info.addStringPermission(permission);
+                }
+                if (StringUtils.isNotBlank(privilege.getApi())){
+                    // 添加基于Permission的权限信息
+                	String api = privilege.getApi();
+                    logger.debug("permission:"+api);
+                    info.addStringPermission(api);
                 }
             }
             return info;
