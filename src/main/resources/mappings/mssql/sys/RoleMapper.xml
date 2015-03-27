@@ -80,6 +80,9 @@
 	</select>
 	
 	<insert id="insert">
+		<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+		    SELECT @@IDENTITY
+	    </selectKey>
 		INSERT INTO T_ROLE(
 			name,
 			gero_id,

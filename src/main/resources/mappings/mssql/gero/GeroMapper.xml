@@ -42,7 +42,9 @@
     </select>
     
     <insert id="insertGero">
-    
+    	<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+		    SELECT @@IDENTITY
+	    </selectKey>
         INSERT INTO
             T_GERO(name, city, district, address, contact, licence, scale, care_level, contact_id, logo_url, photo_url, register_date, cancel_date)
         VALUES
