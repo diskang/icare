@@ -24,7 +24,7 @@ public class MultiSessionStorageEvaluator implements SessionStorageEvaluator{
           if(WebUtils.isWeb(subject)) {
 
             HttpServletRequest request = WebUtils.getHttpRequest(subject);
-            if (request.getHeader("accept").equals(null)) {
+            if (request.getHeader("accept") == null) {
 				enabled = true;
 			}
             else if (request.getHeader("accept").indexOf("application/json")<0) {

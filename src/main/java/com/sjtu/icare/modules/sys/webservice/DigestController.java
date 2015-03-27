@@ -32,7 +32,7 @@ public class DigestController {
 	
 	@SuppressWarnings("static-access")
 	@RequestMapping(value = "", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
-	public Map<String, Object> insertGeroRole(
+	public Map<String, Object> getUserDiegest(
 			@PathVariable("uid") int uid,
 			@RequestBody String inJson
 			){
@@ -47,7 +47,7 @@ public class DigestController {
 			username = (String) String.valueOf(requestBodyParamMap.get("username"));
 			password = (String) String.valueOf(requestBodyParamMap.get("password"));
 						
-			if (username == null || username.equals("null"))
+			if (username == null || username.equals(""))
 				throw new Exception();
 			
 		} catch(Exception e) {
@@ -58,7 +58,7 @@ public class DigestController {
 		
 		User user = systemService.getUserByUsername(username);
 		
-		if (user.equals(null)) {
+		if (user == null) {
 			String message = "GET_DIGEST_BAD_NOT_FOUND";
 			logger.error(message);
 			throw new RestException(HttpStatus.NOT_FOUND, message);
