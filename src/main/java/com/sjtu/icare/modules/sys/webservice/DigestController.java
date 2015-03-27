@@ -40,6 +40,7 @@ public class DigestController extends SysBaseController{
 			@RequestBody String inJson
 			){
 		BasicReturnedJson result = new BasicReturnedJson();
+		Map<String, Object> digestMap = new HashMap<String, Object>();
 		
 		Map<String, Object> requestBodyParamMap = ParamUtils.getMapByJson(inJson, logger);
 		String username;
@@ -74,11 +75,10 @@ public class DigestController extends SysBaseController{
 		}else {
 			String digest = Encodes.encodeHex(Digests.sha1(user.getPassword().getBytes()));
 			logger.debug("user:"+username+"digest:"+digest);
-			Map<String, String> digestMap = new HashMap<String, String>();
 			digestMap.put("digest", digest);
-			result.addEntity(digestMap);
 		}
-		result.addEntity(getUserMapFromUser(user));
+		digestMap.putAll(getUserMapFromUser(user));
+		result.addEntity(digestMap);
 		
 		return result.getMap();
 	}
