@@ -127,22 +127,28 @@ public class GeroAreaRestController extends BasicController{
 			level = (Integer) requestParamMap.get("level");
 			name = (String) requestParamMap.get("name");
 			
-			if (parentId == null || parentIds == null || type == null || level == null || name == null)
+			if (parentId == null || type == null || level == null || name == null)
 				throw new Exception();
 			
 			// 参数详细验证
 			GeroAreaEntity queryParentGeroAreaEntity = new GeroAreaEntity();
 			queryParentGeroAreaEntity.setId(parentId);
 			GeroAreaEntity parentGeroAreaEntity = geroAreaService.getGeroArea(queryParentGeroAreaEntity);
-			parentFullName = parentGeroAreaEntity.getFullName();
+			if (parentGeroAreaEntity != null)
+				parentFullName = parentGeroAreaEntity.getFullName();
+			else
+				parentFullName = "";
 			
 			// 根节点 parentId 为 0， level 从1开始
-			if (parentId == 0 && (level != 1 || !StringUtils.isBlank(parentIds)))
-				throw new Exception();
-			
-			if (parentId != 0 && (parentGeroAreaEntity.getLevel() + 1 != level || !parentIds.equals(parentGeroAreaEntity.getParentIds() + parentId + ",")))
-				throw new Exception();
-			
+			if ( parentId == 0 ){
+				if (level != 1 || !StringUtils.isBlank(parentIds)) {
+					throw new Exception();
+				}
+			}else {
+				if (parentGeroAreaEntity.getLevel() + 1 != level || !parentIds.equals(parentGeroAreaEntity.getParentIds() + parentId + ",")) {
+					throw new Exception();
+				}
+			}			
 		} catch(Exception e) {
 			String otherMessage = "[parent_id=" + requestParamMap.get("parentId") + "]" +
 					"[parent_ids=" + requestParamMap.get("parentIds") + "]" +
