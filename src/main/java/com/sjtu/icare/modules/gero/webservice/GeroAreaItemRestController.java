@@ -35,7 +35,6 @@ import com.sjtu.icare.common.web.rest.GeroBaseController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.op.entity.AreaItemEntity;
-import com.sjtu.icare.modules.op.entity.CareItemEntity;
 import com.sjtu.icare.modules.op.service.IItemService;
 
 @RestController

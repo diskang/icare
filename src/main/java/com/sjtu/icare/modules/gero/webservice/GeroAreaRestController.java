@@ -48,7 +48,12 @@ public class GeroAreaRestController extends BasicController {
 	public Object getGeroAreas(
 			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
-			@RequestParam(value="level", required=false) Integer level
+			@RequestParam(value="parent_id", required=false) Integer parentId,
+			@RequestParam(value="parent_ids", required=false) String parentIds,
+			@RequestParam(value="type", required=false) Integer type,
+			@RequestParam(value="level", required=false) Integer level,
+			@RequestParam(value="name", required=false) String name,
+			@RequestParam(value="full_name", required=false) String fullName
 			) {
 		checkApi(request);
 		List<String> permissions = new ArrayList<String>();
@@ -65,7 +70,14 @@ public class GeroAreaRestController extends BasicController {
 		try {
 			GeroAreaEntity queryGeroAreaEntity = new GeroAreaEntity();
 			queryGeroAreaEntity.setGeroId(geroId);
+			queryGeroAreaEntity.setParentId(parentId);
+			queryGeroAreaEntity.setParentIds(parentIds);
+			queryGeroAreaEntity.setType(type);
 			queryGeroAreaEntity.setLevel(level);
+			queryGeroAreaEntity.setName(name);
+			queryGeroAreaEntity.setFullName(fullName);
+			
+			
 			List<GeroAreaEntity> geroAreaEntities = geroAreaService.getGeroAreas(queryGeroAreaEntity);
 			
 			if (geroAreaEntities != null) {
