@@ -16,7 +16,7 @@ var elder={
         collapsible:false,//是否可折叠的 
         fit: true,//自动大小 
         pageNumber:1,
-        url:rhurl.origin+'/gero/1/elder',  
+        url:rhurl.origin+'/gero/'+gid+'/elder',  
         method:'get',
         remoteSort:true,  
         sortName:'ID',
@@ -28,6 +28,7 @@ var elder={
         pageList: [10,20,30],//可以设置每页记录条数的列表 
         loadFilter:function(data){
         	var result={"total":0,"rows":0};
+            leftTop.dealdata(data);
         	result.total=data.total;
         	result.rows=data.entities;
             for (var i in result.rows) result.rows[i].gender=sex[result.rows[i].gender];
@@ -99,6 +100,9 @@ var elder={
             type: 'DELETE',
             success:function(){
                 elder.drawElderList();
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
             }
         })
 
@@ -117,8 +121,8 @@ var elder={
                         var data=leftTop.dealdata(msg);
                         elder.drawElderInfo(data[0]);
         			},
-        			error: function(e) {
-            			alert(e);
+        			error: function(XMLHttpRequest, textStatus, errorThrown) {
+            			leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
         			}
     			});
     },
@@ -141,7 +145,7 @@ var elder={
             education:document.getElementById("eeducation").value,
             residence:document.getElementById("eresidence").value,
         }
-        var infoUrl=rhurl.origin+'/gero/2/elder'+elder.eid;
+        var infoUrl=rhurl.origin+'/gero/'+gid+'/elder'+elder.eid;
         $.ajax({
             url: infoUrl, 
             type: elder.method, 
@@ -149,7 +153,7 @@ var elder={
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
             timeout: 1000, 
-            error: function(){alert('Error');}, 
+            error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){elder.drawElderList();} 
         }); 
     },

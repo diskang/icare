@@ -39,9 +39,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	public final ResponseEntity<?> handleException(RestException ex, WebRequest request) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType(MediaTypes.JSON_UTF_8));
-//		if (ex.status.equals(HttpStatus.UNAUTHORIZED)) {
-//			headers.set("WWW-Authenticate", "Basic realm='UNAUTHORIZED'");
-//		}
 		return handleExceptionInternal(ex, ex.getMessage(), headers, ex.status, request);
 	}
 

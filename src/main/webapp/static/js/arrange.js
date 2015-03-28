@@ -2,6 +2,7 @@ var arrange={
 	allow:false,
 	changed:false,
 	subres:[],
+	staffrec:[],
 	addsubres:function(id,date){
 		var flag=true;
 		arrange.changed=true;
@@ -35,7 +36,7 @@ var arrange={
 		}
 	},
 	putarrange:function(){
-		var infoUrl=rhurl.origin+'/gero/'+2+'/schedule';
+		var infoUrl=rhurl.origin+'/gero/'+gid+'/schedule';
 		if (arrange.allow){
 			if(window.confirm('你确定要提交修改吗？')){
                  $.ajax({
@@ -45,7 +46,7 @@ var arrange={
             			dataType: 'json', 
             			contentType: "application/json;charset=utf-8",
            		 		timeout: 1000, 
-            			error: function(e){alert('Error');}, 
+            			error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             			success: function(result){arrange.subres=[];arrange.drawArrangeList();arrange.changed=false;} 
             		}); 
              }
@@ -114,15 +115,21 @@ var arrange={
 	    arrange.initdate();
 	    arrange.showth();
 	    $('.fc-body tr').remove();
+	    var datat;
+	    if(document.getElementById("arrange_role").value) datat={start_date:weekstr[0],end_date:weekstr[6],role:document.getElementById("arrange_role").value};
+	    	else datat={start_date:weekstr[0],end_date:weekstr[6]};
 	    $.ajax({
         	type: "get",
-        	data: {start_date:weekstr[0],end_date:weekstr[6]},
+        	data: datat,
         	dataType: "json",
         	contentType: "application/json;charset=utf-8",
-        	url:rhurl.origin+"/gero/"+2+"/schedule",
+        	url:rhurl.origin+"/gero/"+gid+"/schedule",
+        	timeout:1000,
         	success: function (msg) {
+        		staffrec=[];
             	var staffsch=leftTop.dealdata(msg);
             	for (var i in staffsch){
+            		staffrec.push(staffsch[i].staff_id);
             		var tr=document.createElement('tr');
             		tr.id="schedule"+staffsch[i].staff_id;
             		var tdn=document.createElement('td');
@@ -140,12 +147,48 @@ var arrange={
             		}
             		$('.fc-body').append(tr);
             	}
+            	arrange.fillall();
         	},
-        	error: function(e) {
-            	alert(e);
+        	error: function(XMLHttpRequest, textStatus, errorThrown) {
+            	leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
         	}
     	});
 	},
+	fillall:function(){
+		$.ajax({
+        	type: "get",
+        	data:{page:1,rows:65535,sort:'ID',role:document.getElementById("arrange_role").value},
+        	dataType: "json",
+        	contentType: "application/json;charset=utf-8",
+        	url:rhurl.origin+'/gero/'+gid+'/staff',
+        	timeout:1000,
+        	success: function (msg) {
+            	var staffsch=leftTop.dealdata(msg);
+            	for (var i in staffsch){
+            		if (staffrec.indexOf(staffsch[i].id)===-1){
+            			var tr=document.createElement('tr');
+            			tr.id="schedule"+staffsch[i].staff_id;
+            			var tdn=document.createElement('td');
+            			tdn.setAttribute('class',"fc-name");
+            			tdn.innerHTML=staffsch[i].name;
+            			tr.appendChild(tdn);
+            			var tdl=[];
+            			for(var j=0;j<7;j++){
+            				var td=document.createElement('td');
+            				td.setAttribute('class',"arrange-work");
+            				td.setAttribute('num',weekstr[j]);
+            				td.setAttribute('pid',staffsch[i].id);
+            				tr.appendChild(td);
+            			}
+            			$('.fc-body').append(tr);
+            		}
+            	}
+        	},
+        	error: function(XMLHttpRequest, textStatus, errorThrown) {
+            	leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+        	}
+   		});
+	}
 
 }
 

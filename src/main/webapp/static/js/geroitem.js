@@ -14,7 +14,8 @@ var geroItem={
             fit: true,//自动大小 
             url:rhurl.origin+'/gero/'+gid+'/care_item',  
             method:'get',
-            remoteSort:false,  
+            remoteSort:true,  
+            sortName:'ID',
             singleSelect:true,//是否单选 
             pagination:true,//分页控件 
             rownumbers:true,//行号  
@@ -23,6 +24,7 @@ var geroItem={
             pageSize: 10,//每页显示的记录条数，默认为20 
             pageList: [10,20,30],//可以设置每页记录条数的列表 
             loadFilter:function(data){
+                leftTop.dealdata(data)
             	var result={"total":0,"rows":0};
                 result.total=data.total;
                 result.rows=data.entities;
@@ -60,6 +62,9 @@ var geroItem={
             type: 'DELETE',
             success:function(){
                 geroItem.drawGeroCareItemList();
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
             }
         })
 
@@ -80,7 +85,7 @@ var geroItem={
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
             timeout: 1000, 
-            error: function(){alert('Error');}, 
+            error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){geroItem.drawGeroCareItemList();} 
         }); 
 
@@ -106,7 +111,8 @@ var geroItem={
             fit: true,//自动大小 
             url:rhurl.origin+'/gero/'+gid+'/area_item',  
             method:'get',
-            remoteSort:false,  
+            remoteSort:true,  
+            sortName:'ID',  
             singleSelect:true,//是否单选 
             pagination:true,//分页控件 
             rownumbers:true,//行号  
@@ -115,6 +121,7 @@ var geroItem={
             pageSize: 10,//每页显示的记录条数，默认为20 
             pageList: [10,20,30],//可以设置每页记录条数的列表 
             loadFilter:function(data){
+                leftTop.dealdata(data);
                 var result={"total":0,"rows":0};
                 result.total=data.total;
                 result.rows=data.entities;
@@ -150,8 +157,12 @@ var geroItem={
         $.ajax({
             url: infoUrl,
             type: 'DELETE',
+            timeout:1000,
             success:function(){
                 geroItem.drawGeroAreaItemList();
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
             }
         })
 
@@ -171,7 +182,7 @@ var geroItem={
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
             timeout: 1000, 
-            error: function(){alert('Error');}, 
+            error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){geroItem.drawGeroAreaItemList();} 
         }); 
     }

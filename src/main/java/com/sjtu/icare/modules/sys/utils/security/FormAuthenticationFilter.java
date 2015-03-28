@@ -138,6 +138,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	    BasicReturnedJson result = new BasicReturnedJson();
 	    result.setError(errorString);
 	    result.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+	    httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	    httpResponse.getWriter().write(result.toString());
 	}
 }

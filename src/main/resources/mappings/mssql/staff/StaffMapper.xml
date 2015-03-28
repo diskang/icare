@@ -84,7 +84,9 @@
     </select>
 
     <insert id="insertStaff" parameterType="StaffEntity" useGeneratedKeys="true" keyProperty="id">
-    
+    	<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+		    SELECT @@IDENTITY
+	    </selectKey>
         INSERT INTO
             T_STAFF(name, nssf_id, gero_id, basic_url, leave_date, archive_id) 
         VALUES

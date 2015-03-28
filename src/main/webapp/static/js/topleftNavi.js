@@ -38,14 +38,35 @@ var leftTop = {
     },
     
     dealdata:function(msg){
-        if (msg.status===400)
-            window.location = "www.baidu.com" ;
-        else if(msg.status===500)
-            window.location = "www.baidu.com" ;
-        else if(msg.status===200)
+    if(msg.status===200)
         {
             return msg.entities;
         }
+    else{
+        leftTop.dealerr(msg);
+    }
+    },
+    dealerr:function(e){
+        $.messager.show({
+                title:'错误提示',
+                msg:e.status+e.error,
+                showType:'fade',
+                style:{
+                    right:'',
+                    bottom:''
+                }
+            });
+    },
+    dealerror:function(XMLHttpRequest, textStatus, errorThrown){
+        $.messager.show({
+                title:'错误提示',
+                msg:textStatus+XMLHttpRequest.status+errorThrown,
+                showType:'fade',
+                style:{
+                    right:'',
+                    bottom:''
+                }
+            });
     },
 
     findTreeChildrenEx:function(id){
@@ -139,8 +160,6 @@ var leftTop = {
 
 //初始化运行所有js的地方
 $(function(){
-    //$("#rightNavi").load("elder.html");
-    //$("#rightNavi").load('elderInfo.html');
     $("#lefttree").tree({
         onClick:function(node){
             var url=leftTop.findNode(node.id).href;
@@ -154,17 +173,45 @@ $(function(){
         type: "get",
         dataType: "json",
         contentType: "application/json;charset=utf-8",
-        url:rhurl.origin+"/user/1",
+        url:rhurl.origin+"/user/"+uid,
+        timeout:1000,
         success: function (msg) {
             temptree=msg.entities[0].privilege_list;
             leftTop.removeLefttree;
             var str=leftTop.dealtree(temptree);
             $("#lefttree").tree("loadData",str);
         },
-        error: function(e) {
-            alert("ajax error");
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
         }
     });
+    $.ajax({
+        type: "get",
+        data:{page:1,rows:65535,sort:'ID'},
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        url:rhurl.origin+'/gero/'+gid+'/role',
+        timeout:1000,
+        success: function (msg) {
+            var parent=document.getElementById("arrange_role");
+            for(var i in msg.entities){
+                var dt=document.createElement('option');
+                dt.setAttribute('value',msg.entities[i].name);
+                dt.innerHTML=msg.entities[i].name;
+                parent.appendChild(dt);
+            }
+            var parent=document.getElementById("role-check");
+            for(var i in msg.entities){
+                var li=document.createElement('li');
+                li.innerHTML="<input type='checkbox' class='checkrole' disabled=true id='chkrole"+msg.entities[i].id+"' rid='"+msg.entities[i].id+"'>"+msg.entities[i].name+"</input>";
+                parent.appendChild(li);
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+        }
+    });
+
 });
 
 $('.navli-a').live('click',function(){
@@ -182,7 +229,6 @@ $(".arrange-work").live('click',function(){
         }
     }
 })
-
 $('.fc-prev-button').live('click',function(){arrange.prev()});
 $('.fc-next-button').live('click',function(){arrange.next()});
 $('.fc-today-button').live('click',function(){arrange.today()});

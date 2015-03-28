@@ -1,8 +1,16 @@
-﻿<!doctype html>
+﻿<%@page import="com.sjtu.icare.modules.sys.utils.UserUtils"%>
+<%@page import="com.sjtu.icare.modules.sys.entity.User"%>
+<%@page import="com.sjtu.icare.modules.sys.utils.security.SystemAuthorizingRealm.UserPrincipal"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="org.apache.shiro.SecurityUtils"%>
+<%@ page import="org.apache.shiro.subject.Subject"%>
+<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>无标题文档</title>
+
+<title>resthouse管理界面</title>
+
 <link href="/resthouse/static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="/resthouse/static/css/manager.css" rel="stylesheet" type="text/css">
 <!---------------------------------响应式------------------------>
@@ -14,6 +22,29 @@
 </head>
 
 <body>
+<%
+	User user = UserUtils.getUser();
+	String username = user.getUsername();
+	int geroId = user.getGeroId();
+	int userType = user.getUserType();
+	int userId = user.getUserId();
+	int id = user.getId();
+%>
+<script language="JavaScript"> 
+	function getUser(){ 
+	   var user = new Object();
+	   user.id = <%=id%>;
+	   user.gero_id = <%=geroId %>;
+	   user.user_type = <%=userType %>;
+	   user.user_id = <%=userId %>;
+	   return user;
+	}
+	function test(){
+		var user = getUser();
+		alert(user.id);
+	}
+</script> 
+
 <!-------------------------头部-------------------------->
 <div class="head">
   <div class="container header-s">
@@ -27,6 +58,10 @@
     <ul id="topNavi">
       <li class="navli" href="#">首页</li>
     </ul>
+    <div class="btn-group pull-right">
+      <a id="login" class="btn" href="/resthouse/admin/logout"> 退出 </a>
+    </div>
+    <text id="welcome" class="pull-right" ></text>
   </div>
 </div>
 
@@ -152,6 +187,21 @@
       <div id="arrangeshow" class="inf hide" style="min-height:700px;">
         <div class="pers-s">员工排班</div>
         <div class="old">
+          <div class="page-header">查询:</div>
+          <div class="Inquiry">
+            <div class="form-group group">
+              <label class="control" for="name">角色:</label>
+              <div class="col-smm-2">
+                <select id="arrange_role" class="form-control">
+                </select>
+              </div>
+            </div>
+            <div class="form-group group"> 
+              <div class="col-md-offset-2">
+                <button id="elder-search" class="btn btn-default" onclick="arrange.drawArrangeList()" style="margin-left:30px;" >搜索</button>
+              </div>
+            </div>
+          </div>
           <div id="calendar" class="fc fc-ltr fc-unthemed">
             <div class="fc-toolbar">
               <div class="fc-left">
@@ -413,7 +463,6 @@
           <tr><td class="td1"><text>姓名: </text></td><td class="td2"><input id="sname"></input></td></tr>
           <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="sphone" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
           <tr><td class="td1"><text>电子邮箱：</text></td><td class="td2"><input id="semail"></input></td></tr>
-          <tr><td class="td1"><text>角    色：</text></td><td class="td2"><input id="srole_list"></input></td></tr>
           <tr><td class="td1"><text>出生日期：</text></td><td class="td2"><input id="sbirthday"></input></td></tr>
           <tr><td class="td1"><text>身份证号：</text></td><td class="td2"><input id="sidentity_no"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'idcard'"></input></td></tr>
           <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input id="sgender"></input></td></tr>
@@ -423,7 +472,12 @@
           <tr><td class="td1"><text>居住地址：</text></td><td class="td2"><input id="shousehold_address"></input></td></tr>
         </table>
       </div>
-      <div id="staff-Info-card-b"class="info-card-b"><img src="images/p_2.jpg"></div>
+      <div id="staff-Info-card-b" class="info-card-b"><img src="images/p_2.jpg"></div>
+      <div id="staff-Info-card-c" class="info-card-c">
+        <text style="font-size:20px;">角色设置</text>
+        <ul id="role-check">
+        </ul>
+      </div>
     </div>
 </div>
 

@@ -1,5 +1,6 @@
 package com.sjtu.icare.modules.sys.webservice;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -20,12 +21,13 @@ import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.web.rest.BasicController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
+import com.sjtu.icare.common.web.rest.SysBaseController;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.service.SystemService;
 
 @RestController
-@RequestMapping({"/user/digest"})
-public class DigestController extends BasicController{
+@RequestMapping({"/pad/login"})
+public class DigestController extends SysBaseController{
 	private static Logger logger = Logger.getLogger(DigestController.class);
 	
 	@Autowired
@@ -33,10 +35,12 @@ public class DigestController extends BasicController{
 	
 	@SuppressWarnings("static-access")
 	@RequestMapping(value = "", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
+
 	public Map<String, Object> insertGeroRole(
 			@RequestBody String inJson
 			){
 		BasicReturnedJson result = new BasicReturnedJson();
+		Map<String, Object> digestMap = new HashMap<String, Object>();
 		
 		Map<String, Object> requestBodyParamMap = ParamUtils.getMapByJson(inJson, logger);
 		String username;
@@ -47,7 +51,7 @@ public class DigestController extends BasicController{
 			username = (String) String.valueOf(requestBodyParamMap.get("username"));
 			password = (String) String.valueOf(requestBodyParamMap.get("password"));
 						
-			if (username == null || username.equals("null"))
+			if (username == null || username.equals(""))
 				throw new Exception();
 			
 		} catch(Exception e) {
@@ -58,7 +62,7 @@ public class DigestController extends BasicController{
 		
 		User user = systemService.getUserByUsername(username);
 		
-		if (user.equals(null)) {
+		if (user == null) {
 			String message = "GET_DIGEST_BAD_NOT_FOUND";
 			logger.error(message);
 			throw new RestException(HttpStatus.NOT_FOUND, message);
@@ -71,8 +75,10 @@ public class DigestController extends BasicController{
 		}else {
 			String digest = Encodes.encodeHex(Digests.sha1(user.getPassword().getBytes()));
 			logger.debug("user:"+username+"digest:"+digest);
-			result.addEntity(digest);
+			digestMap.put("digest", digest);
 		}
+		digestMap.putAll(getUserMapFromUser(user));
+		result.addEntity(digestMap);
 		
 		return result.getMap();
 	}

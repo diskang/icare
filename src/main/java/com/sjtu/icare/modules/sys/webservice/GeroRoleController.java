@@ -361,7 +361,7 @@ public class GeroRoleController extends GeroBaseController {
 		// 输入参数检查
 		try {
 			privilegeIdList = (List<Integer>) requestBodyParamMap.get("insert_privilege_ids");
-			if (privilegeIdList == null) {
+			if (privilegeIdList == null || privilegeIdList.size()<1) {
 				throw new Exception();
 			}
 		} catch(Exception e) {
@@ -494,7 +494,7 @@ public class GeroRoleController extends GeroBaseController {
 		// 输入参数检查
 		try {
 			privilegeIdList = (List<Integer>) requestBodyParamMap.get("delete_privilege_ids");
-			if (privilegeIdList == null) {
+			if (privilegeIdList == null || privilegeIdList.size() < 1) {
 				throw new Exception();
 			}
 		} catch(Exception e) {

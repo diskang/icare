@@ -150,9 +150,7 @@ public class GeroAreaRestController extends BasicController {
 				parentIds = parentGeroAreaEntity.getParentIds() + parentId + ",";
 			}
 				
-			
 
-			
 		} catch(Exception e) {
 			String otherMessage = "[parent_id=" + requestParamMap.get("parentId") + "]" +
 					"[type=" + requestParamMap.get("type") + "]" +
