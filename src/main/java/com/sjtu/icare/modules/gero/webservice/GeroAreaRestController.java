@@ -30,7 +30,6 @@ import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
-import com.sjtu.icare.common.utils.StringUtils;
 import com.sjtu.icare.common.web.rest.BasicController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
@@ -39,7 +38,7 @@ import com.sjtu.icare.modules.gero.service.IGeroAreaService;
 
 @RestController
 @RequestMapping({"${api.web}/gero/{gid}/area", "${api.service}/gero/{gid}/area"})
-public class GeroAreaRestController extends BasicController{
+public class GeroAreaRestController extends BasicController {
 	private static Logger logger = Logger.getLogger(GeroAreaRestController.class);
 
 	@Autowired
@@ -48,7 +47,8 @@ public class GeroAreaRestController extends BasicController{
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getGeroAreas(
 			HttpServletRequest request,
-			@PathVariable("gid") int geroId
+			@PathVariable("gid") int geroId,
+			@RequestParam(value="level", required=false) Integer level
 			) {
 		checkApi(request);
 		List<String> permissions = new ArrayList<String>();
@@ -65,6 +65,7 @@ public class GeroAreaRestController extends BasicController{
 		try {
 			GeroAreaEntity queryGeroAreaEntity = new GeroAreaEntity();
 			queryGeroAreaEntity.setGeroId(geroId);
+			queryGeroAreaEntity.setLevel(level);
 			List<GeroAreaEntity> geroAreaEntities = geroAreaService.getGeroAreas(queryGeroAreaEntity);
 			
 			if (geroAreaEntities != null) {
@@ -112,40 +113,48 @@ public class GeroAreaRestController extends BasicController{
 		tempRquestParamMap.put("geroId", geroId);
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
 		
-		Integer parentId;
-		String parentIds;
-		Integer type;
-		Integer level;
-		String name;
-		
-		String parentFullName;
+		Integer parentId = null;
+		Integer type = null;
+		Integer level = null;
+		String name = null;
+		String parentIds = null;
+		String parentFullName = "";
 		
 		try {
 			parentId = (Integer) requestParamMap.get("parentId");
-			parentIds = (String) requestParamMap.get("parentIds");
 			type = (Integer) requestParamMap.get("type");
 			level = (Integer) requestParamMap.get("level");
 			name = (String) requestParamMap.get("name");
 			
-			if (parentId == null || parentIds == null || type == null || level == null || name == null)
+			if (parentId == null || type == null || level == null || name == null)
 				throw new Exception();
-			
-			// 参数详细验证
-			GeroAreaEntity queryParentGeroAreaEntity = new GeroAreaEntity();
-			queryParentGeroAreaEntity.setId(parentId);
-			GeroAreaEntity parentGeroAreaEntity = geroAreaService.getGeroArea(queryParentGeroAreaEntity);
-			parentFullName = parentGeroAreaEntity.getFullName();
 			
 			// 根节点 parentId 为 0， level 从1开始
-			if (parentId == 0 && (level != 1 || !StringUtils.isBlank(parentIds)))
-				throw new Exception();
+			if (parentId == 0) {
+				if (level != 1)
+					throw new Exception();
+				// 参数预处理
+				parentIds = "0,";
+				
+			} else {
+				// 参数详细验证
+				GeroAreaEntity queryParentGeroAreaEntity = new GeroAreaEntity();
+				queryParentGeroAreaEntity.setId(parentId);
+				GeroAreaEntity parentGeroAreaEntity = geroAreaService.getGeroArea(queryParentGeroAreaEntity);
+				
+				if (parentGeroAreaEntity.getLevel() + 1 != level)
+					throw new Exception();
+				
+				parentFullName = parentGeroAreaEntity.getFullName();
+				// 参数预处理
+				parentIds = parentGeroAreaEntity.getParentIds() + parentId + ",";
+			}
+				
 			
-			if (parentId != 0 && (parentGeroAreaEntity.getLevel() + 1 != level || !parentIds.equals(parentGeroAreaEntity.getParentIds() + parentId + ",")))
-				throw new Exception();
+
 			
 		} catch(Exception e) {
 			String otherMessage = "[parent_id=" + requestParamMap.get("parentId") + "]" +
-					"[parent_ids=" + requestParamMap.get("parentIds") + "]" +
 					"[type=" + requestParamMap.get("type") + "]" +
 					"[level=" + requestParamMap.get("level") + "]" +
 					"[name=" + requestParamMap.get("name") + "]";
@@ -159,9 +168,11 @@ public class GeroAreaRestController extends BasicController{
 		
 		// 插入数据
 		try {
+	
 			GeroAreaEntity postEntity = new GeroAreaEntity();
 			BeanUtils.populate(postEntity, requestParamMap);
 			postEntity.setFullName(parentFullName + name + ",");
+			postEntity.setParentIds(parentIds);
 			geroAreaService.insertGeroAreaRecord(postEntity);
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";

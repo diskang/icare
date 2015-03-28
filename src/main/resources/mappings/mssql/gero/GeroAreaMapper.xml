@@ -25,6 +25,9 @@
         FROM T_AREA
         WHERE 
             T_AREA.gero_id = #{geroId}
+            <if test="level != null">
+            AND T_AREA.level = #{level}
+            </if>
   
     </select>
     
