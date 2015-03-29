@@ -1,185 +1,180 @@
 USE [HCDB_UPDATE_TEST]
 GO
 
-INSERT INTO [dbo].[T_GERO]
-           ([name]
-           ,[city]
-           ,[district]
-		   ,[register_date])
-     VALUES
-           ('default'
-           ,'default'
-           ,'default'
-		   ,'2015-03-12')
+-- 建立默认养老院
+
+INSERT INTO [dbo].[T_GERO]([name],[city],[district],[register_date])
+     VALUES('default','default','default','2015-03-12')
 GO
 
-INSERT INTO [dbo].[T_GERO]
-           ([name]
-           ,[city]
-           ,[district]
-		   ,[register_date])
-     VALUES
-           ('test'
-           ,'shanghai'
-           ,'minhang'
-		   ,'2015-03-11')
-GO
+---------------------------------------------------------------------------------------
 
-INSERT INTO [dbo].[T_USER]
-           ([username]
+-- 建立养老院区域
+
+INSERT INTO [dbo].[T_AREA]
+           ([parent_id]
+           ,[parent_ids]
+           ,[gero_id]
+           ,[type]
+           ,[level]
            ,[name]
-           ,[password]
-           ,[user_type]
-           ,[user_id]
-           ,[register_date]
-		   ,[identity_no]
-		   ,[birthday]
-		   ,[phone_no]
-		   ,[gero_id]
-		   )
+           ,[full_name])
      VALUES
-           ('su'
-           ,'超级管理员'
-           ,'02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032'
-           ,'0'
-           ,'0'
-           ,'2015-03-05 00:00:00.000'
-		   ,'1'
-		   ,'1970-01-01'
-		   ,'18888888888'
-		   ,'1'
-		   )
+           (0
+           ,'0,'
+           ,1
+           ,1
+           ,1
+           ,'1号楼'
+           ,'1号楼,')
 GO
 
-INSERT INTO [dbo].[T_USER]
-           ([username]
+INSERT INTO [dbo].[T_AREA]
+           ([parent_id]
+           ,[parent_ids]
+           ,[gero_id]
+           ,[type]
+           ,[level]
            ,[name]
-           ,[password]
-           ,[user_type]
-           ,[user_id]
-           ,[register_date]
-		   ,[identity_no]
-		   ,[birthday]
-		   ,[phone_no]
-		   ,[gero_id]
-		   )
+           ,[full_name])
      VALUES
-           ('admin'
-           ,'管理员'
-           ,'02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032'
-           ,'1'
-           ,'1'
-           ,'2015-03-05 00:00:00.000'
-		   ,'1'
-		   ,'1970-01-01'
-		   ,'18888888888'
-		   ,'1'
-		   )
+           (1
+           ,'0,1'
+           ,1
+           ,2
+           ,2
+           ,'1层'
+           ,'1号楼,1层,')
 GO
 
-INSERT INTO [dbo].[T_USER]
-           ([username]
+INSERT INTO [dbo].[T_AREA]
+           ([parent_id]
+           ,[parent_ids]
+           ,[gero_id]
+           ,[type]
+           ,[level]
            ,[name]
-           ,[password]
-           ,[user_type]
-           ,[user_id]
-           ,[register_date]
-		   ,[identity_no]
-		   ,[birthday]
-		   ,[phone_no]
-		   ,[gero_id]
-		   )
+           ,[full_name])
      VALUES
-           ('carer'
-           ,'护工'
-           ,'02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032'
-           ,'2'
-           ,'2'
-           ,'2015-03-05 00:00:00.000'
-		   ,'1'
-		   ,'1970-01-01'
-		   ,'18888888888'
-		   ,'1'
-		   )
+           (2
+           ,'0,1,2'
+           ,1
+           ,3
+           ,3
+           ,'1室'
+           ,'1号楼,1层,1室,')
 GO
 
-INSERT INTO [dbo].[T_USER]
-           ([username]
+INSERT INTO [dbo].[T_AREA]
+           ([parent_id]
+           ,[parent_ids]
+           ,[gero_id]
+           ,[type]
+           ,[level]
            ,[name]
-           ,[password]
-           ,[user_type]
-           ,[user_id]
-           ,[register_date]
-		   ,[identity_no]
-		   ,[birthday]
-		   ,[phone_no]
-		   ,[gero_id]
-		   )
+           ,[full_name])
      VALUES
-           ('doctor'
-           ,'医生'
-           ,'02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032'
-           ,'2'
-           ,'3'
-           ,'2015-03-05 00:00:00.000'
-		   ,'1'
-		   ,'1970-01-01'
-		   ,'18888888888'
-		   ,'1'
-		   )
+           (3
+           ,'0,1,2,3'
+           ,1
+           ,4
+           ,4
+           ,'1床'
+           ,'1号楼,1层,1室,1床')
 GO
 
-INSERT INTO [dbo].[T_USER]
-           ([username]
+---------------------------------------------------------------------------------------
+
+-- 生成默认养老院房间项目
+
+INSERT INTO [dbo].[T_AREA_ITEM]
+           ([gero_id]
            ,[name]
-           ,[password]
-           ,[user_type]
-           ,[user_id]
-           ,[register_date]
-		   ,[identity_no]
-		   ,[birthday]
-		   ,[phone_no]
-		   ,[gero_id]
-		   )
+           ,[icon]
+           ,[period]
+           ,[frequency]
+           ,[notes]
+           ,[del_flag])
      VALUES
-           ('elder'
-           ,'老人'
-           ,'02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032'
-           ,'3'
-           ,'1'
-           ,'2015-03-05 00:00:00.000'
-		   ,'1'
-		   ,'1970-01-01'
-		   ,'18888888888'
-		   ,'1'
-		   )
+           (<gero_id, int,>
+           ,<name, nvarchar(32),>
+           ,<icon, varchar(32),>
+           ,<period, int,>
+           ,<frequency, int,>
+           ,<notes, nvarchar(32),>
+           ,<del_flag, char(1),>)
 GO
 
-INSERT INTO [dbo].[T_USER]
-           ([username]
-           ,[name]
-           ,[password]
-           ,[user_type]
-           ,[user_id]
-           ,[register_date]
-		   ,[identity_no]
-		   ,[birthday]
-		   ,[phone_no]
-		   ,[gero_id]
-		   )
-     VALUES
-           ('relative'
-           ,'家属'
-           ,'02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032'
-           ,'4'
-           ,'1'
-           ,'2015-03-05 00:00:00.000'
-		   ,'1'
-		   ,'1970-01-01'
-		   ,'18888888888'
-		   ,'1'
-		   )
+
+
+
+---------------------------------------------------------------------------------------
+
+
+-- 生成超级管理员
+
+INSERT INTO [dbo].[T_USER]([username],[name],[password],[user_type],[user_id],[register_date],[identity_no],[birthday],[phone_no],[gero_id])
+     VALUES('su','超级管理员','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','0','0','2015-03-05 00:00:00.000','1','1970-01-01','18888888888','1')
 GO
+
+---------------------------------------------------------------------------------------
+
+-- 生成默认养老院管理员
+
+INSERT INTO [dbo].[T_USER]([username],[name],[password],[user_type],[user_id],[register_date],[identity_no],[birthday],[phone_no],[gero_id])
+     VALUES('demo_admin','默认管理员','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','1','1','2015-03-05 00:00:00.000','1','1970-01-01','18888888888','1')
+GO
+
+INSERT INTO [dbo].[T_STAFF]([name],[gero_id])
+     VALUES('默认管理员',1)
+GO
+
+---------------------------------------------------------------------------------------
+
+-- 生成默认养老院职工
+
+-- 生成默认老人护工
+
+INSERT INTO [dbo].[T_USER]([username],[name],[password],[user_type],[user_id],[register_date],[identity_no],[birthday],[phone_no],[gero_id])
+     VALUES('elder_carer','默认老人护工','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','1','2','2015-03-05 00:00:00.000','1','1970-01-01','18888888888','1')
+GO
+
+INSERT INTO [dbo].[T_STAFF]([name],[gero_id])
+     VALUES('默认老人护工',1)
+GO
+
+-- 生成默认房间护工
+
+INSERT INTO [dbo].[T_USER]([username],[name],[password],[user_type],[user_id],[register_date],[identity_no],[birthday],[phone_no],[gero_id])
+     VALUES('room_carer','默认房间护工','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','1','3','2015-03-05 00:00:00.000','1','1970-01-01','18888888888','1')
+GO
+
+INSERT INTO [dbo].[T_STAFF]([name],[gero_id])
+     VALUES('默认房间护工',1)
+GO
+
+-- 生成默认医生
+
+INSERT INTO [dbo].[T_USER]([username],[name],[password],[user_type],[user_id],[register_date],[identity_no],[birthday],[phone_no],[gero_id])
+     VALUES('room_carer','默认医生','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','1','4','2015-03-05 00:00:00.000','1','1970-01-01','18888888888','1')
+GO
+
+INSERT INTO [dbo].[T_STAFF]([name],[gero_id])
+     VALUES('默认医生',1)
+GO
+
+-- 生成默认老人
+
+INSERT INTO [dbo].[T_USER]([username],[name],[password],[user_type],[user_id],[register_date],[identity_no],[birthday],[phone_no],[gero_id])
+     VALUES('room_carer','默认老人','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','2','1','2015-03-05 00:00:00.000','1','1970-01-01','18888888888','1')
+GO
+
+INSERT INTO [dbo].[T_STAFF]([name],[gero_id])
+     VALUES('默认老人',1)
+GO
+
+
+
 
 INSERT INTO [dbo].[T_ROLE]
            ([name]
