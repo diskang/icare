@@ -53,6 +53,7 @@ var arrange={
 		}
 	},
 	allowchange:function(){
+		$('#button-allow').toggleClass("fc-state-default1");
 		arrange.allow=(!arrange.allow);
 	},
 	prev:function(){
