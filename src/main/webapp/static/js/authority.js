@@ -40,12 +40,14 @@ var authority={
         var node=$("#authoritytree").tree('getSelected');
         authority.pid='/'+node.id;
         authority.method="put";
+        authority.obj.parent_id='';
         $('#authorityInfo').removeClass('hide');
         $('#pname').attr('value',node.text);
         $('#picon').attr('value',node.iconCls);
         $('#phref').attr('value',node.attributes.href);
         $('#pnotes').attr('value',node.attributes.notes);
         $('#ppermission').attr('value',node.attributes.permission);
+        $('#papi').attr('value',node.attributes.api);
     },
 
     addTreenode:function(){
@@ -64,6 +66,7 @@ var authority={
         authority.obj.permission=document.getElementById("ppermission").value;
         authority.obj.href=document.getElementById("phref").value;
         authority.obj.icon=document.getElementById("picon").value;
+        authority.obj.api=document.getElementById("papi").value;
         var infoUrl=rhurl.origin+'/privilege'+authority.pid;
         $.ajax({
             url: infoUrl, 

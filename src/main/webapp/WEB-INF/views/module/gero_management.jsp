@@ -18,7 +18,6 @@
 <div class="head">
   <div class="container header-s">
     <div class="logo"><img src="/resthouse/static/images/logo.png" ></div>
-    <div class="dianhua"><img src="/resthouse/static/images/d_1.png"></div>
   </div>
 </div>
 <!--------------------------导航条-------------------------------->
@@ -28,7 +27,10 @@
       <li class="navli" href="#">首页</li>
     </ul>
     <div class="btn-group pull-right">
-      <a id="login" class="btn" href="/resthouse/admin/logout"> 退出 </a>
+      <a id="logout" class="btn" href="/resthouse/admin/logout"> 退出 </a>
+    </div>
+    <div class="btn-group pull-right">
+      <a id="userinfo" class="btn"onclick="user.drawinfo()"> 个人中心 </a>
     </div>
     <text id="welcome" class="pull-right" ></text>
   </div>
@@ -47,7 +49,25 @@
 
   <!--------------------------右内容-------------------------------->
     <div class="rightNav" id="rightNavi" style="min-height:710px;">
+    
 
+    <!---------------------------用户信息-------------------------->
+    <div id="usershow" class="inf hide" style="min-height:700px;">
+        <div class="pers-s">个人信息中心</div>
+        <div class="old">
+          <div class="page-header"></div>
+          <div id="user-Info-card-a" class="info-card-a" >
+            <table >
+              <tr><td class="td1"><text>用户名: </text></td><td class="td2"><input id="uusername"></input></td></tr>
+              <tr><td class="td1"><text>姓名: </text></td><td class="td2"><input id="uname" disabled='true'></input></td></tr>
+              <tr><td class="td1"><text>密码: </text></td><td class="td2"><a id="userinfo" class="btn"onclick="user.changepwd()"> 修改</a></td></tr>
+            </table>
+            <div class="btn-group pull-right">
+              <a id="userinfo" class="btn btn-default"onclick="user.putuser()"> 确定 </a>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <!--------------------------老人列表-------------------------------->
       <div id="eldershow" class="inf hide" style="min-height:700px;">
@@ -182,7 +202,7 @@
               </div>
               <div class="fc-center"><h2>员工排班记录</h2></div>
               <div class="fc-right">
-                <button type="button" class="fc-allow-button fc-state-default ">排班</button>
+                <button type="button" id="button-allow" class="fc-allow-button fc-state-default1 fc-state-default2">排班</button>
                 <button type="button" class="fc-submit-button fc-state-default ">提交</button>
               </div>
             </div>
@@ -220,6 +240,7 @@
       <div id="itemshow" class="inf hide" style="min-height:700px;">
         <div class="pers-s">项目总表</div>
         <div class="old">
+          <div class="page-header"></div>
           <div class="list" style="min-height:280px;padding-top:10px;">
               <table id="careitempage"  class="easyui-datagrid" title="专护项目列表" style="height:270px;" data-options="onDblClickRow:item.onCareDblClickRow">
                 <thead>
@@ -250,6 +271,7 @@
       <div id="gerocareitemshow" class="inf hide" style="min-height:700px;">
         <div class="pers-s">养老院项目管理</div>
         <div class="old">
+          <div class="page-header"></div>
           <div class="list" style="min-height:280px;padding-top:10px;">
               <table id="gerocareitempage"  class="easyui-datagrid" title="专护项目列表" style="height:270px;" data-options="onDblClickRow:geroItem.onCareDblClickRow">
                 <thead>
@@ -258,7 +280,7 @@
                     <th data-options="field:'name',width:140,align:'center'">名 称</th>
                     <th data-options="field:'level',width:100,align:'center'">护理等级</th>
                     <th data-options="field:'period',width:80,align:'center'">周期</th>
-                    <th data-options="field:'frequency',width:80,align:'center'">频率</th>
+                    <th data-options="field:'frequence',width:80,align:'center'">频率</th>
                     <th data-options="field:'notes',width:300,align:'center'">说 明</th>
                   </tr>
                 </thead>
@@ -269,6 +291,7 @@
       <div id="geroareaitemshow" class="inf hide" style="min-height:700px;">
         <div class="pers-s">养老院项目管理</div>
         <div class="old">
+          <div class="page-header"></div>
           <div class="list" style="min-height:280px;padding-top:10px;">
               <table id="geroareaitempage"  class="easyui-datagrid" title="房护项目列表" style="height:270px;" data-options="onDblClickRow:geroItem.onCareDblClickRow">
                 <thead>
@@ -276,7 +299,7 @@
                     <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'name',width:140,align:'center'">名 称</th>
                     <th data-options="field:'period',width:80,align:'center'">周期</th>
-                    <th data-options="field:'frequency',width:80,align:'center'">频率</th>
+                    <th data-options="field:'frequence',width:80,align:'center'">频率</th>
                     <th data-options="field:'notes',width:300,align:'center'">说 明</th>
                   </tr>
                 </thead>
@@ -289,6 +312,7 @@
       <div id="geroroleshow" class="inf hide" style="min-height:700px;">
         <div class="pers-s">养老院角色管理</div>
         <div class="old">
+          <div class="page-header"></div>
           <div class="list" style="min-height:300px;padding-top:10px;">
               <table id="gerorolepage"  class="easyui-datagrid" title="角色列表" style="height:300px;width:500px;" data-options="onDblClickRow:role.onRoleDblClickRow">
                 <thead>
@@ -309,6 +333,7 @@
       <div id="authorityshow" class="inf hide" style="min-height:700px;">
         <div class="pers-s">权限中心</div>
         <div class="old">
+          <div class="page-header"></div>
           <div  id="authoritypanel" class="easyui-panel" title="权限列表" style="height:500px;width:500px;padding:10px;margin:0;overflow:scroll;" data-options="
             width:500,
             tools: [{ 
@@ -330,6 +355,7 @@
               <li>permission: <input type="text" id="ppermission"></input></li>
               <li>href: <input type="text" id="phref"></input></li>
               <li>icon: <input type="text" id="picon"></input></li>
+              <li>api: <input type="text" id="papi"></input></li>
               <li>notes: <input type="text" id="pnotes"></input></li>
               <div class="col-md-offset-2">
                 <button id="authoritybutton" class="btn btn-default" onclick="authority.buttonclk()" style="margin-left:180px;margin-top:10px;" >确定</button>
@@ -568,6 +594,7 @@
 <script type="text/javascript" src="/resthouse/static/js/authority.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/arrange.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/url.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/user.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/validbox.js"></script>
 </body>
 </html>

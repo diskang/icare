@@ -92,7 +92,7 @@ var leftTop = {
         this.id=node.id;
         this.text=node.name;
         this.children=[];
-        this.attributes={"href":node.href,"permission":node.permission,"notes":node.notes}
+        this.attributes={"href":node.href,"permission":node.permission,"notes":node.notes,'api':node.api}
         this.iconCls=node.icon;
     },
 
@@ -169,6 +169,7 @@ $(function(){
             }
         }
     })
+    $('#button-allow').toggleClass("fc-state-default1");
     $.ajax({
         type: "get",
         dataType: "json",
@@ -176,6 +177,9 @@ $(function(){
         url:rhurl.origin+"/user/"+uid,
         timeout:1000,
         success: function (msg) {
+            $("#welcome").text("欢迎"+msg.entities[0].username+"登录resthouse系统");
+            document.getElementById('uusername').setAttribute('value',msg.entities[0].username);
+            document.getElementById('uname').setAttribute('value',msg.entities[0].name);
             temptree=msg.entities[0].privilege_list;
             leftTop.removeLefttree;
             var str=leftTop.dealtree(temptree);
