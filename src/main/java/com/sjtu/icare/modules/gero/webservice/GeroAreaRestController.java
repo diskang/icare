@@ -48,7 +48,12 @@ public class GeroAreaRestController extends BasicController {
 	public Object getGeroAreas(
 			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
-			@RequestParam(value="level", required=false) Integer level
+			@RequestParam(value="parent_id", required=false) Integer parentId,
+			@RequestParam(value="parent_ids", required=false) String parentIds,
+			@RequestParam(value="type", required=false) Integer type,
+			@RequestParam(value="level", required=false) Integer level,
+			@RequestParam(value="name", required=false) String name,
+			@RequestParam(value="full_name", required=false) String fullName
 			) {
 		checkApi(request);
 		List<String> permissions = new ArrayList<String>();
@@ -65,7 +70,14 @@ public class GeroAreaRestController extends BasicController {
 		try {
 			GeroAreaEntity queryGeroAreaEntity = new GeroAreaEntity();
 			queryGeroAreaEntity.setGeroId(geroId);
+			queryGeroAreaEntity.setParentId(parentId);
+			queryGeroAreaEntity.setParentIds(parentIds);
+			queryGeroAreaEntity.setType(type);
 			queryGeroAreaEntity.setLevel(level);
+			queryGeroAreaEntity.setName(name);
+			queryGeroAreaEntity.setFullName(fullName);
+			
+			
 			List<GeroAreaEntity> geroAreaEntities = geroAreaService.getGeroAreas(queryGeroAreaEntity);
 			
 			if (geroAreaEntities != null) {
@@ -222,7 +234,7 @@ public class GeroAreaRestController extends BasicController {
 				
 				// 构造返回的 JSON
 				Map<String, Object> resultMap = new HashMap<String, Object>();
-				resultMap.put("id", geroId); 
+				resultMap.put("id", ancestorGeroAreaEntity.getId()); 
 				resultMap.put("parent_id", ancestorGeroAreaEntity.getParentId()); 
 				resultMap.put("parent_ids", ancestorGeroAreaEntity.getParentIds()); 
 				resultMap.put("type", ancestorGeroAreaEntity.getType()); 
@@ -235,7 +247,7 @@ public class GeroAreaRestController extends BasicController {
 				if (descendantGeroAreaEntities != null) {
 					for (GeroAreaEntity geroAreaEntity : descendantGeroAreaEntities) {
 						Map<String, Object> tempMap = new HashMap<String, Object>();
-						tempMap.put("id", geroId); 
+						tempMap.put("id", ancestorGeroAreaEntity.getId()); 
 						tempMap.put("parent_id", geroAreaEntity.getParentId()); 
 						tempMap.put("parent_ids", geroAreaEntity.getParentIds()); 
 						tempMap.put("type", geroAreaEntity.getType()); 
