@@ -1,15 +1,19 @@
 package com.sjtu.icare.common.security;
 
 import org.apache.commons.codec.binary.Hex;
+import org.apache.log4j.Logger;
+
+import com.sjtu.icare.modules.sys.utils.security.StatelessAuthcFilter;
 
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+
 import java.util.List;
 import java.util.Map;
 
 public class HmacSHA256Utils {
-
+	private static final Logger logger = Logger.getLogger(HmacSHA256Utils.class);
     public static String digest(String key, String content) {
         try {
             Mac mac = Mac.getInstance("HmacSHA256");
@@ -42,6 +46,7 @@ public class HmacSHA256Utils {
                 s.append(values);
             }
         }
+        logger.debug("stringBulider:"+s.toString());
         return digest(key, s.toString());
     }
 
