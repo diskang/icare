@@ -234,7 +234,7 @@ public class GeroAreaRestController extends BasicController {
 				
 				// 构造返回的 JSON
 				Map<String, Object> resultMap = new HashMap<String, Object>();
-				resultMap.put("id", geroId); 
+				resultMap.put("id", ancestorGeroAreaEntity.getId()); 
 				resultMap.put("parent_id", ancestorGeroAreaEntity.getParentId()); 
 				resultMap.put("parent_ids", ancestorGeroAreaEntity.getParentIds()); 
 				resultMap.put("type", ancestorGeroAreaEntity.getType()); 
@@ -247,7 +247,7 @@ public class GeroAreaRestController extends BasicController {
 				if (descendantGeroAreaEntities != null) {
 					for (GeroAreaEntity geroAreaEntity : descendantGeroAreaEntities) {
 						Map<String, Object> tempMap = new HashMap<String, Object>();
-						tempMap.put("id", geroId); 
+						tempMap.put("id", ancestorGeroAreaEntity.getId()); 
 						tempMap.put("parent_id", geroAreaEntity.getParentId()); 
 						tempMap.put("parent_ids", geroAreaEntity.getParentIds()); 
 						tempMap.put("type", geroAreaEntity.getType()); 
