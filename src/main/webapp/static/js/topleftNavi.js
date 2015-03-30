@@ -16,9 +16,15 @@ var Thudate = new Date();
 var Fridate = new Date();
 var Satdate = new Date();
 var weekstr=[];
+var isFirst1=true;
+var isFirst2=true;
 var todayms=Sundate.getTime();
-var gid=$.cookie('gid');
-var uid=$.cookie('uid');
+var temparea;
+var temparea2;
+// var gid=$.cookie('gid');
+// var uid=$.cookie('uid');
+var gid=getUser().gero_id;
+var uid=getUser().id;
 Sundate.setTime(Sundate.getTime()-Sundate.getDay()*24*60*60*1000);
 sexc["男"]=0;
 sexc["女"]=1;
@@ -31,6 +37,9 @@ hrefTable['/gero/1/area_item']='geroItem.drawGeroAreaItemList()';
 hrefTable['/gero/1/role']='role.drawGeroRoleList()';
 hrefTable['/user/1']='authority.drawAuthorityList()';
 hrefTable['/gero/1/schedule']='arrange.drawArrangeList()';
+hrefTable['/area']='area.drawAreaList()';
+hrefTable['/eldercareduty']='eldercare.drawElderCareList()';
+hrefTable['/areacareduty']='area.drawAreaList()';
 
 var leftTop = {
     removeLefttree:function (){
@@ -137,7 +146,6 @@ var leftTop = {
         }
         temptree2=[{"id":1,"text":"权限列表","children":[]}]
         temptree2[0].children=leftTop.createTreeData2(temptree2[0]);
-        $("#authoritychecktree").tree("loadData",temptree2);
         return leftTop.createTreeData(toptree[0]);
     },
 
@@ -169,7 +177,6 @@ $(function(){
             }
         }
     })
-    $('#button-allow').toggleClass("fc-state-default1");
     $.ajax({
         type: "get",
         dataType: "json",
@@ -177,18 +184,19 @@ $(function(){
         url:rhurl.origin+"/user/"+uid,
         timeout:1000,
         success: function (msg) {
-            $("#welcome").text("欢迎"+msg.entities[0].username+"登录resthouse系统");
-            document.getElementById('uusername').setAttribute('value',msg.entities[0].username);
-            document.getElementById('uname').setAttribute('value',msg.entities[0].name);
             temptree=msg.entities[0].privilege_list;
             leftTop.removeLefttree;
             var str=leftTop.dealtree(temptree);
             $("#lefttree").tree("loadData",str);
+            $("#welcome").text("欢迎"+msg.entities[0].username+"登录resthouse系统");
+            document.getElementById('uusername').setAttribute('value',msg.entities[0].username);
+            document.getElementById('uname').setAttribute('value',msg.entities[0].name);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
         }
     });
+
     $.ajax({
         type: "get",
         data:{page:1,rows:65535,sort:'ID'},
@@ -215,6 +223,8 @@ $(function(){
             leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
         }
     });
+
+    $('#button-allow').toggleClass("fc-state-default1");
 
 });
 

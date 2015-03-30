@@ -551,16 +551,24 @@ a:hover{ color:#d71318;}
   
 }
 
-#authorityInfo{
-  width:300px;
-  height:200px;
-  position:absolute;
-  background:url('/resthouse/static/css/images/q_1.jpg');
-  top:300px;
-  right:10%;
+#areaInfo{
+  width:200px;
+  height:300px;
+  position:relative;
+}
+#areaInfo tr{
+  height:40px;
+  padding:10px;
+
 }
 
-#authorityInfo li{
+#authorityInfo{
+  width:200px;
+  height:300px;
+  position:relative;
+}
+
+#authorityInfo tr{
   height:40px;
   padding:10px;
 

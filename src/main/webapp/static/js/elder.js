@@ -80,7 +80,7 @@ var elder={
         elder.method='post';
         $("#elder-dialog-form").dialog("open");
         $("#elder-dialog-form").dialog("center");
-        $('#elder-Info-card-a input').attr('value'," ").removeAttr('disabled','');
+        $('#elder-Info-card-a input').attr('value'," ").removeAttr('disabled');
         $('#elder-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
         $('#elder-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
@@ -89,7 +89,7 @@ var elder={
         elder.method='put';
         $("#elder-dialog-form").dialog("open");
         $("#elder-dialog-form").dialog("center");
-        $('#elder-Info-card-a input').removeAttr('disabled','');
+        $('#elder-Info-card-a input').removeAttr('disabled');
         $('#elder-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
     },
     delElderInfo: function(){
