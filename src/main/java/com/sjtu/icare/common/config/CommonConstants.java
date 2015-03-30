@@ -10,8 +10,9 @@ package com.sjtu.icare.common.config;
 public class CommonConstants {
 	
 	// USER 表里对应的 user_type
-	public static int ELDER_TYPE = 2;	
 	public static int STAFF_TYPE = 1;
+	public static int ELDER_TYPE = 2;	
+	public static final int RELATIVE_TYPE = 3;
 	
 	public static String DEFAULT_PASSWORD = "password";
 	
