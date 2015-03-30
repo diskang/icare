@@ -135,31 +135,25 @@ public class GeroAreaRestController extends BasicController {
 		try {
 			parentId = (Integer) requestParamMap.get("parentId");
 			type = (Integer) requestParamMap.get("type");
-			level = (Integer) requestParamMap.get("level");
 			name = (String) requestParamMap.get("name");
 			
-			if (parentId == null || type == null || level == null || name == null)
+			if (parentId == null || type == null || name == null)
 				throw new Exception();
 			
 			// 根节点 parentId 为 0， level 从1开始
+			// 参数预处理
 			if (parentId == 0) {
-				if (level != 1)
-					throw new Exception();
-				// 参数预处理
 				parentIds = "0,";
+				level = 1;
 				
 			} else {
-				// 参数详细验证
 				GeroAreaEntity queryParentGeroAreaEntity = new GeroAreaEntity();
 				queryParentGeroAreaEntity.setId(parentId);
 				GeroAreaEntity parentGeroAreaEntity = geroAreaService.getGeroArea(queryParentGeroAreaEntity);
 				
-				if (parentGeroAreaEntity.getLevel() + 1 != level)
-					throw new Exception();
-				
 				parentFullName = parentGeroAreaEntity.getFullName();
-				// 参数预处理
 				parentIds = parentGeroAreaEntity.getParentIds() + parentId + ",";
+				level = parentGeroAreaEntity.getLevel() + 1;
 			}
 				
 
@@ -183,6 +177,7 @@ public class GeroAreaRestController extends BasicController {
 			BeanUtils.populate(postEntity, requestParamMap);
 			postEntity.setFullName(parentFullName + name + ",");
 			postEntity.setParentIds(parentIds);
+			postEntity.setLevel(level);
 			geroAreaService.insertGeroAreaRecord(postEntity);
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
