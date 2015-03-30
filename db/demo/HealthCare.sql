@@ -161,6 +161,7 @@ CREATE TABLE T_ELDER_RELATIVE
 	name				nvarchar(20)	NOT NULL,				--名字
 	urgent				bit				,						--是否紧急联系人
 	relationship		nvarchar(20)	,						--与老人关系，optional
+	cancel_date			datetime		,						--注销日期
 )
 GO
 
