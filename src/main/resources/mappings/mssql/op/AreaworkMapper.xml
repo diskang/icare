@@ -58,7 +58,7 @@
                 FROM 
                     T_AREAWORK
                 WHERE
-                    CONVERT(nvarchar(23), T_AREAWORK.end_date, 120) >= '2015-03-24'
+                    CONVERT(nvarchar(23), T_AREAWORK.end_date, 120) >= #{date}
                     AND T_AREAWORK.area_ids LIKE '%,' + CAST(#{id} AS VARCHAR(1000)) + ',%'
                 GROUP BY
                     T_AREAWORK.carer_id

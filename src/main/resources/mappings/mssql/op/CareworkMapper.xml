@@ -31,7 +31,7 @@
                 FROM 
                     T_CAREWORK
                 WHERE
-                    CONVERT(nvarchar(23), T_CAREWORK.end_date, 120) >= '2015-03-24'
+                    CONVERT(nvarchar(23), T_CAREWORK.end_date, 120) >= #{date}
                     AND T_CAREWORK.elder_ids LIKE '%,' + CAST(#{id} AS VARCHAR(1000)) + ',%'
                 GROUP BY
                     T_CAREWORK.carer_id
