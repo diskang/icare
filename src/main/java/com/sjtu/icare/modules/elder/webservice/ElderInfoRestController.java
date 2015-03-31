@@ -27,7 +27,7 @@ import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
-import com.sjtu.icare.common.utils.StringUtils;
+import com.sjtu.icare.common.utils.PinyinUtils;
 import com.sjtu.icare.common.web.rest.GeroBaseController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
@@ -222,8 +222,7 @@ public class ElderInfoRestController extends GeroBaseController{
 		// TODO passworkd register date self gen
 		try {
 			
-			if (requestParamMap.get("username") == null
-				|| requestParamMap.get("name") == null
+			if (requestParamMap.get("name") == null
 				|| requestParamMap.get("identityNo") == null
 				|| requestParamMap.get("birthday") == null
 				|| requestParamMap.get("phoneNo") == null
@@ -267,6 +266,8 @@ public class ElderInfoRestController extends GeroBaseController{
 			// insert into Elder
 			ElderEntity postElderEntity = new ElderEntity(); 
 			BeanUtils.populate(postElderEntity, requestParamMap);
+			if (postElderEntity.getCareLevel() == null)
+				postElderEntity.setCareLevel(3);
 			Integer elderId = elderInfoService.insertElder(postElderEntity);
 			
 			// insert into User
@@ -275,7 +276,11 @@ public class ElderInfoRestController extends GeroBaseController{
 			
 			User postUser = new User(); 
 			BeanUtils.populate(postUser, requestParamMap);
-			systemService.insertUser(postUser);
+			postUser.setUsername(postUser.getIdentityNo());
+			Integer userId = systemService.insertUser(postUser);
+			String pinyinName = PinyinUtils.getPinyin(postUser.getName() + userId);
+			postUser.setUsername(pinyinName);
+			systemService.updateUser(postUser);
 			
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
@@ -371,7 +376,7 @@ public class ElderInfoRestController extends GeroBaseController{
 	
 	@Transactional
 	@RequestMapping(value="/{eid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
-	public Object putStaff(
+	public Object putElder(
 			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("eid") int elderId,
@@ -437,7 +442,7 @@ public class ElderInfoRestController extends GeroBaseController{
 	
 	@Transactional
 	@RequestMapping(value="/{eid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
-	public Object deleteStaff(
+	public Object deleteELder(
 			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("eid") int elderId

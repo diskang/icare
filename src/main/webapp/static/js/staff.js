@@ -30,7 +30,14 @@
         	    var result={"total":0,"rows":0};
                 result.total=data.total;
                 result.rows=data.entities;
-                for (var i in result.rows) result.rows[i].gender=sex[result.rows[i].gender];
+                for (var i in result.rows) {
+                    result.rows[i].gender=sex[result.rows[i].gender];
+                    var roletemp='';
+                    for(var j in result.rows[i].role_list){
+                        roletemp+=result.rows[i].role_list[j].name;
+                    }
+                    result.rows[i].role=roletemp;
+                }
                 return result;
             },
             toolbar: [{ 
@@ -78,7 +85,19 @@
         $('#sarchive_id').attr('value',data.archive_id);
         $('#sresidence_address').attr('value',data.residence_address);
         $('#sidentity_no').attr('value',data.identity_no);
-        $('#sphone').attr('value',data.phone);
+        $('#sphone_no').attr('value',data.phone_no);
+        $('#susername').attr('value',data.username);
+        $('#sregister_date').attr('value',data.register_date);
+        $('#scancel_date').attr('value',data.cancel_date);
+        $('#snationality').attr('value',data.nationality);
+        $('#smarriage').attr('value',data.marriage);
+        $('#snative_place').attr('value',data.native_place);
+        $('#szip_code').attr('value',data.zip_code);
+        $('#swechat_id').attr('value',data.wechat_id);
+        $('#sbasic_url').attr('value',data.basic_url);
+        $('#sleave_date').attr('value',data.leave_date);
+        $('#sage').attr('value',data.age);
+        $('#spolitical_status').attr('value',data.political_status);
         if(data.photo_url!==undefined) $('#staff-Info-card-b img').attr("src",data.photo_url).attr("width","178px").attr("height","220px");
         else $('#staff-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
@@ -105,7 +124,7 @@
     },
     delStaffInfo: function(){
         var stafft = $('#staffpage').datagrid('getSelected');
-        var infoUrl=rhurl.origin+"/gero/"+gid+"/staff/" + stafft.id;
+        var infoUrl=rhurl.origin+"/gero/"+gid+"/staff/" + stafft.user_id;
         $.ajax({
             url: infoUrl,
             type: 'DELETE',
@@ -121,8 +140,10 @@
 
 
     onStaffDblClickRow:function(index){
+                staff.method='put';
                 var stafft = $('#staffpage').datagrid('getSelected');
-                infoUrl=rhurl.origin+"/gero/"+gid+"/staff/" + stafft.id;
+                staff.sid=stafft.user_id;
+                infoUrl=rhurl.origin+"/gero/"+gid+"/staff/" + staff.sid;
                 $.ajax({
                     type: "get",
                     dataType: "json",
@@ -133,7 +154,7 @@
                         staff.drawStaffInfo(data[0]);
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        leftTop.error(XMLHttpRequest, textStatus, errorThrown);
+                        leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
                     }
                 });
     },
@@ -150,6 +171,18 @@
             phone:document.getElementById("sphone").value,
             birthday:document.getElementById("sbirthday").value,
             residence_address:document.getElementById("sresidence_address").value,
+            username:document.getElementById("susername").value,
+            register_date:document.getElementById("sregister_date").value,
+            cancel_date:document.getElementById("scancel_date").value,
+            nationality:document.getElementById("snationality").value,
+            marriage:document.getElementById("smarriage").value,
+            native_place:document.getElementById("snative_place").value,
+            zip_code:document.getElementById("szip_code").value,
+            wechat_id:document.getElementById("swechat_id").value,
+            basic_url:document.getElementById("sbasic_url").value,
+            leave_date:document.getElementById("sleave_date"),
+            age:document.getElementById("sage").value,
+            political_status:document.getElementById("spolitical_status").value,
         }
         var infoUrl=rhurl.origin+'/gero/'+gid+'/staff'+staff.sid;
         $.ajax({
@@ -164,12 +197,13 @@
         }); 
         var roleobj={ids:[]};
         var parentBox = document.getElementById("role-check");
-        var inputs = parentBox.getElementsByTagName("INPUT");
+        var inputs = parentBox.getElementsByTagName("input");
         for(var i=0;i<inputs.length;i++){
             if(inputs[i].type=="checkbox" && inputs[i].checked){
                 roleobj.ids.push(parseInt(inputs[i].getAttribute("rid")));
             }
         }
+        if(staff.sid!==''){
         $.ajax({
             url: rhurl.origin+'/user'+staff.sid+'/role', 
             type: 'put', 
@@ -180,6 +214,7 @@
             error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){staff.drawStaffList();} 
         }); 
+        }
     },
     doSearch:function(){
         $('#staffpage').datagrid('load',{           
