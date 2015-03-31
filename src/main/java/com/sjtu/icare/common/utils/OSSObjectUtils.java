@@ -23,6 +23,7 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.common.utils.DateUtil;
 import com.aliyun.oss.model.MatchMode;
+import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PolicyConditions;
 import com.aliyun.oss.model.PutObjectResult;
@@ -149,6 +150,11 @@ public class OSSObjectUtils {
 		return genUrl.toString();
 	}
     
+    public InputStream getFileInputStream(String filepath){
+    	OSSClient client = new OSSClient(endpoint, key, secret);
+    	OSSObject object = client.getObject(bucket, filepath);
+		return object.getObjectContent();
+	}
     
     /**
      * 检查照片大小

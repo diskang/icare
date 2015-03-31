@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.web.rest.MediaTypes;
+import com.sjtu.icare.common.web.rest.RestException;
 
 /**
  * 获取用户照片（For Stateless ）
@@ -53,8 +56,10 @@ public class DownloadController {
 	        bis.close();  
 	        bos.close(); 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			String message = ErrorConstants.format("download error ",
+					"[name=" +filename + "]" );
+			logger.error(message);
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}  
 	}
 }
