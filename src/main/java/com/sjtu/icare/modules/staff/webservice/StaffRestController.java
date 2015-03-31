@@ -101,42 +101,63 @@ public class StaffRestController extends BasicController {
 			else
 				users = staffDataService.getAllStaffs(queryUser, role);
 			
-			for (User user : users) {
-				Map<String, Object> resultMap = new HashMap<String, Object>(); 
-				resultMap.put("id", user.getUserId()); 
-				resultMap.put("name", user.getName()); 
-				resultMap.put("phone", user.getPhoneNo()); 
-				resultMap.put("email", user.getEmail()); 
-				resultMap.put("identity_no", user.getIdentityNo()); 
-				resultMap.put("birthday", user.getBirthday()); 
-				resultMap.put("gender", user.getGender()); 
-				resultMap.put("residence_address", user.getResidenceAddress()); 
-				resultMap.put("household_address", user.getHouseholdAddress()); 
+			basicReturnedJson.setTotal((int) queryUser.getPage().getCount());
+			
+			if (users != null) {
 				
-				StaffEntity queryStaffEntity = new StaffEntity();
-				queryStaffEntity.setId(user.getUserId());
-				StaffEntity staffEntity = staffDataService.getStaffEntity(queryStaffEntity);
-				if (staffEntity == null)
-					throw new Exception("内部错误： user 找不到对应的 staff");
-				resultMap.put("nssf", staffEntity.getNssfId()); 
-				resultMap.put("leave_date", staffEntity.getLeaveDate()); 
-				resultMap.put("archive_id", staffEntity.getArchiveId()); 
-				
-				User tempUser = UserUtils.get(user.getId());
-				List<Role> roleList = tempUser.getRoleList();
-				List<Map<String, Object>> tempList = new ArrayList<Map<String, Object>>();
-				for (Role tempRole : roleList) {
-					Map<String, Object> tempMap = new HashMap<String, Object>();
-					tempMap.put("id", tempRole.getId());
-					tempMap.put("name", tempRole.getName());
-					tempList.add(tempMap);
+				for (User user : users) {
+					Map<String, Object> resultMap = new HashMap<String, Object>(); 
+					resultMap.put("user_id", user.getUserId()); 
+					resultMap.put("id", user.getId()); 
+					
+					resultMap.put("age", user.getAge()); 
+					resultMap.put("birthday", user.getBirthday()); 
+					resultMap.put("cancel_date", user.getCancelDate()); 
+					resultMap.put("education", user.getEducation()); 
+					resultMap.put("email", user.getEmail()); 
+					resultMap.put("gender", user.getGender()); 
+					resultMap.put("gero_id", user.getGeroId()); 
+					resultMap.put("household_address", user.getHouseholdAddress()); 
+					resultMap.put("identity_no", user.getIdentityNo()); 
+					resultMap.put("marriage", user.getMarriage()); 
+					resultMap.put("name", user.getName()); 
+					resultMap.put("nationality", user.getNationality()); 
+					resultMap.put("native_place", user.getNativePlace()); 
+					resultMap.put("notes", user.getNotes()); 
+					resultMap.put("phone_no", user.getPhoneNo()); 
+					resultMap.put("photo_url", user.getPhotoUrl()); 
+					resultMap.put("political_status", user.getPoliticalStatus()); 
+					resultMap.put("register_date", user.getRegisterDate()); 
+					resultMap.put("residence_address", user.getResidenceAddress()); 
+					resultMap.put("username", user.getUsername()); 
+					resultMap.put("user_type", user.getUserType()); 
+					resultMap.put("wechat_id", user.getWechatId()); 
+					resultMap.put("zip_code", user.getZipCode()); 
+					
+					StaffEntity queryStaffEntity = new StaffEntity();
+					queryStaffEntity.setId(user.getUserId());
+					StaffEntity staffEntity = staffDataService.getStaffEntity(queryStaffEntity);
+					if (staffEntity == null)
+						throw new Exception("内部错误： user 找不到对应的 staff");
+					resultMap.put("nssf", staffEntity.getNssfId()); 
+					resultMap.put("leave_date", staffEntity.getLeaveDate()); 
+					resultMap.put("archive_id", staffEntity.getArchiveId()); 
+					
+					User tempUser = UserUtils.get(user.getId());
+					List<Role> roleList = tempUser.getRoleList();
+					List<Map<String, Object>> tempList = new ArrayList<Map<String, Object>>();
+					for (Role tempRole : roleList) {
+						Map<String, Object> tempMap = new HashMap<String, Object>();
+						tempMap.put("id", tempRole.getId());
+						tempMap.put("name", tempRole.getName());
+						tempList.add(tempMap);
+					}
+					resultMap.put("role_list", tempList);
+					
+					basicReturnedJson.addEntity(resultMap);
 				}
-				resultMap.put("role_list", tempList);
-				
-				basicReturnedJson.addEntity(resultMap);
 			}
 			
-			basicReturnedJson.setTotal((int) queryUser.getPage().getCount());
 			
 			return basicReturnedJson.getMap();
 			
