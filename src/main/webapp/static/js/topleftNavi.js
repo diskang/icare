@@ -21,6 +21,7 @@ var isFirst2=true;
 var todayms=Sundate.getTime();
 var temparea;
 var temparea2;
+var timeline;
 // var gid=$.cookie('gid');
 // var uid=$.cookie('uid');
 var gid=getUser().gero_id;
@@ -196,7 +197,6 @@ $(function(){
             leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
         }
     });
-
     $.ajax({
         type: "get",
         data:{page:1,rows:65535,sort:'ID'},
@@ -224,6 +224,7 @@ $(function(){
         }
     });
 
+    //eldercare.init();
     $('#button-allow').toggleClass("fc-state-default1");
 
 });

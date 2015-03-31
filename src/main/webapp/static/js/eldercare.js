@@ -2,7 +2,6 @@ var eldercare={
 	drawElderCareList:function(){
 		$(".inf").addClass('hide');
 		$("#eldercareshow").removeClass('hide');
-		
 		var items = new vis.DataSet([
     		{id: 1, content: 'item 1', start: new Date(),end: new Date(2015, 5, 21)},
   		]);
@@ -12,11 +11,11 @@ var eldercare={
   		var min = new Date(); // 1 april
   		var max = new Date(2017,3,1); // 30 april
 
-  var container = document.getElementById('visualization');
-  var options = {
-    editable: true,
+    var container = document.getElementById('careitemvision');
+    var options = {
+      editable: true,
 
-    onAdd: function (item, callback) {
+      onAdd: function (item, callback) {
       item.content = prompt('Enter text content for new item:', item.content);
       if (item.content != null) {
         callback(item); // send back adjusted new item
@@ -24,7 +23,7 @@ var eldercare={
       else {
         callback(null); // cancel item creation
       }
-    },
+      },
 
     onMove: function (item, callback) {
       if (confirm('Do you really want to move the item to\n' +
@@ -64,8 +63,8 @@ var eldercare={
       }
     }
   };
-  timeline = new vis.Timeline(container, items, options);
+  timeline = new vis.Timeline(container, [], options);
   timeline.clear({items: true});
-  timeline.setItems(items2);
-	},
+  //timeline.setItems(items2);
+  
 }

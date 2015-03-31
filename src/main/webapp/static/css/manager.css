@@ -550,7 +550,15 @@ a:hover{ color:#d71318;}
   display:block;
   
 }
-
+.itemcont{
+  margin-top:10px;
+  height:500px;
+  width:100%;
+}
+.itemleft{
+  width:130px;
+  height:400px;
+}
 #areaInfo{
   width:200px;
   height:300px;
