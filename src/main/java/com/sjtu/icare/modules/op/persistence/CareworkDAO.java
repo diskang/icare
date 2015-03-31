@@ -25,17 +25,6 @@ public interface CareworkDAO {
 
 
 	
-	List<StaffEntity> getStaffEntitiesByElderId(Map<String, Object> paramMap);
-
-	/**
-	 * @Title getStaffEntitiesByAreaId
-	 * @Description TODO
-	 * @param @param paramMap
-	 * @param @return
-	 * @return List<StaffEntity>
-	 * @throws
-	 */
-	List<StaffEntity> getStaffEntitiesByAreaId(Map<String, Object> paramMap);
 
 	/**
 	 * @Title getCareworkEntities
@@ -73,5 +62,15 @@ public interface CareworkDAO {
 	 * @throws
 	 */
 	void deleteCarework(CareworkEntity careworkEntity);
+
+	/**
+	 * @Title getStaffEntitiesByElderId
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @param @return
+	 * @return List<StaffEntity>
+	 * @throws
+	 */
+	List<StaffEntity> getStaffEntitiesByElderId(Map<String, Object> paramMap);
 
 }

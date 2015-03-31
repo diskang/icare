@@ -7,9 +7,12 @@
  */
 package com.sjtu.icare.modules.elder.webservice;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
@@ -38,7 +41,7 @@ import com.sjtu.icare.modules.staff.entity.StaffEntity;
 import com.sjtu.icare.modules.sys.entity.User;
 
 @RestController
-@RequestMapping({"${api.web}/elder/{eid}/care_item", "${api.service}/elder/{eid}/care_item"})
+@RequestMapping({"${api.web}/gero/{gid}/elder/{eid}/care_item", "${api.service}/gero/{gid}/elder/{eid}/care_item"})
 public class ElderCareItemRestController extends BasicController {
 	private static Logger logger = Logger.getLogger(ElderCareItemRestController.class);
 	
@@ -47,11 +50,20 @@ public class ElderCareItemRestController extends BasicController {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getElderItems(
+			HttpServletRequest request,
+			@PathVariable("gid") int geroId,
 			@PathVariable("eid") int elderId,
 			@RequestParam("page") int page,
-			@RequestParam("limit") int limit,
-			@RequestParam("order_by") String orderByTag
+			@RequestParam("rows") int limit,
+			@RequestParam("sort") String orderByTag
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":elder:care_item:read");
+		permissions.add("elder:"+elderId+":care_item:read");
+		permissions.add("carer:"+getCurrentUser().getUserId()+":gero:"+geroId+":elder:care_item:read");
+		checkPermissions(permissions);
+		
 		Page<ElderItemEntity> elderItemEntityPage = new Page<ElderItemEntity>(page, limit);
 		elderItemEntityPage = setOrderBy(elderItemEntityPage, orderByTag);
 		
@@ -68,21 +80,25 @@ public class ElderCareItemRestController extends BasicController {
 			queyrElderItemEntity.setPage(elderItemEntityPage);
 			List<ElderItemEntity> elderItemEntities;
 			elderItemEntities = elderInfoService.getElderItems(queyrElderItemEntity);
+			basicReturnedJson.setTotal((int) queyrElderItemEntity.getPage().getCount());
 			
-			for (ElderItemEntity elderItemEntity : elderItemEntities) {
-				
-				Map<String, Object> resultMap = new HashMap<String, Object>(); 
-				resultMap.put("id", elderItemEntity.getId()); 
-				resultMap.put("care_item_id", elderItemEntity.getCareItemId()); 
-				resultMap.put("care_item_name", elderItemEntity.getCareItemName()); 
-				resultMap.put("icon", elderItemEntity.getIcon()); 
-				resultMap.put("level", elderItemEntity.getLevel()); 
-				resultMap.put("period", elderItemEntity.getPeriod()); 
-				resultMap.put("start_time", elderItemEntity.getStartTime()); 
-				resultMap.put("end_time", elderItemEntity.getEndTime()); 
-				
-				basicReturnedJson.addEntity(resultMap);
+			if (elderItemEntities != null) {
+				for (ElderItemEntity elderItemEntity : elderItemEntities) {
+					
+					Map<String, Object> resultMap = new HashMap<String, Object>(); 
+					resultMap.put("id", elderItemEntity.getId()); 
+					resultMap.put("care_item_id", elderItemEntity.getCareItemId()); 
+					resultMap.put("care_item_name", elderItemEntity.getCareItemName()); 
+					resultMap.put("icon", elderItemEntity.getIcon()); 
+					resultMap.put("level", elderItemEntity.getLevel()); 
+					resultMap.put("period", elderItemEntity.getPeriod()); 
+					resultMap.put("start_time", elderItemEntity.getStartTime()); 
+					resultMap.put("end_time", elderItemEntity.getEndTime()); 
+					
+					basicReturnedJson.addEntity(resultMap);
+				}
 			}
+			
 			
 			return basicReturnedJson.getMap();
 			
@@ -97,9 +113,16 @@ public class ElderCareItemRestController extends BasicController {
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postElderItem(
+			HttpServletRequest request,
+			@PathVariable("gid") int geroId,
 			@PathVariable("eid") int elderId,
 			@RequestBody String inJson
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":elder:care_item:add");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("elderId", elderId);
@@ -146,9 +169,16 @@ public class ElderCareItemRestController extends BasicController {
 	
 	@RequestMapping(value="/{itemid}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getElderItem(
+			HttpServletRequest request,
+			@PathVariable("gid") int geroId,
 			@PathVariable("eid") int elderId,
 			@PathVariable("itemid") int itemId
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":elder:care_item:read");
+		permissions.add("carer:"+getCurrentUser().getUserId()+":gero:"+geroId+":elder:care_item:read");
+		checkPermissions(permissions);
 		
 		try {
 			// 获取基础的 JSON返回
@@ -191,10 +221,17 @@ public class ElderCareItemRestController extends BasicController {
 	@Transactional
 	@RequestMapping(value="/{itemid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Object putElderItem(
+			HttpServletRequest request,
+			@PathVariable("gid") int geroId,
 			@PathVariable("eid") int elderId,
 			@PathVariable("itemid") int itemId,
 			@RequestBody String inJson
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":elder:care_item:update");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("elderId", elderId);
@@ -240,9 +277,16 @@ public class ElderCareItemRestController extends BasicController {
 	@Transactional
 	@RequestMapping(value="/{itemid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteElderItem(
+			HttpServletRequest request,
+			@PathVariable("gid") int geroId,
 			@PathVariable("eid") int elderId,
 			@PathVariable("itemid") int itemId
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":elder:care_item:delete");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
 		tempRquestParamMap.put("elderId", elderId);

@@ -194,6 +194,9 @@
 	
 	<!-- 更新用户信息  -->
 	<update id="updateUserInfo">
+		<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+		    SELECT @@IDENTITY
+	    </selectKey>
 		UPDATE T_USER SET 		
 			photo_url = #{photoUrl} ,
 			name = #{name}

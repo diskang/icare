@@ -201,6 +201,12 @@ public class ErrorConstants {
 	
 	// gero constants
 	public static final String GERO_GET_SERVICE_FAILED = "490001 GET 养老院：后台服务失败";
+	public static final String GERO_POST_PARAM_INVALID = "490002 POST 养老院：请求参数错误";
+	public static final String GERO_POST_SERVICE_FAILED = "490003 POST 养老院：后台服务失败";
+	public static final String GERO_GET_SPECIFIC_SERVICE_FAILED = "490004 GET 指定养老院：后台服务失败";
+	public static final String GERO_PUT_PARAM_INVALID = "490005 PUT 养老院：请求参数错误";
+	public static final String GERO_PUT_SERVICE_FAILED = "490006 PUT 养老院：后台服务失败";
+	public static final String GERO_DELETE_SPECIFIC_SERVICE_FAILED = "490007 DELETE 养老院：后台服务失败";
 	
 	
 	public static String format(String errorConstant, String otherMessage) {

@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +57,7 @@ public class StaffRestController extends BasicController {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getStaffs(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestParam(value="name", required=false) String name,
 			@RequestParam(value="gender", required=false) String gender,
@@ -64,6 +67,10 @@ public class StaffRestController extends BasicController {
 			@RequestParam("rows") int limit,
 			@RequestParam("sort") String orderByTag
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":staff:info:read");
+		checkPermissions(permissions);
 		
 		Page<User> userPage = new Page<User>(page, limit);
 		userPage = setOrderBy(userPage, orderByTag);
@@ -145,9 +152,15 @@ public class StaffRestController extends BasicController {
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postStaff(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestBody String inJson
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":staff:info:add");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("geroId", geroId);
@@ -225,10 +238,15 @@ public class StaffRestController extends BasicController {
 	
 	@RequestMapping(value="/{sid}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getStaff(
-
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("sid") int staffId
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":staff:info:read");
+		
+		
 		
 		try {
 			// 获取基础的 JSON返回
@@ -246,6 +264,9 @@ public class StaffRestController extends BasicController {
 			Map<String, Object> resultMap = new HashMap<String, Object>(); 
 			resultMap.put("user_id", user.getUserId()); 
 			resultMap.put("id", user.getId()); 
+			
+			permissions.add("user:"+user.getId()+":info:read");
+			checkPermissions(permissions);
 			
 			resultMap.put("age", user.getAge()); 
 			resultMap.put("birthday", user.getBirthday()); 
@@ -318,10 +339,15 @@ public class StaffRestController extends BasicController {
 	@Transactional
 	@RequestMapping(value="/{sid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Object putStaff(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("sid") int staffId,
 			@RequestBody String inJson
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":staff:info:update");
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("geroId", geroId);
@@ -382,6 +408,10 @@ public class StaffRestController extends BasicController {
 			requestParamMap.put("userType", CommonConstants.STAFF_TYPE);
 			requestParamMap.put("userId", staffId);
 			User tempUser = systemService.getUserByUserTypeAndUserId(CommonConstants.STAFF_TYPE, staffId);
+			
+			permissions.add("user:"+tempUser.getId()+":info:read");
+			checkPermissions(permissions);
+			
 			User postUser = new User(); 
 			BeanUtils.populate(postUser, requestParamMap);
 			postUser.setId(tempUser.getId());
@@ -401,9 +431,15 @@ public class StaffRestController extends BasicController {
 	@Transactional
 	@RequestMapping(value="/{sid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteStaff(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("sid") int staffId
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":staff:info:update");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> requestParamMap = new HashMap<String, Object>();
 		requestParamMap.put("geroId", geroId);

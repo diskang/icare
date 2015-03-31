@@ -16,9 +16,10 @@ var role={
         border: true, 
         collapsible:false,//是否可折叠的 
         fit:false,//自动大小 
-        url:'/gero/1/role',  
+        url:rhurl.origin+'/gero/'+gid+'/role',  
         method:'get',
-        remoteSort:false,  
+        remoteSort:true,  
+        sortName:'ID',  
         singleSelect:true,//是否单选 
         pagination:true,//分页控件 
         rownumbers:true,//行号  
@@ -27,9 +28,10 @@ var role={
         pageSize: 10,//每页显示的记录条数，默认为20 
         pageList: [10,20,30],//可以设置每页记录条数的列表 
         loadFilter:function(data){
+            leftTop.dealdata(data);
         	var result={"total":0,"rows":0};
             result.total=data.total;
-            result.rows=data.entities[0];
+            result.rows=data.entities;
             return result;
         },
         toolbar: [{ 
@@ -62,6 +64,12 @@ var role={
         $("#role-dialog-form").dialog("center");
         temp=[];
         temp2=[];
+        $("#authoritychecktree").tree("loadData",temptree2);
+        $("#authoritychecktree").tree("collapseAll");
+        var nodes = $('#authoritychecktree').tree('getChecked', ['checked','indeterminate']);
+        for (var i  in nodes){
+                $("#authoritychecktree").tree("uncheck",nodes[i].target);
+        }
         for (var i  in data.privilege_list){
             var node=$("#authoritychecktree").tree('find',data.privilege_list[i].id);
             if ($("#authoritychecktree").tree('isLeaf',node.target))
@@ -77,12 +85,16 @@ var role={
     },
     delRoleInfo: function(){
         var rolet = $('#gerorolepage').datagrid('getSelected');
-        var infoUrl="gero/1/role/" + rolet.id;
+        var infoUrl=rhurl.origin+"/gero/"+gid+"/role/" + rolet.id;
         $.ajax({
             url: infoUrl,
             type: 'DELETE',
+            timeout:1000,
             success:function(){
-                role.drawRoleList();
+                role.drawGeroRoleList();
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
             }
         })
 
@@ -90,19 +102,20 @@ var role={
 
     onRoleDblClickRow:function(index){
         var rolet = $('#gerorolepage').datagrid('getSelected');
-        var infoUrl="gero/1/role/" + rolet.id;
-        role.rid="/"+rolet.id;
+                role.rid="/"+rolet.id;
+        var infoUrl=rhurl.origin+"/gero/"+gid+"/role" + role.rid;
         $.ajax({
             type: "get",
             dataType: "json",
             contentType: "application/json;charset=utf-8",
             url: infoUrl,
+            timeout:1000,
             success: function (msg) {
                 var data=leftTop.dealdata(msg);
-                role.drawRoleInfo(data);
+                role.drawRoleInfo(data[0]);
             },
-            error: function(e) {
-                alert(e);
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
             }
         });
     },
@@ -115,43 +128,49 @@ var role={
         for(var i in temp2) {
             if(temp.indexOf(temp2[i])===-1) insert_privilege_ids.push(temp2[i]);
         }
-        for(var i in temp2) {
+        for(var i in temp) {
             if(temp2.indexOf(temp[i])===-1) delete_privilege_ids.push(temp[i]);
         }
-        var infoUrl='/gero/1/role/1/privilege';
+        var infoUrl=rhurl.origin+'/gero/'+gid+'/role'+role.rid+'/privilege';
+    if(insert_privilege_ids.length>=1){
         $.ajax({
             url: infoUrl, 
-            type: 'put', 
-            data:{"insert_privilege_ids":insert_privilege_ids}, 
-            dataType: 'text', 
+            type: 'post', 
+            data:JSON.stringify({"insert_privilege_ids":insert_privilege_ids}), 
+            dataType: 'json', 
+            contentType: "application/json;charset=utf-8",
             timeout: 1000, 
-            error: function(){alert('Error');}, 
+            error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){role.drawGeroRoleList();} 
         }); 
-
+    }
+    if(delete_privilege_ids.length>=1){
         $.ajax({
             url: infoUrl, 
             type: 'delete', 
-            data:{"delete_privilege_ids":delete_privilege_ids}, 
-            dataType: 'text', 
+            data:JSON.stringify({"delete_privilege_ids":delete_privilege_ids}), 
+            dataType: 'json', 
+            contentType: "application/json;charset=utf-8",
             timeout: 1000, 
-            error: function(){alert('Error');}, 
+            error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){role.drawGeroRoleList();} 
         }); 
+    }
     },
     postrole:function(){
         var obj={
             name:document.getElementById("rname").value,
             notes:document.getElementById("rnotes").value,
         }
-        var infoUrl='/gero/1/staff';
+        var infoUrl=rhurl.origin+'/gero/'+gid+'/role';
         $.ajax({
             url: infoUrl, 
             type: 'post', 
-            data:obj, 
+            data:JSON.stringify(obj), 
             dataType: 'json', 
+            contentType: "application/json;charset=utf-8",
             timeout: 1000, 
-            error: function(){alert('Error');}, 
+            error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){role.drawGeroRoleList();} 
         }); 
     }

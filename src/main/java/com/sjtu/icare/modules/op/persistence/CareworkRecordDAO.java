@@ -23,7 +23,7 @@ public interface CareworkRecordDAO {
 	 * @return List<CareworkRecordEntity>
 	 * @throws
 	 */
-	List<CareworkRecordEntity> getCareworkRecords(Map<String, Object> paramMap);
+	List<CareworkRecordEntity> getCareworkRecords(CareworkRecordEntity careworkRecordEntity);
 
 	/**
 	 * @Title insertCareworkRecords

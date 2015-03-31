@@ -23,7 +23,7 @@ public interface AreaworkRecordDAO {
 	 * @return List<AreaworkRecordEntity>
 	 * @throws
 	 */
-	List<AreaworkRecordEntity> getAreaworkRecords(Map<String, Object> paramMap);
+	List<AreaworkRecordEntity> getAreaworkRecords(AreaworkRecordEntity areaworkRecordEntity);
 
 	/**
 	 * @Title insertAreaworkRecords

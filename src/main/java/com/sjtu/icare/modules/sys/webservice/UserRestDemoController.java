@@ -42,7 +42,7 @@ import com.sjtu.icare.modules.sys.persistence.UserMapper;
  * @author KangShiyong
  */
 @RestController
-@RequestMapping(value = { "/api/v1/user", "/api/secure/v1/user" })
+//@RequestMapping(value = { "/api/v1/user", "/api/secure/v1/user" })
 public class UserRestDemoController {
 	private static Logger logger = Logger.getLogger(UserRestDemoController.class);
 	

@@ -158,6 +158,7 @@ public class SysBaseController extends BasicController {
 		privilegeMap.put("permission", privilege.getPermission());
 		privilegeMap.put("href", privilege.getHref());
 		privilegeMap.put("icon", privilege.getIcon());
+		privilegeMap.put("api", privilege.getApi());
 		return privilegeMap;
 	}
 	
@@ -183,7 +184,7 @@ public class SysBaseController extends BasicController {
 		Map<String, Object> roleMap = new HashMap<String, Object>();
 		roleMap.put("id", role.getId());
 		roleMap.put("name", role.getName());
-		roleMap.put("note", role.getNotes());
+		roleMap.put("notes", role.getNotes());
 		ArrayList<Object> privilegeList = new ArrayList<Object>();
 		for (Privilege privilege : role.getPrivilegeList()){
 			privilegeList.add(getPrivilegeMapFromPrivilege(privilege));

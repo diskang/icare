@@ -65,6 +65,10 @@
 		SELECT
 			<include refid="roleColumns"/>
 		FROM T_ROLE a
+		WHERE
+		<if test="geroId != null">
+			gero_id = #{geroId}
+		</if>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
@@ -76,6 +80,9 @@
 	</select>
 	
 	<insert id="insert">
+		<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+		    SELECT @@IDENTITY
+	    </selectKey>
 		INSERT INTO T_ROLE(
 			name,
 			gero_id,

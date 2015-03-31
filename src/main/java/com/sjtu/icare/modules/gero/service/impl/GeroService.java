@@ -24,4 +24,37 @@ public class GeroService implements IGeroService {
 		return geroEntity.getPage().setList(geroDAO.getGeros(geroEntity)).getList();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.gero.service.IGeroService#insertGero(com.sjtu.icare.modules.gero.entity.GeroEntity)
+	 */
+	@Override
+	public void insertGero(GeroEntity geroEntity) {
+		geroDAO.insertGero(geroEntity);
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.gero.service.IGeroService#getGero(com.sjtu.icare.modules.gero.entity.GeroEntity)
+	 */
+	@Override
+	public GeroEntity getGero(GeroEntity geroEntity) {
+		return geroDAO.getGero(geroEntity);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.gero.service.IGeroService#updateGero(com.sjtu.icare.modules.gero.entity.GeroEntity)
+	 */
+	@Override
+	public void updateGero(GeroEntity geroEntity) {
+		geroDAO.updateGero(geroEntity);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.sjtu.icare.modules.gero.service.IGeroService#deleteGero(com.sjtu.icare.modules.gero.entity.GeroEntity)
+	 */
+	@Override
+	public void deleteGero(GeroEntity geroEntity) {
+		geroDAO.deleteGero(geroEntity);
+	}
+
 }

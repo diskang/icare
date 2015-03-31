@@ -6,25 +6,40 @@ var temptree;
 var temptree2;
 var hrefTable=[];
 var sex=["男","女"];
-var  sexc=[];
-var showDate = new Date();
-alert(showDate.toLocaleDateString().replace(/\//g,'-'));
-// myDate.getFullYear();    //获取完整的年份(4位,1970-????)
-// myDate.getMonth();       //获取当前月份(0-11,0代表1月)
-// myDate.getDate();        //获取当前日(1-31)
-// myDate.getDay();         //获取当前星期X(0-6,0代表星期天)
-// myDate.toLocaleDateString();     //获取当前日期
+var sexc=[];
+var Searchdate = new Date();
+var Sundate = new Date();
+var Mondate = new Date();
+var Tuedate = new Date();
+var Weddate = new Date();
+var Thudate = new Date();
+var Fridate = new Date();
+var Satdate = new Date();
+var weekstr=[];
+var isFirst1=true;
+var isFirst2=true;
+var todayms=Sundate.getTime();
+var temparea;
+var temparea2;
+// var gid=$.cookie('gid');
+// var uid=$.cookie('uid');
+var gid=getUser().gero_id;
+var uid=getUser().id;
+Sundate.setTime(Sundate.getTime()-Sundate.getDay()*24*60*60*1000);
 sexc["男"]=0;
 sexc["女"]=1;
 hrefTable['/gero/1/elder']='elder.drawElderList()';
 hrefTable['/gero/1/staff']='staff.drawStaffList()';
 hrefTable['/gero/1/schedule']='staff.drawScheduleList()';
 hrefTable['/item']='item.drawItemList()';
-hrefTable['/gero/1/care_item']='geroItem.drawGeroItemList()';
-hrefTable['/gero/1/area_item']='geroItem.drawGeroItemList()';
+hrefTable['/gero/1/care_item']='geroItem.drawGeroCareItemList()';
+hrefTable['/gero/1/area_item']='geroItem.drawGeroAreaItemList()';
 hrefTable['/gero/1/role']='role.drawGeroRoleList()';
-hrefTable['/users/test']='authority.drawAuthorityList()';
+hrefTable['/user/1']='authority.drawAuthorityList()';
 hrefTable['/gero/1/schedule']='arrange.drawArrangeList()';
+hrefTable['/area']='area.drawAreaList()';
+hrefTable['/eldercareduty']='eldercare.drawElderCareList()';
+hrefTable['/areacareduty']='area.drawAreaList()';
 
 var leftTop = {
     removeLefttree:function (){
@@ -32,16 +47,46 @@ var leftTop = {
     },
     
     dealdata:function(msg){
-        if (msg.status===400)
-            window.location = "www.baidu.com" ;
-        else if(msg.status===500)
-            window.location = "www.baidu.com" ;
-        else if(msg.status===200)
+    if(msg.status===200)
         {
-            return msg.entities[0];
+            return msg.entities;
         }
+    else{
+        leftTop.dealerr(msg);
+    }
+    },
+    dealerr:function(e){
+        $.messager.show({
+                title:'错误提示',
+                msg:e.status+e.error,
+                showType:'fade',
+                style:{
+                    right:'',
+                    bottom:''
+                }
+            });
+    },
+    dealerror:function(XMLHttpRequest, textStatus, errorThrown){
+        $.messager.show({
+                title:'错误提示',
+                msg:textStatus+XMLHttpRequest.status+errorThrown,
+                showType:'fade',
+                style:{
+                    right:'',
+                    bottom:''
+                }
+            });
     },
 
+    findTreeChildrenEx:function(id){
+        var result=[];
+        for(var i in temptree){
+            if(temptree[i].parent_id===id && temptree[i].href!=='no'){
+                result.push(temptree[i]);
+            }
+        }
+        return result;
+    },
     findTreeChildren:function(id){
         var result=[];
         for(var i in temptree){
@@ -56,17 +101,17 @@ var leftTop = {
         this.id=node.id;
         this.text=node.name;
         this.children=[];
-        this.attributes={"href":node.href,"permission":node.permission,"notes":node.notes}
+        this.attributes={"href":node.href,"permission":node.permission,"notes":node.notes,'api':node.api}
         this.iconCls=node.icon;
     },
 
     createTreeData:function(node){
         var result=[];
-        var childs= leftTop.findTreeChildren(node.id);
+        var childs= leftTop.findTreeChildrenEx(node.id);
         if (childs.length!==0){
             for(var i in childs){
                 var temp= new leftTop.createTreeNode(childs[i]);
-                if (leftTop.findTreeChildren(childs[i].id).length!==0){
+                if (leftTop.findTreeChildrenEx(childs[i].id).length!==0){
                     temp.children=leftTop.createTreeData(childs[i]);
                     result.push(temp);
                 }
@@ -95,13 +140,12 @@ var leftTop = {
     },
 
     dealtree:function(msg){
-        toptree = leftTop.findTreeChildren(0);
+        toptree = leftTop.findTreeChildren(1);
         for(var i in toptree){
             $("#topNavi").append('<li class="navli-a" ><a href="#">'+toptree[i].name+'<a></li>');
         }
-        temptree2=[{"id":0,"text":"权限列表","children":[]}]
+        temptree2=[{"id":1,"text":"权限列表","children":[]}]
         temptree2[0].children=leftTop.createTreeData2(temptree2[0]);
-        $("#authoritychecktree").tree("loadData",temptree2);
         return leftTop.createTreeData(toptree[0]);
     },
 
@@ -124,13 +168,12 @@ var leftTop = {
 
 //初始化运行所有js的地方
 $(function(){
-    //$("#rightNavi").load("elder.html");
-    //$("#rightNavi").load('elderInfo.html');
     $("#lefttree").tree({
         onClick:function(node){
             var url=leftTop.findNode(node.id).href;
-            if (url!==""){
+            if (url!==""){              
                 eval(hrefTable[url]);
+                //authority.drawAuthorityList()
             }
         }
     })
@@ -138,22 +181,51 @@ $(function(){
         type: "get",
         dataType: "json",
         contentType: "application/json;charset=utf-8",
-<<<<<<< HEAD
-        url: "/user/1",
-=======
-        url: "/resthouse/api/web/user/1",
->>>>>>> 9384f14d73bd834335c58102eed2b2051ac09d47
+        url:rhurl.origin+"/user/"+uid,
+        timeout:1000,
         success: function (msg) {
             temptree=msg.entities[0].privilege_list;
             leftTop.removeLefttree;
             var str=leftTop.dealtree(temptree);
             $("#lefttree").tree("loadData",str);
-            
+            $("#welcome").text("欢迎"+msg.entities[0].username+"登录resthouse系统");
+            document.getElementById('uusername').setAttribute('value',msg.entities[0].username);
+            document.getElementById('uname').setAttribute('value',msg.entities[0].name);
         },
-        error: function(e) {
-            alert(e);
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
         }
     });
+
+    $.ajax({
+        type: "get",
+        data:{page:1,rows:65535,sort:'ID'},
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        url:rhurl.origin+'/gero/'+gid+'/role',
+        timeout:1000,
+        success: function (msg) {
+            var parent=document.getElementById("arrange_role");
+            for(var i in msg.entities){
+                var dt=document.createElement('option');
+                dt.setAttribute('value',msg.entities[i].name);
+                dt.innerHTML=msg.entities[i].name;
+                parent.appendChild(dt);
+            }
+            var parent=document.getElementById("role-check");
+            for(var i in msg.entities){
+                var li=document.createElement('li');
+                li.innerHTML="<input type='checkbox' class='checkrole' disabled=true id='chkrole"+msg.entities[i].id+"' rid='"+msg.entities[i].id+"'>"+msg.entities[i].name+"</input>";
+                parent.appendChild(li);
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+        }
+    });
+
+    $('#button-allow').toggleClass("fc-state-default1");
+
 });
 
 $('.navli-a').live('click',function(){
@@ -162,5 +234,17 @@ $('.navli-a').live('click',function(){
 });
 
 $(".arrange-work").live('click',function(){
+    if(arrange.allow){
         $(this).toggleClass("workday");
-    })
+        if ($(this).hasClass("workday")){
+            arrange.addsubres(parseInt($(this).attr("pid")),$(this).attr("num"));
+        }else{
+            arrange.delsubres(parseInt($(this).attr("pid")),$(this).attr("num"));
+        }
+    }
+})
+$('.fc-prev-button').live('click',function(){arrange.prev()});
+$('.fc-next-button').live('click',function(){arrange.next()});
+$('.fc-today-button').live('click',function(){arrange.today()});
+$('.fc-allow-button').live('click',function(){arrange.allowchange()});
+$('.fc-submit-button').live('click',function(){arrange.putarrange()});

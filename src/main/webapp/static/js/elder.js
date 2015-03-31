@@ -16,9 +16,10 @@ var elder={
         collapsible:false,//是否可折叠的 
         fit: true,//自动大小 
         pageNumber:1,
-        url:'/gero/1/elder',  
+        url:rhurl.origin+'/gero/'+gid+'/elder',  
         method:'get',
-        remoteSort:false,  
+        remoteSort:true,  
+        sortName:'ID',
         singleSelect:true,//是否单选 
         pagination:true,//分页控件 
         rownumbers:true,//行号
@@ -27,8 +28,9 @@ var elder={
         pageList: [10,20,30],//可以设置每页记录条数的列表 
         loadFilter:function(data){
         	var result={"total":0,"rows":0};
+            leftTop.dealdata(data);
         	result.total=data.total;
-        	result.rows=data.entities[0];
+        	result.rows=data.entities;
             for (var i in result.rows) result.rows[i].gender=sex[result.rows[i].gender];
         	return result;
         },
@@ -49,11 +51,12 @@ var elder={
     },
     
     drawElderInfo: function(data){
-        elder.eid="/"+data.id;
         $("#elder-dialog-form").dialog("open");
         $("#elder-dialog-form").dialog("center");
         $('#elder-Info-card-a input').attr('disabled','disabled');
+        $('#elder-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
         $('#ename').attr('value',data.name);
+        $('#eusername').attr('value',data.username);
         $('#ebirthday').attr('value',data.birthday);
         $('#egender').attr('value',sex[data.gender]);
         $('#eaddress').attr('value',data.address);
@@ -67,9 +70,9 @@ var elder={
         $('#eresidence').attr('value',data.residence);
         $('#epolitical_status').attr('value',data.political_status);
         $('#eidentity_no').attr('value',data.identity_no);
-        $('#ephone').attr('value',data.phone);
+        $('#ephone_no').attr('value',data.phone_no);
         if(data.photo_url!==undefined) $('#elder-Info-card-b img').attr("src",data.photo_url).attr("width","178px").attr("height","220px");
-        else $('#elder-Info-card-b img').attr("src","/images/p_2.jpg").attr("width","178px").attr("height","220px");
+        else $('#elder-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
 
     addElderInfo: function(){
@@ -77,24 +80,29 @@ var elder={
         elder.method='post';
         $("#elder-dialog-form").dialog("open");
         $("#elder-dialog-form").dialog("center");
-        $('#elder-Info-card-a input').attr('value'," ").removeAttr('disabled','');
-        $('#elder-Info-card-b img').attr("src","/images/p_2.jpg").attr("width","178px").attr("height","220px");
+        $('#elder-Info-card-a input').attr('value'," ").removeAttr('disabled');
+        $('#elder-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
+        $('#elder-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
 
     editElderInfo: function(){
         elder.method='put';
         $("#elder-dialog-form").dialog("open");
         $("#elder-dialog-form").dialog("center");
-        $('#elder-Info-card-a input').removeAttr('disabled','');
+        $('#elder-Info-card-a input').removeAttr('disabled');
+        $('#elder-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
     },
     delElderInfo: function(){
         var eldert = $('#elderpage').datagrid('getSelected');
-        infoUrl="gero/1/elder/" + eldert.id;
+        infoUrl=rhurl.origin+"/gero/"+gid+"/elder/" + eldert.elder_id;
         $.ajax({
             url: infoUrl,
             type: 'DELETE',
             success:function(){
                 elder.drawElderList();
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
             }
         })
 
@@ -102,7 +110,8 @@ var elder={
 
     onElderDblClickRow:function(index){
                 var eldert = $('#elderpage').datagrid('getSelected');
-                infoUrl="gero/1/elder/" + eldert.id;
+                elder.eid='/'+eldert.elder_id;
+                infoUrl=rhurl.origin+"/gero/"+gid+"/elder" + elder.eid;
                 $.ajax({
         			type: "get",
         			dataType: "json",
@@ -110,19 +119,21 @@ var elder={
         			url: infoUrl,
         			success: function (msg) {
                         var data=leftTop.dealdata(msg);
-                        elder.drawElderInfo(data);
+                        elder.drawElderInfo(data[0]);
         			},
-        			error: function(e) {
-            			alert(e);
+        			error: function(XMLHttpRequest, textStatus, errorThrown) {
+            			leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
         			}
     			});
     },
     buttonclk:function(){
         var obj={
             name:document.getElementById("ename").value,
+            username:document.getElementById("eusername").value,
             gender:sexc[document.getElementById("egender").value],
             address:document.getElementById("eaddress").value,
             identity_no:document.getElementById("eidentity_no").value,
+            phone_no:document.getElementById("ephone_no").value,
             nssf_id:document.getElementById("enssf_id").value,
             archive_id:document.getElementById("earchive_id").value,
             area_id:document.getElementById("earea_id").value,
@@ -134,16 +145,24 @@ var elder={
             education:document.getElementById("eeducation").value,
             residence:document.getElementById("eresidence").value,
         }
-        var infoUrl='/gero/1/elder'+elder.eid;
+        var infoUrl=rhurl.origin+'/gero/'+gid+'/elder'+elder.eid;
         $.ajax({
             url: infoUrl, 
             type: elder.method, 
-            data:obj, 
+            data:JSON.stringify(obj), 
             dataType: 'json', 
+            contentType: "application/json;charset=utf-8",
             timeout: 1000, 
-            error: function(){alert('Error');}, 
+            error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){elder.drawElderList();} 
         }); 
+    },
+    doSearch:function(){
+        $('#elderpage').datagrid('load',{           
+                    name: $('#elder_name').val(),
+                    area_id: $('#elder_areaid').val(),
+                    care_level: $('#elder_care_level').val(),
+                });
     }
 
 }

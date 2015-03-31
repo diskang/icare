@@ -16,7 +16,7 @@ import com.sjtu.icare.modules.op.entity.CareItemEntity;
 @MyBatisDao
 public interface CareItemDAO {
 
-	List<CareItemEntity> getCareItemEntitiesByGeroId(Map<String, Object> paramMap);
+	List<CareItemEntity> getCareItemEntitiesByGeroId(CareItemEntity careItemEntity);
 
 	/**
 	 * @Title getCareItemEntityById

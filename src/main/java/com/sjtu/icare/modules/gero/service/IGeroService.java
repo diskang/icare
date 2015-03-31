@@ -23,4 +23,42 @@ public interface IGeroService {
 	 */
 	List<GeroEntity> getGeros(GeroEntity geroEntity);
 
+	/**
+	 * @Title insertGero
+	 * @Description TODO
+	 * @param @param geroEntity
+	 * @return void
+	 * @throws
+	 */
+	void insertGero(GeroEntity geroEntity);
+
+	/**
+	 * @Title getGero
+	 * @Description TODO
+	 * @param @param geroEntity
+	 * @param @return
+	 * @return GeroEntity
+	 * @throws
+	 */
+	GeroEntity getGero(GeroEntity geroEntity);
+
+	/**
+	 * @Title updateGero
+	 * @Description TODO
+	 * @param @param geroEntity
+	 * @return void
+	 * @throws
+	 */
+	void updateGero(GeroEntity geroEntity);
+
+	/**
+	 * @Title deleteGero
+	 * @Description TODO
+	 * @param @param geroEntity
+	 * @param @return
+	 * @return void
+	 * @throws
+	 */
+	void deleteGero(GeroEntity geroEntity);
+
 }

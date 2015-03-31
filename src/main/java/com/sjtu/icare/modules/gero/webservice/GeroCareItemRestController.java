@@ -7,9 +7,12 @@
  */
 package com.sjtu.icare.modules.gero.webservice;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
@@ -20,12 +23,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sjtu.icare.common.config.ErrorConstants;
+import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
+import com.sjtu.icare.common.web.rest.GeroBaseController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.op.entity.CareItemEntity;
@@ -33,15 +39,24 @@ import com.sjtu.icare.modules.op.service.IItemService;
 
 @RestController
 @RequestMapping({"${api.web}/gero/{gid}/care_item", "${api.service}/gero/{gid}/care_item"})
-public class GeroCareItemRestController {
+public class GeroCareItemRestController extends GeroBaseController {
 	private static Logger logger = Logger.getLogger(GeroCareItemRestController.class);
 	
 	@Autowired IItemService itemService;
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getGeroCareItems(
-			@PathVariable("gid") int geroId
+			HttpServletRequest request,
+			@PathVariable("gid") int geroId,
+			@RequestParam("page") int page,
+			@RequestParam("rows") int rows,
+			@RequestParam("sort") String sort
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":care_item:read");
+		permissions.add("carer:"+getCurrentUser().getUserId()+":gero:"+geroId+":care_item:read");
+		checkPermissions(permissions);
 		
 		// 获取基础的 JSON返回
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
@@ -50,9 +65,16 @@ public class GeroCareItemRestController {
 		// 参数预处理
 		
 		try {
+			Page<CareItemEntity> pages = new Page<CareItemEntity>(page, rows);
+			pages = setOrderBy(pages, sort);
+			
 			CareItemEntity queryCareItemEntity = new CareItemEntity();
 			queryCareItemEntity.setGeroId(geroId);
+			queryCareItemEntity.setPage(pages);
+			
 			List<CareItemEntity> careItemEntities = itemService.getCareItems(queryCareItemEntity);
+			
+			basicReturnedJson.setTotal((int) queryCareItemEntity.getPage().getCount());
 			
 			// 构造返回的 JSON
 			if (careItemEntities != null) {
@@ -86,9 +108,15 @@ public class GeroCareItemRestController {
 	@Transactional
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postGeroCareItem(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@RequestBody String inJson
-			) {	
+			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":care_item:add");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("geroId", geroId);
@@ -110,7 +138,7 @@ public class GeroCareItemRestController {
 			frequency = (Integer) requestParamMap.get("frequency");
 			notes = (String) requestParamMap.get("notes");
 			
-			if (name == null || icon == null || level == null || period == null || frequency == null || notes == null)
+			if (name == null || level == null)
 				throw new Exception();
 			
 			// 参数详细验证
@@ -149,9 +177,15 @@ public class GeroCareItemRestController {
 	
 	@RequestMapping(value="/{itemid}", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getGeroCareItem(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("itemid") int itemId
 			) {
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":care_item:read");
+		permissions.add("carer:"+getCurrentUser().getUserId()+":gero:"+geroId+":care_item:read");
+		checkPermissions(permissions);
 		
 		// 获取基础的 JSON返回
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
@@ -195,10 +229,16 @@ public class GeroCareItemRestController {
 	@Transactional
 	@RequestMapping(value="/{itemid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
 	public Object putGeroCareItem(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("itemid") int itemId,
 			@RequestBody String inJson
 			) {	
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":care_item:update");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		tempRquestParamMap.put("geroId", geroId);
@@ -261,9 +301,15 @@ public class GeroCareItemRestController {
 	@Transactional
 	@RequestMapping(value = "/{itemid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
 	public Object deleteGeroCareItem(
+			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("itemid") int itemId
 			) {	
+		checkApi(request);
+		List<String> permissions = new ArrayList<String>();
+		permissions.add("admin:gero:"+geroId+":care_item:delete");
+		checkPermissions(permissions);
+		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = new HashMap<String, Object>();
 		tempRquestParamMap.put("geroId", geroId);
@@ -280,6 +326,7 @@ public class GeroCareItemRestController {
 			itemService.deleteCareItem(inputEntity);
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
+			
 			String message = ErrorConstants.format(ErrorConstants.GERO_CARE_ITEM_DELETE_SERVICE_FAILED, otherMessage);
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);

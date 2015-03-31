@@ -25,6 +25,27 @@
         FROM T_AREA
         WHERE 
             T_AREA.gero_id = #{geroId}
+            <if test="parentId != null">
+            AND T_AREA.parent_id = #{parentId}
+            </if>
+            <if test="parentIds != null">
+            AND T_AREA.parent_ids LIKE '%,' + #{parentIds} + ',%'
+            </if>
+            <if test="geroId != null">
+            AND T_AREA.gero_id = #{geroId}
+            </if>
+            <if test="type != null">
+            AND T_AREA.type = #{type}
+            </if>
+            <if test="level != null">
+            AND T_AREA.level = #{level}
+            </if>
+            <if test="name != null">
+            AND T_AREA.name = #{name}
+            </if>
+            <if test="fullName != null">
+            AND T_AREA.full_name = #{fullName}
+            </if>
   
     </select>
     
