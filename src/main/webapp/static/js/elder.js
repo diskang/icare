@@ -56,8 +56,9 @@ var elder={
         $('#elder-Info-card-a input').attr('disabled','disabled');
         $('#elder-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
         $('#ename').attr('value',data.name);
-        $('#eusername').attr('value',data.username);
+        // $('#eusername').attr('value',data.username);
         $('#ebirthday').attr('value',data.birthday);
+        $('#eage').attr('value',data.age);
         $('#egender').attr('value',sex[data.gender]);
         $('#eaddress').attr('value',data.address);
         $('#enative_place').attr('value',data.native_place);
@@ -69,8 +70,13 @@ var elder={
         $('#eeducation').attr('value',data.education);
         $('#eresidence').attr('value',data.residence);
         $('#epolitical_status').attr('value',data.political_status);
+        $('#echeckin_date').attr('value',data.checkin_date);
+        $('#echeckout_date').attr('value',data.checkout_date);
+        $('#epad_mac').attr('value',data.pad_mac);
+        $('#eage').attr('value',data.age);
+        $('#emarriage').attr('value',data.marriage);
         $('#eidentity_no').attr('value',data.identity_no);
-        $('#ephone_no').attr('value',data.phone_no);
+
         if(data.photo_url!==undefined) $('#elder-Info-card-b img').attr("src",data.photo_url).attr("width","178px").attr("height","220px");
         else $('#elder-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
@@ -144,6 +150,11 @@ var elder={
             political_status:document.getElementById("epolitical_status").value,
             education:document.getElementById("eeducation").value,
             residence:document.getElementById("eresidence").value,
+            checkin_date:document.getElementById("echeckin_date").value,
+            checkout_date:document.getElementById("echeckout_date").value,
+            pad_mac:document.getElementById("epad_mac").value,
+            age:document.getElementById("eage").value,
+            marriage:document.getElementById("emarriage").value,
         }
         var infoUrl=rhurl.origin+'/gero/'+gid+'/elder'+elder.eid;
         $.ajax({

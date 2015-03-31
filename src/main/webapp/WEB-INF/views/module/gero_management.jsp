@@ -307,10 +307,19 @@
       <div id="eldercareshow" class="inf hide" style="min-height:700px;">
         <div class="pers-s">专护职责情况</div>
         <div class="old">
-          <div class="page-header"></div>
-          <div id="visualization"></div>
-          <p></p>
-          <div id="log"></div>
+          <div id="careitemvision"></div>
+          <div class="itemcont">
+            <div class="itemleft">
+              <table id="eldercarerpage"  class="easyui-datagrid" title="员工信息列表" style="height:400px;" data-options="onDblClickRow:staff.onStaffDblClickRow">
+                <thead>
+                  <tr>
+                    <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'name',width:100,align:'center'">员工</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
           
         </div>
       </div>
@@ -472,6 +481,13 @@
           handler:function(){
             elder.editElderInfo();
           }
+        },'-',{
+          text:'传照片',
+          iconCls:'icon-edit',
+          handler:function(){
+            $('#elder-photosubmit').removeClass('hide');
+            //成功结束后$('#elder-photosubmit').addClass('hide');
+          }
         }],
         buttons: [{
           text:'确定',
@@ -489,9 +505,10 @@
       <div id="elder-Info-card-a" class="info-card-a">
         <table>
           <tr><td class="td1"><text>老人姓名: </text></td><td class="td2"><input id="ename"class="easyui-validatebox textbox" data-options="required:true"></input>*</td></tr>
-          <tr><td class="td1"><text>老人账号名: </text></td><td class="td2"><input id="eusername"class="easyui-validatebox textbox" data-options="required:true"></input>*</td></tr>
           <tr><td class="td1"><text>出生日期：</text></td><td class="td2"><input id="ebirthday"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'date'"></input>*</td></tr>
+          <tr><td class="td1"><text>年    龄：</text></td><td class="td2"><input id="eage"></input></td></tr>
           <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input id="egender"></input></td></tr>
+          <tr><td class="td1"><text>婚姻状况：</text></td><td class="td2"><input id="emarriage"></input></td></tr>
           <tr><td class="td1"><text>民    族：</text></td><td class="td2"><input id="enationality"></input></td></tr>
           <tr><td class="td1"><text>籍    贯：</text></td><td class="td2"><input id="enative_place"></input></td></tr>
           <tr><td class="td1"><text>护理等级：</text></td><td class="td2"><input id="ecare_level"></input></td></tr>
@@ -502,11 +519,17 @@
           <tr><td class="td1"><text>社保卡号：</text></td><td class="td2"><input id="enssf_id"></input></td></tr>
           <tr><td class="td1"><text>档案编号：</text></td><td class="td2"><input id="earchive_id"></input></td></tr>
           <tr><td class="td1"><text>入住床号：</text></td><td class="td2"><input id="earea_id" class="easyui-validatebox textbox" data-options="required:true"></input>*</td></tr>
-          <tr><td class="td1"><text>联系人电话：</text></td><td class="td2"><input id="ephone_no"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input>*</td></tr>
           <tr><td class="td1"><text>家庭地址：</text></td><td class="td2"><input id="eaddress"></input></td></tr>
+          <tr><td class="td1"><text>入院日期：</text></td><td class="td2"><input id="echeckin_date"></input></td></tr>
+          <tr><td class="td1"><text>离院日期：</text></td><td class="td2"><input id="echeckout_date"></input></td></tr>
+          <tr><td class="td1"><text>pad_mac：</text></td><td class="td2"><input id="epad_mac"></input></td></tr>
         </table>
       </div>
-      <div id="elder-Info-card-b" class="info-card-b"><img src="images/p_2.jpg"></div>
+      <div id="elder-Info-card-b" class="info-card-b"><img src="images/p_2.jpg">
+        <div id="elder-photosubmit" class="hide" sytle="height:200px;">
+          传照片
+        </div>
+      </div>
     </div>
 </div>
 
@@ -543,7 +566,11 @@
       <div id="staff-Info-card-a" class="info-card-a">
         <table>
           <tr><td class="td1"><text>姓名: </text></td><td class="td2"><input id="sname"></input></td></tr>
-          <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="sphone" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
+          <tr><td class="td1"><text>用户名: </text></td><td class="td2"><input id="susername"></input></td></tr>
+          <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="sphone_no" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
+          <tr><td class="td1"><text>婚姻状况：</text></td><td class="td2"><input id="smarriage"></input></td></tr>
+          <tr><td class="td1"><text>民族：</text></td><td class="td2"><input id="snationality"></input></td></tr>
+          <tr><td class="td1"><text>政治面貌：</text></td><td class="td2"><input id="spolitical_status"></input></td></tr>
           <tr><td class="td1"><text>电子邮箱：</text></td><td class="td2"><input id="semail"></input></td></tr>
           <tr><td class="td1"><text>出生日期：</text></td><td class="td2"><input id="sbirthday"></input></td></tr>
           <tr><td class="td1"><text>身份证号：</text></td><td class="td2"><input id="sidentity_no"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'idcard'"></input></td></tr>
@@ -552,6 +579,14 @@
           <tr><td class="td1"><text>档案编号：</text></td><td class="td2"><input id="sarchive_id"></input></td></tr>
           <tr><td class="td1"><text>社保卡号：</text></td><td class="td2"><input id="snssf_id"></input></td></tr>
           <tr><td class="td1"><text>居住地址：</text></td><td class="td2"><input id="shousehold_address"></input></td></tr>
+          <tr><td class="td1"><text>注册日期：</text></td><td class="td2"><input id="sregister_date"></input></td></tr>
+          <tr><td class="td1"><text>注销日期：</text></td><td class="td2"><input id="scancel_date"></input></td></tr>
+          <tr><td class="td1"><text>年龄：</text></td><td class="td2"><input id="sage"></input></td></tr>
+          <tr><td class="td1"><text>邮编：</text></td><td class="td2"><input id="szip_code"></input></td></tr>
+          <tr><td class="td1"><text>微信号：</text></td><td class="td2"><input id="swechat_id"></input></td></tr>
+          <tr><td class="td1"><text>籍贯：</text></td><td class="td2"><input id="snative_place"></input></td></tr>
+          <tr><td class="td1"><text>basic_url：</text></td><td class="td2"><input id="sbasic_url"></input></td></tr>
+          <tr><td class="td1"><text>离职日期：</text></td><td class="td2"><input id="sleave_date"></input></td></tr>
         </table>
       </div>
       <div id="staff-Info-card-b" class="info-card-b"><img src="images/p_2.jpg"></div>
