@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sjtu.icare.modules.elder.persistence.RelativeDAO">
+
+    <cache />
+    
+    <resultMap type="com.sjtu.icare.modules.elder.entity.RelativeEntity" id="RelativeMap">
+	    <id property="id" column="id" />
+	    <result property="elderId" column="elder_id" />
+	    <result property="name" column="name" />
+	    <result property="urgent" column="urgent" />
+	    <result property="relationship" column="relationship" />
+	    <result property="cancelDate" column="cancel_date" />
+	</resultMap>
+  
+    <select id="getRelative" resultMap="RelativeMap">
+        SELECT
+			*
+        FROM T_ELDER_RELATIVE
+        WHERE T_ELDER_RELATIVE.id = #{id}
+    </select>
+
+    <select id="getUsersOfRelatives" resultMap="com.sjtu.icare.modules.sys.persistence.UserMapper.UserMap">
+    
+        SELECT 
+            T_USER.*
+        FROM 
+            (T_USER INNER JOIN T_ELDER_RELATIVE
+            ON
+                T_USER.user_type = #{userType}
+                AND T_USER.gero_id = #{geroId}
+                AND T_USER.user_id = T_ELDER_RELATIVE.id 
+	            <if test="name != null">
+	                AND T_USER.name LIKE '%' + #{name} + '%'
+	            </if> 
+	            <if test="elderId != null">
+	                AND T_ELDER_RELATIVE.elder_id = #{elderId}
+	            </if>
+	        )    
+	  
+    </select>
+
+
+    <insert id="insertRelative" parameterType="RelativeEntity" useGeneratedKeys="true" keyProperty="id">
+    
+        INSERT INTO
+            T_ELDER_RELATIVE(name, elder_id, urgent, relationship, cancel_date) 
+        VALUES
+            (#{name}, #{elderId}, #{urgent}, #{relationship}, #{cancelDate})
+            
+    </insert>
+    
+    
+    <update id="updateRelative">
+    
+        UPDATE
+            T_ELDER_RELATIVE
+        <set>
+            <if test="name != null">
+            T_ELDER_RELATIVE.name = #{name},
+            </if>
+            <if test="elderId != null">
+            T_ELDER_RELATIVE.elder_id = #{elderId},
+            </if>
+            <if test="urgent != null">
+            T_ELDER_RELATIVE.urgent = #{urgent},
+            </if>
+            <if test="relationship != null">
+            T_ELDER_RELATIVE.relationship = #{relationship},
+            </if>
+            <if test="cancelDate != null">
+            T_ELDER_RELATIVE.cancel_date = #{cancelDate},
+            </if>
+           
+        </set>
+        WHERE
+            T_ELDER_RELATIVE.id = #{id}
+            
+    </update>
+    
+    <update id="deleteRelative">
+    
+        UPDATE
+            T_ELDER_RELATIVE
+        SET
+            T_ELDER_RELATIVE.cancel_date = #{cancelDate}
+        WHERE
+            T_ELDER_RELATIVE.id = #{id}
+            
+    </update>
+    
+    
+</mapper>

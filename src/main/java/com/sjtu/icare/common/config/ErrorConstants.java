@@ -208,6 +208,16 @@ public class ErrorConstants {
 	public static final String GERO_PUT_SERVICE_FAILED = "490006 PUT 养老院：后台服务失败";
 	public static final String GERO_DELETE_SPECIFIC_SERVICE_FAILED = "490007 DELETE 养老院：后台服务失败";
 	
+	// relative constants
+	public static final String RELATIVE_INFO_GET_SERVICE_FAILED = "500001 GET 老人家属：后台服务失败";
+	public static final String RELATIVE_INFO_POST_PARAM_INVALID = "500002 POST 老人家属：请求参数错误";
+	public static final String RELATIVE_INFO_POST_SERVICE_FAILED = "500003 POST 老人家属：后台服务失败";
+	public static final String RELATIVE_INFO_SPECIFIC_GET_SERVICE_FAILED = "500004 GET 指定老人家属：后台服务失败";
+	public static final String RELATIVE_INFO_ELDER_PUT_PARAM_INVALID = "500005 PUT 指定老人家属：请求参数错误";
+	public static final String RELATIVE_INFO_ELDER_PUT_SERVICE_FAILED = "500006 PUT 指定老人家属：后台服务失败";
+	public static final String RELATIVE_INFO_ELDER_DELETE_SERVICE_FAILED = "500007 DELETE 指定老人家属：后台服务失败";
+	
+	
 	
 	public static String format(String errorConstant, String otherMessage) {
 		if (errorConstant == null)

@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sjtu.icare.common.config.CommonConstants;
 import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
@@ -42,6 +44,7 @@ public class ElderInfoService implements IElderInfoService{
 	 */
 	@Override
 	public List<User> getAllElders(User user) {
+		user.setUserType(CommonConstants.ELDER_TYPE);
 		return user.getPage().setList(elderDao.getAllElders(user)).getList();
 	}
 

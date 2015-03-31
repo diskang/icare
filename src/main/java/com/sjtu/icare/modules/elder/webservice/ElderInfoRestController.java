@@ -371,7 +371,7 @@ public class ElderInfoRestController extends GeroBaseController{
 	
 	@Transactional
 	@RequestMapping(value="/{eid}", method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
-	public Object putStaff(
+	public Object putElder(
 			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("eid") int elderId,
@@ -437,7 +437,7 @@ public class ElderInfoRestController extends GeroBaseController{
 	
 	@Transactional
 	@RequestMapping(value="/{eid}", method = RequestMethod.DELETE, produces = MediaTypes.JSON_UTF_8)
-	public Object deleteStaff(
+	public Object deleteELder(
 			HttpServletRequest request,
 			@PathVariable("gid") int geroId,
 			@PathVariable("eid") int elderId

@@ -39,12 +39,16 @@ public class User extends DataEntity<User> {
     private String wechatId; //微信账号
     private int geroId;//养老院ID
     
-    // GET elders 时用到
+    // elders 查询参数
     private Integer ageMin;
     private Integer ageMax;
     private Integer areaId;
     private Integer careLevel;
     private List<Integer> areaIds;
+    
+    // relative 查询参数
+    private Integer elderId;
+    
     
     
 	private Role role;	// 根据角色查询用户条件
@@ -442,6 +446,14 @@ public class User extends DataEntity<User> {
 	 */
 	public void setAreaIds(List<Integer> areaIds) {
 		this.areaIds = areaIds;
+	}
+
+	public Integer getElderId() {
+		return elderId;
+	}
+
+	public void setElderId(Integer elderId) {
+		this.elderId = elderId;
 	}
 	
 	
