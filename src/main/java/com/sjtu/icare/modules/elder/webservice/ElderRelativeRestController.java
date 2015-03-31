@@ -7,7 +7,6 @@
  */
 package com.sjtu.icare.modules.elder.webservice;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -34,10 +33,10 @@ import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
+import com.sjtu.icare.common.utils.PinyinUtils;
 import com.sjtu.icare.common.web.rest.BasicController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
-import com.sjtu.icare.modules.elder.entity.ElderEntity;
 import com.sjtu.icare.modules.elder.entity.RelativeEntity;
 import com.sjtu.icare.modules.elder.service.IRelativeInfoService;
 import com.sjtu.icare.modules.sys.entity.User;
@@ -168,8 +167,7 @@ public class ElderRelativeRestController  extends BasicController {
 		// TODO passworkd register date self gen
 		try {
 			
-			if (requestParamMap.get("username") == null
-				|| requestParamMap.get("name") == null
+			if (requestParamMap.get("name") == null
 				|| requestParamMap.get("identityNo") == null
 				|| requestParamMap.get("birthday") == null
 				|| requestParamMap.get("phoneNo") == null
@@ -206,7 +204,11 @@ public class ElderRelativeRestController  extends BasicController {
 			
 			User requestUser = new User(); 
 			BeanUtils.populate(requestUser, requestParamMap);
-			systemService.insertUser(requestUser);
+			requestUser.setUsername(requestUser.getIdentityNo());
+			Integer userId = systemService.insertUser(requestUser);
+			String pinyinName = PinyinUtils.getPinyin(requestUser.getName() + userId);
+			requestUser.setUsername(pinyinName);
+			systemService.updateUser(requestUser);
 			
 		} catch(Exception e) {
 			String otherMessage = "[" + e.getMessage() + "]";
