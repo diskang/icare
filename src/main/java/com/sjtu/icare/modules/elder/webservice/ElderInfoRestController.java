@@ -266,6 +266,8 @@ public class ElderInfoRestController extends GeroBaseController{
 			// insert into Elder
 			ElderEntity postElderEntity = new ElderEntity(); 
 			BeanUtils.populate(postElderEntity, requestParamMap);
+			if (postElderEntity.getCareLevel() == null)
+				postElderEntity.setCareLevel(3);
 			Integer elderId = elderInfoService.insertElder(postElderEntity);
 			
 			// insert into User

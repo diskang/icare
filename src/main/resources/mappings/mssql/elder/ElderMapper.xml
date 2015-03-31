@@ -56,7 +56,7 @@
                 T_USER.user_type = #{userType}
                 AND T_USER.gero_id = #{geroId}
                 AND T_USER.user_id = T_ELDER.id 
-                AND T_ELDER.checkout_date is NULL
+                AND T_USER.cancel_date is NULL
 	            <if test="name != null">
 	                AND T_USER.name LIKE '%' + #{name} + '%'
 	            </if> 

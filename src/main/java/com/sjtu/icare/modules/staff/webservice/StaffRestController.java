@@ -116,8 +116,7 @@ public class StaffRestController extends BasicController {
 					resultMap.put("email", user.getEmail());
 					resultMap.put("gender", user.getGender());
 					resultMap.put("gero_id", user.getGeroId());
-					resultMap.put("household_address",
-							user.getHouseholdAddress());
+					resultMap.put("household_address", user.getHouseholdAddress());
 					resultMap.put("identity_no", user.getIdentityNo());
 					resultMap.put("marriage", user.getMarriage());
 					resultMap.put("name", user.getName());
@@ -126,11 +125,9 @@ public class StaffRestController extends BasicController {
 					resultMap.put("notes", user.getNotes());
 					resultMap.put("phone_no", user.getPhoneNo());
 					resultMap.put("photo_url", user.getPhotoUrl());
-					resultMap
-							.put("political_status", user.getPoliticalStatus());
+					resultMap.put("political_status", user.getPoliticalStatus());
 					resultMap.put("register_date", user.getRegisterDate());
-					resultMap.put("residence_address",
-							user.getResidenceAddress());
+					resultMap.put("residence_address", user.getResidenceAddress());
 					resultMap.put("username", user.getUsername());
 					resultMap.put("user_type", user.getUserType());
 					resultMap.put("wechat_id", user.getWechatId());
