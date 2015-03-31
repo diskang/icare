@@ -13,36 +13,32 @@
 
 <link href="/resthouse/static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="/resthouse/static/css/manager.css" rel="stylesheet" type="text/css">
-<!---------------------------------响应式------------------------>
 <link href="/resthouse/static/css/conter.css" rel="stylesheet" type="text/css">
 <link href="/resthouse/static/css/jeesite.min.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="/resthouse/static/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/resthouse/static/css/easyui.css">
 <link rel="stylesheet" type="text/css" href="/resthouse/static/css/icon.css">
+<link href="/resthouse/static/css/vis.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
 <%
-	User user = UserUtils.getUser();
-	String username = user.getUsername();
-	int geroId = user.getGeroId();
-	int userType = user.getUserType();
-	int userId = user.getUserId();
-	int id = user.getId();
+  User user = UserUtils.getUser();
+  String username = user.getUsername();
+  int geroId = user.getGeroId();
+  int userType = user.getUserType();
+  int userId = user.getUserId();
+  int id = user.getId();
 %>
 <script language="JavaScript"> 
-	function getUser(){ 
-	   var user = new Object();
-	   user.id = <%=id%>;
-	   user.gero_id = <%=geroId %>;
-	   user.user_type = <%=userType %>;
-	   user.user_id = <%=userId %>;
-	   return user;
-	}
-	function test(){
-		var user = getUser();
-		alert(user.id);
-	}
+  function getUser(){ 
+     var user = new Object();
+     user.id = <%=id%>;
+     user.gero_id = <%=geroId %>;
+     user.user_type = <%=userType %>;
+     user.user_id = <%=userId %>;
+     return user;
+  }
 </script> 
 
 <!-------------------------头部-------------------------->
@@ -203,6 +199,47 @@
       </div>
 
 
+
+      <!--------------------------区域管理-------------------------------->
+      <div id="areashow" class="inf hide" style="min-height:700px;">
+        <div class="pers-s">区域管理</div>
+        <div class="old">
+          <div class="page-header"></div>
+          <div id="area-Info-card-a" class="info-card-a">
+          <div  id="areapanel" class="easyui-panel" title="区域列表" style="height:500px;width:500px;padding:10px;margin:0;overflow:scroll;" data-options="
+            width:500,
+            tools: [{ 
+                iconCls: 'icon-add', 
+                handler: function() { 
+                  area.addTreenode();
+                } 
+            }, '-',{ 
+                iconCls: 'icon-remove', 
+                handler: function(){ 
+                  area.delTreenode();
+                }
+            }]">
+              <ul id="areatree" style="padding-left:20px;text-align:left;">
+              </ul>
+          </div>
+          </div>
+          <div class="info-card-b">
+            <div id="areaInfo" class="hide">
+              <table>
+                <tr><td>name: </td><td><input type="text" id="aname" ></input></td></tr>
+                <tr><td>type: </td><td><input type="text" id="atype"></input></td></tr>
+                <tr><td>level: </td><td><input type="text" id="alevel"></input></td></tr>
+              </table>
+              <div class="col-md-offset-2">
+                <button id="areabutton" class="btn btn-default" onclick="area.buttonclk()" style="margin-left:180px;margin-top:10px;" >确定</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
       <!--------------------------排班-------------------------------->
       <div id="arrangeshow" class="inf hide" style="min-height:700px;">
         <div class="pers-s">员工排班</div>
@@ -262,6 +299,19 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+
+      <!--------------------------专护职责-------------------------------->
+      <div id="eldercareshow" class="inf hide" style="min-height:700px;">
+        <div class="pers-s">专护职责情况</div>
+        <div class="old">
+          <div class="page-header"></div>
+          <div id="visualization"></div>
+          <p></p>
+          <div id="log"></div>
+          
         </div>
       </div>
 
@@ -365,6 +415,7 @@
         <div class="pers-s">权限中心</div>
         <div class="old">
           <div class="page-header"></div>
+          <div id="role-Info-card-a" class="info-card-a">
           <div  id="authoritypanel" class="easyui-panel" title="权限列表" style="height:500px;width:500px;padding:10px;margin:0;overflow:scroll;" data-options="
             width:500,
             tools: [{ 
@@ -381,16 +432,21 @@
               <ul id="authoritytree" style="padding-left:20px;text-align:left;">
               </ul>
           </div>
-          <div id="authorityInfo" class="hide">
-              <li>name: <input type="text" id="pname" ></input></li>
-              <li>permission: <input type="text" id="ppermission"></input></li>
-              <li>href: <input type="text" id="phref"></input></li>
-              <li>icon: <input type="text" id="picon"></input></li>
-              <li>api: <input type="text" id="papi"></input></li>
-              <li>notes: <input type="text" id="pnotes"></input></li>
+          </div>
+          <div class="info-card-b">
+            <div id="authorityInfo" class="hide">
+              <table>
+                <tr><td>name: </td><td><input type="text" id="pname" ></input></td></tr>
+                <tr><td>permission: </td><td><input type="text" id="ppermission"></input></td></tr>
+                <tr><td>href: </td><td><input type="text" id="phref"></input></td></tr>
+                <tr><td>icon: </td><td><input type="text" id="picon"></input></td></tr>
+                <tr><td>api: </td><td><input type="text" id="papi"></input></td></tr>
+                <tr><td>notes: </td><td><input type="text" id="pnotes"></input></td></tr>
+              </table>
               <div class="col-md-offset-2">
                 <button id="authoritybutton" class="btn btn-default" onclick="authority.buttonclk()" style="margin-left:180px;margin-top:10px;" >确定</button>
               </div>
+            </div>
           </div>
         </div>
       </div>
@@ -614,7 +670,6 @@
 
 <script type="text/javascript" src="/resthouse/static/js/jquery-1.8.3.min.js" ></script>
 <script type="text/javascript" src="/resthouse/static/js/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/cookie.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/topleftNavi.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/elder.js"></script>
@@ -626,6 +681,10 @@
 <script type="text/javascript" src="/resthouse/static/js/arrange.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/url.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/user.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/area.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/areacare.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/eldercare.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/validbox.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/vis.js"></script>
 </body>
 </html>
