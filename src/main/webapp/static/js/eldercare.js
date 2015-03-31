@@ -66,5 +66,6 @@ var eldercare={
   timeline = new vis.Timeline(container, [], options);
   timeline.clear({items: true});
   //timeline.setItems(items2);
+},
   
 }

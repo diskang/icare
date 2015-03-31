@@ -100,7 +100,7 @@ var elder={
     },
     delElderInfo: function(){
         var eldert = $('#elderpage').datagrid('getSelected');
-        infoUrl=rhurl.origin+"/gero/"+gid+"/elder/" + eldert.elder_id;
+        infoUrl=rhurl.origin+"/gero/"+gid+"/elder/" + eldert.user_id;
         $.ajax({
             url: infoUrl,
             type: 'DELETE',
@@ -115,8 +115,9 @@ var elder={
     },
 
     onElderDblClickRow:function(index){
+                elder.method='put';
                 var eldert = $('#elderpage').datagrid('getSelected');
-                elder.eid='/'+eldert.elder_id;
+                elder.eid='/'+eldert.user_id;
                 infoUrl=rhurl.origin+"/gero/"+gid+"/elder" + elder.eid;
                 $.ajax({
         			type: "get",

@@ -131,7 +131,7 @@
               <table id="elderpage"  class="easyui-datagrid" title="老人信息列表" style="height:400px;" data-options="onDblClickRow:elder.onElderDblClickRow">
                 <thead>
                   <tr>
-                    <th data-options="field:'elder_id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'user_id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'bed_id',width:120,align:'center'">房 间</th>
                     <th data-options="field:'name',width:120,align:'center'">姓 名</th>
                     <th data-options="field:'identity_no',width:160,align:'center'">身份证号</th>
@@ -184,7 +184,7 @@
               <table id="staffpage"  class="easyui-datagrid" title="员工信息列表" style="height:400px;" data-options="onDblClickRow:staff.onStaffDblClickRow">
                 <thead>
                   <tr>
-                    <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'user_id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'role',width:100,align:'center'">角色</th>
                     <th data-options="field:'name',width:100,align:'center'">姓 名</th>
                     <th data-options="field:'identity_no',width:160,align:'center'">身份证号</th>
@@ -485,8 +485,7 @@
           text:'传照片',
           iconCls:'icon-edit',
           handler:function(){
-            $('#elder-photosubmit').removeClass('hide');
-            //成功结束后$('#elder-photosubmit').addClass('hide');
+            if(elder.method==='put') photo.doit(rhurl.root+'/uploadObject/user'+elder.eid)
           }
         }],
         buttons: [{
@@ -526,9 +525,6 @@
         </table>
       </div>
       <div id="elder-Info-card-b" class="info-card-b"><img src="images/p_2.jpg">
-        <div id="elder-photosubmit" class="hide" sytle="height:200px;">
-          传照片
-        </div>
       </div>
     </div>
 </div>
@@ -548,6 +544,12 @@
           iconCls:'icon-edit',
           handler:function(){
             staff.editStaffInfo();
+          }
+        },'-',{
+          text:'传照片',
+          iconCls:'icon-edit',
+          handler:function(){
+            if(staff.method==='put') photo.doit(rhurl.root+'/uploadObject/user'+staff.sid)
           }
         }],
         buttons: [{
@@ -646,6 +648,24 @@
       </table> 
 </div>
 
+<!----上传照片---->
+<div id="photosubmit"  class="easyui-dialog" title="上传照片" style="width:300px;height:200px;padding:10px"
+      data-options="
+        modal:true,
+        closed:true,
+        fix:true,
+        left:($(window).width()-300)*0.5,
+        top:($(window).height()-200)*0.5,
+        draggable:true,
+        iconCls: 'icon-edit',
+      ">
+      123123123
+      <!--上传照片插件
+        <div></div>
+        
+      -->
+</div>
+
 
 
 
@@ -707,6 +727,7 @@
 <script type="text/javascript" src="/resthouse/static/js/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/topleftNavi.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/photo.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/elder.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/staff.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/item.js"></script>
