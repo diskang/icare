@@ -19,7 +19,9 @@
         SELECT
 			*
         FROM T_ELDER_RELATIVE
-        WHERE T_ELDER_RELATIVE.id = #{id}
+        WHERE 
+        	T_ELDER_RELATIVE.id = #{id}
+        	AND T_ELDER_RELATIVE.cancel_date is null
     </select>
 
     <select id="getUsersOfRelatives" resultMap="com.sjtu.icare.modules.sys.persistence.UserMapper.UserMap">
@@ -32,6 +34,7 @@
                 T_USER.user_type = #{userType}
                 AND T_USER.gero_id = #{geroId}
                 AND T_USER.user_id = T_ELDER_RELATIVE.id 
+                AND T_USER.cancel_date is null
 	            <if test="name != null">
 	                AND T_USER.name LIKE '%' + #{name} + '%'
 	            </if> 
