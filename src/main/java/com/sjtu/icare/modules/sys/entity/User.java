@@ -67,7 +67,10 @@ public class User extends DataEntity<User> {
     }
     
     public void setUsername(String username) {
-        this.username = username;
+    	if (username == null)
+    		this.username = null;
+    	else
+    		this.username = username.trim();
     }
     
     public User() {
@@ -249,7 +252,10 @@ public class User extends DataEntity<User> {
 	}
 
 	public void setIdentityNo(String identityNo) {
-		this.identityNo = identityNo;
+		if (identityNo == null)
+			this.identityNo = null;
+		else
+			this.identityNo = identityNo.trim();
 	}
 
 	public int getAge() {
@@ -289,7 +295,10 @@ public class User extends DataEntity<User> {
 	}
 
 	public void setBirthday(String birthday) {
-		this.birthday = birthday;
+		if (birthday == null)
+			this.birthday = null;
+		else
+			this.birthday = birthday.trim();
 	}
 
 	public String getPoliticalStatus() {
@@ -313,7 +322,10 @@ public class User extends DataEntity<User> {
 	}
 
 	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
+		if (phoneNo == null)
+			this.phoneNo = null;
+		else
+			this.phoneNo = phoneNo.trim();
 	}
 
 	public String getZipCode() {

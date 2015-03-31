@@ -41,7 +41,9 @@
             track_url,
             pad_mac
         FROM T_ELDER
-        WHERE T_ELDER.id = #{id}
+        WHERE 
+        	T_ELDER.id = #{id}
+        	AND T_ELDER.checkout_date is NULL
     </select>
 
     <select id="getAllElders" resultMap="com.sjtu.icare.modules.sys.persistence.UserMapper.UserMap">
@@ -54,6 +56,7 @@
                 T_USER.user_type = #{userType}
                 AND T_USER.gero_id = #{geroId}
                 AND T_USER.user_id = T_ELDER.id 
+                AND T_USER.cancel_date is NULL
 	            <if test="name != null">
 	                AND T_USER.name LIKE '%' + #{name} + '%'
 	            </if> 
