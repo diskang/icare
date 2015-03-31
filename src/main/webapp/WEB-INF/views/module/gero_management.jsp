@@ -13,12 +13,12 @@
 
 <link href="/resthouse/static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="/resthouse/static/css/manager.css" rel="stylesheet" type="text/css">
-<!---------------------------------响应式------------------------>
 <link href="/resthouse/static/css/conter.css" rel="stylesheet" type="text/css">
 <link href="/resthouse/static/css/jeesite.min.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="/resthouse/static/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/resthouse/static/css/easyui.css">
 <link rel="stylesheet" type="text/css" href="/resthouse/static/css/icon.css">
+<link href="/resthouse/static/css/vis.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -308,7 +308,9 @@
         <div class="pers-s">专护职责情况</div>
         <div class="old">
           <div class="page-header"></div>
-          <div id="ss" style="height:200px"></div>
+          <div id="visualization"></div>
+          <p></p>
+          <div id="log"></div>
           
         </div>
       </div>
@@ -683,5 +685,6 @@
 <script type="text/javascript" src="/resthouse/static/js/areacare.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/eldercare.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/validbox.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/vis.js"></script>
 </body>
 </html>
