@@ -137,6 +137,8 @@ public class OSSObjectUtils {
 		return postParams;
 	}
     
+    
+    
     public String getDownloadUrl(String url) {
     	
     	OSSClient client = new OSSClient(endpoint, key, secret);

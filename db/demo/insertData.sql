@@ -93,19 +93,513 @@ INSERT INTO [dbo].[T_AREA_ITEM]
            ,[icon]
            ,[period]
            ,[frequency]
-           ,[notes]
-           ,[del_flag])
+           ,[notes])
      VALUES
-           (<gero_id, int,>
-           ,<name, nvarchar(32),>
-           ,<icon, varchar(32),>
-           ,<period, int,>
-           ,<frequency, int,>
-           ,<notes, nvarchar(32),>
-           ,<del_flag, char(1),>)
+           (1
+           ,'漱口'
+           ,'item.png'
+           ,1
+           ,1
+           ,'')
 GO
 
+INSERT INTO [dbo].[T_AREA_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'刷牙'
+           ,'item.png'
+           ,1
+           ,1
+           ,'')
+GO
 
+INSERT INTO [dbo].[T_AREA_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'梳头'
+           ,'item.png'
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_AREA_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'更换衣服'
+           ,'item.png'
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_AREA_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'发放药物'
+           ,'item.png'
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_AREA_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'剃须'
+           ,'item.png'
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_AREA_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'剪指甲'
+           ,'item.png'
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_AREA_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'饮水'
+           ,'item.png'
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_AREA_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'穿（脱）衣'
+           ,'item.png'
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_AREA_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'协助如厕'
+           ,'item.png'
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_AREA_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'喂食'
+           ,'item.png'
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_AREA_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'更换尿布'
+           ,'item.png'
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_AREA_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'衣物洗涤'
+           ,'item.png'
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_AREA_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'尿布洗涤'
+           ,'item.png'
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_AREA_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'食物粉碎'
+           ,'item.png'
+           ,1
+           ,1
+           ,'')
+GO
+
+---------------------------------------------------------------------------------------
+
+-- 生成默认养老院老人项目
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'漱口'
+           ,'item.png'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'刷牙'
+           ,'item.png'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'梳头'
+           ,'item.png'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'更换衣服'
+           ,'item.png'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'发放药物'
+           ,'item.png'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'剃须'
+           ,'item.png'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'剪指甲'
+           ,'item.png'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'饮水'
+           ,'item.png'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'穿（脱）衣'
+           ,'item.png'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'协助如厕'
+           ,'item.png'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'喂食'
+           ,'item.png'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'更换尿布'
+           ,'item.png'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'衣物洗涤'
+           ,'item.png'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'尿布洗涤'
+           ,'item.png'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'食物粉碎'
+           ,'item.png'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
 
 
 ---------------------------------------------------------------------------------------
@@ -156,7 +650,7 @@ GO
 -- 生成默认医生
 
 INSERT INTO [dbo].[T_USER]([username],[name],[password],[user_type],[user_id],[register_date],[identity_no],[birthday],[phone_no],[gero_id])
-     VALUES('room_carer','默认医生','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','1','4','2015-03-05 00:00:00.000','1','1970-01-01','18888888888','1')
+     VALUES('doctor','默认医生','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','1','4','2015-03-05 00:00:00.000','1','1970-01-01','18888888888','1')
 GO
 
 INSERT INTO [dbo].[T_STAFF]([name],[gero_id])
@@ -166,7 +660,7 @@ GO
 -- 生成默认老人
 
 INSERT INTO [dbo].[T_USER]([username],[name],[password],[user_type],[user_id],[register_date],[identity_no],[birthday],[phone_no],[gero_id])
-     VALUES('room_carer','默认老人','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','2','1','2015-03-05 00:00:00.000','1','1970-01-01','18888888888','1')
+     VALUES('elder','默认老人','02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032','2','1','2015-03-05 00:00:00.000','1','1970-01-01','18888888888','1')
 GO
 
 INSERT INTO [dbo].[T_STAFF]([name],[gero_id])

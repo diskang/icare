@@ -56,7 +56,7 @@ public class UploadObjectController {
 	@RequestMapping(value = "/user/{uid}", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> uploadUserPhoto(
 			@PathVariable("uid") int uid,
-			@RequestParam("user_photo") MultipartFile file,
+			@RequestParam("file") MultipartFile file,
 			HttpServletRequest request,
 			HttpServletResponse response){
 	        
@@ -89,7 +89,7 @@ public class UploadObjectController {
 	@RequestMapping(value = "/gero/{gid}/CMS/icon", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> uploadGeroIcon(
 			@PathVariable("gid") int gid,
-			@RequestParam("gero_icon") MultipartFile file,
+			@RequestParam("file") MultipartFile file,
 			HttpServletRequest request,
 			HttpServletResponse response){
 	        
@@ -118,7 +118,7 @@ public class UploadObjectController {
 	@RequestMapping(value = "/gero/{gid}/CMS/picture", method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Map<String, Object> uploadGeroPicture(
 			@PathVariable("gid") int gid,
-			@RequestParam("gero_picture") MultipartFile file,
+			@RequestParam("file") MultipartFile file,
 			HttpServletRequest request,
 			HttpServletResponse response){
 	        
@@ -149,7 +149,7 @@ public class UploadObjectController {
 	public Map<String, Object> uploadStaffBasicForm(
 			@PathVariable("gid") int gid,
 			@PathVariable("sid") int sid,
-			@RequestParam("basic_form") MultipartFile file,
+			@RequestParam("file") MultipartFile file,
 			HttpServletRequest request,
 			HttpServletResponse response){
 	        
@@ -180,7 +180,7 @@ public class UploadObjectController {
 	public Map<String, Object> uploadElderApplyForm(
 			@PathVariable("gid") int gid,
 			@PathVariable("eid") int eid,
-			@RequestParam("apply_form") MultipartFile file,
+			@RequestParam("file") MultipartFile file,
 			HttpServletRequest request,
 			HttpServletResponse response){
 	        
@@ -211,7 +211,7 @@ public class UploadObjectController {
 	public Map<String, Object> uploadElderSurveyForm(
 			@PathVariable("gid") int gid,
 			@PathVariable("eid") int eid,
-			@RequestParam("survey_form") MultipartFile file,
+			@RequestParam("file") MultipartFile file,
 			HttpServletRequest request,
 			HttpServletResponse response){
 	        
@@ -242,7 +242,7 @@ public class UploadObjectController {
 	public Map<String, Object> uploadElderAssessForm(
 			@PathVariable("gid") int gid,
 			@PathVariable("eid") int eid,
-			@RequestParam("assess_form") MultipartFile file,
+			@RequestParam("file") MultipartFile file,
 			HttpServletRequest request,
 			HttpServletResponse response){
 	        
@@ -273,7 +273,7 @@ public class UploadObjectController {
 	public Map<String, Object> uploadElderTrackForm(
 			@PathVariable("gid") int gid,
 			@PathVariable("eid") int eid,
-			@RequestParam("track_form") MultipartFile file,
+			@RequestParam("file") MultipartFile file,
 			HttpServletRequest request,
 			HttpServletResponse response){
 	        

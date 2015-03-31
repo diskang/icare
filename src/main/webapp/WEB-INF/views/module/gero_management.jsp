@@ -659,11 +659,10 @@
         draggable:true,
         iconCls: 'icon-edit',
       ">
-      123123123
-      <!--上传照片插件
-        <div></div>
-        
-      -->
+      <form id="upload-pic-dropzone" class="alert alert-info" style="height:100px;">
+        将文件拖拽至此区域进行上传（或点击此区域）
+      </form>
+      <div id="upload-pic-dropzone-message" class="alert alert-info" role="alert"></div>
 </div>
 
 
@@ -742,5 +741,6 @@
 <script type="text/javascript" src="/resthouse/static/js/eldercare.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/validbox.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/vis.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/dropzone.js"></script>
 </body>
 </html>
