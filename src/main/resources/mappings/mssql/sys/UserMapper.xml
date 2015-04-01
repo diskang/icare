@@ -257,7 +257,7 @@
         WHERE T_USER.id = #{id}
     </update> -->
 
-    <insert id="insertUser">
+    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
     
         INSERT INTO
             T_USER(

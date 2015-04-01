@@ -4,6 +4,7 @@
             dataType: "json",
             contentType: "application/json;charset=utf-8",
             url: "/gero",
+            timeout:3000,
             success: function (msg) {
                 var str = "";
                 for (i in msg) {

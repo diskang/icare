@@ -84,7 +84,7 @@ var geroItem={
             data:JSON.stringify(obj), 
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
-            timeout: 1000, 
+            timeout: deadtime, 
             error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){geroItem.drawGeroCareItemList();} 
         }); 
@@ -157,7 +157,7 @@ var geroItem={
         $.ajax({
             url: infoUrl,
             type: 'DELETE',
-            timeout:1000,
+            timeout:deadtime,
             success:function(){
                 geroItem.drawGeroAreaItemList();
             },
@@ -181,7 +181,7 @@ var geroItem={
             data:JSON.stringify(obj), 
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
-            timeout: 1000, 
+            timeout: deadtime, 
             error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){geroItem.drawGeroAreaItemList();} 
         }); 

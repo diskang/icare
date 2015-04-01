@@ -19,7 +19,7 @@ var area={
             dataType: "json",
             contentType: "application/json;charset=utf-8",
             url: rhurl.origin+"/gero/"+gid+"/area",
-            timeout:1000,
+            timeout:deadtime,
             success: function (msg) {
             	temparea=msg.entities;
             	area.dealtree();
@@ -104,7 +104,7 @@ var area={
             data:JSON.stringify(area.obj), 
             dataType:"json",
             contentType: "application/json;charset=utf-8",
-            timeout:1000,
+            timeout:deadtime,
             error: function(XMLHttpRequest, textStatus, errorThrown){
                 leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
             }, 
@@ -120,7 +120,7 @@ var area={
             $.ajax({
                 url: infoUrl,
                 type: 'DELETE',
-                timeout:1000,
+                timeout:deadtime,
                 success:function(result){
                     area.drawAreaList();
                 },

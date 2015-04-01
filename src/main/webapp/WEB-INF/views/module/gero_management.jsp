@@ -69,7 +69,7 @@
   <!--------------------------左导航--------------------------------> 
     <div class="leftNav" id="leftNavi" >
       <div style="background:url('/resthouse/static/images/r_1.jpg');line-height:30px;font-size:16px;color: #fff;height:30px;padding-left:20px;font-size:20px;margin:0;text-align:left;">菜单</div>
-      <ul id="lefttree" style="padding-left:20px;padding-top:10px;text-align:left;">
+      <ul id="lefttree" style="padding-left:20px;height:670px;padding-top:10px;text-align:left;overflow:scroll;">
       </ul>
     </div>
 
@@ -131,7 +131,7 @@
               <table id="elderpage"  class="easyui-datagrid" title="老人信息列表" style="height:400px;" data-options="onDblClickRow:elder.onElderDblClickRow">
                 <thead>
                   <tr>
-                    <th data-options="field:'elder_id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'user_id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'bed_id',width:120,align:'center'">房 间</th>
                     <th data-options="field:'name',width:120,align:'center'">姓 名</th>
                     <th data-options="field:'identity_no',width:160,align:'center'">身份证号</th>
@@ -184,7 +184,7 @@
               <table id="staffpage"  class="easyui-datagrid" title="员工信息列表" style="height:400px;" data-options="onDblClickRow:staff.onStaffDblClickRow">
                 <thead>
                   <tr>
-                    <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'user_id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'role',width:100,align:'center'">角色</th>
                     <th data-options="field:'name',width:100,align:'center'">姓 名</th>
                     <th data-options="field:'identity_no',width:160,align:'center'">身份证号</th>
@@ -307,17 +307,27 @@
       <div id="eldercareshow" class="inf hide" style="min-height:700px;">
         <div class="pers-s">专护职责情况</div>
         <div class="old">
+          <div class="page-header"></div>
           <div id="careitemvision"></div>
           <div class="itemcont">
             <div class="itemleft">
-              <table id="eldercarerpage"  class="easyui-datagrid" title="员工信息列表" style="height:400px;" data-options="onDblClickRow:staff.onStaffDblClickRow">
-                <thead>
-                  <tr>
-                    <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
-                    <th data-options="field:'name',width:100,align:'center'">员工</th>
-                  </tr>
-                </thead>
-              </table>
+              <div class="dutyhead">专护人员</div>
+              <ul id="eldercarercont">
+              </ul>
+            </div>
+            <div id="elderdutypanel" class="itemmiddle hide">
+              <div class="dutyhead">控制操作</div>
+              <div class="dutycontrol">
+                <div></div>
+                <div>结束日期:<input id="eldercarer_end" type="text"></input></div>
+                <div></div>
+                <div><button id="eldercarerbutton" class="btn btn-default" onclick="eldercarer.buttonclk()" style="margin-left:180px;margin-top:10px;" >提交</button></div>
+              </div>
+            </div>
+            <div class="itemright">
+              <div class="dutyhead">老人</div>
+              <ul id="elderchecktree" class="easyui-tree" data-options="checkbox:true">
+              </ul>
             </div>
           </div>
           
@@ -485,8 +495,7 @@
           text:'传照片',
           iconCls:'icon-edit',
           handler:function(){
-            $('#elder-photosubmit').removeClass('hide');
-            //成功结束后$('#elder-photosubmit').addClass('hide');
+            if(elder.method==='put') photo.doit(rhurl.root+'/uploadObject/user'+elder.eid)
           }
         }],
         buttons: [{
@@ -505,8 +514,10 @@
       <div id="elder-Info-card-a" class="info-card-a">
         <table>
           <tr><td class="td1"><text>老人姓名: </text></td><td class="td2"><input id="ename"class="easyui-validatebox textbox" data-options="required:true"></input>*</td></tr>
+          <tr><td class="td1"><text>用户名: </text></td><td class="td2"><input id="eusername"class="easyui-validatebox textbox" data-options="required:true"></input>*</td></tr>
           <tr><td class="td1"><text>出生日期：</text></td><td class="td2"><input id="ebirthday"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'date'"></input>*</td></tr>
           <tr><td class="td1"><text>年    龄：</text></td><td class="td2"><input id="eage"></input></td></tr>
+          <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="ephone_no" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
           <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input id="egender"></input></td></tr>
           <tr><td class="td1"><text>婚姻状况：</text></td><td class="td2"><input id="emarriage"></input></td></tr>
           <tr><td class="td1"><text>民    族：</text></td><td class="td2"><input id="enationality"></input></td></tr>
@@ -526,9 +537,6 @@
         </table>
       </div>
       <div id="elder-Info-card-b" class="info-card-b"><img src="images/p_2.jpg">
-        <div id="elder-photosubmit" class="hide" sytle="height:200px;">
-          传照片
-        </div>
       </div>
     </div>
 </div>
@@ -548,6 +556,12 @@
           iconCls:'icon-edit',
           handler:function(){
             staff.editStaffInfo();
+          }
+        },'-',{
+          text:'传照片',
+          iconCls:'icon-edit',
+          handler:function(){
+            if(staff.method==='put') photo.doit(rhurl.root+'/uploadObject/user'+staff.sid)
           }
         }],
         buttons: [{
@@ -646,6 +660,24 @@
       </table> 
 </div>
 
+<!----上传照片---->
+<div id="photosubmit"  class="easyui-dialog" title="上传照片" style="width:300px;height:200px;padding:10px"
+      data-options="
+        modal:true,
+        closed:true,
+        fix:true,
+        left:($(window).width()-300)*0.5,
+        top:($(window).height()-200)*0.5,
+        draggable:true,
+        iconCls: 'icon-edit',
+      ">
+      123123123
+      <!--上传照片插件
+        <div></div>
+        
+      -->
+</div>
+
 
 
 
@@ -707,6 +739,7 @@
 <script type="text/javascript" src="/resthouse/static/js/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/topleftNavi.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/photo.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/elder.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/staff.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/item.js"></script>

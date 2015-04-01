@@ -108,7 +108,7 @@
         $("#staff-dialog-form").dialog("open");
         $("#staff-dialog-form").dialog("center");
         $('.checkrole').attr("checked",false);
-        $('.checkrole').attr("disabled",false);
+        $('.checkrole').attr("disabled",true);
         $('#staff-Info-card-a input').attr('value'," ").removeAttr('disabled','');
         $("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
         $('#staff-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
@@ -124,10 +124,11 @@
     },
     delStaffInfo: function(){
         var stafft = $('#staffpage').datagrid('getSelected');
-        var infoUrl=rhurl.origin+"/gero/"+gid+"/staff/" + stafft.id;
+        var infoUrl=rhurl.origin+"/gero/"+gid+"/staff/" + stafft.user_id;
         $.ajax({
             url: infoUrl,
             type: 'DELETE',
+            timeout:deadtime,
             success:function(){
                 staff.drawstaffList();
             },
@@ -140,19 +141,22 @@
 
 
     onStaffDblClickRow:function(index){
+                staff.method='put';
                 var stafft = $('#staffpage').datagrid('getSelected');
-                infoUrl=rhurl.origin+"/gero/"+gid+"/staff/" + stafft.id;
+                staff.sid=stafft.user_id;
+                infoUrl=rhurl.origin+"/gero/"+gid+"/staff/" + staff.sid;
                 $.ajax({
                     type: "get",
                     dataType: "json",
                     contentType: "application/json;charset=utf-8",
                     url: infoUrl,
+                    timeout:deadtime,
                     success: function (msg) {
                         var data=leftTop.dealdata(msg);
                         staff.drawStaffInfo(data[0]);
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        leftTop.error(XMLHttpRequest, textStatus, errorThrown);
+                        leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
                     }
                 });
     },
@@ -189,7 +193,7 @@
             data:JSON.stringify(obj), 
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
-            timeout: 1000, 
+            timeout: deadtime, 
             error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){staff.drawStaffList();} 
         }); 
@@ -208,7 +212,7 @@
             data: JSON.stringify(roleobj), 
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
-            timeout: 1000, 
+            timeout: deadtime, 
             error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){staff.drawStaffList();} 
         }); 

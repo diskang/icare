@@ -151,7 +151,7 @@ public class MapListUtils {
 		}
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" }) 
+	@SuppressWarnings({ "rawtypes"}) 
 	public static List<Map<String, Object>> listOfBeanToListOfMap(List beanList) {
 		try {
 			

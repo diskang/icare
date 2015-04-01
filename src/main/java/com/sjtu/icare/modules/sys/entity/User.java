@@ -39,12 +39,16 @@ public class User extends DataEntity<User> {
     private String wechatId; //微信账号
     private int geroId;//养老院ID
     
-    // GET elders 时用到
+    // elders 查询参数
     private Integer ageMin;
     private Integer ageMax;
     private Integer areaId;
     private Integer careLevel;
     private List<Integer> areaIds;
+    
+    // relative 查询参数
+    private Integer elderId;
+    
     
     
 	private Role role;	// 根据角色查询用户条件
@@ -63,7 +67,10 @@ public class User extends DataEntity<User> {
     }
     
     public void setUsername(String username) {
-        this.username = username;
+    	if (username == null)
+    		this.username = null;
+    	else
+    		this.username = username.trim();
     }
     
     public User() {
@@ -245,7 +252,10 @@ public class User extends DataEntity<User> {
 	}
 
 	public void setIdentityNo(String identityNo) {
-		this.identityNo = identityNo;
+		if (identityNo == null)
+			this.identityNo = null;
+		else
+			this.identityNo = identityNo.trim();
 	}
 
 	public int getAge() {
@@ -285,7 +295,10 @@ public class User extends DataEntity<User> {
 	}
 
 	public void setBirthday(String birthday) {
-		this.birthday = birthday;
+		if (birthday == null)
+			this.birthday = null;
+		else
+			this.birthday = birthday.trim();
 	}
 
 	public String getPoliticalStatus() {
@@ -309,7 +322,10 @@ public class User extends DataEntity<User> {
 	}
 
 	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
+		if (phoneNo == null)
+			this.phoneNo = null;
+		else
+			this.phoneNo = phoneNo.trim();
 	}
 
 	public String getZipCode() {
@@ -442,6 +458,14 @@ public class User extends DataEntity<User> {
 	 */
 	public void setAreaIds(List<Integer> areaIds) {
 		this.areaIds = areaIds;
+	}
+
+	public Integer getElderId() {
+		return elderId;
+	}
+
+	public void setElderId(Integer elderId) {
+		this.elderId = elderId;
 	}
 	
 	

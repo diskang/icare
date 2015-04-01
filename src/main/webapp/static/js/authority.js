@@ -18,7 +18,7 @@ var authority={
             dataType: "json",
             contentType: "application/json;charset=utf-8",
             url: rhurl.origin+"/privilege",
-            timeout:1000,
+            timeout:deadtime,
             success: function (msg) {
         	    temptree=msg.entities;
                 temptree2=[{"id":1,"text":"权限列表","children":[]}]
@@ -77,7 +77,7 @@ var authority={
             data:JSON.stringify(authority.obj), 
             dataType:"json",
             contentType: "application/json;charset=utf-8",
-            timeout:1000,
+            timeout:3000,
             error: function(XMLHttpRequest, textStatus, errorThrown){
                 leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
             }, 
@@ -93,7 +93,7 @@ var authority={
             $.ajax({
                 url: infoUrl,
                 type: 'DELETE',
-                timeout:1000,
+                timeout:3000,
                 success:function(result){
                     authority.drawAuthorityList();
                 },
