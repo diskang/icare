@@ -34,7 +34,6 @@ import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.ParamValidator;
 import com.sjtu.icare.common.utils.StringUtils;
-import com.sjtu.icare.common.web.rest.BasicController;
 import com.sjtu.icare.common.web.rest.GeroBaseController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
@@ -231,8 +230,8 @@ public class AreaworkRestController extends GeroBaseController {
 			endDate = (String) requestParamMap.get("endDate");
 			
 			// 参数详细验证
-			if (endDate != null && !ParamValidator.isDate(endDate))
-				throw new Exception();
+//			if (endDate != null && !ParamValidator.isDate(endDate))
+//				throw new Exception();
 		} catch(Exception e) {
 			String otherMessage = "[" + inJson + "]";
 			String message = ErrorConstants.format(ErrorConstants.GERO_AREAWORK_PUT_PARAM_INVALID, otherMessage);
