@@ -146,7 +146,7 @@ public class ElderInfoRestController extends GeroBaseController{
 			for (User user : users) {
 				
 				Map<String, Object> resultMap = new HashMap<String, Object>(); 
-				resultMap.put("user_id", user.getUserId()); 
+				resultMap.put("elder_id", user.getUserId()); 
 				resultMap.put("id", user.getId()); 
 				
 				resultMap.put("age", user.getAge()); 
@@ -327,7 +327,7 @@ public class ElderInfoRestController extends GeroBaseController{
 			checkPermissions(permissions);
 			
 			Map<String, Object> resultMap = new HashMap<String, Object>(); 
-			resultMap.put("user_id", user.getUserId()); 
+			resultMap.put("elder_id", user.getUserId()); 
 			resultMap.put("id", user.getId()); 
 			
 			resultMap.put("age", user.getAge()); 

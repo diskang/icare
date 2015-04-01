@@ -107,7 +107,7 @@ public class StaffRestController extends BasicController {
 
 				for (User user : users) {
 					Map<String, Object> resultMap = new HashMap<String, Object>();
-					resultMap.put("user_id", user.getUserId());
+					resultMap.put("staff_id", user.getUserId());
 					resultMap.put("id", user.getId());
 
 					resultMap.put("age", user.getAge());
@@ -289,7 +289,7 @@ public class StaffRestController extends BasicController {
 				throw new Exception("内部错误：找不到对应的 user");
 
 			Map<String, Object> resultMap = new HashMap<String, Object>();
-			resultMap.put("user_id", user.getUserId());
+			resultMap.put("staff_id", user.getUserId());
 			resultMap.put("id", user.getId());
 
 			permissions.add("user:" + user.getId() + ":info:read");
