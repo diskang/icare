@@ -20,12 +20,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aliyun.oss.internal.OSSUtils;
 import com.sjtu.icare.common.config.CommonConstants;
 import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
+import com.sjtu.icare.common.utils.OSSObjectUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.PinyinUtils;
 import com.sjtu.icare.common.web.rest.GeroBaseController;
@@ -170,6 +172,9 @@ public class ElderInfoRestController extends GeroBaseController{
 				resultMap.put("user_type", user.getUserType()); 
 				resultMap.put("wechat_id", user.getWechatId()); 
 				resultMap.put("zip_code", user.getZipCode()); 
+				
+				OSSObjectUtils ossObjectUtils = new OSSObjectUtils();
+				resultMap.put("photo_src", ossObjectUtils.getDownloadUrl(user.getPhotoUrl())); 
 				
 				ElderEntity queryElderEntity = new ElderEntity();
 				queryElderEntity.setId(user.getUserId());
@@ -349,6 +354,8 @@ public class ElderInfoRestController extends GeroBaseController{
 			resultMap.put("wechat_id", user.getWechatId()); 
 			resultMap.put("zip_code", user.getZipCode()); 
 			
+			OSSObjectUtils ossObjectUtils = new OSSObjectUtils();
+			resultMap.put("photo_src", ossObjectUtils.getDownloadUrl(user.getPhotoUrl())); 
 			
 			resultMap.put("apply_url", elderEntity.getApplyUrl()); 
 			resultMap.put("assess_url", elderEntity.getAssessUrl()); 
