@@ -232,8 +232,8 @@ public class CareworkRestController extends BasicController {
 			endDate = (String) requestParamMap.get("endDate");
 			
 			// 参数详细验证
-			if (endDate != null && !ParamValidator.isDate(endDate))
-				throw new Exception();
+//			if (endDate != null && !ParamValidator.isDate(endDate))
+//				throw new Exception();
 		} catch(Exception e) {
 			String otherMessage = "[" + inJson + "]";
 			String message = ErrorConstants.format(ErrorConstants.GERO_CAREWOKR_PUT_PARAM_INVALID, otherMessage);
