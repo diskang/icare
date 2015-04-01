@@ -14,7 +14,7 @@ var user={
             data:JSON.stringify({name:document.getElementById("uusername").value,photo_url:''}), 
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
-            timeout: 1000, 
+            timeout: deadtime, 
             error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){document.getElementById('uusername').setAttribute('value',result.username);} 
         }); 

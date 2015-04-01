@@ -108,7 +108,7 @@
         $("#staff-dialog-form").dialog("open");
         $("#staff-dialog-form").dialog("center");
         $('.checkrole').attr("checked",false);
-        $('.checkrole').attr("disabled",false);
+        $('.checkrole').attr("disabled",true);
         $('#staff-Info-card-a input').attr('value'," ").removeAttr('disabled','');
         $("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
         $('#staff-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
@@ -128,6 +128,7 @@
         $.ajax({
             url: infoUrl,
             type: 'DELETE',
+            timeout:deadtime,
             success:function(){
                 staff.drawstaffList();
             },
@@ -149,6 +150,7 @@
                     dataType: "json",
                     contentType: "application/json;charset=utf-8",
                     url: infoUrl,
+                    timeout:deadtime,
                     success: function (msg) {
                         var data=leftTop.dealdata(msg);
                         staff.drawStaffInfo(data[0]);
@@ -191,7 +193,7 @@
             data:JSON.stringify(obj), 
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
-            timeout: 1000, 
+            timeout: deadtime, 
             error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){staff.drawStaffList();} 
         }); 
@@ -210,7 +212,7 @@
             data: JSON.stringify(roleobj), 
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
-            timeout: 1000, 
+            timeout: deadtime, 
             error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){staff.drawStaffList();} 
         }); 

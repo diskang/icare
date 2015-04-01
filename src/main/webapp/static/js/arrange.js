@@ -45,7 +45,7 @@ var arrange={
             			data:JSON.stringify(arrange.subres), 
             			dataType: 'json', 
             			contentType: "application/json;charset=utf-8",
-           		 		timeout: 1000, 
+           		 		timeout: deadtime, 
             			error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             			success: function(result){arrange.subres=[];arrange.drawArrangeList();arrange.changed=false;} 
             		}); 
@@ -125,7 +125,7 @@ var arrange={
         	dataType: "json",
         	contentType: "application/json;charset=utf-8",
         	url:rhurl.origin+"/gero/"+gid+"/schedule",
-        	timeout:1000,
+        	timeout:deadtime,
         	success: function (msg) {
         		staffrec=[];
             	var staffsch=leftTop.dealdata(msg);
@@ -162,11 +162,11 @@ var arrange={
         	dataType: "json",
         	contentType: "application/json;charset=utf-8",
         	url:rhurl.origin+'/gero/'+gid+'/staff',
-        	timeout:1000,
+        	timeout:deadtime,
         	success: function (msg) {
             	var staffsch=leftTop.dealdata(msg);
             	for (var i in staffsch){
-            		if (staffrec.indexOf(staffsch[i].id)===-1){
+            		if (staffrec.indexOf(staffsch[i].user_id)===-1){
             			var tr=document.createElement('tr');
             			tr.id="schedule"+staffsch[i].staff_id;
             			var tdn=document.createElement('td');

@@ -4,6 +4,7 @@ var lefttree=[];
 var righttemp;
 var temptree;
 var temptree2;
+var deadtime=10000;
 var hrefTable=[];
 var sex=["男","女"];
 var sexc=[];
@@ -22,6 +23,8 @@ var todayms=Sundate.getTime();
 var temparea;
 var temparea2;
 var timeline;
+var min = new Date(); // 1 april
+var max = new Date(2017,3,1); // 30 april
 // var gid=$.cookie('gid');
 // var uid=$.cookie('uid');
 var gid=getUser().gero_id;
@@ -183,7 +186,7 @@ $(function(){
         dataType: "json",
         contentType: "application/json;charset=utf-8",
         url:rhurl.origin+"/user/"+uid,
-        timeout:1000,
+        timeout:3000,
         success: function (msg) {
             temptree=msg.entities[0].privilege_list;
             leftTop.removeLefttree;
@@ -203,7 +206,7 @@ $(function(){
         dataType: "json",
         contentType: "application/json;charset=utf-8",
         url:rhurl.origin+'/gero/'+gid+'/role',
-        timeout:1000,
+        timeout:3000,
         success: function (msg) {
             var parent=document.getElementById("arrange_role");
             for(var i in msg.entities){
@@ -224,7 +227,7 @@ $(function(){
         }
     });
 
-    //eldercare.init();
+    eldercare.init();
     $('#button-allow').toggleClass("fc-state-default1");
 
 });
@@ -249,3 +252,6 @@ $('.fc-next-button').live('click',function(){arrange.next()});
 $('.fc-today-button').live('click',function(){arrange.today()});
 $('.fc-allow-button').live('click',function(){arrange.allowchange()});
 $('.fc-submit-button').live('click',function(){arrange.putarrange()});
+$('.itemleft li').live('click',function(){     
+    eldercare.getList(parseInt($(this).attr("pid")),$(this).text());
+});

@@ -26209,12 +26209,12 @@ return /******/ (function(modules) { // webpackBootstrap
               }
           },
 
-          _weekdays : 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_'),
+          _weekdays : '周日_周一_周二_周三_周四_周五_周六'.split('_'),
           weekdays : function (m) {
               return this._weekdays[m.day()];
           },
 
-          _weekdaysShort : 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_'),
+          _weekdaysShort : '周日_周一_周二_周三_周四_周五_周六'.split('_'),
           weekdaysShort : function (m) {
               return this._weekdaysShort[m.day()];
           },

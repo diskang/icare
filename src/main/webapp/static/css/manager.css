@@ -139,7 +139,6 @@ a:hover{ color:#d71318;}
 @media (min-width: 1200px) {
 	.leftNav{
 	height:700px;
-  overflow:auto;
 }
 
 }
@@ -555,9 +554,67 @@ a:hover{ color:#d71318;}
   height:500px;
   width:100%;
 }
-.itemleft{
-  width:130px;
+.itemmiddle{
+  width:250px;
   height:400px;
+  float:left;
+  margin-left:50px;
+}
+.itemleft{
+  width:250px;
+  height:400px;
+  margin:0;
+  float:left;
+}
+.itemright{
+  width:250px;
+  height:400px;
+  position:relative;
+  margin:0;
+  float:right;
+}
+.dutyhead{
+  height:30px;
+  font-size: 20px;
+  line-height: 30px;
+  background: #428bca;
+  color:#fff;
+  text-align: center;
+}
+.itemleft li{
+  height:29px;
+  font-size: 16px;
+  line-height: 29px;
+  border-bottom:1px solid #eee;
+  text-align: center;
+  cursor:pointer;
+}
+.itemleft li a:hover{
+  color: #600;
+  width:100%;
+}
+.itemleft ul{
+  height:480px;
+  overflow-y:scroll;
+  border:1px solid #c0c0c1;
+}
+.itemright ul{
+  border:1px solid #c0c0c1 ;
+  padding-left:20px;
+  text-align:left;
+  overflow-y:scroll;
+  height:480px;
+}
+.dutycontrol{
+  border:1px solid #c0c0c1 ;
+  padding-left:10px;
+  text-align:left;
+  height:480px;
+}
+.dutycontrol div{
+  height:30px;
+  font-size:18px;
+  line-height: 30px;
 }
 #areaInfo{
   width:200px;
