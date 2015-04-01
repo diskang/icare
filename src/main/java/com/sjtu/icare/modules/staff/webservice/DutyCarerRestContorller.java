@@ -57,7 +57,6 @@ public class DutyCarerRestContorller extends GeroBaseController{
 			@RequestParam(value="date", required=false) String date
 			) {
 		checkApi(request);
-		checkGero(geroId);
 		
 		// 参数检查
 		if (date != null && !ParamValidator.isDate(date)) {
@@ -121,7 +120,6 @@ public class DutyCarerRestContorller extends GeroBaseController{
 			@RequestParam(value="date", required=false) String date
 			) {
 		checkApi(request);
-		checkGero(geroId);
 		
 		// 参数检查
 		if (date != null && !ParamValidator.isDate(date)) {
