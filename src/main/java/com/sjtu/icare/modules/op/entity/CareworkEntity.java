@@ -10,6 +10,7 @@ package com.sjtu.icare.modules.op.entity;
 import java.io.Serializable;
 
 import com.sjtu.icare.common.persistence.DataEntity;
+import com.sjtu.icare.common.utils.StringUtils;
 
 public class CareworkEntity extends DataEntity<CareworkEntity> implements Serializable {
     
@@ -71,7 +72,10 @@ public class CareworkEntity extends DataEntity<CareworkEntity> implements Serial
 	 * @param endDate the endDate to set
 	 */
 	public void setEndDate(String endDate) {
-		this.endDate = endDate;
+		if (StringUtils.isBlank(endDate))
+			this.endDate = null;
+		else
+			this.endDate = endDate;
 	}
 	/**
 	 * @return the status
