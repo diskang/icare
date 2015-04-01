@@ -69,7 +69,7 @@
   <!--------------------------左导航--------------------------------> 
     <div class="leftNav" id="leftNavi" >
       <div style="background:url('/resthouse/static/images/r_1.jpg');line-height:30px;font-size:16px;color: #fff;height:30px;padding-left:20px;font-size:20px;margin:0;text-align:left;">菜单</div>
-      <ul id="lefttree" style="padding-left:20px;padding-top:10px;text-align:left;">
+      <ul id="lefttree" style="padding-left:20px;height:670px;padding-top:10px;text-align:left;overflow:scroll;">
       </ul>
     </div>
 
@@ -307,17 +307,27 @@
       <div id="eldercareshow" class="inf hide" style="min-height:700px;">
         <div class="pers-s">专护职责情况</div>
         <div class="old">
+          <div class="page-header"></div>
           <div id="careitemvision"></div>
           <div class="itemcont">
             <div class="itemleft">
-              <table id="eldercarerpage"  class="easyui-datagrid" title="员工信息列表" style="height:400px;" data-options="onDblClickRow:staff.onStaffDblClickRow">
-                <thead>
-                  <tr>
-                    <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
-                    <th data-options="field:'name',width:100,align:'center'">员工</th>
-                  </tr>
-                </thead>
-              </table>
+              <div class="dutyhead">专护人员</div>
+              <ul id="eldercarercont">
+              </ul>
+            </div>
+            <div id="elderdutypanel" class="itemmiddle hide">
+              <div class="dutyhead">控制操作</div>
+              <div class="dutycontrol">
+                <div></div>
+                <div>结束日期:<input id="eldercarer_end" type="text"></input></div>
+                <div></div>
+                <div><button id="eldercarerbutton" class="btn btn-default" onclick="eldercarer.buttonclk()" style="margin-left:180px;margin-top:10px;" >提交</button></div>
+              </div>
+            </div>
+            <div class="itemright">
+              <div class="dutyhead">老人</div>
+              <ul id="elderchecktree" class="easyui-tree" data-options="checkbox:true">
+              </ul>
             </div>
           </div>
           
@@ -504,8 +514,10 @@
       <div id="elder-Info-card-a" class="info-card-a">
         <table>
           <tr><td class="td1"><text>老人姓名: </text></td><td class="td2"><input id="ename"class="easyui-validatebox textbox" data-options="required:true"></input>*</td></tr>
+          <tr><td class="td1"><text>用户名: </text></td><td class="td2"><input id="eusername"class="easyui-validatebox textbox" data-options="required:true"></input>*</td></tr>
           <tr><td class="td1"><text>出生日期：</text></td><td class="td2"><input id="ebirthday"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'date'"></input>*</td></tr>
           <tr><td class="td1"><text>年    龄：</text></td><td class="td2"><input id="eage"></input></td></tr>
+          <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="ephone_no" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
           <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input id="egender"></input></td></tr>
           <tr><td class="td1"><text>婚姻状况：</text></td><td class="td2"><input id="emarriage"></input></td></tr>
           <tr><td class="td1"><text>民    族：</text></td><td class="td2"><input id="enationality"></input></td></tr>

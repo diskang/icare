@@ -118,6 +118,7 @@ var item={
         				dataType: "json",
         				contentType: "application/json;charset=utf-8",
         				url: infoUrl,
+                        timeout:3000,
         				success: function (msg) {
                             $("#elder-dialog-form").dialog("open");
                             // $("#elder-dialog-form").dialog("center");
@@ -142,6 +143,7 @@ var item={
                         dataType: "json",
                         contentType: "application/json;charset=utf-8",
                         url: infoUrl,
+                        timeout:3000,
                         success: function (msg) {
                             $("#elder-dialog-form").dialog("open");
                             // $("#elder-dialog-form").dialog("center");

@@ -89,7 +89,7 @@ var role={
         $.ajax({
             url: infoUrl,
             type: 'DELETE',
-            timeout:3000,
+            timeout:deadtime,
             success:function(){
                 role.drawGeroRoleList();
             },
@@ -109,7 +109,7 @@ var role={
             dataType: "json",
             contentType: "application/json;charset=utf-8",
             url: infoUrl,
-            timeout:3000,
+            timeout:deadtime,
             success: function (msg) {
                 var data=leftTop.dealdata(msg);
                 role.drawRoleInfo(data[0]);
@@ -139,7 +139,7 @@ var role={
             data:JSON.stringify({"insert_privilege_ids":insert_privilege_ids}), 
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
-            timeout: 3000, 
+            timeout: deadtime, 
             error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){role.drawGeroRoleList();} 
         }); 
@@ -151,7 +151,7 @@ var role={
             data:JSON.stringify({"delete_privilege_ids":delete_privilege_ids}), 
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
-            timeout: 3000, 
+            timeout: deadtime, 
             error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){role.drawGeroRoleList();} 
         }); 
@@ -169,7 +169,7 @@ var role={
             data:JSON.stringify(obj), 
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
-            timeout: 3000, 
+            timeout: deadtime, 
             error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){role.drawGeroRoleList();} 
         }); 

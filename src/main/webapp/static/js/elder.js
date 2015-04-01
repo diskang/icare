@@ -104,6 +104,7 @@ var elder={
         $.ajax({
             url: infoUrl,
             type: 'DELETE',
+            timeout:deadtime,
             success:function(){
                 elder.drawElderList();
             },
@@ -124,6 +125,7 @@ var elder={
         			dataType: "json",
         			contentType: "application/json;charset=utf-8",
         			url: infoUrl,
+                    timeout:deadtime,
         			success: function (msg) {
                         var data=leftTop.dealdata(msg);
                         elder.drawElderInfo(data[0]);
@@ -143,7 +145,7 @@ var elder={
             phone_no:document.getElementById("ephone_no").value,
             nssf_id:document.getElementById("enssf_id").value,
             archive_id:document.getElementById("earchive_id").value,
-            area_id:document.getElementById("earea_id").value,
+            area_id:parseInt(document.getElementById("earea_id").value),
             care_level:document.getElementById("ecare_level").value,
             nationality:document.getElementById("enationality").value,
             native_place:document.getElementById("enative_place").value,
@@ -164,7 +166,7 @@ var elder={
             data:JSON.stringify(obj), 
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
-            timeout: 1000, 
+            timeout: deadtime, 
             error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){elder.drawElderList();} 
         }); 
