@@ -4,8 +4,6 @@ import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
 
 import com.sjtu.icare.common.utils.MapKeyComparator;
-import com.sjtu.icare.modules.sys.utils.security.StatelessAuthcFilter;
-
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
