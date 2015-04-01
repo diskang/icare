@@ -92,7 +92,7 @@ public class ElderRelativeRestController  extends BasicController {
 			if (users != null) {
 				for (User user : users) {
 					Map<String, Object> resultMap = new HashMap<String, Object>(); 
-					resultMap.put("user_id", user.getUserId()); 
+					resultMap.put("relative_id", user.getUserId()); 
 					resultMap.put("id", user.getId()); 
 					
 					resultMap.put("age", user.getAge()); 
@@ -257,7 +257,7 @@ public class ElderRelativeRestController  extends BasicController {
 //			checkPermissions(permissions);
 			
 			Map<String, Object> resultMap = new HashMap<String, Object>(); 
-			resultMap.put("user_id", user.getUserId()); 
+			resultMap.put("relative_id", user.getUserId()); 
 			resultMap.put("id", user.getId()); 
 			
 			resultMap.put("age", user.getAge()); 
