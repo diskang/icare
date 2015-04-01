@@ -25,7 +25,9 @@
         SELECT
 			*
         FROM T_STAFF
-        WHERE T_STAFF.id = #{id}
+        WHERE 
+        	T_STAFF.id = #{id}
+        	AND T_STAFF.leave_date is NULL
         ]]>
     </select>
  
@@ -38,6 +40,7 @@
         WHERE
             T_USER.user_type = #{userType} 
             AND T_USER.gero_id = #{geroId}
+            AND T_USER.cancel_date is NULL
 		    <if test="name != null">
 		        AND T_USER.name LIKE '%' + #{name} + '%'
 		    </if> 
@@ -59,6 +62,7 @@
         WHERE
             T_USER.user_type = #{userType}
             AND T_USER.gero_id = #{geroId} 
+            AND T_USER.cancel_date is NULL
 		    <if test="name != null">
 		        AND T_USER.name LIKE '%' + #{name} + '%'
 		    </if> 
