@@ -132,6 +132,7 @@
                 <thead>
                   <tr>
                     <th data-options="field:'user_id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'bed_id',width:120,align:'center'">房 间</th>
                     <th data-options="field:'name',width:120,align:'center'">姓 名</th>
                     <th data-options="field:'identity_no',width:160,align:'center'">身份证号</th>
@@ -185,6 +186,7 @@
                 <thead>
                   <tr>
                     <th data-options="field:'user_id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'role',width:100,align:'center'">角色</th>
                     <th data-options="field:'name',width:100,align:'center'">姓 名</th>
                     <th data-options="field:'identity_no',width:160,align:'center'">身份证号</th>
@@ -319,9 +321,12 @@
               <div class="dutyhead">控制操作</div>
               <div class="dutycontrol">
                 <div></div>
-                <div>结束日期:<input id="eldercarer_end" type="text"></input></div>
+                <div>结束日期:<input type="text" id="eldercarer-end" ></input></div>
                 <div></div>
-                <div><button id="eldercarerbutton" class="btn btn-default" onclick="eldercarer.buttonclk()" style="margin-left:180px;margin-top:10px;" >提交</button></div>
+                <div><button id="eldercarerbutton" class="btn btn-default" onclick="eldercare.buttonclk()" style="margin-left:180px;margin-top:10px;" >提交</button>
+                </div>
+                <div></div>
+                <p>说明: 结束日期为真正结束日期的后一天。</p>
               </div>
             </div>
             <div class="itemright">
@@ -495,7 +500,7 @@
           text:'传照片',
           iconCls:'icon-edit',
           handler:function(){
-            if(elder.method==='put') photo.doit(rhurl.root+'/uploadObject/user'+elder.eid)
+            if(elder.method==='put') photo.doit(rhurl.root+'/uploadObject/user'+elder.uid)
           }
         }],
         buttons: [{
@@ -561,7 +566,7 @@
           text:'传照片',
           iconCls:'icon-edit',
           handler:function(){
-            if(staff.method==='put') photo.doit(rhurl.root+'/uploadObject/user'+staff.sid)
+            if(staff.method==='put') photo.doit(rhurl.root+'/uploadObject/user'+staff.uid)
           }
         }],
         buttons: [{

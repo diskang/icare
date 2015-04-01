@@ -1,6 +1,7 @@
 var elder={
     method:'',
     eid:'',
+    uid:"",
     drawElderList:function(){
         $("#elder-dialog-form").dialog("close");
         $(".inf").addClass('hide');
@@ -77,7 +78,7 @@ var elder={
         $('#emarriage').attr('value',data.marriage);
         $('#eidentity_no').attr('value',data.identity_no);
 
-        if(data.photo_url!==undefined) $('#elder-Info-card-b img').attr("src",data.photo_url).attr("width","178px").attr("height","220px");
+        if(data.photo_url!==undefined) $('#elder-Info-card-b img').attr("src",data.photo_src).attr("width","178px").attr("height","220px");
         else $('#elder-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
 
@@ -119,6 +120,7 @@ var elder={
                 elder.method='put';
                 var eldert = $('#elderpage').datagrid('getSelected');
                 elder.eid='/'+eldert.user_id;
+                elder.uid='/'+eldert.id;
                 infoUrl=rhurl.origin+"/gero/"+gid+"/elder" + elder.eid;
                 $.ajax({
         			type: "get",

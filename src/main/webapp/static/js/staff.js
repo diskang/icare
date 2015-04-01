@@ -1,6 +1,7 @@
 ﻿var staff={
     method:'',
     sid:'',
+    uid:'',
     drawStaffList:function(){
         $("#staff-dialog-form").dialog("close");
         $(".inf").addClass('hide');
@@ -98,7 +99,7 @@
         $('#sleave_date').attr('value',data.leave_date);
         $('#sage').attr('value',data.age);
         $('#spolitical_status').attr('value',data.political_status);
-        if(data.photo_url!==undefined) $('#staff-Info-card-b img').attr("src",data.photo_url).attr("width","178px").attr("height","220px");
+        if(data.photo_url!==undefined) $('#staff-Info-card-b img').attr("src",data.photo_src).attr("width","178px").attr("height","220px");
         else $('#staff-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
 
@@ -144,6 +145,7 @@
                 staff.method='put';
                 var stafft = $('#staffpage').datagrid('getSelected');
                 staff.sid=stafft.user_id;
+                staff.uid='/'+stafft.id;
                 infoUrl=rhurl.origin+"/gero/"+gid+"/staff/" + staff.sid;
                 $.ajax({
                     type: "get",
