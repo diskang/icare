@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,11 +28,16 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.common.utils.DateUtil;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectResult;
+import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.OSSObjectUtils;
 import com.sjtu.icare.common.utils.UploadUtils;
 import com.sjtu.icare.common.web.rest.MediaTypes;
+import com.sjtu.icare.common.web.rest.RestException;
+import com.sjtu.icare.modules.sys.entity.User;
+import com.sjtu.icare.modules.sys.service.SystemService;
+import com.sjtu.icare.modules.sys.utils.UserUtils;
 
 /**
  * 上传文件控制器
@@ -41,6 +48,9 @@ import com.sjtu.icare.common.web.rest.MediaTypes;
 @RequestMapping("/uploadObject")
 public class UploadObjectController {
 	private static Logger logger = Logger.getLogger(UploadObjectController.class);
+	
+	@Autowired
+	private SystemService systemService;
 	
 	/**
 	 * 上传用户照片
@@ -64,12 +74,30 @@ public class UploadObjectController {
 		
 		String innerPath = "user/";
 		String filename = "user_"+uid+"_"+DateUtils.getDate();
+		String filepath = innerPath + filename + ".jpg";
 		
 		OSSObjectUtils uploadUtils = new OSSObjectUtils();
 		
 		Map<String, String> urls = uploadUtils.uploadFile(file, innerPath, filename, "head");
 		
 		Map<String, String> postParam = uploadUtils.getPostParam(innerPath + filename + ".jpg");
+		
+		User user = UserUtils.get(uid);
+		if (user.getId() == 0) {
+			String message = ErrorConstants.format(ErrorConstants.USER_FOR_ID_NOT_FOUND,"");
+			logger.error(message);
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
+		}
+		user.setPhotoUrl(filepath);
+	
+		try {
+			systemService.updateUser(user);
+		} catch (Exception e) {
+			String message = ErrorConstants.format(ErrorConstants.USER_UPDATE_INFO_SERVICE_ERROR,
+					"[photoUrl=" + filepath + "]");
+			logger.error(message);
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
+		}
 		
 		result.addEntity(urls);
 		result.addEntity(postParam);
