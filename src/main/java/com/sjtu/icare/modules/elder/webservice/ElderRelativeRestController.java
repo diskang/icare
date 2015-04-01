@@ -32,6 +32,7 @@ import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
+import com.sjtu.icare.common.utils.OSSObjectUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.PinyinUtils;
 import com.sjtu.icare.common.web.rest.BasicController;
@@ -117,6 +118,9 @@ public class ElderRelativeRestController  extends BasicController {
 					resultMap.put("user_type", user.getUserType()); 
 					resultMap.put("wechat_id", user.getWechatId()); 
 					resultMap.put("zip_code", user.getZipCode()); 
+					
+					OSSObjectUtils ossObjectUtils = new OSSObjectUtils();
+					resultMap.put("photo_src", ossObjectUtils.getDownloadUrl(user.getPhotoUrl())); 
 					
 					RelativeEntity requestRelativeEntity = new RelativeEntity();
 					requestRelativeEntity.setId(user.getUserId());
@@ -279,6 +283,9 @@ public class ElderRelativeRestController  extends BasicController {
 			resultMap.put("user_type", user.getUserType()); 
 			resultMap.put("wechat_id", user.getWechatId()); 
 			resultMap.put("zip_code", user.getZipCode()); 
+			
+			OSSObjectUtils ossObjectUtils = new OSSObjectUtils();
+			resultMap.put("photo_src", ossObjectUtils.getDownloadUrl(user.getPhotoUrl())); 
 			
 			
 			resultMap.put("elder_id", relativeEntity.getElderId()); 
