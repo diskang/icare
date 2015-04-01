@@ -83,7 +83,7 @@ public class UploadObjectController {
 		Map<String, String> postParam = uploadUtils.getPostParam(innerPath + filename + ".jpg");
 		
 		User user = UserUtils.get(uid);
-		if (user.getId() == 0) {
+		if (user == null) {
 			String message = ErrorConstants.format(ErrorConstants.USER_FOR_ID_NOT_FOUND,"");
 			logger.error(message);
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);

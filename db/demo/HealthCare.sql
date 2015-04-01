@@ -337,7 +337,8 @@ CREATE TABLE T_PRIVILEGE
 	name				nvarchar(50)	NOT NULL,				--权限名
 	parent_id			int				NOT NULL,				--父亲结点，顶级菜单id为1，其父节点为虚拟结点，为0
 	parent_ids			varchar(1000)	NOT NULL,				--所有父亲权限列表，用逗号分隔，从0开始。添加到索引
-	permission			varchar(255)	NOT NULL,				--shiro权限字符串
+	permission			varchar(255)	,						--shiro权限字符串
+	api					varchar(255)	,						--api
 	href				varchar(255)	,						--链接
 	icon				varchar(100)	,						--图标
 	notes				nvarchar(500)	,						--权限说明

@@ -12,9 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aliyun.oss.internal.OSSUtils;
+import com.aliyun.oss.model.OSSObject;
 import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.config.OrderByConstant;
 import com.sjtu.icare.common.persistence.Page;
+import com.sjtu.icare.common.utils.OSSObjectUtils;
 import com.sjtu.icare.modules.sys.entity.Gero;
 import com.sjtu.icare.modules.sys.entity.Privilege;
 import com.sjtu.icare.modules.sys.entity.Role;
@@ -141,6 +144,7 @@ public class SysBaseController extends BasicController {
 		userMap.put("register_date", user.getRegisterDate());
 		userMap.put("cancel_date", user.getCancelDate());
 		userMap.put("photo_url", user.getPhotoUrl());
+		userMap.put("photo_src", new OSSObjectUtils().getDownloadUrl(user.getPhotoUrl()));
 		return userMap;
 	}
 	
