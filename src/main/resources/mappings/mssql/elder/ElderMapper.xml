@@ -40,8 +40,13 @@
             pad_mac
         FROM T_ELDER
         WHERE 
-        	T_ELDER.id = #{id}
-        	AND T_ELDER.checkout_date is NULL
+        	T_ELDER.checkout_date is NULL
+        	<if test="id != null">
+        	AND T_ELDER.id = #{id}
+        	</if> 
+        	<if test="identityNo != null">
+        	AND T_ELDER.id = (SELECT T_USER.user_id FROM T_USER WHERE T_USER.identity_no = #{identityNo})
+        	</if> 
     </select>
 
     <select id="getAllElders" resultMap="com.sjtu.icare.modules.sys.persistence.UserMapper.UserMap">
