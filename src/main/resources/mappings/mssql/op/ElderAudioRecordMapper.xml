@@ -4,8 +4,6 @@
 
 <mapper namespace="com.sjtu.icare.modules.op.persistence.ElderAudioRecordDAO">
 
-    <cache />
-    
     <sql id="elderAudioRecordEntityColumns">
         id,
 		recorder_identity as recorderIdentity,

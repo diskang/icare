@@ -4,8 +4,6 @@
 
 <mapper namespace="com.sjtu.icare.modules.op.persistence.CareItemDAO">
 
-    <cache />
-    
 	<resultMap type="com.sjtu.icare.modules.op.entity.CareItemEntity" id="CareItemMap">
 	    <id property="id" column="id" />
 	    <result property="geroId" column="gero_id" />

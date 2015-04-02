@@ -3,6 +3,8 @@ package com.sjtu.icare.modules.staff.entity;
 
 import java.io.Serializable;
 
+import com.sjtu.icare.common.utils.StringUtils;
+
 /**
  * @Description Staff Entity
  * @author WangQi
@@ -135,7 +137,10 @@ public class StaffEntity implements Serializable {
 	 * @param leaveDate the leaveDate to set
 	 */
 	public void setLeaveDate(String leaveDate) {
-		this.leaveDate = leaveDate;
+		if (StringUtils.isBlank(leaveDate))
+			this.leaveDate = null;
+		else
+			this.leaveDate = leaveDate;
 	}
 
 

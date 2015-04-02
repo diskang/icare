@@ -4,8 +4,6 @@
 
 <mapper namespace="com.sjtu.icare.modules.gero.persistence.GeroElderExchangeDAO">
 
-    <cache />
-    
     <resultMap type="com.sjtu.icare.modules.gero.entity.GeroElderExchangeEntity" id="GeroElderExchangeMap">
         <id property="id" column="id" />
         <result property="participants" column="participants" />

@@ -4,8 +4,6 @@
 
 <mapper namespace="com.sjtu.icare.modules.elder.persistence.RelativeDAO">
 
-    <cache />
-    
     <resultMap type="com.sjtu.icare.modules.elder.entity.RelativeEntity" id="RelativeMap">
 	    <id property="id" column="id" />
 	    <result property="elderId" column="elder_id" />

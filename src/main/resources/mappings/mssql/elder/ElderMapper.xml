@@ -4,8 +4,6 @@
 
 <mapper namespace="com.sjtu.icare.modules.elder.persistence.ElderDAO">
 
-    <cache />
-    
     <resultMap type="com.sjtu.icare.modules.elder.entity.ElderEntity" id="ElderMap">
 	    <id property="id" column="id" />
 	    <result property="name" column="name" />
