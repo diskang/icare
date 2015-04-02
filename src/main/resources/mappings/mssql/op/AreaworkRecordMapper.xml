@@ -4,8 +4,6 @@
 
 <mapper namespace="com.sjtu.icare.modules.op.persistence.AreaworkRecordDAO">
 
-    <cache />
-    
     <resultMap type="com.sjtu.icare.modules.op.entity.AreaworkRecordEntity" id="AreaworkRecordMap">
         <id property="id" column="id" />
         <result property="carerId" column="carer_id" />

@@ -2,6 +2,8 @@ package com.sjtu.icare.modules.elder.entity;
 
 import java.io.Serializable;
 
+import com.sjtu.icare.common.utils.StringUtils;
+
 public class RelativeEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -51,7 +53,10 @@ public class RelativeEntity implements Serializable {
 		return cancelDate;
 	}
 	public void setCancelDate(String cancelDate) {
-		this.cancelDate = cancelDate;
+		if (StringUtils.isBlank(cancelDate))
+			this.cancelDate = null;
+		else
+			this.cancelDate = cancelDate;
 	}
 
 }
