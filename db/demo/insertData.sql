@@ -475,7 +475,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'漱口'
-           ,'null'
+           ,'mouth_wash'
 		   ,1
            ,1
            ,1
@@ -493,7 +493,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'刷牙'
-           ,'null'
+           ,'teeth_brush'
 		   ,1
            ,1
            ,1
@@ -511,7 +511,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'梳头'
-           ,'null'
+           ,'hair_comb'
 		   ,1
            ,1
            ,1
@@ -529,7 +529,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'更换衣服'
-           ,'null'
+           ,'clothes_change'
 		   ,1
            ,1
            ,1
@@ -547,7 +547,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'发放药物'
-           ,'null'
+           ,'medicine_distribute'
 		   ,1
            ,1
            ,1
@@ -565,7 +565,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'剃须'
-           ,'null'
+           ,'beard_shave'
 		   ,1
            ,1
            ,1
@@ -583,7 +583,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'剪指甲'
-           ,'null'
+           ,'nail_cut'
 		   ,1
            ,1
            ,1
@@ -601,7 +601,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'饮水'
-           ,'null'
+           ,'water_drink'
 		   ,1
            ,1
            ,1
@@ -619,7 +619,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'穿（脱）衣'
-           ,'null'
+           ,'clothes_on_off'
 		   ,1
            ,1
            ,1
@@ -637,7 +637,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'协助如厕'
-           ,'null'
+           ,'toilet_assist'
 		   ,1
            ,1
            ,1
@@ -655,7 +655,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'喂食'
-           ,'null'
+           ,'food_feed'
 		   ,1
            ,1
            ,1
@@ -673,6 +673,24 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'更换尿布'
+           ,'diaper_change'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'clothes_wash'
            ,'null'
 		   ,1
            ,1
@@ -690,25 +708,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
            ,[notes])
      VALUES
            (1
-           ,'衣物洗涤'
-           ,'null'
-		   ,1
-           ,1
-           ,1
-           ,'')
-GO
-
-INSERT INTO [dbo].[T_CARE_ITEM]
-           ([gero_id]
-           ,[name]
-           ,[icon]
-           ,[level]
-           ,[period]
-           ,[frequency]
-           ,[notes])
-     VALUES
-           (1
-           ,'尿布洗涤'
+           ,'diaper_wash'
            ,'null'
 		   ,1
            ,1
@@ -727,7 +727,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'食物粉碎'
-           ,'null'
+           ,'food_comminute'
 		   ,1
            ,1
            ,1
