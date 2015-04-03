@@ -598,7 +598,14 @@ a:hover{ color:#d71318;}
   overflow-y:scroll;
   border:1px solid #c0c0c1;
 }
-.itemright ul{
+#elderchecktree{
+  border:1px solid #c0c0c1 ;
+  padding-left:20px;
+  text-align:left;
+  overflow-y:scroll;
+  height:480px;
+}
+#areachecktree{
   border:1px solid #c0c0c1 ;
   padding-left:20px;
   text-align:left;
