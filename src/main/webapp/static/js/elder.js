@@ -61,7 +61,7 @@ var elder={
         $('#eage').attr('value',data.age);
         var radios = document.getElementsByName("egender");
             for (var i = 0; i < radios.length; i++) {
-                if (radios[i].value==data.gender) radios[i].checked="checked";
+                if (radios[i].getAttribute('value')==data.gender) radios[i].checked="checked";
             }
         $('#eaddress').attr('value',data.address);
         $('#enative_place').attr('value',data.native_place);
@@ -142,7 +142,7 @@ var elder={
         var sexc;
         var radios = document.getElementsByName("egender");
             for (var i = 0; i < radios.length; i++) {
-                if (radios[i].checked==="checked") sexc=parseInt(radios[i].value);
+                if (radios[i].checked==="checked") sexc=radios[i].getAttribute('value');
             }
         var obj={
             name:document.getElementById("ename").value,
