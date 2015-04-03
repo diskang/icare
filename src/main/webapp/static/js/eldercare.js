@@ -4,45 +4,57 @@ var eldercare={
   carework_id:'',
   method:'',
   sid:'',
+  item_id:'',
+  obj:{ staff_id:'',
+        elder_ids:[],
+        end_date:'',
+  },
 	drawElderCareList:function(){
     min=timeline.getCurrentTime();
 		$(".inf").addClass('hide');
 		$("#eldercareshow").removeClass('hide');
-     $("#elderdutypanel").addClass('hide')
+    $("#elderdutypanel").addClass('hide');
     eldercare.updateeldercarer();
     eldercare.updateeldertree();
-},
+  },
+
   init:function(){
-    var container = document.getElementById('careitemvision');
-    var options = {
+    container = document.getElementById('careitemvision');
+    options = {
       editable:{add:true,
         remove:true},
       margin:{item:0},
       dataAttributes:['all'],
       onAdd: function (item, callback) {
         eldercare.method='post';
+        eldercare.carework_id='';
         $("#elderdutypanel").removeClass('hide')
         $("#elderchecktree").tree("loadData",eldercare.eldertemp);
         callback(null); // cancel item creation
       },
 
       onUpdate: function (item, callback) {
-        
         eldercare.method='put';
+        eldercare.carework_id='/'+item.id;
+        $("#elderchecktree").tree("loadData",eldercare.eldertemp);
+        for(var i in item.elder_ids){
+          var node=$("#elderchecktree").tree('find',item.elder_ids[i]);
+            if(node)$("#elderchecktree").tree("check",node.target);
+        }
         $("#elderdutypanel").removeClass('hide')
         callback(null); // cancel updating the item
-    },
+      },
 
-    onRemove: function (item, callback) {
+      onRemove: function (item, callback) {
       if (confirm('Remove item ' + item.content + '?')) {
         callback(item); // confirm deletion
       }
       else {
         callback(null); // cancel deletion
       }
-    }
-    };
-    timeline = new vis.Timeline(container, [], options);
+      }
+      };
+      timeline = new vis.Timeline(container, [], options);
     // timeline.clear({items: true});
     //timeline.setItems(items2);
   },
@@ -74,6 +86,10 @@ var eldercare={
   },
   updateeldertree:function(){
     $('#elderchecktree li').remove();
+    /*$("#elderchecktree").tree({
+            checkbox:true,
+        //onlyLeafCheck:true,
+        })*/
     $.ajax({
         type: "get",
         data:{page:1,rows:65535,sort:'ID'},
@@ -82,7 +98,7 @@ var eldercare={
         url:rhurl.origin+'/gero/'+gid+'/elder',
         timeout:deadtime,
         success: function (msg) {
-          eldertemp=[];
+          eldercare.eldertemp=[];
           for(var i in msg.entities){
             var temp={
               id:msg.entities[i].user_id,
@@ -137,17 +153,19 @@ var eldercare={
     });
   },
   buttonclk:function(){
-    authority.obj.name=document.getElementById("pname").value;
-    authority.obj.notes=document.getElementById("pnotes").value;
-    authority.obj.permission=document.getElementById("ppermission").value;
-    authority.obj.href=document.getElementById("phref").value;
-    authority.obj.icon=document.getElementById("picon").value;
-    authority.obj.api=document.getElementById("papi").value;
-    var infoUrl=rhurl.origin+'/gero/'+gid+'/carework'+'';
+    eldercare.obj.staff_id=eldercare.sid;
+    eldercare.obj.end_date=document.getElementById("eldercarer-end").value;
+    var nodes = $('#elderchecktree').tree('getChecked', ['checked','indeterminate']);
+    if(nodes){
+      eldercare.obj.elder_ids=[];
+      for (var i  in nodes){
+          eldercare.obj.elder_ids.push(nodes[i].id);
+        }
+      var infoUrl=rhurl.origin+'/gero/'+gid+'/carework'+eldercare.carework_id;
         $.ajax({
             url: infoUrl, 
             type:eldercare.method, 
-            data:JSON.stringify(authority.obj), 
+            data:JSON.stringify(eldercare.obj), 
             dataType:"json",
             contentType: "application/json;charset=utf-8",
             timeout:deadtime,
@@ -158,7 +176,8 @@ var eldercare={
                 authority.drawAuthorityList();
             } 
         }); 
-  }
+      }
+  },
 
   
 }

@@ -25,6 +25,8 @@ var temparea2;
 var timeline;
 var min = new Date(); // 1 april
 var max = new Date(2017,3,1); // 30 april
+var container;
+var options;
 // var gid=$.cookie('gid');
 // var uid=$.cookie('uid');
 var gid=getUser().gero_id;
@@ -226,7 +228,6 @@ $(function(){
             leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
         }
     });
-
     eldercare.init();
     $('#button-allow').toggleClass("fc-state-default1");
 
