@@ -390,7 +390,7 @@ INSERT INTO [dbo].[T_AREA_ITEM]
      VALUES
            (1
            ,'整理厕所'
-           ,'toliet_clean'
+           ,'toilet_clean'
            ,1
            ,1
            ,'')
