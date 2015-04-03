@@ -46,15 +46,25 @@ var eldercare={
       },
 
       onRemove: function (item, callback) {
-      if (confirm('Remove item ' + item.content + '?')) {
-        callback(item); // confirm deletion
-      }
-      else {
+        if (confirm('确定要删除？')) {
+          var infoUrl=rhurl.origin+'/gero/'+gid+'/carework/'+item.id;
+          $.ajax({
+            url: infoUrl, 
+            type:'delete', 
+            timeout:deadtime,
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+            }, 
+            success: function(result){
+                eldercare.drawElderCareList();
+            } 
+        }); 
+        }
         callback(null); // cancel deletion
+
       }
-      }
-      };
-      timeline = new vis.Timeline(container, [], options);
+    };
+    timeline = new vis.Timeline(container, [], options);
     // timeline.clear({items: true});
     //timeline.setItems(items2);
   },
@@ -72,7 +82,7 @@ var eldercare={
             var parent=document.getElementById("eldercarercont");
             for(var i in msg.entities){
                 var dt=document.createElement('li');
-                dt.setAttribute('pid',msg.entities[i].user_id);
+                dt.setAttribute('pid',msg.entities[i].staff_id);
                 var a=document.createElement('a');
                 a.innerHTML=msg.entities[i].name;
                 dt.appendChild(a);
@@ -86,10 +96,6 @@ var eldercare={
   },
   updateeldertree:function(){
     $('#elderchecktree li').remove();
-    /*$("#elderchecktree").tree({
-            checkbox:true,
-        //onlyLeafCheck:true,
-        })*/
     $.ajax({
         type: "get",
         data:{page:1,rows:65535,sort:'ID'},
@@ -101,7 +107,7 @@ var eldercare={
           eldercare.eldertemp=[];
           for(var i in msg.entities){
             var temp={
-              id:msg.entities[i].user_id,
+              id:msg.entities[i].elder_id,
               text:msg.entities[i].name,
               iconCls:'icon-blank',
             }
@@ -173,11 +179,11 @@ var eldercare={
                 leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
             }, 
             success: function(result){
-                authority.drawAuthorityList();
+                eldercare.drawElderCareList();
             } 
         }); 
       }
-  },
+  }
 
   
 }

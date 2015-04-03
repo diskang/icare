@@ -166,7 +166,7 @@ var arrange={
         	success: function (msg) {
             	var staffsch=leftTop.dealdata(msg);
             	for (var i in staffsch){
-            		if (staffrec.indexOf(staffsch[i].user_id)===-1){
+            		if (staffrec.indexOf(staffsch[i].staff_id)===-1){
             			var tr=document.createElement('tr');
             			tr.id="schedule"+staffsch[i].staff_id;
             			var tdn=document.createElement('td');

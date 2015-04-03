@@ -96,7 +96,7 @@
         </div>
       </div>
 
-    <!--------------------------老人列表-------------------------------->
+      <!--------------------------老人列表-------------------------------->
       <div id="eldershow" class="inf hide" style="min-height:700px;">
         <div class="pers-s">老人信息中心</div>
         <div class="old">
@@ -131,7 +131,7 @@
               <table id="elderpage"  class="easyui-datagrid" title="老人信息列表" style="height:400px;" data-options="onDblClickRow:elder.onElderDblClickRow">
                 <thead>
                   <tr>
-                    <th data-options="field:'user_id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'elder_id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'bed_id',width:120,align:'center'">房 间</th>
                     <th data-options="field:'name',width:120,align:'center'">姓 名</th>
@@ -139,6 +139,44 @@
                     <th data-options="field:'gender',width:80,align:'center'">性 别</th>
                     <th data-options="field:'age',width:80,align:'center'">年 龄</th>
                     <th data-options="field:'care_level',width:120,align:'center'">护理等级</th>
+                  </tr>
+                </thead>
+              </table>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!--------------------------家属列表-------------------------------->
+      <div id="relativeshow" class="inf hide" style="min-height:700px;">
+        <div class="pers-s">家属信息中心</div>
+        <div class="old">
+          <div class="page-header">家属信息查询:</div>
+          <div class="Inquiry">
+            <div class="form-group group">
+              <label class="control" for="name">姓名:</label>
+              <div class="col-smm-2">
+                <input id="relative_name" class="form-control"  value=""></input>
+              </div>
+            </div>
+            <div class="form-group group"> 
+              <div class="col-md-offset-2">
+                <button id="relative-search" class="btn btn-default" onclick="relative.doSearch()" style="margin-left:30px;" >搜索</button>
+              </div>
+            </div>
+          </div>
+          <div class="list" style="min-height:500px">
+              <table id="relativepage"  class="easyui-datagrid" title="家属信息列表" style="height:400px;" data-options="onDblClickRow:relative.onRelativeDblClickRow">
+                <thead>
+                  <tr>
+                    <th data-options="field:'relative_id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'name',width:120,align:'center'">姓 名</th>
+                    <th data-options="field:'phone_no',width:120,align:'center'">电话</th>
+                    <th data-options="field:'elder_id',width:160,align:'center'">相关老人</th>
+                    <th data-options="field:'gender',width:80,align:'center'">性 别</th>
+                    <th data-options="field:'age',width:80,align:'center'">年 龄</th>
                   </tr>
                 </thead>
               </table>
@@ -185,7 +223,7 @@
               <table id="staffpage"  class="easyui-datagrid" title="员工信息列表" style="height:400px;" data-options="onDblClickRow:staff.onStaffDblClickRow">
                 <thead>
                   <tr>
-                    <th data-options="field:'user_id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'staff_id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'role',width:100,align:'center'">角色</th>
                     <th data-options="field:'name',width:100,align:'center'">姓 名</th>
@@ -341,6 +379,42 @@
 
 
 
+      <!--------------------------房护职责-------------------------------->
+      <div id="areacareshow" class="inf hide" style="min-height:700px;">
+        <div class="pers-s">房护职责情况</div>
+        <div class="old">
+          <div class="page-header"></div>
+          <div id="areaitemvision"></div>
+          <div class="itemcont">
+            <div class="itemleft">
+              <div class="dutyhead">房护人员</div>
+              <ul id="areacarercont">
+              </ul>
+            </div>
+            <div id="areadutypanel" class="itemmiddle hide">
+              <div class="dutyhead">控制操作</div>
+              <div class="dutycontrol">
+                <div></div>
+                <div>结束日期:<input type="text" id="areacarer-end" ></input></div>
+                <div></div>
+                <div><button id="areacarerbutton" class="btn btn-default" onclick="areacare.buttonclk()" style="margin-left:180px;margin-top:10px;" >提交</button>
+                </div>
+                <div></div>
+                <p>说明: 结束日期为真正结束日期的后一天。</p>
+              </div>
+            </div>
+            <div class="itemright">
+              <div class="dutyhead">区域</div>
+              <ul id="areachecktree" class="easyui-tree" data-options="checkbox:true,onlyLeafCheck:true">
+              </ul>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+
+
       <!--------------------------项目列表-------------------------------->
       <div id="itemshow" class="inf hide" style="min-height:700px;">
         <div class="pers-s">项目总表</div>
@@ -385,7 +459,7 @@
                     <th data-options="field:'name',width:140,align:'center'">名 称</th>
                     <th data-options="field:'level',width:100,align:'center'">护理等级</th>
                     <th data-options="field:'period',width:80,align:'center'">周期</th>
-                    <th data-options="field:'frequence',width:80,align:'center'">频率</th>
+                    <th data-options="field:'frequency',width:80,align:'center'">频率</th>
                     <th data-options="field:'notes',width:300,align:'center'">说 明</th>
                   </tr>
                 </thead>
@@ -404,7 +478,7 @@
                     <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'name',width:140,align:'center'">名 称</th>
                     <th data-options="field:'period',width:80,align:'center'">周期</th>
-                    <th data-options="field:'frequence',width:80,align:'center'">频率</th>
+                    <th data-options="field:'frequency',width:80,align:'center'">频率</th>
                     <th data-options="field:'notes',width:300,align:'center'">说 明</th>
                   </tr>
                 </thead>
@@ -519,11 +593,10 @@
       <div id="elder-Info-card-a" class="info-card-a">
         <table>
           <tr><td class="td1"><text>老人姓名: </text></td><td class="td2"><input id="ename"class="easyui-validatebox textbox" data-options="required:true"></input>*</td></tr>
-          <tr><td class="td1"><text>用户名: </text></td><td class="td2"><input id="eusername"class="easyui-validatebox textbox" data-options="required:true"></input>*</td></tr>
           <tr><td class="td1"><text>出生日期：</text></td><td class="td2"><input id="ebirthday"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'date'"></input>*</td></tr>
           <tr><td class="td1"><text>年    龄：</text></td><td class="td2"><input id="eage"></input></td></tr>
           <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="ephone_no" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
-          <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input id="egender"></input></td></tr>
+          <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input type="radio" name="egender" value=0 checked="checked" />男 <input type="radio" name="egender" value=1 />女</td></tr>
           <tr><td class="td1"><text>婚姻状况：</text></td><td class="td2"><input id="emarriage"></input></td></tr>
           <tr><td class="td1"><text>民    族：</text></td><td class="td2"><input id="enationality"></input></td></tr>
           <tr><td class="td1"><text>籍    贯：</text></td><td class="td2"><input id="enative_place"></input></td></tr>
@@ -545,6 +618,84 @@
       </div>
     </div>
 </div>
+
+
+<!-----------------------家属个人信息------------------------------>
+<div id="relative-dialog-form"  class="easyui-dialog" title="家属信息详情" style="width:700px;height:600px;padding:10px"
+      data-options="
+        modal:true,
+        closed:true,
+        fix:true,
+        left:($(window).width()-700)*0.5,
+        top:($(window).height()-700)*0.5,
+        draggable:true,
+        iconCls: 'icon-save',
+        toolbar: [{
+          text:'修改',
+          iconCls:'icon-edit',
+          handler:function(){
+            staff.editStaffInfo();
+          }
+        },'-',{
+          text:'传照片',
+          iconCls:'icon-edit',
+          handler:function(){
+            if(relative.method==='put') photo.doit(rhurl.root+'/uploadObject/user'+relative.uid)
+          }
+        }],
+        buttons: [{
+          text:'确定',
+          iconCls:'icon-ok',
+          handler:function(){
+            if(relative.method==='put' || relative.method==='post'  )
+            {
+              relative.buttonclk();
+            }
+            else $('#relative-dialog-form').dialog('close');
+          }
+        }]
+      ">
+    <div id="relative-Info-card" class="info-card ">
+      <div id="relative-Info-card-a" class="info-card-a">
+        <table>
+          <tr><td class="td1"><text>姓    名: </text></td><td class="td2"><input id="rname"></input></td></tr>
+          <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="rphone_no" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
+          <tr><td class="td1"><text>紧急系数: </text></td><td class="td2"><input id="rurgent"></input></td></tr>
+          <tr><td class="td1"><text>与老人关系：</text></td><td class="td2"><input id="rrelationship"></input></td></tr>
+          <tr><td class="td1"><text>婚姻状况：</text></td><td class="td2"><input id="rmarriage"></input></td></tr>
+          <tr><td class="td1"><text>民    族：</text></td><td class="td2"><input id="rnationality"></input></td></tr>
+          <tr><td class="td1"><text>政治面貌：</text></td><td class="td2"><input id="rpolitical_status"></input></td></tr>
+          <tr><td class="td1"><text>电子邮箱：</text></td><td class="td2"><input id="remail"></input></td></tr>
+          <tr><td class="td1"><text>出生日期：</text></td><td class="td2"><input id="rbirthday"></input></td></tr>
+          <tr><td class="td1"><text>身份证号：</text></td><td class="td2"><input id="ridentity_no"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'idcard'"></input></td></tr>
+          <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input type="radio" name="rgender" value=0 checked="checked" />男 <input type="radio" name="rgender" value=1 />女</td></tr>
+          <tr><td class="td1"><text>教育程度：</text></td><td class="td2"><input id="reducation"></input></td></tr>
+          <tr><td class="td1"><text>社保卡号：</text></td><td class="td2"><input id="rnssf_id"></input></td></tr>
+          <tr><td class="td1"><text>居住地址：</text></td><td class="td2"><input id="raddress"></input></td></tr>
+          <tr><td class="td1"><text>年龄：</text></td><td class="td2"><input id="rage"></input></td></tr>
+          <tr><td class="td1"><text>邮编：</text></td><td class="td2"><input id="rzip_code"></input></td></tr>
+          <tr><td class="td1"><text>微信号：</text></td><td class="td2"><input id="rwechat_id"></input></td></tr>
+          <tr><td class="td1"><text>籍贯：</text></td><td class="td2"><input id="rnative_place"></input></td></tr>
+          <tr><td class="td1"><text>注册日期：</text></td><td class="td2"><input id="rregister_date"></input></td></tr>
+          <tr><td class="td1"><text>注销日期：</text></td><td class="td2"><input id="rcancel_date"></input></td></tr>
+        </table>
+      </div>
+      <div id="relative-Info-card-b" class="info-card-b"><img src="images/p_2.jpg"></div>
+      <div id="relative-Info-card-c" class="info-card-c">
+        <text style="font-size:20px;">老人设置</text>
+        <ul id="elder-check">
+        </ul>
+      </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
 
 <!-----------------------员工个人信息------------------------------>
 <div id="staff-dialog-form"  class="easyui-dialog" title="员工信息详情" style="width:700px;height:600px;padding:10px"
@@ -585,15 +736,14 @@
       <div id="staff-Info-card-a" class="info-card-a">
         <table>
           <tr><td class="td1"><text>姓名: </text></td><td class="td2"><input id="sname"></input></td></tr>
-          <tr><td class="td1"><text>用户名: </text></td><td class="td2"><input id="susername"></input></td></tr>
-          <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="sphone_no" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
+          <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="sphone" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
           <tr><td class="td1"><text>婚姻状况：</text></td><td class="td2"><input id="smarriage"></input></td></tr>
           <tr><td class="td1"><text>民族：</text></td><td class="td2"><input id="snationality"></input></td></tr>
           <tr><td class="td1"><text>政治面貌：</text></td><td class="td2"><input id="spolitical_status"></input></td></tr>
           <tr><td class="td1"><text>电子邮箱：</text></td><td class="td2"><input id="semail"></input></td></tr>
           <tr><td class="td1"><text>出生日期：</text></td><td class="td2"><input id="sbirthday"></input></td></tr>
           <tr><td class="td1"><text>身份证号：</text></td><td class="td2"><input id="sidentity_no"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'idcard'"></input></td></tr>
-          <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input id="sgender"></input></td></tr>
+          <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input type="radio" name="sgender" value=0 checked="checked" />男 <input type="radio" name="sgender" value=1 />女</td></tr>
           <tr><td class="td1"><text>户口所在地：</text></td><td class="td2"><input id="sresidence_address"></input></td></tr>
           <tr><td class="td1"><text>档案编号：</text></td><td class="td2"><input id="sarchive_id"></input></td></tr>
           <tr><td class="td1"><text>社保卡号：</text></td><td class="td2"><input id="snssf_id"></input></td></tr>
@@ -709,7 +859,7 @@
         <tr><td>项目名: </td><td><input type="text" id="gciname" /></td></tr>
         <tr><td>护理等级: </td><td><input type="text" id="gcilevel" /></td></tr>
         <tr><td>周期: </td><td><input type="text" id="gciperiod" /></td></tr>
-        <tr><td>频率: </td><td><input type="text" id="gcifrequence" /></td></tr>
+        <tr><td>频率: </td><td><input type="text" id="gcifrequency" /></td></tr>
         <tr><td>说明: </td><td><input type="text" id="gcinotes" /></td></tr>
       </table>
 </div>
@@ -734,7 +884,7 @@
       <table>
         <tr><td>项目名: </td><td><input type="text" id="gainame" /></td></tr>
         <tr><td>周期: </td><td><input type="text" id="gaiperiod" /></td></tr>
-        <tr><td>频率: </td><td><input type="text" id="gaifrequence" /></td></tr>
+        <tr><td>频率: </td><td><input type="text" id="gaifrequency" /></td></tr>
         <tr><td>说明: </td><td><input type="text" id="gainotes" /></td></tr>
       </table>
 </div>
@@ -752,6 +902,7 @@
 <script type="text/javascript" src="/resthouse/static/js/authority.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/arrange.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/url.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/relative.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/user.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/area.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/areacare.js"></script>
