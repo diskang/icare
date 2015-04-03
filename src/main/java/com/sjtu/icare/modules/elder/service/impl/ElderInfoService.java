@@ -1,10 +1,10 @@
 package com.sjtu.icare.modules.elder.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -119,6 +119,13 @@ public class ElderInfoService implements IElderInfoService{
 	public void deleteElderItem(ElderItemEntity elderItemEntity) {
 		Map<String, Object> paramMap = MapListUtils.beanToMap(elderItemEntity);
 		elderItemDao.deleteElderItem(paramMap);
+	}
+
+	@Override
+	public ElderEntity getElderEntityByIdentityNo(String elderIdentityNo) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("identityNo", elderIdentityNo);
+		return elderDao.getElderEntity(paramMap);
 	}
 
 }

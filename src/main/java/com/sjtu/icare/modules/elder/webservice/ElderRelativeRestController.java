@@ -32,13 +32,16 @@ import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
+import com.sjtu.icare.common.utils.OSSObjectUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.PinyinUtils;
 import com.sjtu.icare.common.web.rest.BasicController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
+import com.sjtu.icare.modules.elder.entity.ElderEntity;
 import com.sjtu.icare.modules.elder.entity.RelativeEntity;
 import com.sjtu.icare.modules.elder.service.IRelativeInfoService;
+import com.sjtu.icare.modules.elder.service.impl.ElderInfoService;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.service.SystemService;
 
@@ -51,6 +54,8 @@ public class ElderRelativeRestController  extends BasicController {
 	private IRelativeInfoService relativeInfoService;
 	@Autowired
 	private SystemService systemService;
+	@Autowired
+	private ElderInfoService elderInfoService;
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getRelatives(
@@ -91,7 +96,7 @@ public class ElderRelativeRestController  extends BasicController {
 			if (users != null) {
 				for (User user : users) {
 					Map<String, Object> resultMap = new HashMap<String, Object>(); 
-					resultMap.put("user_id", user.getUserId()); 
+					resultMap.put("relative_id", user.getUserId()); 
 					resultMap.put("id", user.getId()); 
 					
 					resultMap.put("age", user.getAge()); 
@@ -117,6 +122,9 @@ public class ElderRelativeRestController  extends BasicController {
 					resultMap.put("user_type", user.getUserType()); 
 					resultMap.put("wechat_id", user.getWechatId()); 
 					resultMap.put("zip_code", user.getZipCode()); 
+					
+					OSSObjectUtils ossObjectUtils = new OSSObjectUtils();
+					resultMap.put("photo_src", ossObjectUtils.getDownloadUrl(user.getPhotoUrl())); 
 					
 					RelativeEntity requestRelativeEntity = new RelativeEntity();
 					requestRelativeEntity.setId(user.getUserId());
@@ -196,6 +204,11 @@ public class ElderRelativeRestController  extends BasicController {
 			// insert into Relative
 			RelativeEntity requestRelativeEntity = new RelativeEntity(); 
 			BeanUtils.populate(requestRelativeEntity, requestParamMap);
+			if (requestParamMap.get("elderIdentityNo") != null) {
+				String elderIdentityNo = (String) requestParamMap.get("elderIdentityNo");
+				ElderEntity elderEntity = elderInfoService.getElderEntityByIdentityNo(elderIdentityNo);
+				requestRelativeEntity.setElderId(elderEntity.getId());
+			}
 			Integer relativeId = relativeInfoService.insertRelative(requestRelativeEntity);
 			
 			// insert into User
@@ -253,7 +266,7 @@ public class ElderRelativeRestController  extends BasicController {
 //			checkPermissions(permissions);
 			
 			Map<String, Object> resultMap = new HashMap<String, Object>(); 
-			resultMap.put("user_id", user.getUserId()); 
+			resultMap.put("relative_id", user.getUserId()); 
 			resultMap.put("id", user.getId()); 
 			
 			resultMap.put("age", user.getAge()); 
@@ -279,6 +292,9 @@ public class ElderRelativeRestController  extends BasicController {
 			resultMap.put("user_type", user.getUserType()); 
 			resultMap.put("wechat_id", user.getWechatId()); 
 			resultMap.put("zip_code", user.getZipCode()); 
+			
+			OSSObjectUtils ossObjectUtils = new OSSObjectUtils();
+			resultMap.put("photo_src", ossObjectUtils.getDownloadUrl(user.getPhotoUrl())); 
 			
 			
 			resultMap.put("elder_id", relativeEntity.getElderId()); 

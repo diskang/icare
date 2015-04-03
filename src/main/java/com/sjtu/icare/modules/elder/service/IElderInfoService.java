@@ -1,7 +1,6 @@
 package com.sjtu.icare.modules.elder.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.modules.elder.entity.ElderEntity;
@@ -98,6 +97,7 @@ public interface IElderInfoService {
 	 * @throws
 	 */
 	void deleteElderItem(ElderItemEntity elderItemEntity);
-	
-	
+
+	ElderEntity getElderEntityByIdentityNo(String elderIdentityNo);
+
 }

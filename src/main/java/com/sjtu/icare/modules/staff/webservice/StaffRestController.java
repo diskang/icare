@@ -33,6 +33,7 @@ import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
+import com.sjtu.icare.common.utils.OSSObjectUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.PinyinUtils;
 import com.sjtu.icare.common.web.rest.BasicController;
@@ -106,7 +107,7 @@ public class StaffRestController extends BasicController {
 
 				for (User user : users) {
 					Map<String, Object> resultMap = new HashMap<String, Object>();
-					resultMap.put("user_id", user.getUserId());
+					resultMap.put("staff_id", user.getUserId());
 					resultMap.put("id", user.getId());
 
 					resultMap.put("age", user.getAge());
@@ -133,6 +134,9 @@ public class StaffRestController extends BasicController {
 					resultMap.put("wechat_id", user.getWechatId());
 					resultMap.put("zip_code", user.getZipCode());
 
+					OSSObjectUtils ossObjectUtils = new OSSObjectUtils();
+					resultMap.put("photo_src", ossObjectUtils.getDownloadUrl(user.getPhotoUrl())); 
+					
 					StaffEntity queryStaffEntity = new StaffEntity();
 					queryStaffEntity.setId(user.getUserId());
 					StaffEntity staffEntity = staffDataService
@@ -285,7 +289,7 @@ public class StaffRestController extends BasicController {
 				throw new Exception("内部错误：找不到对应的 user");
 
 			Map<String, Object> resultMap = new HashMap<String, Object>();
-			resultMap.put("user_id", user.getUserId());
+			resultMap.put("staff_id", user.getUserId());
 			resultMap.put("id", user.getId());
 
 			permissions.add("user:" + user.getId() + ":info:read");
@@ -314,6 +318,10 @@ public class StaffRestController extends BasicController {
 			resultMap.put("user_type", user.getUserType());
 			resultMap.put("wechat_id", user.getWechatId());
 			resultMap.put("zip_code", user.getZipCode());
+			
+			OSSObjectUtils ossObjectUtils = new OSSObjectUtils();
+			resultMap.put("photo_src", ossObjectUtils.getDownloadUrl(user.getPhotoUrl())); 
+			
 
 			resultMap.put("nssf_id", staffEntity.getNssfId());
 			resultMap.put("leave_date", staffEntity.getLeaveDate());

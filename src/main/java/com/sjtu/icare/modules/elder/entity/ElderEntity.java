@@ -3,6 +3,8 @@ package com.sjtu.icare.modules.elder.entity;
 
 import java.io.Serializable;
 
+import com.sjtu.icare.common.utils.StringUtils;
+
 /**
  * @Description 老人数据 Entity
  * @author WangQi
@@ -141,7 +143,10 @@ public class ElderEntity implements Serializable {
 	 * @param checkoutDate the checkoutDate to set
 	 */
 	public void setCheckoutDate(String checkoutDate) {
-		this.checkoutDate = checkoutDate;
+		if (StringUtils.isBlank(checkoutDate))
+			this.checkoutDate = null;
+		else
+			this.checkoutDate = checkoutDate;
 	}
 	/**
 	 * @return the applyUrl

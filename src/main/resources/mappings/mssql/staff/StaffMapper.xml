@@ -4,10 +4,6 @@
 
 <mapper namespace="com.sjtu.icare.modules.staff.persistence.StaffDAO">
     
-
-    
-    <cache />
-    
     <resultMap id="StaffMap" type="com.sjtu.icare.modules.staff.entity.StaffEntity">
         <id property="id" column="id" />
         <result property="name" column="name" />

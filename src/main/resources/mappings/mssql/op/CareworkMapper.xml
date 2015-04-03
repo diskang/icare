@@ -4,8 +4,6 @@
 
 <mapper namespace="com.sjtu.icare.modules.op.persistence.CareworkDAO">
 
-    <cache />
-    
     <resultMap id="CareworkMap" type="com.sjtu.icare.modules.op.entity.CareworkEntity">
         <id property="id" column="id" />
         <result property="carerId" column="carer_id" />
@@ -31,7 +29,7 @@
                 FROM 
                     T_CAREWORK
                 WHERE
-                    CONVERT(nvarchar(23), T_CAREWORK.end_date, 120) >= #{date}
+                    CONVERT(nvarchar(23), T_CAREWORK.end_date, 120) > #{date}
                     AND T_CAREWORK.elder_ids LIKE '%,' + CAST(#{id} AS VARCHAR(1000)) + ',%'
                 GROUP BY
                     T_CAREWORK.carer_id

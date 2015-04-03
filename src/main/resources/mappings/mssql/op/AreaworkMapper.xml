@@ -4,9 +4,6 @@
 
 <mapper namespace="com.sjtu.icare.modules.op.persistence.AreaworkDAO">
 
-    <cache />
-    
-    
     <resultMap id="AreaworkMap" type="com.sjtu.icare.modules.op.entity.AreaworkEntity">
         <id property="id" column="id" />
         <result property="carerId" column="carer_id" />
@@ -58,7 +55,7 @@
                 FROM 
                     T_AREAWORK
                 WHERE
-                    CONVERT(nvarchar(23), T_AREAWORK.end_date, 120) >= #{date}
+                    CONVERT(nvarchar(23), T_AREAWORK.end_date, 120) > #{date}
                     AND T_AREAWORK.area_ids LIKE '%,' + CAST(#{id} AS VARCHAR(1000)) + ',%'
                 GROUP BY
                     T_AREAWORK.carer_id
