@@ -313,7 +313,7 @@
     
         UPDATE
             T_USER
-        SET
+        <set>
             <if test="password != null">
             T_USER.password = #{password},
             </if>
@@ -378,6 +378,7 @@
             <if test="wechatId != null">
             T_USER.wechat_id = #{wechatId}
             </if>
+        </set>
         WHERE
             T_USER.id = #{id}
             
