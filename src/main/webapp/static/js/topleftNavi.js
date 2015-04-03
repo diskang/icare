@@ -1,4 +1,3 @@
-//删除$("#topNavi").children().filter('li').remove();
 var toptree=[];
 var lefttree=[];
 var righttemp;
@@ -7,7 +6,6 @@ var temptree2;
 var deadtime=10000;
 var hrefTable=[];
 var sex=["男","女"];
-var sexc=[];
 var Searchdate = new Date();
 var Sundate = new Date();
 var Mondate = new Date();
@@ -23,17 +21,14 @@ var todayms=Sundate.getTime();
 var temparea;
 var temparea2;
 var timeline;
+var timeline2;
 var min = new Date(); // 1 april
 var max = new Date(2017,3,1); // 30 april
 var container;
 var options;
-// var gid=$.cookie('gid');
-// var uid=$.cookie('uid');
 var gid=getUser().gero_id;
 var uid=getUser().id;
 Sundate.setTime(Sundate.getTime()-Sundate.getDay()*24*60*60*1000);
-sexc["男"]=0;
-sexc["女"]=1;
 hrefTable['/gero/1/elder']='elder.drawElderList()';
 hrefTable['/gero/1/staff']='staff.drawStaffList()';
 hrefTable['/gero/1/schedule']='staff.drawScheduleList()';
@@ -45,7 +40,8 @@ hrefTable['/user/1']='authority.drawAuthorityList()';
 hrefTable['/gero/1/schedule']='arrange.drawArrangeList()';
 hrefTable['/area']='area.drawAreaList()';
 hrefTable['/eldercareduty']='eldercare.drawElderCareList()';
-hrefTable['/areacareduty']='area.drawAreaList()';
+hrefTable['/areacareduty']='areacare.drawAreaCareList()';
+hrefTable['/relative']='relative.drawRelativeList()';
 
 var leftTop = {
     removeLefttree:function (){
@@ -179,7 +175,6 @@ $(function(){
             var url=leftTop.findNode(node.id).href;
             if (url!==""){              
                 eval(hrefTable[url]);
-                //authority.drawAuthorityList()
             }
         }
     })
@@ -229,6 +224,7 @@ $(function(){
         }
     });
     eldercare.init();
+    areacare.init();
     $('#button-allow').toggleClass("fc-state-default1");
 
 });
@@ -253,6 +249,9 @@ $('.fc-next-button').live('click',function(){arrange.next()});
 $('.fc-today-button').live('click',function(){arrange.today()});
 $('.fc-allow-button').live('click',function(){arrange.allowchange()});
 $('.fc-submit-button').live('click',function(){arrange.putarrange()});
-$('.itemleft li').live('click',function(){     
+$('#eldercarercont li').live('click',function(){     
     eldercare.getList(parseInt($(this).attr("pid")),$(this).text());
+});
+$('#areacarercont li').live('click',function(){     
+    areacare.getList(parseInt($(this).attr("pid")),$(this).text());
 });

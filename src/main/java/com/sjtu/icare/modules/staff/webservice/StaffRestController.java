@@ -36,6 +36,7 @@ import com.sjtu.icare.common.utils.MapListUtils;
 import com.sjtu.icare.common.utils.OSSObjectUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.PinyinUtils;
+import com.sjtu.icare.common.utils.StringUtils;
 import com.sjtu.icare.common.web.rest.BasicController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
@@ -96,7 +97,7 @@ public class StaffRestController extends BasicController {
 			queryUser.setGeroId(geroId);
 			queryUser.setPage(userPage);
 			List<User> users;
-			if (role == null)
+			if (StringUtils.isBlank(role))
 				users = staffDataService.getAllStaffs(queryUser);
 			else
 				users = staffDataService.getAllStaffs(queryUser, role);

@@ -75,7 +75,7 @@ var geroItem={
             level:parseInt(document.getElementById("gcilevel").value),
             notes:document.getElementById("gcinotes").value,
             period:parseInt(document.getElementById("gciperiod").value),
-            frequence:parseInt(document.getElementById("gcifrequence").value),
+            frequency:parseInt(document.getElementById("gcifrequency").value),
         }
         var infoUrl=rhurl.origin+'/gero/'+gid+'/care_item';
         $.ajax({
@@ -172,7 +172,7 @@ var geroItem={
             name:document.getElementById("gainame").value,
             notes:document.getElementById("gainotes").value,
             period:parseInt(document.getElementById("gaiperiod").value),
-            frequence:parseInt(document.getElementById("gaifrequence").value),
+            frequency:parseInt(document.getElementById("gaifrequency").value),
         }
         var infoUrl=rhurl.origin+'/gero/'+gid+'/area_item';
         $.ajax({

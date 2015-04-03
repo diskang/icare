@@ -313,31 +313,72 @@
     
         UPDATE
             T_USER
-        SET
+        <set>
             <if test="password != null">
             T_USER.password = #{password},
             </if>
+            <if test="geroId != null">
             T_USER.gero_id = #{geroId},
+            </if>
+            <if test="userType != null">
             T_USER.user_type = #{userType},
+            </if>
+            <if test="userId != null">
             T_USER.user_id = #{userId},
+            </if>
+			<if test="username != null">
             T_USER.username = #{username},
+			</if>            
+			<if test="name != null">
             T_USER.name = #{name},
+            </if>
             <!--  T_USER.register_date = #{registerDate},  -->
+            <if test="gender != null">
             T_USER.gender = #{gender},
+            </if>
+            <if test="photoUrl != null">
             T_USER.photo_url = #{photoUrl},
+            </if>
+            <if test="identityNo != null">
             T_USER.identity_no = #{identityNo},
+            </if>
+            <if test="age != null">
             T_USER.age = #{age},
+            </if>
+            <if test="nationality != null">
             T_USER.nationality = #{nationality},
+            </if>
+            <if test="marriage != null">
             T_USER.marriage = #{marriage},
+            </if>
+            <if test="nativePlace != null">
             T_USER.native_place = #{nativePlace},
+            </if>
+            <if test="birthday != null">
             T_USER.birthday = #{birthday},
+            </if>
+            <if test="politicalStatus != null">
             T_USER.political_status = #{politicalStatus},
+            </if>
+            <if test="education != null">
             T_USER.education = #{education},
+            </if>
+            <if test="phoneNo != null">
             T_USER.phone_no = #{phoneNo},
+            </if>
+            <if test="zipCode != null">
             T_USER.zip_code = #{zipCode},
+            </if>
+            <if test="residenceAddress != null">
             T_USER.residence_address = #{residenceAddress},
+            </if>
+            <if test="householdAddress != null">
             T_USER.household_address = #{householdAddress},
+            </if>
+            <if test="wechatId != null">
             T_USER.wechat_id = #{wechatId}
+            </if>
+        </set>
         WHERE
             T_USER.id = #{id}
             

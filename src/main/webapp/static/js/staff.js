@@ -67,7 +67,8 @@
     },
 
      drawStaffInfo: function(data){
-        staff.sid="/"+data.id;
+        staff.sid="/"+data.staff_id;
+        staff.uid="/"+data.id;
         var rolestr='';
         $('.checkrole').attr("checked",false);
         for(var i in data.role_list){
@@ -80,13 +81,16 @@
         $('#sname').attr('value',data.name);
         $('#semail').attr('value',data.email);
         $('#sbirthday').attr('value',data.birthday);
-        $('#sgender').attr('value',sex[data.gender]);
+        var radios = document.getElementsByName("sgender");
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].value==data.gender) radios[i].checked="checked";
+            }
         $('#shousehold_address').attr('value',data.household_address);
         $('#snssf_id').attr('value',data.nssf_id);
         $('#sarchive_id').attr('value',data.archive_id);
         $('#sresidence_address').attr('value',data.residence_address);
         $('#sidentity_no').attr('value',data.identity_no);
-        $('#sphone_no').attr('value',data.phone_no);
+        $('#sphone').attr('value',data.phone_no);
         $('#susername').attr('value',data.username);
         $('#sregister_date').attr('value',data.register_date);
         $('#scancel_date').attr('value',data.cancel_date);
@@ -105,6 +109,7 @@
 
     addStaffInfo: function(){
         staff.sid="";
+        staff.uid="";
         staff.method='post';
         $("#staff-dialog-form").dialog("open");
         $("#staff-dialog-form").dialog("center");
@@ -125,7 +130,7 @@
     },
     delStaffInfo: function(){
         var stafft = $('#staffpage').datagrid('getSelected');
-        var infoUrl=rhurl.origin+"/gero/"+gid+"/staff/" + stafft.user_id;
+        var infoUrl=rhurl.origin+"/gero/"+gid+"/staff/" + stafft.staff_id;
         $.ajax({
             url: infoUrl,
             type: 'DELETE',
@@ -142,9 +147,9 @@
 
 
     onStaffDblClickRow:function(index){
-                staff.method='put';
+                staff.method='';
                 var stafft = $('#staffpage').datagrid('getSelected');
-                staff.sid=stafft.user_id;
+                staff.sid=stafft.staff_id;
                 staff.uid='/'+stafft.id;
                 infoUrl=rhurl.origin+"/gero/"+gid+"/staff/" + staff.sid;
                 $.ajax({
@@ -164,9 +169,14 @@
     },
 
     buttonclk:function(){
+        var sexc;
+        var radios = document.getElementsByName("sgender");
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked==="checked") sexc=parseInt(radios[i].value);
+            }
         var obj={
             name:document.getElementById("sname").value,
-            gender:sexc[document.getElementById("sgender").value],
+            gender:sexc,
             household_address:document.getElementById("shousehold_address").value,
             identity_no:document.getElementById("sidentity_no").value,
             nssf_id:document.getElementById("snssf_id").value,
@@ -175,18 +185,17 @@
             phone:document.getElementById("sphone").value,
             birthday:document.getElementById("sbirthday").value,
             residence_address:document.getElementById("sresidence_address").value,
-            username:document.getElementById("susername").value,
             register_date:document.getElementById("sregister_date").value,
             cancel_date:document.getElementById("scancel_date").value,
             nationality:document.getElementById("snationality").value,
-            marriage:document.getElementById("smarriage").value,
+            marriage:parseInt(document.getElementById("smarriage").value),
             native_place:document.getElementById("snative_place").value,
             zip_code:document.getElementById("szip_code").value,
             wechat_id:document.getElementById("swechat_id").value,
             basic_url:document.getElementById("sbasic_url").value,
-            leave_date:document.getElementById("sleave_date"),
+            leave_date:document.getElementById("sleave_date").value,
             age:document.getElementById("sage").value,
-            political_status:document.getElementById("spolitical_status").value,
+            political_status:document.getElementById("spolitical_status").value
         }
         var infoUrl=rhurl.origin+'/gero/'+gid+'/staff'+staff.sid;
         $.ajax({

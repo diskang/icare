@@ -57,10 +57,12 @@ var elder={
         $('#elder-Info-card-a input').attr('disabled','disabled');
         $('#elder-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
         $('#ename').attr('value',data.name);
-        // $('#eusername').attr('value',data.username);
         $('#ebirthday').attr('value',data.birthday);
         $('#eage').attr('value',data.age);
-        $('#egender').attr('value',sex[data.gender]);
+        var radios = document.getElementsByName("egender");
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].getAttribute('value')==data.gender) radios[i].checked="checked";
+            }
         $('#eaddress').attr('value',data.address);
         $('#enative_place').attr('value',data.native_place);
         $('#earea_id').attr('value',data.area_id);
@@ -74,7 +76,6 @@ var elder={
         $('#echeckin_date').attr('value',data.checkin_date);
         $('#echeckout_date').attr('value',data.checkout_date);
         $('#epad_mac').attr('value',data.pad_mac);
-        $('#eage').attr('value',data.age);
         $('#emarriage').attr('value',data.marriage);
         $('#eidentity_no').attr('value',data.identity_no);
 
@@ -101,7 +102,7 @@ var elder={
     },
     delElderInfo: function(){
         var eldert = $('#elderpage').datagrid('getSelected');
-        infoUrl=rhurl.origin+"/gero/"+gid+"/elder/" + eldert.user_id;
+        infoUrl=rhurl.origin+"/gero/"+gid+"/elder/" + eldert.elder_id;
         $.ajax({
             url: infoUrl,
             type: 'DELETE',
@@ -119,7 +120,7 @@ var elder={
     onElderDblClickRow:function(index){
                 elder.method='put';
                 var eldert = $('#elderpage').datagrid('getSelected');
-                elder.eid='/'+eldert.user_id;
+                elder.eid='/'+eldert.elder_id;
                 elder.uid='/'+eldert.id;
                 infoUrl=rhurl.origin+"/gero/"+gid+"/elder" + elder.eid;
                 $.ajax({
@@ -138,10 +139,14 @@ var elder={
     			});
     },
     buttonclk:function(){
+        var sexc;
+        var radios = document.getElementsByName("egender");
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked==="checked") sexc=radios[i].getAttribute('value');
+            }
         var obj={
             name:document.getElementById("ename").value,
-            username:document.getElementById("eusername").value,
-            gender:sexc[document.getElementById("egender").value],
+            gender:sexc,
             address:document.getElementById("eaddress").value,
             identity_no:document.getElementById("eidentity_no").value,
             phone_no:document.getElementById("ephone_no").value,

@@ -64,7 +64,7 @@ var area={
     },
 
 	dealtree:function(){
-		temparea2=[{"id":0,"text":"区域列表","children":[]}]
+		temparea2=[{"id":0,"text":"区域列表",attributes:{type:0},"children":[]}]
         temparea2[0].children=area.createTreeData(temparea2[0]);
 	},
 
@@ -78,7 +78,7 @@ var area={
         authority.obj.parent_id='';
         $('#areaInfo').removeClass('hide');
         $('#aname').attr('value',node.text);
-        $('#atype').attr('disabled','disabled');
+        $('#atype').attr('disabled',"disabled");
         $('#atype').attr('value',node.attributes.type);
         $('#alevel').attr('value',node.attributes.level);
     },
