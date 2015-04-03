@@ -390,7 +390,7 @@ INSERT INTO [dbo].[T_AREA_ITEM]
      VALUES
            (1
            ,'整理厕所'
-           ,'clean_toilet'
+           ,'toliet_clean'
            ,1
            ,1
            ,'')
@@ -406,7 +406,7 @@ INSERT INTO [dbo].[T_AREA_ITEM]
      VALUES
            (1
            ,'冲开水'
-           ,'get_water'
+           ,'water_get'
            ,1
            ,1
            ,'')
@@ -422,7 +422,7 @@ INSERT INTO [dbo].[T_AREA_ITEM]
      VALUES
            (1
            ,'清扫阳台'
-           ,'sweep_balcony'
+           ,'balcony_clean'
            ,1
            ,1
            ,'')
@@ -438,7 +438,7 @@ INSERT INTO [dbo].[T_AREA_ITEM]
      VALUES
            (1
            ,'更换床单'
-           ,'replace_bedsheet'
+           ,'bedsheet_change'
            ,1
            ,1
            ,'')
@@ -454,7 +454,7 @@ INSERT INTO [dbo].[T_AREA_ITEM]
      VALUES
            (1
            ,'整理房间'
-           ,'clean_room'
+           ,'room_clean'
            ,1
            ,1
            ,'')
@@ -690,8 +690,8 @@ INSERT INTO [dbo].[T_CARE_ITEM]
            ,[notes])
      VALUES
            (1
+           ,'清洗衣物'
            ,'clothes_wash'
-           ,'null'
 		   ,1
            ,1
            ,1
@@ -708,8 +708,8 @@ INSERT INTO [dbo].[T_CARE_ITEM]
            ,[notes])
      VALUES
            (1
+           ,'清洗尿布'
            ,'diaper_wash'
-           ,'null'
 		   ,1
            ,1
            ,1
@@ -763,7 +763,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'洗澡'
-           ,'take_shower'
+           ,'shower_take'
 		   ,1
            ,1
            ,1
@@ -781,7 +781,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'洗脸'
-           ,'wash_face'
+           ,'face_wash'
 		   ,1
            ,1
            ,1
@@ -799,7 +799,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'洗脚'
-           ,'wash_feet'
+           ,'feet_wash'
 		   ,1
            ,1
            ,1
@@ -817,7 +817,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'洗手'
-           ,'wash_hands'
+           ,'hands_wash'
 		   ,1
            ,1
            ,1
