@@ -182,14 +182,17 @@ public class ElderInfoRestController extends GeroBaseController{
 				if (elder == null)
 					throw new Exception("内部错误： user 找不到对应的 elder");
 				
+				resultMap.put("apply_url", elder.getApplyUrl()); 
+				resultMap.put("area_id", elder.getAreaId());
+				resultMap.put("assess_url", elder.getAssessUrl());
+				resultMap.put("archive_id", elder.getArchiveId());
 				resultMap.put("care_level", elder.getCareLevel()); 
 				resultMap.put("checkin_date", elder.getCheckinDate()); 
-				resultMap.put("checkout_date", elder.getCheckoutDate()); 
-				resultMap.put("pad_mac", elder.getPadMac()); 
+				resultMap.put("checkout_date", elder.getCheckoutDate());
 				resultMap.put("nssf_id", elder.getNssfId()); 
-				resultMap.put("archive_id", elder.getArchiveId()); 
-				resultMap.put("area_id", elder.getAreaId()); 
-				resultMap.put("elder_id", elder.getId()); 
+				resultMap.put("pad_mac", elder.getPadMac()); 
+				resultMap.put("survey_url", elder.getSurveyUrl()); 
+				resultMap.put("track_url", elder.getTrackUrl()); 
 				
 				basicReturnedJson.addEntity(resultMap);
 			}
@@ -358,7 +361,9 @@ public class ElderInfoRestController extends GeroBaseController{
 			resultMap.put("photo_src", ossObjectUtils.getDownloadUrl(user.getPhotoUrl())); 
 			
 			resultMap.put("apply_url", elderEntity.getApplyUrl()); 
-			resultMap.put("assess_url", elderEntity.getAssessUrl()); 
+			resultMap.put("area_id", elderEntity.getAreaId());
+			resultMap.put("assess_url", elderEntity.getAssessUrl());
+			resultMap.put("archive_id", elderEntity.getArchiveId());
 			resultMap.put("care_level", elderEntity.getCareLevel()); 
 			resultMap.put("checkin_date", elderEntity.getCheckinDate()); 
 			resultMap.put("checkout_date", elderEntity.getCheckoutDate());
