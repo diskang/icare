@@ -390,7 +390,7 @@ INSERT INTO [dbo].[T_AREA_ITEM]
      VALUES
            (1
            ,'整理厕所'
-           ,'item.png'
+           ,'toilet_clean'
            ,1
            ,1
            ,'')
@@ -406,7 +406,7 @@ INSERT INTO [dbo].[T_AREA_ITEM]
      VALUES
            (1
            ,'冲开水'
-           ,'item.png'
+           ,'water_get'
            ,1
            ,1
            ,'')
@@ -422,7 +422,7 @@ INSERT INTO [dbo].[T_AREA_ITEM]
      VALUES
            (1
            ,'清扫阳台'
-           ,'item.png'
+           ,'balcony_clean'
            ,1
            ,1
            ,'')
@@ -438,7 +438,7 @@ INSERT INTO [dbo].[T_AREA_ITEM]
      VALUES
            (1
            ,'更换床单'
-           ,'item.png'
+           ,'bedsheet_change'
            ,1
            ,1
            ,'')
@@ -454,7 +454,7 @@ INSERT INTO [dbo].[T_AREA_ITEM]
      VALUES
            (1
            ,'整理房间'
-           ,'item.png'
+           ,'room_clean'
            ,1
            ,1
            ,'')
@@ -475,7 +475,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'漱口'
-           ,'item.png'
+           ,'mouth_wash'
 		   ,1
            ,1
            ,1
@@ -493,7 +493,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'刷牙'
-           ,'item.png'
+           ,'teeth_brush'
 		   ,1
            ,1
            ,1
@@ -511,7 +511,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'梳头'
-           ,'item.png'
+           ,'hair_comb'
 		   ,1
            ,1
            ,1
@@ -529,7 +529,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'更换衣服'
-           ,'item.png'
+           ,'clothes_change'
 		   ,1
            ,1
            ,1
@@ -547,7 +547,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'发放药物'
-           ,'item.png'
+           ,'medicine_distribute'
 		   ,1
            ,1
            ,1
@@ -565,7 +565,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'剃须'
-           ,'item.png'
+           ,'beard_shave'
 		   ,1
            ,1
            ,1
@@ -583,7 +583,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'剪指甲'
-           ,'item.png'
+           ,'nail_cut'
 		   ,1
            ,1
            ,1
@@ -601,7 +601,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'饮水'
-           ,'item.png'
+           ,'water_drink'
 		   ,1
            ,1
            ,1
@@ -619,7 +619,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'穿（脱）衣'
-           ,'item.png'
+           ,'clothes_on_off'
 		   ,1
            ,1
            ,1
@@ -637,7 +637,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'协助如厕'
-           ,'item.png'
+           ,'toilet_assist'
 		   ,1
            ,1
            ,1
@@ -655,7 +655,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'喂食'
-           ,'item.png'
+           ,'food_feed'
 		   ,1
            ,1
            ,1
@@ -673,7 +673,7 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'更换尿布'
-           ,'item.png'
+           ,'diaper_change'
 		   ,1
            ,1
            ,1
@@ -690,8 +690,8 @@ INSERT INTO [dbo].[T_CARE_ITEM]
            ,[notes])
      VALUES
            (1
-           ,'衣物洗涤'
-           ,'item.png'
+           ,'清洗衣物'
+           ,'clothes_wash'
 		   ,1
            ,1
            ,1
@@ -708,8 +708,8 @@ INSERT INTO [dbo].[T_CARE_ITEM]
            ,[notes])
      VALUES
            (1
-           ,'尿布洗涤'
-           ,'item.png'
+           ,'清洗尿布'
+           ,'diaper_wash'
 		   ,1
            ,1
            ,1
@@ -727,7 +727,97 @@ INSERT INTO [dbo].[T_CARE_ITEM]
      VALUES
            (1
            ,'食物粉碎'
-           ,'item.png'
+           ,'food_comminute'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'心理护理'
+           ,'mental_nursing'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'洗澡'
+           ,'shower_take'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'洗脸'
+           ,'face_wash'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'洗脚'
+           ,'feet_wash'
+		   ,1
+           ,1
+           ,1
+           ,'')
+GO
+
+INSERT INTO [dbo].[T_CARE_ITEM]
+           ([gero_id]
+           ,[name]
+           ,[icon]
+           ,[level]
+           ,[period]
+           ,[frequency]
+           ,[notes])
+     VALUES
+           (1
+           ,'洗手'
+           ,'hands_wash'
 		   ,1
            ,1
            ,1
