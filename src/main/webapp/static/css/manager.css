@@ -237,6 +237,15 @@ a:hover{ color:#d71318;}
 	float: left;
 	height: auto;
 }
+.info-card-d{
+  width: 55%;
+  margin-top:2px;
+  padding-left:0;
+  line-height: 20px;
+  font-size: 14px;
+  float: left;
+  height: auto;
+}
 #rolepost-dialog-form p{
   height:30px;
   margin-left:20px;
@@ -253,6 +262,15 @@ a:hover{ color:#d71318;}
 	float: right;
 	height: auto;
 	text-align:left;
+}
+.info-card-e{
+  width: 45%;
+  margin-top:20px;
+  margin-right:0;
+  float: right;
+  height: auto;
+  text-align:left;
+  border:1px solid #bcbcbc;
 }
 .info-card-c{
   border: 1px dashed #bcbcbc;

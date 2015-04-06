@@ -75,9 +75,10 @@ var care_item={
                     relative.eldertemp.push(temp);
                 }
                 $("#elderchoosetree").tree("loadData",relative.eldertemp);
+
                 eldervalue='#care_item_elder_name';
                 var node=$("#elderchoosetree").tree('find',parseInt($('#care_item_elder_name').val()));
-                if(node)$("#elderchoosetree").tree("check",node.target);
+                if(node) $("#elderchoosetree").tree("select",node.target);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
@@ -136,7 +137,10 @@ var care_item={
     postitem:function(id,level){
         var obj={
             care_item_id:id,
-            level:level
+            level:level,
+            start_time:$("#cistime").val(),
+            end_time:$("#cietime").val(),
+            icon:parseInt($("#ciicon").val()),
         }
         var infoUrl=rhurl.origin+'/gero/'+gid+'/elder/'+care_item.eid+'/care_item';  
         $.ajax({

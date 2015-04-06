@@ -525,6 +525,8 @@
                     <th data-options="field:'care_item_name',width:120,align:'center'">项目名</th>
                     <th data-options="field:'period',width:120,align:'center'">周期</th>
                     <th data-options="field:'level',width:120,align:'center'">护理等级</th>
+                    <th data-options="field:'start_time',width:120,align:'center'">开始时间</th>
+                    <th data-options="field:'end_time',width:120,align:'center'">结束时间</th>
                   </tr>
                 </thead>
               </table>
@@ -870,43 +872,53 @@
           text:'确定',
           iconCls:'icon-ok',
           handler:function(){
-            var nodes = $('#areachoosetree').tree('getChecked', ['checked']);
-            if(nodes!==undefined) $(areavalue).attr('value',nodes[0].id);
+            var node = $('#areachoosetree').tree('getSelected');
+            if(node) $(areavalue).attr('value',node.id);
             $('#area-dialog-form').dialog('close');
           }
         }]
       ">
     <div id="area-Info-card" class="info-card">
-      <ul id="areachoosetree" class="easyui-tree" style="padding-left:20px;text-align:left;" data-options="checkbox:true,onlyLeafCheck:true">
+      <ul id="areachoosetree" class="easyui-tree" style="padding-left:20px;text-align:left;" data-options="">
       </ul>
     </div>    
 </div>
 
 
 <!-----------------------选择项目信息------------------------------>
-<div id="eldercareitem-dialog-form"  class="easyui-dialog" title="项目信息" style="width:300px;height:400px;padding:10px;"
+<div id="eldercareitem-dialog-form"  class="easyui-dialog" title="项目信息" style="width:600px;height:600px;padding:10px;"
       data-options="
         modal:true,
         closed:true,
         fix:true,
-        left:($(window).width()-300)*0.5,
-        top:($(window).height()-400)*0.5,
+        left:($(window).width()-600)*0.5,
+        top:($(window).height()-600)*0.5,
         draggable:true,
         iconCls: 'icon-blank',
         buttons: [{
           text:'确定',
           iconCls:'icon-ok',
           handler:function(){
-            var nodes = $('#careitemchoosetree').tree('getChecked', ['checked']);
-            if(nodes!==undefined) care_item.postitem(nodes[0].id,nodes[0].attributes.level);
+            var node = $('#careitemchoosetree').tree('getSelected');
+            if(node) care_item.postitem(node.id,node.attributes.level);
             $('#eldercareitem-dialog-form').dialog('close');
           }
         }]
       ">
-    <div id="eldercareitem-Info-card" class="info-card">
-      <ul id="careitemchoosetree" class="easyui-tree" style="padding-left:20px;text-align:left;" data-options="checkbox:true">
-      </ul>
+    <div id="eldercareitem-Info-card" class="info-card-d">
+      <div class='old' style="padding-top:10px;">
+        <div class="pers-s">请选择一个项目</div>
+        <ul id="careitemchoosetree" class="easyui-tree" style="padding-left:20px;text-align:left;max-height:400px;overflow-y:scroll;border:1px solid #bcbcbc;" data-options="">
+        </ul>
+      </div>
     </div>    
+    <div class="info-card-e">
+      <table>
+        <tr><td>开始时间</td><td><input type="text" id="cistime" /></td></tr>
+        <tr><td>结束时间</td><td><input type="text" id="cietime" /></td></tr>
+        <tr><td>图标</td><td><input type="text" id="ciicon" /></td></tr>
+      </table>
+    </div>   
 </div>
 
 
@@ -926,15 +938,15 @@
           text:'确定',
           iconCls:'icon-ok',
           handler:function(){
-            var nodes = $('#elderchoosetree').tree('getChecked', ['checked']);
-            if(nodes!==undefined) $(eldervalue).attr('value',nodes[0].id);
-            elderchoosename=nodes[0].text;
+            var node = $('#elderchoosetree').tree('getSelected');
+            if(node) $(eldervalue).attr('value',node.id);
+            elderchoosename=node.text;
             $('#elderchoose-dialog-form').dialog('close');
           }
         }]
       ">
     <div id="elderchoose-Info-card" class="info-card">
-      <ul id="elderchoosetree" class="easyui-tree" style="padding-left:20px;text-align:left;" data-options="checkbox:true">
+      <ul id="elderchoosetree" class="easyui-tree" style="padding-left:20px;text-align:left;" data-options="">
       </ul>
     </div>    
 </div>
