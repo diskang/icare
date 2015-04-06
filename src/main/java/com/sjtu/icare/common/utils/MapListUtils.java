@@ -134,13 +134,18 @@ public class MapListUtils {
 				PropertyDescriptor descriptor = propertyDescriptors[i]; 
 				String propertyName = descriptor.getName(); 
 				if (!propertyName.equals("class")) { 
-					Method readMethod = descriptor.getReadMethod(); 
-					Object result = readMethod.invoke(bean, new Object[0]); 
-					if (result != null) { 
-						returnMap.put(propertyName, result); 
-					} else { 
-						returnMap.put(propertyName, null); 
-					} 
+					try {
+						Method readMethod = descriptor.getReadMethod(); 
+						Object result = readMethod.invoke(bean, new Object[0]); 
+						if (result != null) { 
+							returnMap.put(propertyName, result); 
+						} else { 
+							returnMap.put(propertyName, null); 
+						} 
+					} catch(Exception e) {
+						
+					}
+					
 				}
 			} 
 			return returnMap; 
