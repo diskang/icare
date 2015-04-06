@@ -13,6 +13,8 @@
 	    <result property="frequency" column="frequency" />
 	    <result property="notes" column="notes" />
 	    <result property="delFlag" column="del_flag" />
+	    <result property="startTime" column="start_tiem" />
+	    <result property="endTime" column="end_time" />
 	</resultMap>
   
     <select id="getCareItemEntitiesByGeroId" resultMap="CareItemMap">
@@ -41,9 +43,9 @@
     <insert id="insertCareItem">
     
         insert into 
-            T_CARE_ITEM(gero_id, name, icon, level, period, frequency, notes) 
+            T_CARE_ITEM(gero_id, name, icon, level, period, frequency, notes, start_time, end_time) 
         values
-            (#{geroId}, #{name}, #{icon}, #{level}, #{period}, #{frequency}, #{notes})
+            (#{geroId}, #{name}, #{icon}, #{level}, #{period}, #{frequency}, #{notes}, #{startTime}, #{endTime})
             
     </insert>
     
@@ -81,6 +83,12 @@
             </if>
             <if test="notes != null">
             T_CARE_ITEM.notes = #{notes}
+            </if>
+            <if test="startTime != null">
+            T_CARE_ITEM.start_time = #{startTime}
+            </if>
+            <if test="endTime != null">
+            T_CARE_ITEM.end_time = #{endTime}
             </if>
         </set>
         WHERE

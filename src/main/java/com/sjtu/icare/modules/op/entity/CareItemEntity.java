@@ -24,6 +24,10 @@ public class CareItemEntity extends DataEntity<CareItemEntity> implements Serial
 	private Integer frequency;		//频率（一天做几次）
 	private String notes;
 	private String delFlag;		//默认为0，删除为1
+	
+	private String startTime;
+	private String endTime;
+	
 	/**
 	 * @return the id
 	 */
@@ -145,6 +149,18 @@ public class CareItemEntity extends DataEntity<CareItemEntity> implements Serial
 	public void preDelete() {
 		// TODO Auto-generated method stub
 		
+	}
+	public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+	public String getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
 	}
 
 
