@@ -88,6 +88,8 @@ public class GeroCareItemRestController extends GeroBaseController {
 					resultMap.put("period", careItemEntity.getPeriod()); 
 					resultMap.put("frequency", careItemEntity.getFrequency()); 
 					resultMap.put("notes", careItemEntity.getNotes()); 
+					resultMap.put("start_time", careItemEntity.getStartTime()); 
+					resultMap.put("end_time", careItemEntity.getEndTime()); 
 					
 					basicReturnedJson.addEntity(resultMap);
 				}
@@ -211,6 +213,8 @@ public class GeroCareItemRestController extends GeroBaseController {
 				resultMap.put("period", careItemEntity.getPeriod()); 
 				resultMap.put("frequency", careItemEntity.getFrequency()); 
 				resultMap.put("notes", careItemEntity.getNotes()); 
+				resultMap.put("start_time", careItemEntity.getStartTime()); 
+				resultMap.put("end_time", careItemEntity.getEndTime()); 
 				
 				basicReturnedJson.addEntity(resultMap);
 			}
