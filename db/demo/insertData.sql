@@ -9,296 +9,308 @@ GO
 
 -- 建立权限表
 
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'root',0,'0,','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'用户',1,'0,1','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'用户个人信息',2,'0,1,2','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查看当前用户信息',3,'0,1,2,3','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查看当前超管信息',4,'0,1,2,3,4','user:{uid}:info:read','/user/{id}:GET','/user/1','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查看当前员工信息',4,'0,1,2,3,4','user:{uid}:info:read','/gero/{id}/staff/{id}:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查看当前老人信息',4,'0,1,2,3,4','user:{uid}:info:read','/gero/{id}/elder/{id}:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查看当前家属信息',4,'0,1,2,3,4','user:{uid}:info:read','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'修改当前用户信息',3,'0,1,2,3','','','no','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'修改当前超管信息',9,'0,1,2,3,9','user:{uid}:info:update','/user/{id}:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'修改当前员工信息',9,'0,1,2,3,9','user:{uid}:info:update','/gero/{id}/staff/{id}:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'修改当前老人信息',9,'0,1,2,3,9','user:{uid}:info:update','/gero/{id}/elder/{id}:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'修改当前家属信息',9,'0,1,2,3,9','user:{uid}:info:update','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'修改用户密码',3,'0,1,2,3','user:{uid}:password:update','/user/{id}/password:PUT','no','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'老人家属功能模块',2,'0,1,2','','','no','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查看老人健康信息',15,'0,1,2,15','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查看老人体温',16,'0,1,2,15,16','elder:{eid}:health:read','/gero/{id}/elder/{id}/temperature:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查看老人血压',16,'0,1,2,15,16','elder:{eid}:health:read','/gero/{id}/elder/{id}/blood_pressure:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查看老人心律',16,'0,1,2,15,16','elder:{eid}:health:read','/gero/{id}/elder/{id}/heart_rate:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查看老人项目记录',15,'0,1,2,15','elder:{eid}:carework_record:read','/gero/{id}/carework_record:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查看老人负责护工',15,'0,1,2,15','elder:{eid}:carework:read','/gero/{id}/carework:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查看老人项目',15,'0,1,2,15','elder:{eid}:care_item:read','/gero/{id}/elder/{id}/care_item:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'职工功能模块',2,'0,1,2','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'养老院信息',23,'0,1,2,23','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查看养老院老人',24,'0,1,2,23,24','staff:{sid}:gero:{gid}:elder:read','/gero/{id}/elder/{id}:GET','/gero/1/elder','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查看养老院基本信息',24,'0,1,2,23,24','staff:{sid}:gero:{gid}:info:read','/gero/{id}:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'获取养老院所有的区域列表',24,'0,1,2,23,24','staff:{sid}:gero:{gid}:area:read','/gero/{id}/area:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'获取某区域及其子区域',24,'0,1,2,23,24','staff:{sid}:gero:{gid}:area:read','/gero/{id}/area/{id}:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查看本人排班信息',23,'0,1,2,23','','','no','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'获取某员工的上班信息列表',29,'0,1,2,23,29','staff:{sid}:schedule:read','/gero/{id}/staff/{id}/schedule:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'获取某员工的某天是否上班',29,'0,1,2,23,29','staff:{sid}:schedule:read','/staff/{id}/schedule/{date}:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'养老院管理模块',23,'0,1,2,23','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'养老院基本信息',32,'0,1,2,23,32','','','no','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'获取养老院基本信息',33,'0,1,2,23,32,33','admin:gero:{gid}:info:read','/gero/{id}:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'修改养老院基本信息',33,'0,1,2,23,32,33','admin:gero:{gid}:info:update','/gero/{id}:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'区域管理',32,'0,1,2,23,32','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'获取养老院所有的区域列表',36,'0,1,2,23,32,36','admin:gero:{gid}:area:read','/gero/{id}/area:GET','/area','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'创建一个养老院区域',36,'0,1,2,23,32,36','admin:gero:{gid}:area:add','/gero/{id}/area:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'获取某区域及其子区域',36,'0,1,2,23,32,36','admin:gero:{gid}:area:read','/gero/{id}/area/{id}:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'修改某区域',36,'0,1,2,23,32,36','admin:gero:{gid}:area:update','/gero/{id}/area/{id}:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'删除某区域',36,'0,1,2,23,32,36','admin:gero:{gid}:area:delete','/gero/{id}/area/{id}:DELETE','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'项目管理',32,'0,1,2,23,32','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'老人项目',42,'0,1,2,23,32,42','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'老人项目列表',43,'0,1,2,23,32,42,43','admin:gero:{gid}:care_item:read','/gero/{id}/care_item:GET','/gero/1/care_item','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'添加老人项目',43,'0,1,2,23,32,42,43','admin:gero:{gid}:care_item:add','/gero/{id}/care_item:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'取老人项目',43,'0,1,2,23,32,42,43','admin:gero:{gid}:care_item:read','/gero/{id}/care_item/{id}:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'改老人项目',43,'0,1,2,23,32,42,43','admin:gero:{gid}:care_item:update','/gero/{id}/care_item/{id}:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'删老人项目',43,'0,1,2,23,32,42,43','admin:gero:{gid}:care_item:delete','/gero/{id}/care_item/{id}:DELETE','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'房间项目',42,'0,1,2,23,32,42','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'房间项目列表',49,'0,1,2,23,32,42,49','admin:gero:{gid}:area_item:read','/gero/{id}/area_item:GET','/gero/1/area_item','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'添加房间项目',49,'0,1,2,23,32,42,49','admin:gero:{gid}:area_item:add','/gero/{id}/area_item:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'取房间项目',49,'0,1,2,23,32,42,49','admin:gero:{gid}:area_item:read','/gero/{id}/area_item/{id}:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'改房间项目',49,'0,1,2,23,32,42,49','admin:gero:{gid}:area_item:update','/gero/{id}/area_item/{id}:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'删房间项目',49,'0,1,2,23,32,42,49','admin:gero:{gid}:area_item:delete','/gero/{id}/area_item/{id}:DELETE','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'老人专属项目',42,'0,1,2,23,32,42','','','no','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'老人专属项目列表',55,'0,1,2,23,32,42,55','admin:gero:{gid}:elder:care_item:read','/gero/{id}/elder/{id}/care_item:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'添加老人专属项目',55,'0,1,2,23,32,42,55','admin:gero:{gid}:elder:care_item:add','/gero/{id}/elder/{id}/care_item:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'取老人专属项目',55,'0,1,2,23,32,42,55','admin:gero:{gid}:elder:care_item:read','/gero/{id}/elder/{id}/care_item/{id}:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'改老人专属项目',55,'0,1,2,23,32,42,55','admin:gero:{gid}:elder:care_item:update','/gero/{id}/elder/{id}/care_item/{id}:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'删老人专属项目',55,'0,1,2,23,32,42,55','admin:gero:{gid}:elder:care_item:delete','/gero/{id}/elder/{id}/care_item/{id}:DELETE','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'院属互动',32,'0,1,2,23,32','','','no','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'院属互动列表',61,'0,1,2,23,32,61','admin:gero:{gid}:exchange:read','/gero/{id}/exchange:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'添加院属互动',61,'0,1,2,23,32,61','admin:gero:{gid}:exchange:add','/gero/{id}/exchange:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'取院属互动',61,'0,1,2,23,32,61','admin:gero:{gid}:exchange:read','/gero/{id}/exchange/{id}:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'改院属互动',61,'0,1,2,23,32,61','admin:gero:{gid}:exchange:update','/gero/{id}/exchange/{id}:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'删院属互动',61,'0,1,2,23,32,61','admin:gero:{gid}:exchange:delete','/gero/{id}/exchange/{id}:DELETE','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'角色管理',32,'0,1,2,23,32','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'养老院角色列表',67,'0,1,2,23,32,67','admin:gero:{gid}:role:read','/gero/{id}/role:GET','/gero/1/role','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'新增养老院角色',67,'0,1,2,23,32,67','admin:gero:{gid}:role:add','/gero/{id}/role:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'获取角色信息',67,'0,1,2,23,32,67','admin:gero:{gid}:role:read','/gero/{id}/role/{id}:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'修改角色的基本信息',67,'0,1,2,23,32,67','admin:gero:{gid}:role:update','/gero/{id}/role/{id}:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'删除养老院角色',67,'0,1,2,23,32,67','admin:gero:{gid}:role:delete','/gero/{id}/role/{id}:DELETE','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'给养老院角色添加权限',67,'0,1,2,23,32,67','admin:gero:{gid}:role:update','/gero/{id}/role/{id}/privilege:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'给养老院角色删除权限',67,'0,1,2,23,32,67','admin:gero:{gid}:role:update','/gero/{id}/role/{id}/privilege:DELETE','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'为某个角色关联员工',67,'0,1,2,23,32,67','admin:gero:{gid}:role:update','/gero/{id}/role/{id}/user:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'职工基本信息管理',32,'0,1,2,23,32','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'职工基本信息列表',76,'0,1,2,23,32,76','admin:gero:{gid}:staff:info:read','/gero/{id}/staff:GET','/gero/1/staff','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'增加职工基本信息',76,'0,1,2,23,32,76','admin:gero:{gid}:staff:info:add','/gero/{id}/staff:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查找职工基本信息',76,'0,1,2,23,32,76','admin:gero:{gid}:staff:info:read','/gero/{id}/staff/{id}:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'修改职工基本信息',76,'0,1,2,23,32,76','admin:gero:{gid}:staff:info:update','/gero/{id}/staff/{id}:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'删除职工基本信息',76,'0,1,2,23,32,76','admin:gero:{gid}:staff:info:delete','/gero/{id}/staff/{id}:DELETE','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'老人基本信息管理',32,'0,1,2,23,32','','','no','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'老人基本信息列表',82,'0,1,2,23,32,82','admin:gero:{gid}:elder:info:read','/gero/{id}/elder:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'新增老人基本信息',82,'0,1,2,23,32,82','admin:gero:{gid}:elder:info:add','/gero/{id}/elder:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'修改老人基本信息',82,'0,1,2,23,32,82','admin:gero:{gid}:elder:info:read','/gero/{id}/elder/{id}:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查找老人基本信息',82,'0,1,2,23,32,82','admin:gero:{gid}:elder:info:update','/gero/{id}/elder/{id}:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'删除老人基本信息',82,'0,1,2,23,32,82','admin:gero:{gid}:elder:info:delete','/gero/{id}/elder/{id}:DELETE','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'老人健康信息管理',32,'0,1,2,23,32','','','no','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'获取体温',88,'0,1,2,23,32,88','admin:gero:{gid}:elder:health:read','/gero/{id}/elder/{id}/temperature:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'新增体温',88,'0,1,2,23,32,88','admin:gero:{gid}:elder:health:add','/gero/{id}/elder/{id}/temperature:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'获取血压',88,'0,1,2,23,32,88','admin:gero:{gid}:elder:health:read','/gero/{id}/elder/{id}/blood_pressure:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'新增血压',88,'0,1,2,23,32,88','admin:gero:{gid}:elder:health:add','/gero/{id}/elder/{id}/blood_pressure:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'获取心率',88,'0,1,2,23,32,88','admin:gero:{gid}:elder:health:read','/gero/{id}/elder/{id}/heart_rate:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'新增心率',88,'0,1,2,23,32,88','admin:gero:{gid}:elder:health:add','/gero/{id}/elder/{id}/heart_rate:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'项目记录管理',32,'0,1,2,23,32','','','no','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'老人护工',95,'0,1,2,23,32,95','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'老人护工的项目记录列表',96,'0,1,2,23,32,95,96','admin:gero:{gid}:carework_record:read','/gero/{id}/carework_record:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'添加老人护工项目记录',96,'0,1,2,23,32,95,96','admin:gero:{gid}:carework_record:add','/gero/{id}/carework_record:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'房间护工',95,'0,1,2,23,32,95','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'房间护工的项目记录列表',99,'0,1,2,23,32,95,99','admin:gero:{gid}:areawork_record:read','/gero/{id}/areawork_record:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'添加房间护工项目记录',99,'0,1,2,23,32,95,99','admin:gero:{gid}:areawork_record:add','/gero/{id}/areawork_record:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'排班管理',32,'0,1,2,23,32','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'上班时间安排',102,'0,1,2,23,32,102','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'上班时间安排列表',103,'0,1,2,23,32,102,103','admin:gero:{gid}:schedule:read','/gero/{id}/schedule:GET','/gero/1/schedule','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'修改上班时间安排',103,'0,1,2,23,32,102,103','admin:gero:{gid}:schedule:update','/gero/{id}/schedule:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'老人护工职责',102,'0,1,2,23,32,102','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'老人护工职责列表',106,'0,1,2,23,32,102,106','admin:gero:{gid}:carework:read','/gero/{id}/carework:GET','/eldercareduty','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'新增老人护工职责',106,'0,1,2,23,32,102,106','admin:gero:{gid}:carework:add','/gero/{id}/carework:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'修改老人护工职责',106,'0,1,2,23,32,102,106','admin:gero:{gid}:carework:update','/gero/{id}/carework/{id}:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'删除老人护工职责',106,'0,1,2,23,32,102,106','admin:gero:{gid}:carework:delete','/gero/{id}/carework/{id}:DELETE','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'房间护工职责',102,'0,1,2,23,32,102','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'房间护工职责列表',111,'0,1,2,23,32,102,111','admin:gero:{gid}:areawork:read','/gero/{id}/areawork:GET','/areacareduty','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'新增房间护工职责',111,'0,1,2,23,32,102,111','admin:gero:{gid}:areawork:add','/gero/{id}/areawork:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'修改房间护工职责',111,'0,1,2,23,32,102,111','admin:gero:{gid}:areawork:update','/gero/{id}/areawork/{id}:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'删除房间护工职责',111,'0,1,2,23,32,102,111','admin:gero:{gid}:areawork:delete','/gero/{id}/areawork/{id}:DELETE','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'护工模块',23,'0,1,2,23','','','no','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查看项目',116,'0,1,2,23,116','','','no','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'老人项目列表',117,'0,1,2,23,116,117','carer:{cid}:gero:{gid}:care_item:read','/gero/{id}/care_item:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'老人专属项目列表',117,'0,1,2,23,116,117','carer:{cid}:gero:{gid}:elder:care_item:read','/gero/{id}/elder/{id}/care_item:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'房间项目列表',117,'0,1,2,23,116,117','carer:{cid}:gero:{gid}:area_item:read','/gero/{id}/area_item:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查询老人项目',117,'0,1,2,23,116,117','carer:{cid}:gero:{gid}:care_item:read','/gero/{id}/care_item/{id}:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查询老人专属项目',117,'0,1,2,23,116,117','carer:{cid}:gero:{gid}:elder:care_item:read','/gero/{id}/elder/{id}/care_item/{id}:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查询房间项目',117,'0,1,2,23,116,117','carer:{cid}:gero:{gid}:area_item:read','/gero/{id}/area_item/{id}:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'项目记录',116,'0,1,2,23,116','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'老人护工查看',124,'0,1,2,23,116,124','carer:{cid}:gero:{gid}:carework_record:read','/gero/{id}/carework_record','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'老人护工新增',124,'0,1,2,23,116,124','carer:{cid}:gero:{gid}:carework_record:add','/gero/{id}/carework_record','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'房间护工查看',124,'0,1,2,23,116,124','carer:{cid}:gero:{gid}:areawork_record:read','/gero/{id}/areawork_record','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'房间护工新增',124,'0,1,2,23,116,124','carer:{cid}:gero:{gid}:areawork_record:add','/gero/{id}/areawork_record','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查看职责',116,'0,1,2,23,116','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'老人护工',129,'0,1,2,23,116,129','carer:{cid}:gero:{gid}:duty_carer:read','/gero/{id}/elder/{id}/duty_carer','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'房间护工',129,'0,1,2,23,116,129','carer:{cid}:gero:{gid}:duty_carer:read','/gero/{id}/area/{id}/duty_carer','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'医生模块',23,'0,1,2,23','','','no','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'老人健康信息管理',132,'0,1,2,23,132','','','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'获取体温',133,'0,1,2,23,132,133','doctor:gero:{gid}:elder:health:read','/gero/{id}/elder/{id}/temperature:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'新增体温',133,'0,1,2,23,132,133','doctor:gero:{gid}:elder:health:add','/gero/{id}/elder/{id}/temperature:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'获取血压',133,'0,1,2,23,132,133','doctor:gero:{gid}:elder:health:read','/gero/{id}/elder/{id}/blood_pressure:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'新增血压',133,'0,1,2,23,132,133','doctor:gero:{gid}:elder:health:add','/gero/{id}/elder/{id}/blood_pressure:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'获取心率',133,'0,1,2,23,132,133','doctor:gero:{gid}:elder:health:read','/gero/{id}/elder/{id}/heart_rate:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'新增心率',133,'0,1,2,23,132,133','doctor:gero:{gid}:elder:health:add','/gero/{id}/elder/{id}/heart_rate:POST','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'修改养老院老人密码',82,'0,1,2,23,32,82','admin:gero:{gid}:staff:info:update','/user/{id}/password:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'修改养老院职工密码',76,'0,1,2,23,32,76','admin:gero:{gid}:elder:info:update','/user/{id}/password:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'修改员工角色',67,'0,1,2,23,32,67','admin:gero:{gid}:user:role:update','/user/{id}/role:PUT','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'超级管理员',2,'0,1,2','','','no','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'查询用户列表',143,'0,1,2,143','super:user:list:read','/user:GET','','','');
-INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
-'修改上班时间安排',103,'0,1,2,23,32,102,103','admin:gero:{gid}:schedule:add','/gero/{id}/staff/{id}/schedule:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+1,'root',0,'0,','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+2,'用户',1,'0,1','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+3,'用户个人信息',2,'0,1,2','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+4,'查看当前用户信息',3,'0,1,2,3','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+5,'查看当前超管信息',4,'0,1,2,3,4','user:{uid}:info:read','/user/{id}:GET','/user/1','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+6,'查看当前员工信息',4,'0,1,2,3,4','user:{uid}:info:read','/gero/{id}/staff/{id}:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+7,'查看当前老人信息',4,'0,1,2,3,4','user:{uid}:info:read','/gero/{id}/elder/{id}:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+8,'查看当前家属信息',4,'0,1,2,3,4','user:{uid}:info:read','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+9,'修改当前用户信息',3,'0,1,2,3','','','no','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+10,'修改当前超管信息',9,'0,1,2,3,9','user:{uid}:info:update','/user/{id}:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+11,'修改当前员工信息',9,'0,1,2,3,9','user:{uid}:info:update','/gero/{id}/staff/{id}:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+12,'修改当前老人信息',9,'0,1,2,3,9','user:{uid}:info:update','/gero/{id}/elder/{id}:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+13,'修改当前家属信息',9,'0,1,2,3,9','user:{uid}:info:update','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+14,'修改用户密码',3,'0,1,2,3','user:{uid}:password:update','/user/{id}/password:PUT','no','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+15,'老人家属功能模块',2,'0,1,2','','','no','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+16,'查看老人健康信息',15,'0,1,2,15','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+17,'查看老人体温',16,'0,1,2,15,16','elder:{eid}:health:read','/gero/{id}/elder/{id}/temperature:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+18,'查看老人血压',16,'0,1,2,15,16','elder:{eid}:health:read','/gero/{id}/elder/{id}/blood_pressure:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+19,'查看老人心律',16,'0,1,2,15,16','elder:{eid}:health:read','/gero/{id}/elder/{id}/heart_rate:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+20,'查看老人项目记录',15,'0,1,2,15','elder:{eid}:carework_record:read','/gero/{id}/carework_record:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+21,'查看老人负责护工',15,'0,1,2,15','elder:{eid}:carework:read','/gero/{id}/carework:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+22,'查看老人项目',15,'0,1,2,15','elder:{eid}:care_item:read','/gero/{id}/elder/{id}/care_item:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+23,'职工功能模块',2,'0,1,2','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+24,'养老院信息',23,'0,1,2,23','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+25,'查看养老院老人',24,'0,1,2,23,24','staff:{sid}:gero:{gid}:elder:read','/gero/{id}/elder/{id}:GET','/gero/1/elder','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+26,'查看养老院基本信息',24,'0,1,2,23,24','staff:{sid}:gero:{gid}:info:read','/gero/{id}:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+27,'获取养老院所有的区域列表',24,'0,1,2,23,24','staff:{sid}:gero:{gid}:area:read','/gero/{id}/area:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+28,'获取某区域及其子区域',24,'0,1,2,23,24','staff:{sid}:gero:{gid}:area:read','/gero/{id}/area/{id}:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+29,'查看本人排班信息',23,'0,1,2,23','','','no','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+30,'获取某员工的上班信息列表',29,'0,1,2,23,29','staff:{sid}:schedule:read','/gero/{id}/staff/{id}/schedule:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+31,'获取某员工的某天是否上班',29,'0,1,2,23,29','staff:{sid}:schedule:read','/staff/{id}/schedule/{date}:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+32,'养老院管理模块',23,'0,1,2,23','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+33,'养老院基本信息',32,'0,1,2,23,32','','','no','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+34,'获取养老院基本信息',33,'0,1,2,23,32,33','admin:gero:{gid}:info:read','/gero/{id}:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+35,'修改养老院基本信息',33,'0,1,2,23,32,33','admin:gero:{gid}:info:update','/gero/{id}:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+36,'区域管理',32,'0,1,2,23,32','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+37,'获取养老院所有的区域列表',36,'0,1,2,23,32,36','admin:gero:{gid}:area:read','/gero/{id}/area:GET','/area','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+38,'创建一个养老院区域',36,'0,1,2,23,32,36','admin:gero:{gid}:area:add','/gero/{id}/area:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+39,'获取某区域及其子区域',36,'0,1,2,23,32,36','admin:gero:{gid}:area:read','/gero/{id}/area/{id}:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+40,'修改某区域',36,'0,1,2,23,32,36','admin:gero:{gid}:area:update','/gero/{id}/area/{id}:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+41,'删除某区域',36,'0,1,2,23,32,36','admin:gero:{gid}:area:delete','/gero/{id}/area/{id}:DELETE','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+42,'项目管理',32,'0,1,2,23,32','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+43,'老人项目',42,'0,1,2,23,32,42','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+44,'老人项目列表',43,'0,1,2,23,32,42,43','admin:gero:{gid}:care_item:read','/gero/{id}/care_item:GET','/gero/1/care_item','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+45,'添加老人项目',43,'0,1,2,23,32,42,43','admin:gero:{gid}:care_item:add','/gero/{id}/care_item:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+46,'取老人项目',43,'0,1,2,23,32,42,43','admin:gero:{gid}:care_item:read','/gero/{id}/care_item/{id}:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+47,'改老人项目',43,'0,1,2,23,32,42,43','admin:gero:{gid}:care_item:update','/gero/{id}/care_item/{id}:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+48,'删老人项目',43,'0,1,2,23,32,42,43','admin:gero:{gid}:care_item:delete','/gero/{id}/care_item/{id}:DELETE','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+49,'房间项目',42,'0,1,2,23,32,42','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+50,'房间项目列表',49,'0,1,2,23,32,42,49','admin:gero:{gid}:area_item:read','/gero/{id}/area_item:GET','/gero/1/area_item','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+51,'添加房间项目',49,'0,1,2,23,32,42,49','admin:gero:{gid}:area_item:add','/gero/{id}/area_item:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+52,'取房间项目',49,'0,1,2,23,32,42,49','admin:gero:{gid}:area_item:read','/gero/{id}/area_item/{id}:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+53,'改房间项目',49,'0,1,2,23,32,42,49','admin:gero:{gid}:area_item:update','/gero/{id}/area_item/{id}:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+54,'删房间项目',49,'0,1,2,23,32,42,49','admin:gero:{gid}:area_item:delete','/gero/{id}/area_item/{id}:DELETE','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+55,'老人专属项目',42,'0,1,2,23,32,42','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+56,'老人专属项目列表',55,'0,1,2,23,32,42,55','admin:gero:{gid}:elder:care_item:read','/gero/{id}/elder/{id}/care_item:GET','/elder_care_item','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+57,'添加老人专属项目',55,'0,1,2,23,32,42,55','admin:gero:{gid}:elder:care_item:add','/gero/{id}/elder/{id}/care_item:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+58,'取老人专属项目',55,'0,1,2,23,32,42,55','admin:gero:{gid}:elder:care_item:read','/gero/{id}/elder/{id}/care_item/{id}:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+59,'改老人专属项目',55,'0,1,2,23,32,42,55','admin:gero:{gid}:elder:care_item:update','/gero/{id}/elder/{id}/care_item/{id}:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+60,'删老人专属项目',55,'0,1,2,23,32,42,55','admin:gero:{gid}:elder:care_item:delete','/gero/{id}/elder/{id}/care_item/{id}:DELETE','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+61,'院属互动',32,'0,1,2,23,32','','','no','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+62,'院属互动列表',61,'0,1,2,23,32,61','admin:gero:{gid}:exchange:read','/gero/{id}/exchange:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+63,'添加院属互动',61,'0,1,2,23,32,61','admin:gero:{gid}:exchange:add','/gero/{id}/exchange:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+64,'取院属互动',61,'0,1,2,23,32,61','admin:gero:{gid}:exchange:read','/gero/{id}/exchange/{id}:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+65,'改院属互动',61,'0,1,2,23,32,61','admin:gero:{gid}:exchange:update','/gero/{id}/exchange/{id}:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+66,'删院属互动',61,'0,1,2,23,32,61','admin:gero:{gid}:exchange:delete','/gero/{id}/exchange/{id}:DELETE','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+67,'角色管理',32,'0,1,2,23,32','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+68,'养老院角色列表',67,'0,1,2,23,32,67','admin:gero:{gid}:role:read','/gero/{id}/role:GET','/gero/1/role','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+69,'新增养老院角色',67,'0,1,2,23,32,67','admin:gero:{gid}:role:add','/gero/{id}/role:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+70,'获取角色信息',67,'0,1,2,23,32,67','admin:gero:{gid}:role:read','/gero/{id}/role/{id}:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+71,'修改角色的基本信息',67,'0,1,2,23,32,67','admin:gero:{gid}:role:update','/gero/{id}/role/{id}:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+72,'删除养老院角色',67,'0,1,2,23,32,67','admin:gero:{gid}:role:delete','/gero/{id}/role/{id}:DELETE','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+73,'给养老院角色添加权限',67,'0,1,2,23,32,67','admin:gero:{gid}:role:update','/gero/{id}/role/{id}/privilege:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+74,'给养老院角色删除权限',67,'0,1,2,23,32,67','admin:gero:{gid}:role:update','/gero/{id}/role/{id}/privilege:DELETE','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+75,'为某个角色关联员工',67,'0,1,2,23,32,67','admin:gero:{gid}:role:update','/gero/{id}/role/{id}/user:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+76,'职工基本信息管理',32,'0,1,2,23,32','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+77,'职工基本信息列表',76,'0,1,2,23,32,76','admin:gero:{gid}:staff:info:read','/gero/{id}/staff:GET','/gero/1/staff','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+78,'增加职工基本信息',76,'0,1,2,23,32,76','admin:gero:{gid}:staff:info:add','/gero/{id}/staff:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+79,'查找职工基本信息',76,'0,1,2,23,32,76','admin:gero:{gid}:staff:info:read','/gero/{id}/staff/{id}:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+80,'修改职工基本信息',76,'0,1,2,23,32,76','admin:gero:{gid}:staff:info:update','/gero/{id}/staff/{id}:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+81,'删除职工基本信息',76,'0,1,2,23,32,76','admin:gero:{gid}:staff:info:delete','/gero/{id}/staff/{id}:DELETE','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+82,'老人基本信息管理',32,'0,1,2,23,32','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+83,'老人基本信息列表',82,'0,1,2,23,32,82','admin:gero:{gid}:elder:info:read','/gero/{id}/elder:GET',NULL,'','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+84,'新增老人基本信息',82,'0,1,2,23,32,82','admin:gero:{gid}:elder:info:add','/gero/{id}/elder:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+85,'修改老人基本信息',82,'0,1,2,23,32,82','admin:gero:{gid}:elder:info:read','/gero/{id}/elder/{id}:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+86,'查找老人基本信息',82,'0,1,2,23,32,82','admin:gero:{gid}:elder:info:update','/gero/{id}/elder/{id}:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+87,'删除老人基本信息',82,'0,1,2,23,32,82','admin:gero:{gid}:elder:info:delete','/gero/{id}/elder/{id}:DELETE','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+88,'老人健康信息管理',32,'0,1,2,23,32','','','no','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+89,'获取体温',88,'0,1,2,23,32,88','admin:gero:{gid}:elder:health:read','/gero/{id}/elder/{id}/temperature:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+90,'新增体温',88,'0,1,2,23,32,88','admin:gero:{gid}:elder:health:add','/gero/{id}/elder/{id}/temperature:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+91,'获取血压',88,'0,1,2,23,32,88','admin:gero:{gid}:elder:health:read','/gero/{id}/elder/{id}/blood_pressure:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+92,'新增血压',88,'0,1,2,23,32,88','admin:gero:{gid}:elder:health:add','/gero/{id}/elder/{id}/blood_pressure:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+93,'获取心率',88,'0,1,2,23,32,88','admin:gero:{gid}:elder:health:read','/gero/{id}/elder/{id}/heart_rate:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+94,'新增心率',88,'0,1,2,23,32,88','admin:gero:{gid}:elder:health:add','/gero/{id}/elder/{id}/heart_rate:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+95,'项目记录管理',32,'0,1,2,23,32','','','no','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+96,'老人护工',95,'0,1,2,23,32,95','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+97,'老人护工的项目记录列表',96,'0,1,2,23,32,95,96','admin:gero:{gid}:carework_record:read','/gero/{id}/carework_record:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+98,'添加老人护工项目记录',96,'0,1,2,23,32,95,96','admin:gero:{gid}:carework_record:add','/gero/{id}/carework_record:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+99,'房间护工',95,'0,1,2,23,32,95','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+100,'房间护工的项目记录列表',99,'0,1,2,23,32,95,99','admin:gero:{gid}:areawork_record:read','/gero/{id}/areawork_record:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+101,'添加房间护工项目记录',99,'0,1,2,23,32,95,99','admin:gero:{gid}:areawork_record:add','/gero/{id}/areawork_record:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+102,'排班管理',32,'0,1,2,23,32','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+103,'上班时间安排',102,'0,1,2,23,32,102','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+104,'上班时间安排列表',103,'0,1,2,23,32,102,103','admin:gero:{gid}:schedule:read','/gero/{id}/schedule:GET','/gero/1/schedule','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+105,'修改上班时间安排',103,'0,1,2,23,32,102,103','admin:gero:{gid}:schedule:update','/gero/{id}/schedule:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+106,'老人护工职责',102,'0,1,2,23,32,102','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+107,'老人护工职责列表',106,'0,1,2,23,32,102,106','admin:gero:{gid}:carework:read','/gero/{id}/carework:GET','/eldercareduty','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+108,'新增老人护工职责',106,'0,1,2,23,32,102,106','admin:gero:{gid}:carework:add','/gero/{id}/carework:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+109,'修改老人护工职责',106,'0,1,2,23,32,102,106','admin:gero:{gid}:carework:update','/gero/{id}/carework/{id}:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+110,'删除老人护工职责',106,'0,1,2,23,32,102,106','admin:gero:{gid}:carework:delete','/gero/{id}/carework/{id}:DELETE','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+111,'房间护工职责',102,'0,1,2,23,32,102','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+112,'房间护工职责列表',111,'0,1,2,23,32,102,111','admin:gero:{gid}:areawork:read','/gero/{id}/areawork:GET','/areacareduty','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+113,'新增房间护工职责',111,'0,1,2,23,32,102,111','admin:gero:{gid}:areawork:add','/gero/{id}/areawork:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+114,'修改房间护工职责',111,'0,1,2,23,32,102,111','admin:gero:{gid}:areawork:update','/gero/{id}/areawork/{id}:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+115,'删除房间护工职责',111,'0,1,2,23,32,102,111','admin:gero:{gid}:areawork:delete','/gero/{id}/areawork/{id}:DELETE','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+116,'护工模块',23,'0,1,2,23','','','no','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+117,'查看项目',116,'0,1,2,23,116','','','no','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+118,'老人项目列表',117,'0,1,2,23,116,117','carer:{cid}:gero:{gid}:care_item:read','/gero/{id}/care_item:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+119,'老人专属项目列表',117,'0,1,2,23,116,117','carer:{cid}:gero:{gid}:elder:care_item:read','/gero/{id}/elder/{id}/care_item:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+120,'房间项目列表',117,'0,1,2,23,116,117','carer:{cid}:gero:{gid}:area_item:read','/gero/{id}/area_item:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+121,'查询老人项目',117,'0,1,2,23,116,117','carer:{cid}:gero:{gid}:care_item:read','/gero/{id}/care_item/{id}:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+122,'查询老人专属项目',117,'0,1,2,23,116,117','carer:{cid}:gero:{gid}:elder:care_item:read','/gero/{id}/elder/{id}/care_item/{id}:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+123,'查询房间项目',117,'0,1,2,23,116,117','carer:{cid}:gero:{gid}:area_item:read','/gero/{id}/area_item/{id}:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+124,'项目记录',116,'0,1,2,23,116','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+125,'老人护工查看',124,'0,1,2,23,116,124','carer:{cid}:gero:{gid}:carework_record:read','/gero/{id}/carework_record','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+126,'老人护工新增',124,'0,1,2,23,116,124','carer:{cid}:gero:{gid}:carework_record:add','/gero/{id}/carework_record','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+127,'房间护工查看',124,'0,1,2,23,116,124','carer:{cid}:gero:{gid}:areawork_record:read','/gero/{id}/areawork_record','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+128,'房间护工新增',124,'0,1,2,23,116,124','carer:{cid}:gero:{gid}:areawork_record:add','/gero/{id}/areawork_record','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+129,'查看职责',116,'0,1,2,23,116','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+130,'老人护工',129,'0,1,2,23,116,129','carer:{cid}:gero:{gid}:duty_carer:read','/gero/{id}/elder/{id}/duty_carer','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+131,'房间护工',129,'0,1,2,23,116,129','carer:{cid}:gero:{gid}:duty_carer:read','/gero/{id}/area/{id}/duty_carer','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+132,'医生模块',23,'0,1,2,23','','','no','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+133,'老人健康信息管理',132,'0,1,2,23,132','','','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+134,'获取体温',133,'0,1,2,23,132,133','doctor:gero:{gid}:elder:health:read','/gero/{id}/elder/{id}/temperature:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+135,'新增体温',133,'0,1,2,23,132,133','doctor:gero:{gid}:elder:health:add','/gero/{id}/elder/{id}/temperature:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+136,'获取血压',133,'0,1,2,23,132,133','doctor:gero:{gid}:elder:health:read','/gero/{id}/elder/{id}/blood_pressure:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+137,'新增血压',133,'0,1,2,23,132,133','doctor:gero:{gid}:elder:health:add','/gero/{id}/elder/{id}/blood_pressure:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+138,'获取心率',133,'0,1,2,23,132,133','doctor:gero:{gid}:elder:health:read','/gero/{id}/elder/{id}/heart_rate:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+139,'新增心率',133,'0,1,2,23,132,133','doctor:gero:{gid}:elder:health:add','/gero/{id}/elder/{id}/heart_rate:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+140,'修改养老院老人密码',82,'0,1,2,23,32,82','admin:gero:{gid}:staff:info:update','/user/{id}/password:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+141,'修改养老院职工密码',76,'0,1,2,23,32,76','admin:gero:{gid}:elder:info:update','/user/{id}/password:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+142,'修改员工角色',67,'0,1,2,23,32,67','admin:gero:{gid}:user:role:update','/user/{id}/role:PUT','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+143,'超级管理员',2,'0,1,2','','','no','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+144,'查询用户列表',143,'0,1,2,143','super:user:list:read','/user:GET','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+145,'修改上班时间安排',103,'0,1,2,23,32,102,103','admin:gero:{gid}:schedule:add','/gero/{id}/staff/{id}/schedule:POST','','','');
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+146,'家属信息管理',32,'0,1,2,23,32','','',NULL,NULL,NULL);
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+149,'家属信息管理列表',146,'0,1,2,23,32,146','admin:gero:{gid}:relative:info:read','/gero/{id}/relative:GET','/relative',NULL,NULL);
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+150,'删除家属信息',146,'0,1,2,23,32,146','admin:gero:{gid}:relative:info:delete','/gero/{gid}/relative/{id}:DELETE',NULL,NULL,NULL);
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+151,'查找家属信息',146,'0,1,2,23,32,146','admin:gero:{gid}:relative:info:read','/gero/{gid}/relative/{id}:GET',NULL,NULL,NULL);
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+152,'修改家属信息',146,'0,1,2,23,32,146','admin:gero:{gid}:relative:info:update','/gero/{gid}/relative/{id}:PUT',NULL,NULL,NULL);
+INSERT INTO HCDB_UPDATE_TEST.dbo.T_PRIVILEGE (id,name,parent_id,parent_ids,permission,api,href,icon,notes) VALUES (
+153,'新增家属信息',146,'0,1,2,23,32,146','admin:gero:{gid}:relative:info:add','/gero/{gid}/relative:POST',NULL,NULL,NULL);
 
 ---------------------------------------------------------------------------------------
 
