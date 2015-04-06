@@ -2,10 +2,13 @@ var relative={
 	method:'',
     rid:'',
     uid:"",
+    eldertemp:[],
     drawRelativeList:function(){
         $("#relative-dialog-form").dialog("close");
         $(".inf").addClass('hide');
 	    $("#relativeshow").removeClass('hide');
+        $("#relative_name").attr('value',null);
+        $("#relative_elderid").attr('value',null);
 	    $('#relativepage').datagrid({ 
         title:'家属信息列表', 
         iconCls:'icon-edit',//图标 
@@ -25,8 +28,8 @@ var relative={
         pagination:true,//分页控件 
         rownumbers:true,//行号
         pagePosition:'bottom',
-        pageSize: 10,//每页显示的记录条数，默认为20 
-        pageList: [10,20,30],//可以设置每页记录条数的列表 
+        pageSize: 35,//每页显示的记录条数，默认为20 
+        pageList: [20,35,50],//可以设置每页记录条数的列表 
         loadFilter:function(data){
         	var result={"total":0,"rows":0};
             leftTop.dealdata(data);
@@ -57,17 +60,17 @@ var relative={
         $('#relative-Info-card-a input').attr('disabled','disabled');
         $('#relative-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
         $('#rname').attr('value',data.name);
-        // $('#eusername').attr('value',data.username);
         $('#rbirthday').attr('value',data.birthday);
         $('#rage').attr('value',data.age);
         var radios = document.getElementsByName("rgender");
             for (var i = 0; i < radios.length; i++) {
-                if (radios[i].value==data.gender) radios[i].checked="checked";
+                if (radios[i].getAttribute('value')==data.gender) radios[i].checked="checked";
             }
         $('#raddress').attr('value',data.address);
+        $('#relder_id').attr('value',data.elder_id);
         $('#rnative_place').attr('value',data.native_place);
-        $('#rnssf_id').attr('value',data.nssf_id);
-        $('#rarchive_id').attr('value',data.archive_id);
+        $('#rurgent').attr('value',data.urgent);
+        $('#rwechat_id').attr('value',data.wechat_id);
         $('#rnationality').attr('value',data.nationality);
         $('#reducation').attr('value',data.education);
         $('#rresidence').attr('value',data.residence);
@@ -75,6 +78,10 @@ var relative={
         $('#rmarriage').attr('value',data.marriage);
         $('#ridentity_no').attr('value',data.identity_no);
         $('#rphone_no').attr('value',data.phone_no);
+        $('#rzip_code').attr('value',data.zip_code);
+        $('#rregister_date').attr('value',data.register_date);
+        $('#rcancel_date').attr('value',data.cancel_date);
+        $('#remail').attr('value',data.email);
 
         if(data.photo_url!==undefined) $('#relative-Info-card-b img').attr("src",data.photo_src).attr("width","178px").attr("height","220px");
         else $('#relative-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
@@ -85,7 +92,7 @@ var relative={
         relative.method='post';
         $("#relative-dialog-form").dialog("open");
         $("#relative-dialog-form").dialog("center");
-        $('#relative-Info-card-a input').attr('value'," ").removeAttr('disabled');
+        $('#relative-Info-card-a input').attr('value',null).removeAttr('disabled');
         $('#relative-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
         $('#relative-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
@@ -137,31 +144,32 @@ var relative={
     },
     buttonclk:function(){
         var sexc;
-        var radios = document.getElementsByName("egender");
+        var radios = document.getElementsByName("rgender");
             for (var i = 0; i < radios.length; i++) {
-                if (radios[i].checked==="checked") sexc=parseInt(radios[i].value);
+                if (radios[i].checked) sexc=i;
             }
         var obj={
-            name:document.getElementById("ename").value,
+            name:document.getElementById("rname").value,
             gender:sexc,
-            address:document.getElementById("eaddress").value,
-            identity_no:document.getElementById("eidentity_no").value,
-            phone_no:document.getElementById("ephone_no").value,
-            nssf_id:document.getElementById("enssf_id").value,
-            archive_id:document.getElementById("earchive_id").value,
-            area_id:parseInt(document.getElementById("earea_id").value),
-            care_level:document.getElementById("ecare_level").value,
-            nationality:document.getElementById("enationality").value,
-            native_place:document.getElementById("enative_place").value,
-            birthday:document.getElementById("ebirthday").value,
-            political_status:document.getElementById("epolitical_status").value,
-            education:document.getElementById("eeducation").value,
-            residence:document.getElementById("eresidence").value,
-            checkin_date:document.getElementById("echeckin_date").value,
-            checkout_date:document.getElementById("echeckout_date").value,
-            pad_mac:document.getElementById("epad_mac").value,
-            age:document.getElementById("eage").value,
-            marriage:document.getElementById("emarriage").value,
+            address:document.getElementById("raddress").value,
+            elder_id:document.getElementById("relder_id").value,
+            identity_no:document.getElementById("ridentity_no").value,
+            phone_no:document.getElementById("rphone_no").value,
+            wechat_id:parseInt(document.getElementById("rwechat_id").value),
+            zip_code:document.getElementById("rzip_code").value,
+            nationality:document.getElementById("rnationality").value,
+            native_place:document.getElementById("rnative_place").value,
+            birthday:document.getElementById("rbirthday").value,
+            political_status:document.getElementById("rpolitical_status").value,
+            education:document.getElementById("reducation").value,
+            residence:document.getElementById("rresidence").value,
+            email:document.getElementById("remail").value,
+            relationship:document.getElementById("rrelationship").value,
+            urgent:document.getElementById("rurgent").value,
+            age:document.getElementById("rage").value,
+            register_date:document.getElementById("rregister_date").value,
+            cancel_date:document.getElementById("rcancel_date").value,
+            marriage:document.getElementById("rmarriage").value,
         }
         var infoUrl=rhurl.origin+'/gero/'+gid+'/relative'+relative.rid;
         $.ajax({
@@ -178,9 +186,72 @@ var relative={
     doSearch:function(){
         $('#relativepage').datagrid('load',{           
                     name: $('#relative_name').val(),
-                    area_id: $('#relative_areaid').val(),
-                    care_level: $('#relative_care_level').val(),
+                    elder_id: $('#relative_elderid').val(),
                 });
+    },
+    elder_idclick:function(){
+        $('#elderchoose-dialog-form').dialog('open');
+        $("#elderchoose-dialog-form").dialog("center");
+        $('#elderchoosetree li').remove();
+        $('#elderchoosetree ul').remove();
+        $.ajax({
+            type: "get",
+            data:{page:1,rows:65535,sort:'ID'},
+            dataType: "json",
+            contentType: "application/json;charset=utf-8",
+            url:rhurl.origin+'/gero/'+gid+'/elder',
+            timeout:deadtime,
+            success: function (msg) {
+                relative.eldertemp=[];
+                for(var i in msg.entities){
+                    var temp={
+                        id:msg.entities[i].elder_id,
+                        text:msg.entities[i].name,
+                        iconCls:'icon-blank',
+                    }
+                    relative.eldertemp.push(temp);
+                }
+                $("#elderchoosetree").tree("loadData",relative.eldertemp);
+                eldervalue='#relder_id';
+                var node=$("#elderchoosetree").tree('find',parseInt($('#relder_id').val()));
+                if(node)$("#elderchoosetree").tree("check",node.target);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+            }
+        });
+    },
+    searchelder_id:function(){
+        $('#elderchoose-dialog-form').dialog('open');
+        $("#elderchoose-dialog-form").dialog("center");
+        $('#elderchoosetree li').remove();
+        $('#elderchoosetree ul').remove();
+        $.ajax({
+            type: "get",
+            data:{page:1,rows:65535,sort:'ID'},
+            dataType: "json",
+            contentType: "application/json;charset=utf-8",
+            url:rhurl.origin+'/gero/'+gid+'/elder',
+            timeout:deadtime,
+            success: function (msg) {
+                relative.eldertemp=[];
+                for(var i in msg.entities){
+                    var temp={
+                        id:msg.entities[i].elder_id,
+                        text:msg.entities[i].name,
+                        iconCls:'icon-blank',
+                    }
+                    relative.eldertemp.push(temp);
+                }
+                $("#elderchoosetree").tree("loadData",relative.eldertemp);
+                eldervalue='#relative_elderid';
+                var node=$("#elderchoosetree").tree('find',parseInt($('#relative_elderid').val()));
+                if(node)$("#elderchoosetree").tree("check",node.target);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+            }
+        });
     }
 
 }

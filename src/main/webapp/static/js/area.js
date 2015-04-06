@@ -90,7 +90,7 @@ var area={
             area.obj.parent_id=node.id;
             area.method="post";
             $('#areaInfo').removeClass('hide');
-            $('#areaInfo input').attr('value',' ');
+            $('#areaInfo input').attr('value',null);
             $('#atype').removeAttr('disabled');
         }
     },

@@ -60,7 +60,7 @@ var authority={
             authority.obj.parent_id=node.id;
             authority.method="post";
             $('#authorityInfo').removeClass('hide');
-            $('#authorityInfo input').attr('value',' ');
+            $('#authorityInfo input').attr('value',null);
         }
     },
     buttonclk:function(){

@@ -24,8 +24,8 @@
             rownumbers:true,//行号  
             pageNumber:1,
             pagePosition:'bottom',
-            pageSize: 10,//每页显示的记录条数，默认为20 
-            pageList: [10,20,30],//可以设置每页记录条数的列表 
+            pageSize: 35,//每页显示的记录条数，默认为20 
+            pageList: [20,35,50],//可以设置每页记录条数的列表 
             loadFilter:function(data){
                 leftTop.dealdata(data);
         	    var result={"total":0,"rows":0};
@@ -64,13 +64,34 @@
             $(this).pagination('loaded');
         }*/ 
 		});
+
+        $.ajax({
+        type: "get",
+        data:{page:1,rows:65535,sort:'ID'},
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        url:rhurl.origin+'/gero/'+gid+'/role',
+        timeout:deadtime,
+        success: function (msg) {
+            $("#role-check li").remove()
+            var parent=document.getElementById("role-check");
+            for(var i in msg.entities){
+                var li=document.createElement('li');
+                li.innerHTML="<input type='checkbox' class='checkrole' disabled=true id='chkrole"+msg.entities[i].id+"' rid='"+msg.entities[i].id+"'>"+msg.entities[i].name+"</input>";
+                parent.appendChild(li);
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+        }
+    });
     },
 
      drawStaffInfo: function(data){
         staff.sid="/"+data.staff_id;
         staff.uid="/"+data.id;
         var rolestr='';
-        $('.checkrole').attr("checked",false);
+        $('#role-check input').attr("checked",false);
         for(var i in data.role_list){
             $("#chkrole"+data.role_list[i].role_id).attr("checked","true");
         };
@@ -83,14 +104,14 @@
         $('#sbirthday').attr('value',data.birthday);
         var radios = document.getElementsByName("sgender");
             for (var i = 0; i < radios.length; i++) {
-                if (radios[i].value==data.gender) radios[i].checked="checked";
+                if (radios[i].getAttribute('value')==data.gender) radios[i].checked="checked";
             }
         $('#shousehold_address').attr('value',data.household_address);
         $('#snssf_id').attr('value',data.nssf_id);
         $('#sarchive_id').attr('value',data.archive_id);
         $('#sresidence_address').attr('value',data.residence_address);
         $('#sidentity_no').attr('value',data.identity_no);
-        $('#sphone').attr('value',data.phone_no);
+        $('#sphone_no').attr('value',data.phone_no);
         $('#susername').attr('value',data.username);
         $('#sregister_date').attr('value',data.register_date);
         $('#scancel_date').attr('value',data.cancel_date);
@@ -113,9 +134,9 @@
         staff.method='post';
         $("#staff-dialog-form").dialog("open");
         $("#staff-dialog-form").dialog("center");
-        $('.checkrole').attr("checked",false);
-        $('.checkrole').attr("disabled",true);
-        $('#staff-Info-card-a input').attr('value'," ").removeAttr('disabled','');
+        $('#role-check input').attr("checked",false);
+        $('#role-check input').attr("disabled",true);
+        $('#staff-Info-card-a input').attr('value',null).removeAttr('disabled','');
         $("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
         $('#staff-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
@@ -125,23 +146,27 @@
         $("#staff-dialog-form").dialog("open");
         $("#staff-dialog-form").dialog("center");
         $('#staff-Info-card-a input').removeAttr('disabled','');
-        $('.checkrole').attr("disabled",false);
+        $('#role-check input').attr("disabled",false);
         $("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
     },
     delStaffInfo: function(){
         var stafft = $('#staffpage').datagrid('getSelected');
-        var infoUrl=rhurl.origin+"/gero/"+gid+"/staff/" + stafft.staff_id;
-        $.ajax({
-            url: infoUrl,
-            type: 'DELETE',
-            timeout:deadtime,
-            success:function(){
-                staff.drawstaffList();
-            },
-            error:function(XMLHttpRequest, textStatus, errorThrown){
-                leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+        if (stafft){
+            var infoUrl=rhurl.origin+"/gero/"+gid+"/staff/" + stafft.staff_id;
+            if (confirm('确定要删除？')) {
+                $.ajax({
+                    url: infoUrl,
+                    type: 'DELETE',
+                    timeout:deadtime,
+                    success:function(){
+                        staff.drawStaffList();
+                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                        leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+                    }
+                })
             }
-        })
+        }
 
     },
 
@@ -172,7 +197,7 @@
         var sexc;
         var radios = document.getElementsByName("sgender");
             for (var i = 0; i < radios.length; i++) {
-                if (radios[i].checked==="checked") sexc=parseInt(radios[i].value);
+                if (radios[i].checked) sexc=i;
             }
         var obj={
             name:document.getElementById("sname").value,
@@ -182,7 +207,7 @@
             nssf_id:document.getElementById("snssf_id").value,
             archive_id:document.getElementById("sarchive_id").value,
             email:document.getElementById("semail").value,
-            phone:document.getElementById("sphone").value,
+            phone_no:document.getElementById("sphone_no").value,
             birthday:document.getElementById("sbirthday").value,
             residence_address:document.getElementById("sresidence_address").value,
             register_date:document.getElementById("sregister_date").value,
@@ -218,7 +243,7 @@
         }
         if(staff.sid!==''){
         $.ajax({
-            url: rhurl.origin+'/user'+staff.sid+'/role', 
+            url: rhurl.origin+'/user'+staff.uid+'/role', 
             type: 'put', 
             data: JSON.stringify(roleobj), 
             dataType: 'json', 

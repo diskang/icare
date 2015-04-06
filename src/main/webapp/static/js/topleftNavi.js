@@ -28,6 +28,9 @@ var container;
 var options;
 var gid=getUser().gero_id;
 var uid=getUser().id;
+var areavalue;
+var eldervalue;
+var elderchoosename='';
 Sundate.setTime(Sundate.getTime()-Sundate.getDay()*24*60*60*1000);
 hrefTable['/gero/1/elder']='elder.drawElderList()';
 hrefTable['/gero/1/staff']='staff.drawStaffList()';
@@ -42,6 +45,7 @@ hrefTable['/area']='area.drawAreaList()';
 hrefTable['/eldercareduty']='eldercare.drawElderCareList()';
 hrefTable['/areacareduty']='areacare.drawAreaCareList()';
 hrefTable['/relative']='relative.drawRelativeList()';
+hrefTable['/elder_care_item']='care_item.drawItemList()';
 
 var leftTop = {
     removeLefttree:function (){
@@ -183,7 +187,7 @@ $(function(){
         dataType: "json",
         contentType: "application/json;charset=utf-8",
         url:rhurl.origin+"/user/"+uid,
-        timeout:3000,
+        timeout:deadtime,
         success: function (msg) {
             temptree=msg.entities[0].privilege_list;
             leftTop.removeLefttree;
@@ -192,32 +196,6 @@ $(function(){
             $("#welcome").text("欢迎"+msg.entities[0].username+"登录resthouse系统");
             document.getElementById('uusername').setAttribute('value',msg.entities[0].username);
             document.getElementById('uname').setAttribute('value',msg.entities[0].name);
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
-        }
-    });
-    $.ajax({
-        type: "get",
-        data:{page:1,rows:65535,sort:'ID'},
-        dataType: "json",
-        contentType: "application/json;charset=utf-8",
-        url:rhurl.origin+'/gero/'+gid+'/role',
-        timeout:3000,
-        success: function (msg) {
-            var parent=document.getElementById("arrange_role");
-            for(var i in msg.entities){
-                var dt=document.createElement('option');
-                dt.setAttribute('value',msg.entities[i].name);
-                dt.innerHTML=msg.entities[i].name;
-                parent.appendChild(dt);
-            }
-            var parent=document.getElementById("role-check");
-            for(var i in msg.entities){
-                var li=document.createElement('li');
-                li.innerHTML="<input type='checkbox' class='checkrole' disabled=true id='chkrole"+msg.entities[i].id+"' rid='"+msg.entities[i].id+"'>"+msg.entities[i].name+"</input>";
-                parent.appendChild(li);
-            }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);

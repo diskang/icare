@@ -111,13 +111,18 @@
             <div class="form-group group">
               <label class="col-ssm-1" for="name">房间:</label>
               <div class="col-smm-2">
-                <input id="elder_areaid" class="form-control"  value=""></input>
+                <input id="elder_areaid" type='button' onclick='elder.searcharea_id();' class="form-control"  value=""></input>
               </div>
             </div>
             <div class="form-group group">
               <label class="col-smm-1" for="name">护理等级:</label>
               <div class="col-smm-2">
                 <select id="elder_care_level" class="form-control"  value="">
+                  <option value=''></option>
+                  <option value='1'>1</option>
+                  <option value='2'>2</option>
+                  <option value='3'>3</option>
+                  <option value='专护'>专护</option>
                 </select>
               </div>
             </div>
@@ -133,7 +138,7 @@
                   <tr>
                     <th data-options="field:'elder_id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
-                    <th data-options="field:'bed_id',width:120,align:'center'">房 间</th>
+                    <th data-options="field:'area_id',width:120,align:'center'">房 间</th>
                     <th data-options="field:'name',width:120,align:'center'">姓 名</th>
                     <th data-options="field:'identity_no',width:160,align:'center'">身份证号</th>
                     <th data-options="field:'gender',width:80,align:'center'">性 别</th>
@@ -158,6 +163,12 @@
               <label class="control" for="name">姓名:</label>
               <div class="col-smm-2">
                 <input id="relative_name" class="form-control"  value=""></input>
+              </div>
+            </div>
+            <div class="form-group group">
+              <label class="col-ssm-1" for="name">相关老人:</label>
+              <div class="col-smm-2">
+                <input id="relative_elderid" type='button' onclick='relative.searchelder_id();' class="form-control"  value=""></input>
               </div>
             </div>
             <div class="form-group group"> 
@@ -295,7 +306,7 @@
             </div>
             <div class="form-group group"> 
               <div class="col-md-offset-2">
-                <button id="elder-search" class="btn btn-default" onclick="arrange.drawArrangeList()" style="margin-left:30px;" >搜索</button>
+                <button id="elder-search" class="btn btn-default" onclick="arrange.drawArrangeList2()" style="margin-left:30px;" >搜索</button>
               </div>
             </div>
           </div>
@@ -487,6 +498,42 @@
         </div>
       </div>
 
+      <!--------------------------老人专属项目列表-------------------------------->
+      <div id="eldercareitemshow" class="inf hide" style="min-height:700px;">
+        <div class="pers-s">老人专属项目查询</div>
+        <div class="old">
+          <div class="page-header">老人选择:</div>
+          <div class="Inquiry">
+            <div class="form-group group">
+              <label class="control" for="name">老人:</label>
+              <div class="col-smm-2">
+                <input id="care_item_elder_name" type:"button" onclick="care_item.chooseelder()" class="form-control"  value=""></input>
+              </div>
+            </div>
+            <div class="form-group group"> 
+              <div class="col-md-offset-2">
+                <button class="btn btn-default" onclick="care_item.doSearch()" style="margin-left:30px;" >搜索</button>
+              </div>
+            </div>
+          </div>
+          <div class="list" style="min-height:500px">
+              <table id="eldercareitempage"  class="easyui-datagrid" title="老人专属项目列表" style="height:400px;" data-options="onDblClickRow:care_item.onDblClickRow">
+                <thead>
+                  <tr>
+                    <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'care_item_id',hidden:true,align:'center'">标识号</th>
+                    <th data-options="field:'care_item_name',width:120,align:'center'">项目名</th>
+                    <th data-options="field:'period',width:120,align:'center'">周期</th>
+                    <th data-options="field:'level',width:120,align:'center'">护理等级</th>
+                  </tr>
+                </thead>
+              </table>
+          </div>
+        </div>
+      </div>
+
+
+
       <!--------------------------院方角色列表-------------------------------->
       <div id="geroroleshow" class="inf hide" style="min-height:700px;">
         <div class="pers-s">养老院角色管理</div>
@@ -596,7 +643,7 @@
           <tr><td class="td1"><text>出生日期：</text></td><td class="td2"><input id="ebirthday"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'date'"></input>*</td></tr>
           <tr><td class="td1"><text>年    龄：</text></td><td class="td2"><input id="eage"></input></td></tr>
           <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="ephone_no" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
-          <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input type="radio" name="egender" value=0 checked="checked" />男 <input type="radio" name="egender" value=1 />女</td></tr>
+          <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input type="radio" name="egender" value='0' />男 <input type="radio" name="egender" value='1' />女</td></tr>
           <tr><td class="td1"><text>婚姻状况：</text></td><td class="td2"><input id="emarriage"></input></td></tr>
           <tr><td class="td1"><text>民    族：</text></td><td class="td2"><input id="enationality"></input></td></tr>
           <tr><td class="td1"><text>籍    贯：</text></td><td class="td2"><input id="enative_place"></input></td></tr>
@@ -607,7 +654,7 @@
           <tr><td class="td1"><text>身份证号：</text></td><td class="td2"><input id="eidentity_no"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'idcard'"></input></td></tr>
           <tr><td class="td1"><text>社保卡号：</text></td><td class="td2"><input id="enssf_id"></input></td></tr>
           <tr><td class="td1"><text>档案编号：</text></td><td class="td2"><input id="earchive_id"></input></td></tr>
-          <tr><td class="td1"><text>入住床号：</text></td><td class="td2"><input id="earea_id" class="easyui-validatebox textbox" data-options="required:true"></input>*</td></tr>
+          <tr><td class="td1"><text>入住床号：</text></td><td class="td2"><input id="earea_id" style="width:80px;"  onclick="elder.area_idclick();" class="easyui-validatebox textbox" type="button" data-options="required:true"></input></td></tr>
           <tr><td class="td1"><text>家庭地址：</text></td><td class="td2"><input id="eaddress"></input></td></tr>
           <tr><td class="td1"><text>入院日期：</text></td><td class="td2"><input id="echeckin_date"></input></td></tr>
           <tr><td class="td1"><text>离院日期：</text></td><td class="td2"><input id="echeckout_date"></input></td></tr>
@@ -634,7 +681,7 @@
           text:'修改',
           iconCls:'icon-edit',
           handler:function(){
-            staff.editStaffInfo();
+            relative.editRelativeInfo();
           }
         },'-',{
           text:'传照片',
@@ -668,11 +715,12 @@
           <tr><td class="td1"><text>电子邮箱：</text></td><td class="td2"><input id="remail"></input></td></tr>
           <tr><td class="td1"><text>出生日期：</text></td><td class="td2"><input id="rbirthday"></input></td></tr>
           <tr><td class="td1"><text>身份证号：</text></td><td class="td2"><input id="ridentity_no"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'idcard'"></input></td></tr>
-          <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input type="radio" name="rgender" value=0 checked="checked" />男 <input type="radio" name="rgender" value=1 />女</td></tr>
+          <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input type="radio" name="rgender" value='0' checked="checked" />男 <input type="radio" name="rgender" value='1' />女</td></tr>
           <tr><td class="td1"><text>教育程度：</text></td><td class="td2"><input id="reducation"></input></td></tr>
-          <tr><td class="td1"><text>社保卡号：</text></td><td class="td2"><input id="rnssf_id"></input></td></tr>
+          <tr><td class="td1"><text>户口所在地：</text></td><td class="td2"><input id="rresidence"></input></td></tr>
           <tr><td class="td1"><text>居住地址：</text></td><td class="td2"><input id="raddress"></input></td></tr>
-          <tr><td class="td1"><text>年龄：</text></td><td class="td2"><input id="rage"></input></td></tr>
+          <tr><td class="td1"><text>年    龄：</text></td><td class="td2"><input id="rage"></input></td></tr>
+          <tr><td class="td1"><text>老人选择：</text></td><td class="td2"><input id="relder_id" style="width:80px;"  onclick="relative.elder_idclick();" class="easyui-validatebox textbox" type="button" data-options="required:true"></input></td></tr>
           <tr><td class="td1"><text>邮编：</text></td><td class="td2"><input id="rzip_code"></input></td></tr>
           <tr><td class="td1"><text>微信号：</text></td><td class="td2"><input id="rwechat_id"></input></td></tr>
           <tr><td class="td1"><text>籍贯：</text></td><td class="td2"><input id="rnative_place"></input></td></tr>
@@ -681,16 +729,8 @@
         </table>
       </div>
       <div id="relative-Info-card-b" class="info-card-b"><img src="images/p_2.jpg"></div>
-      <div id="relative-Info-card-c" class="info-card-c">
-        <text style="font-size:20px;">老人设置</text>
-        <ul id="elder-check">
-        </ul>
-      </div>
     </div>
 </div>
-
-
-
 
 
 
@@ -735,15 +775,15 @@
     <div id="staff-Info-card" class="info-card ">
       <div id="staff-Info-card-a" class="info-card-a">
         <table>
-          <tr><td class="td1"><text>姓名: </text></td><td class="td2"><input id="sname"></input></td></tr>
-          <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="sphone" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
+          <tr><td class="td1"><text>姓    名: </text></td><td class="td2"><input id="sname"></input></td></tr>
+          <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="sphone_no" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
           <tr><td class="td1"><text>婚姻状况：</text></td><td class="td2"><input id="smarriage"></input></td></tr>
           <tr><td class="td1"><text>民族：</text></td><td class="td2"><input id="snationality"></input></td></tr>
           <tr><td class="td1"><text>政治面貌：</text></td><td class="td2"><input id="spolitical_status"></input></td></tr>
           <tr><td class="td1"><text>电子邮箱：</text></td><td class="td2"><input id="semail"></input></td></tr>
           <tr><td class="td1"><text>出生日期：</text></td><td class="td2"><input id="sbirthday"></input></td></tr>
           <tr><td class="td1"><text>身份证号：</text></td><td class="td2"><input id="sidentity_no"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'idcard'"></input></td></tr>
-          <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input type="radio" name="sgender" value=0 checked="checked" />男 <input type="radio" name="sgender" value=1 />女</td></tr>
+          <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input type="radio" name="sgender" value='0' checked="checked" />男 <input type="radio" name="sgender" value='1' />女</td></tr>
           <tr><td class="td1"><text>户口所在地：</text></td><td class="td2"><input id="sresidence_address"></input></td></tr>
           <tr><td class="td1"><text>档案编号：</text></td><td class="td2"><input id="sarchive_id"></input></td></tr>
           <tr><td class="td1"><text>社保卡号：</text></td><td class="td2"><input id="snssf_id"></input></td></tr>
@@ -810,10 +850,96 @@
         }]
       ">
       <table>
-        <tr><td>角色名:</td><td><input type="text" id="rname" /></td></tr>
-        <tr><td>说  明:</td><td><input type="text" id="rnotes" /></td></tr>
+        <tr><td>角色名:</td><td><input type="text" id="rcname" /></td></tr>
+        <tr><td>说  明:</td><td><input type="text" id="rcnotes" /></td></tr>
       </table> 
 </div>
+
+
+<!-----------------------选择区域信息------------------------------>
+<div id="area-dialog-form"  class="easyui-dialog" title="区域信息" style="width:300px;height:400px;padding:10px;"
+      data-options="
+        modal:true,
+        closed:true,
+        fix:true,
+        left:($(window).width()-300)*0.5,
+        top:($(window).height()-400)*0.5,
+        draggable:true,
+        iconCls: 'icon-save',
+        buttons: [{
+          text:'确定',
+          iconCls:'icon-ok',
+          handler:function(){
+            var nodes = $('#areachoosetree').tree('getChecked', ['checked']);
+            if(nodes!==undefined) $(areavalue).attr('value',nodes[0].id);
+            $('#area-dialog-form').dialog('close');
+          }
+        }]
+      ">
+    <div id="area-Info-card" class="info-card">
+      <ul id="areachoosetree" class="easyui-tree" style="padding-left:20px;text-align:left;" data-options="checkbox:true,onlyLeafCheck:true">
+      </ul>
+    </div>    
+</div>
+
+
+<!-----------------------选择项目信息------------------------------>
+<div id="eldercareitem-dialog-form"  class="easyui-dialog" title="项目信息" style="width:300px;height:400px;padding:10px;"
+      data-options="
+        modal:true,
+        closed:true,
+        fix:true,
+        left:($(window).width()-300)*0.5,
+        top:($(window).height()-400)*0.5,
+        draggable:true,
+        iconCls: 'icon-blank',
+        buttons: [{
+          text:'确定',
+          iconCls:'icon-ok',
+          handler:function(){
+            var nodes = $('#careitemchoosetree').tree('getChecked', ['checked']);
+            if(nodes!==undefined) care_item.postitem(nodes[0].id,nodes[0].attributes.level);
+            $('#eldercareitem-dialog-form').dialog('close');
+          }
+        }]
+      ">
+    <div id="eldercareitem-Info-card" class="info-card">
+      <ul id="careitemchoosetree" class="easyui-tree" style="padding-left:20px;text-align:left;" data-options="checkbox:true">
+      </ul>
+    </div>    
+</div>
+
+
+
+
+<!-----------------------选择老人信息------------------------------>
+<div id="elderchoose-dialog-form"  class="easyui-dialog" title="老人信息" style="width:300px;height:400px;padding:10px;"
+      data-options="
+        modal:true,
+        closed:true,
+        fix:true,
+        left:($(window).width()-300)*0.5,
+        top:($(window).height()-400)*0.5,
+        draggable:true,
+        iconCls: 'icon-save',
+        buttons: [{
+          text:'确定',
+          iconCls:'icon-ok',
+          handler:function(){
+            var nodes = $('#elderchoosetree').tree('getChecked', ['checked']);
+            if(nodes!==undefined) $(eldervalue).attr('value',nodes[0].id);
+            elderchoosename=nodes[0].text;
+            $('#elderchoose-dialog-form').dialog('close');
+          }
+        }]
+      ">
+    <div id="elderchoose-Info-card" class="info-card">
+      <ul id="elderchoosetree" class="easyui-tree" style="padding-left:20px;text-align:left;" data-options="checkbox:true">
+      </ul>
+    </div>    
+</div>
+
+
 
 <!----上传照片---->
 <div id="photosubmit"  class="easyui-dialog" title="上传照片" style="width:300px;height:200px;padding:10px"
@@ -907,6 +1033,7 @@
 <script type="text/javascript" src="/resthouse/static/js/area.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/areacare.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/eldercare.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/elder_care_item.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/validbox.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/vis.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/dropzone.js"></script>

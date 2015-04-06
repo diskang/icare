@@ -2,10 +2,15 @@ var elder={
     method:'',
     eid:'',
     uid:"",
+    temparea:[],
+    areatemp:[],
     drawElderList:function(){
         $("#elder-dialog-form").dialog("close");
         $(".inf").addClass('hide');
 	    $("#eldershow").removeClass('hide');
+        $("#elder_areaid").attr('value',null);
+        $("#elder_name").attr('value',null);
+        $("#elder_care_level").attr('value',null);
 	    $('#elderpage').datagrid({ 
         title:'老人信息列表', 
         iconCls:'icon-edit',//图标 
@@ -25,8 +30,8 @@ var elder={
         pagination:true,//分页控件 
         rownumbers:true,//行号
         pagePosition:'bottom',
-        pageSize: 10,//每页显示的记录条数，默认为20 
-        pageList: [10,20,30],//可以设置每页记录条数的列表 
+        pageSize: 35,//每页显示的记录条数，默认为20 
+        pageList: [20,35,50],//可以设置每页记录条数的列表 
         loadFilter:function(data){
         	var result={"total":0,"rows":0};
             leftTop.dealdata(data);
@@ -43,7 +48,11 @@ var elder={
             handler: function(){ 
                 elder.delElderInfo(); 
             }
-        }]
+        }/*,'-',{ text: '查看项目', iconCls: 'icon-search', 
+            handler: function(){ 
+                elder.searchitem(); 
+            }
+        }*/]
     }); 
 	    var pager = $('#elderpage').datagrid('getPager');	// get the pager of datagrid
 		pager.pagination({
@@ -88,8 +97,8 @@ var elder={
         elder.method='post';
         $("#elder-dialog-form").dialog("open");
         $("#elder-dialog-form").dialog("center");
-        $('#elder-Info-card-a input').attr('value'," ").removeAttr('disabled');
-        $('#elder-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
+        $('#elder-Info-card-a input').attr('value',null).removeAttr('disabled');
+        $('#elder-Info-card-a').find('.easyui-validatebox').validatebox('enableValidation').validatebox('validate');
         $('#elder-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
 
@@ -102,20 +111,41 @@ var elder={
     },
     delElderInfo: function(){
         var eldert = $('#elderpage').datagrid('getSelected');
-        infoUrl=rhurl.origin+"/gero/"+gid+"/elder/" + eldert.elder_id;
-        $.ajax({
-            url: infoUrl,
-            type: 'DELETE',
-            timeout:deadtime,
-            success:function(){
-                elder.drawElderList();
-            },
-            error:function(XMLHttpRequest, textStatus, errorThrown){
-                leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+        if(eldert){
+            infoUrl=rhurl.origin+"/gero/"+gid+"/elder/" + eldert.elder_id;
+            if (confirm('确定要删除？')) {
+                $.ajax({
+                    url: infoUrl,
+                    type: 'DELETE',
+                    timeout:deadtime,
+                    success:function(){
+                        elder.drawElderList();
+                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                        leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+                    }
+                })
             }
-        })
-
+        }
     },
+    // searchitem:function(){
+    //     var eldert = $('#elderpage').datagrid('getSelected');
+    //     if(eldert){
+    //         infoUrl=rhurl.origin+"/gero/"+gid+"/elder/" + eldert.elder_id+"/care_item";
+    //         $.ajax({
+    //             url: infoUrl,
+    //             data:{page:1,rows:65535,sort:'ID'},
+    //             type: 'get',
+    //             timeout:deadtime,
+    //             success:function(){
+    //                 alert(1);
+    //             },
+    //             error:function(XMLHttpRequest, textStatus, errorThrown){
+    //                 leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+    //             }
+    //         })
+    //     }
+    // },
 
     onElderDblClickRow:function(index){
                 elder.method='put';
@@ -142,7 +172,7 @@ var elder={
         var sexc;
         var radios = document.getElementsByName("egender");
             for (var i = 0; i < radios.length; i++) {
-                if (radios[i].checked==="checked") sexc=radios[i].getAttribute('value');
+                if (radios[i].checked) sexc=i;
             }
         var obj={
             name:document.getElementById("ename").value,
@@ -184,23 +214,89 @@ var elder={
                     area_id: $('#elder_areaid').val(),
                     care_level: $('#elder_care_level').val(),
                 });
+    },
+
+
+
+    createTreeNode:function(node){
+        this.id=node.id;
+        this.text=node.name;
+        this.children=[];
+        iconCls='icon-blank';
+        this.attributes={"type":node.type,"level":node.level}
+    },
+    findTreeChildren:function(id){
+        var result=[];
+        for(var i in elder.temparea){
+            if(elder.temparea[i].parent_id===id){
+                result.push(elder.temparea[i]);
+            }
+        }
+        return result;
+    },
+    createTreeData:function(node){
+        var result=[];
+        var childs= elder.findTreeChildren(node.id);
+        if (childs.length!==0){
+            for(var i in childs){
+                var temp= new elder.createTreeNode(childs[i]);
+                if (elder.findTreeChildren(childs[i].id).length!==0){
+                    temp.children=elder.createTreeData(childs[i]);
+                }
+                result.push(temp);
+            }
+        }
+        return result;
+    },
+    area_idclick:function(){
+        $('#area-dialog-form').dialog('open');
+        $("#area-dialog-form").dialog("center");
+        $('#areachoosetree li').remove();
+        $('#areachoosetree ul').remove();
+        $.ajax({
+            type: "get",
+            data:{page:1,rows:65535,sort:'ID'},
+            dataType: "json",
+            contentType: "application/json;charset=utf-8",
+            url:rhurl.origin+'/gero/'+gid+'/area',
+            timeout:deadtime,
+            success: function (msg) {
+                elder.temparea=msg.entities;
+                elder.areatemp=elder.createTreeData({"id":0,"types":0});
+                $("#areachoosetree").tree("loadData",elder.areatemp);
+                areavalue="#earea_id";
+                var node=$("#areachoosetree").tree('find',parseInt($('#earea_id').val()));
+                if(node)$("#areachoosetree").tree("check",node.target);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+            }
+        });
+    },
+    searcharea_id:function(){
+        $('#area-dialog-form').dialog('open');
+        $("#area-dialog-form").dialog("center");
+        $('#areachoosetree li').remove();
+        $('#areachoosetree ul').remove();
+        $.ajax({
+            type: "get",
+            data:{page:1,rows:65535,sort:'ID'},
+            dataType: "json",
+            contentType: "application/json;charset=utf-8",
+            url:rhurl.origin+'/gero/'+gid+'/area',
+            timeout:deadtime,
+            success: function (msg) {
+                elder.temparea=msg.entities;
+                elder.areatemp=elder.createTreeData({"id":0,"types":0});
+                $("#areachoosetree").tree("loadData",elder.areatemp);
+                areavalue="#elder_areaid";
+                var node=$("#areachoosetree").tree('find',parseInt($('#elder_areaid').val()));
+                if(node)$("#areachoosetree").tree("check",node.target);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+            }
+        });
     }
 
 }
-
-/*
-function doSearch(){
-				$('#elderpage').datagrid('load',{			
-					name: $('#elder_name').val(),
-					bed_id: $('#elder_bedid').val(),
-					care_level: $('#elder_care_level').val(),
-				});
-				
-			}
-
-function onthClick(e,field){
-	$('#elderpage').datagrid({ 
-		sortName:field,
-		sortOrder:"asc"
-	});
-}*/

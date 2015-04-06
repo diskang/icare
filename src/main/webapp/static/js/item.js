@@ -19,6 +19,9 @@ var item={
             pagination:true,//分页控件 
             rownumbers:true,//行号  
             pageNumber:1,
+            pagePosition:'bottom',
+            pageSize: 35,//每页显示的记录条数，默认为20 
+            pageList: [20,35,50],//可以设置每页记录条数的列表  
             loadFilter:function(data){
         	    var result={"total":0,"rows":0};
                 result.total=data.total;
@@ -41,16 +44,7 @@ var item={
         }); 
 	    var pager1 = $('#careitempage').datagrid().datagrid('getPager');	// get the pager of datagrid
 		pager1.pagination({
-			pageSize: 5,//每页显示的记录条数，默认为20 
-        	pageList: [5,10,15],//可以设置每页记录条数的列表 
-        	beforePageText: '第',//页数文本框前显示的汉字 
-        	afterPageText: '页    共 {pages} 页', 
         	displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录', 
-        /*onBeforeRefresh:function(){
-            $(this).pagination('loading');
-            alert('before refresh');
-            $(this).pagination('loaded');
-        }*/ 
         });
     
     $('#areaitempage').datagrid({ 
@@ -68,8 +62,11 @@ var item={
         remoteSort:false,  
         singleSelect:true,//是否单选 
         pagination:true,//分页控件 
-        rownumbers:true,//行号  
-        pageNumber:1,
+            rownumbers:true,//行号  
+            pageNumber:1,
+            pagePosition:'bottom',
+            pageSize: 35,//每页显示的记录条数，默认为20 
+            pageList: [20,35,50],//可以设置每页记录条数的列表  
         loadFilter:function(data){
             var result={"total":0,"rows":0};
             result.total=data.total;
@@ -92,17 +89,7 @@ var item={
     }); 
     var pager2 = $('#areaitempage').datagrid().datagrid('getPager'); // get the pager of datagrid
         pager2.pagination({
-            pageSize: 5,//每页显示的记录条数，默认为20 
-            pageList: [5,10,15],//可以设置每页记录条数的列表 
-            beforePageText: '第',//页数文本框前显示的汉字 
-            afterPageText: '页    共 {pages} 页', 
             displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录', 
-        /*onBeforeRefresh:function(){
-            $(this).pagination('loading');
-            alert('before refresh');
-            $(this).pagination('loaded');
-        }*/ 
-
         });    
     },
 

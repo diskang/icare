@@ -47,7 +47,7 @@ var arrange={
             			contentType: "application/json;charset=utf-8",
            		 		timeout: deadtime, 
             			error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
-            			success: function(result){arrange.subres=[];arrange.drawArrangeList();arrange.changed=false;} 
+            			success: function(result){arrange.subres=[];arrange.drawArrangeList2();arrange.changed=false;} 
             		}); 
              }
 		}
@@ -59,17 +59,17 @@ var arrange={
 	prev:function(){
 		Sundate.setTime(Sundate.getTime()-7*24*60*60*1000);
 		if(arrange.changed)arrange.putarrange();
-		else arrange.drawArrangeList();
+		else arrange.drawArrangeList2();
 	},
 	next:function(){
 		Sundate.setTime(Sundate.getTime()+7*24*60*60*1000);
 		if(arrange.changed)arrange.putarrange();
-		else arrange.drawArrangeList();
+		else arrange.drawArrangeList2();
 	},
 	today:function(){
 		arrange.putarrange();
 		Sundate.setTime(todayms);
-		arrange.drawArrangeList();
+		arrange.drawArrangeList2();
 	},
 	initdate:function(){
 		Mondate.setTime(Sundate.getTime()+1*24*60*60*1000);
@@ -113,10 +113,35 @@ var arrange={
     drawArrangeList:function(){
 	    $(".inf").addClass('hide');
 	    $("#arrangeshow").removeClass('hide');
+		$.ajax({
+        type: "get",
+        data:{page:1,rows:65535,sort:'ID'},
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        url:rhurl.origin+'/gero/'+gid+'/role',
+        timeout:deadtime,
+        success: function (msg) {
+        	$("#arrange_role option").remove();
+            var parent=document.getElementById("arrange_role");
+            for(var i in msg.entities){
+                var dt=document.createElement('option');
+                dt.setAttribute('value',msg.entities[i].name);
+                dt.innerHTML=msg.entities[i].name;
+                parent.appendChild(dt);
+            }
+            arrange.drawArrangeList2();
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+        }
+    });
+	    
+	},
+	drawArrangeList2:function(){
+	    $('.fc-body tr').remove();
 	    arrange.initdate();
 	    arrange.showth();
-	    $('.fc-body tr').remove();
-	    var datat;
+		var datat;
 	    if(document.getElementById("arrange_role").value) datat={start_date:weekstr[0],end_date:weekstr[6],role:document.getElementById("arrange_role").value};
 	    	else datat={start_date:weekstr[0],end_date:weekstr[6]};
 	    $.ajax({
@@ -155,6 +180,7 @@ var arrange={
         	}
     	});
 	},
+
 	fillall:function(){
 		$.ajax({
         	type: "get",
@@ -178,7 +204,7 @@ var arrange={
             				var td=document.createElement('td');
             				td.setAttribute('class',"arrange-work");
             				td.setAttribute('num',weekstr[j]);
-            				td.setAttribute('pid',staffsch[i].id);
+            				td.setAttribute('pid',staffsch[i].staff_id);
             				tr.appendChild(td);
             			}
             			$('.fc-body').append(tr);

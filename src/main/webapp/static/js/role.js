@@ -25,8 +25,8 @@ var role={
         rownumbers:true,//行号  
         pageNumber:1,
         pagePosition:'bottom',
-        pageSize: 10,//每页显示的记录条数，默认为20 
-        pageList: [10,20,30],//可以设置每页记录条数的列表 
+        pageSize: 20,//每页显示的记录条数，默认为20 
+        pageList: [20,30,40],//可以设置每页记录条数的列表 
         loadFilter:function(data){
             leftTop.dealdata(data);
         	var result={"total":0,"rows":0};
@@ -81,7 +81,7 @@ var role={
     addRoleInfo: function(){
         $("#rolepost-dialog-form").dialog("open");
         $("#rolepost-dialog-form").dialog("center");
-        $("#rolepost-dialog-form input").attr("value",' ');
+        $("#rolepost-dialog-form input").attr("value",null);
     },
     delRoleInfo: function(){
         var rolet = $('#gerorolepage').datagrid('getSelected');
@@ -159,8 +159,8 @@ var role={
     },
     postrole:function(){
         var obj={
-            name:document.getElementById("rname").value,
-            notes:document.getElementById("rnotes").value,
+            name:document.getElementById("rcname").value,
+            notes:document.getElementById("rcnotes").value,
         }
         var infoUrl=rhurl.origin+'/gero/'+gid+'/role';
         $.ajax({

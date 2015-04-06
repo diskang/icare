@@ -21,8 +21,8 @@ var geroItem={
             rownumbers:true,//行号  
             pageNumber:1,
             pagePosition:'bottom',
-            pageSize: 10,//每页显示的记录条数，默认为20 
-            pageList: [10,20,30],//可以设置每页记录条数的列表 
+            pageSize: 35,//每页显示的记录条数，默认为20 
+            pageList: [20,35,50],//可以设置每页记录条数的列表  
             loadFilter:function(data){
                 leftTop.dealdata(data)
             	var result={"total":0,"rows":0};
@@ -52,7 +52,7 @@ var geroItem={
     addGeroCareItemInfo: function(){
         $("#gerocareitempost-dialog-form").dialog("open");
         $("#gerocareitempost-dialog-form").dialog("center");
-        $("#gerocareitempost-dialog-form input").attr("value",' ');
+        $("#gerocareitempost-dialog-form input").attr("value",null);
     },
     delGeroCareItemInfo: function(){
         var itemt = $('#gerocareitempage').datagrid('getSelected');
@@ -118,8 +118,8 @@ var geroItem={
             rownumbers:true,//行号  
             pageNumber:1,
             pagePosition:'bottom',
-            pageSize: 10,//每页显示的记录条数，默认为20 
-            pageList: [10,20,30],//可以设置每页记录条数的列表 
+            pageSize: 35,//每页显示的记录条数，默认为20 
+            pageList: [20,35,50],//可以设置每页记录条数的列表  
             loadFilter:function(data){
                 leftTop.dealdata(data);
                 var result={"total":0,"rows":0};
@@ -149,7 +149,7 @@ var geroItem={
     addGeroAreaItemInfo: function(){
         $("#geroareaitempost-dialog-form").dialog("open");
         $("#geroareaitempost-dialog-form").dialog("center");
-        $("#geroareaitempost-dialog-form input").attr("value",' ');
+        $("#geroareaitempost-dialog-form input").attr("value",null);
     },
     delGeroAreaItemInfo: function(){
         var itemt = $('#gerocareitempage').datagrid('getSelected');
