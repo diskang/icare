@@ -30,29 +30,42 @@ public class CustomSimpleMappingExceptionResolver extends SimpleMappingException
         // Expose ModelAndView for chosen error view.
         String viewName = determineViewName(ex, request);
         if (viewName != null) {//JSP格式返回
-            if(!(request.getHeader("accept").indexOf("application/json")>-1)){//如果不是异步请求
+        	Integer statusCode = Integer.parseInt(viewName.split("/")[1]);
+        	if(!(request.getHeader("accept").indexOf("application/json")>-1)){//如果不是异步请求
                 // Apply HTTP status code for error views, if specified.
                 // Only apply it if we're processing a top-level request.
-                Integer statusCode = Integer.parseInt(viewName.split("/")[1]);
                 if (statusCode != null) {
                     applyStatusCodeIfPossible(request, response, statusCode);
                     return getModelAndView(viewName, ex, request);
                 }
             }else{//JSON格式返回
-                JSONObject errorJson = new JSONObject();
-                if(ex.getClass().equals(UnauthorizedException.class)){
-                    errorJson.put("error", "Unauthorized");
-                    errorJson.put("errno", HttpStatus.UNAUTHORIZED);
-                }
-                
-                try {
-                	response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                    response.setContentType("application/json");
-                    response.getWriter().write(errorJson.toJSONString());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return new ModelAndView();
+            	
+            	if (statusCode == 403) {
+					try {
+						JSONObject errorJson = new JSONObject();
+						errorJson.put("error", "Unauthorized");
+						errorJson.put("errno", HttpStatus.UNAUTHORIZED);
+						response.setStatus(HttpStatus.UNAUTHORIZED.value());
+						response.setContentType("application/json");
+						response.getWriter().write(errorJson.toJSONString());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						logger.error(e);
+					}
+				}else {
+					try {
+						JSONObject errorJson = new JSONObject();
+						errorJson.put("error", "Internal Error");
+						errorJson.put("errno", HttpStatus.INTERNAL_SERVER_ERROR);
+						response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+						response.setContentType("application/json");
+						response.getWriter().write(errorJson.toJSONString());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						logger.error(e);
+					}
+				}
+				return new ModelAndView();
             }
             return null;
         }

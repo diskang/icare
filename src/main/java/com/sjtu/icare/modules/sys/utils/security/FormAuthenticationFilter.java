@@ -11,8 +11,10 @@ import java.util.Map;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.HttpRequest;
 import org.apache.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -82,20 +84,23 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		
 		UsernamePasswordToken token = (UsernamePasswordToken) createToken(request, response); 
 	    logger.debug("before login");
-	     
-    	if (isLoginRequest(request, response)) {
-            if (isLoginSubmission(request, response)) {
-                if (logger.isTraceEnabled()) {
-                	logger.trace("Login submission detected.  Attempting to execute login.");
-                }
-                return executeLogin(request, response);
-            } else {
-                if (logger.isTraceEnabled()) {
-                	logger.trace("Login page view.");
-                }
-                //allow them to see the login page ;)
-                return true;
-            }
+	    
+	    HttpServletRequest httpServletRequest = (HttpServletRequest)request;
+	    if (!httpServletRequest.getHeader("Accept").contains("application/json")) {
+			if (isLoginRequest(request, response)) {
+	            if (isLoginSubmission(request, response)) {
+	                if (logger.isTraceEnabled()) {
+	                	logger.trace("Login submission detected.  Attempting to execute login.");
+	                }
+	                return executeLogin(request, response);
+	            } else {
+	                if (logger.isTraceEnabled()) {
+	                	logger.trace("Login page view.");
+	                }
+	                //allow them to see the login page ;)
+	                return true;
+	            }
+			}
         }else {
         	try { 
 			Subject subject = getSubject(request, response);
