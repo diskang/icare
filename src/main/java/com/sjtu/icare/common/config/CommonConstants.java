@@ -14,6 +14,6 @@ public class CommonConstants {
 	public static int ELDER_TYPE = 2;	
 	public static final int RELATIVE_TYPE = 3;
 	
-	public static String DEFAULT_PASSWORD = "password";
+	public static String DEFAULT_PASSWORD = "ac2e2c80e60060f5d6c5585d21b639e25cf1d938a2c61c3ec0ec5870";
 	
 }
