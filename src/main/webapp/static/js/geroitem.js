@@ -76,6 +76,8 @@ var geroItem={
             notes:document.getElementById("gcinotes").value,
             period:parseInt(document.getElementById("gciperiod").value),
             frequency:parseInt(document.getElementById("gcifrequency").value),
+            start_time:parseInt(document.getElementById("gcistart_time").value),
+            end_time:parseInt(document.getElementById("gciend_time").value),
         }
         var infoUrl=rhurl.origin+'/gero/'+gid+'/care_item';
         $.ajax({
