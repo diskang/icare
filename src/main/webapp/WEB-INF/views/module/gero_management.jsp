@@ -40,7 +40,6 @@
      return user;
   }
 </script> 
-
 <!-------------------------头部-------------------------->
 <div class="head">
   <div class="container header-s">
@@ -85,13 +84,10 @@
           <div class="page-header"></div>
           <div id="user-Info-card-a" class="info-card-a" >
             <table >
-              <tr><td class="td1"><text>用户名: </text></td><td class="td2"><input id="uusername"></input></td></tr>
-              <tr><td class="td1"><text>姓名: </text></td><td class="td2"><input id="uname" disabled='true'></input></td></tr>
+              <tr><td class="td1"><text>用户名: </text></td><td class="td2"><div id="uusername" ></div></td></tr>
+              <tr><td class="td1"><text>姓名: </text></td><td class="td2"><div id="uname" ></div></td></tr>
               <tr><td class="td1"><text>密码: </text></td><td class="td2"><a id="userinfo" class="btn"onclick="user.changepwd()"> 修改</a></td></tr>
             </table>
-            <div class="btn-group pull-right">
-              <a id="userinfo" class="btn btn-default"onclick="user.putuser()"> 确定 </a>
-            </div>
           </div>
         </div>
       </div>
@@ -119,10 +115,10 @@
               <div class="col-smm-2">
                 <select id="elder_care_level" class="form-control"  value="">
                   <option value=''></option>
+                  <option value='0'>0</option>
                   <option value='1'>1</option>
                   <option value='2'>2</option>
                   <option value='3'>3</option>
-                  <option value='专护'>专护</option>
                 </select>
               </div>
             </div>
@@ -138,12 +134,12 @@
                   <tr>
                     <th data-options="field:'elder_id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
-                    <th data-options="field:'area_id',width:120,align:'center'">房 间</th>
-                    <th data-options="field:'name',width:120,align:'center'">姓 名</th>
+                    <th data-options="field:'area_id',width:80,align:'center'">房 间</th>
+                    <th data-options="field:'name',width:100,align:'center'">姓 名</th>
                     <th data-options="field:'identity_no',width:160,align:'center'">身份证号</th>
                     <th data-options="field:'gender',width:80,align:'center'">性 别</th>
                     <th data-options="field:'age',width:80,align:'center'">年 龄</th>
-                    <th data-options="field:'care_level',width:120,align:'center'">护理等级</th>
+                    <th data-options="field:'care_level',width:100,align:'center'">护理等级</th>
                   </tr>
                 </thead>
               </table>
@@ -471,7 +467,9 @@
                     <th data-options="field:'level',width:100,align:'center'">护理等级</th>
                     <th data-options="field:'period',width:80,align:'center'">周期</th>
                     <th data-options="field:'frequency',width:80,align:'center'">频率</th>
-                    <th data-options="field:'notes',width:300,align:'center'">说 明</th>
+                    <th data-options="field:'notes',width:200,align:'center'">说 明</th>
+                    <th data-options="field:'start_time',width:100,align:'center'">开 始</th>
+                    <th data-options="field:'end_time',width:100,align:'center'">结 束</th>
                   </tr>
                 </thead>
               </table>
@@ -975,13 +973,13 @@
 
 
 <!-----------------------项目信息------------------------------>
-<div id="gerocareitempost-dialog-form"  class="easyui-dialog" title="角色信息" style="width:300px;height:300px;padding:10px"
+<div id="gerocareitempost-dialog-form"  class="easyui-dialog" title="角色信息" style="width:300px;height:400px;padding:10px"
       data-options="
         modal:true,
         closed:true,
         fix:true,
         left:($(window).width()-300)*0.5,
-        top:($(window).height()-200)*0.5,
+        top:($(window).height()-400)*0.5,
         draggable:true,
         iconCls: 'icon-save',
         buttons: [{
@@ -999,6 +997,8 @@
         <tr><td>周期: </td><td><input type="text" id="gciperiod" /></td></tr>
         <tr><td>频率: </td><td><input type="text" id="gcifrequency" /></td></tr>
         <tr><td>说明: </td><td><input type="text" id="gcinotes" /></td></tr>
+        <tr><td>开始时间: </td><td><input type="text" id="gcistart_time" /></td></tr>
+        <tr><td>结束时间: </td><td><input type="text" id="gciend_time" /></td></tr>
       </table>
 </div>
 <div id="geroareaitempost-dialog-form"  class="easyui-dialog" title="角色信息" style="width:300px;height:250px;padding:10px"
@@ -1032,8 +1032,8 @@
 <script type="text/javascript" src="/resthouse/static/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/topleftNavi.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/photo.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/elder.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/staff.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/elder.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/item.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/geroitem.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/role.js"></script>

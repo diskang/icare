@@ -91,12 +91,12 @@ var care_item={
             title:elderchoosename+'专护项目列表', 
             iconCls:'icon-edit',//图标 
             height:400,
+            fit:true,
             nowrap: false, 
             loadMsg:"正在加载，请稍等...", 
             striped: true, 
             border: true, 
             collapsible:false,//是否可折叠的 
-            fit: true,//自动大小 
             url:rhurl.origin+'/gero/'+gid+'/elder/'+care_item.eid+'/care_item',  
             method:'get',
             remoteSort:true,  

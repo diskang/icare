@@ -12,16 +12,14 @@ var elder={
         $("#elder_name").attr('value',null);
         $("#elder_care_level").attr('value',null);
 	    $('#elderpage').datagrid({ 
-        title:'老人信息列表', 
-        iconCls:'icon-edit',//图标 
-        height:700,
-        nowrap: true, 
-        loadMsg:"正在加载，请稍等...", 
-        striped: true, 
-        border: true, 
+        // title:'老人信息列表', 
+        // iconCls:'icon-edit',//图标 
+        // fit:true,//自动大小 
+        // nowrap: false, 
+        // //loadMsg:"正在加载，请稍等...", 
+        // striped: true, 
+        // border: true, 
         collapsible:false,//是否可折叠的 
-        fit: true,//自动大小 
-        pageNumber:1,
         url:rhurl.origin+'/gero/'+gid+'/elder',  
         method:'get',
         remoteSort:true,  
@@ -29,6 +27,7 @@ var elder={
         singleSelect:true,//是否单选 
         pagination:true,//分页控件 
         rownumbers:true,//行号
+        pageNumber:1,
         pagePosition:'bottom',
         pageSize: 35,//每页显示的记录条数，默认为20 
         pageList: [20,35,50],//可以设置每页记录条数的列表 

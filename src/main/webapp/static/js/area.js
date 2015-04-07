@@ -26,7 +26,7 @@ var area={
                 area.removeTree();
                 $("#areatree").tree("loadData",temparea2);
                 //if(isFirst2){$("#areatree").tree("collapseAll");isFirst2=false;}
-                $("#areatree").tree("collapseAll");
+                //$("#areatree").tree("collapseAll");
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
         	   leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
