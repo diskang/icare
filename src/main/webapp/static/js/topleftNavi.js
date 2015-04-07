@@ -39,7 +39,7 @@ hrefTable['/item']='item.drawItemList()';
 hrefTable['/gero/1/care_item']='geroItem.drawGeroCareItemList()';
 hrefTable['/gero/1/area_item']='geroItem.drawGeroAreaItemList()';
 hrefTable['/gero/1/role']='role.drawGeroRoleList()';
-hrefTable['/user/1']='authority.drawAuthorityList()';
+hrefTable['/superp']='authority.drawAuthorityList()';
 hrefTable['/gero/1/schedule']='arrange.drawArrangeList()';
 hrefTable['/area']='area.drawAreaList()';
 hrefTable['/eldercareduty']='eldercare.drawElderCareList()';
@@ -146,13 +146,19 @@ var leftTop = {
     },
 
     dealtree:function(msg){
-        toptree = leftTop.findTreeChildren(1);
+        toptree = leftTop.findTreeChildren(2);
+        var k=-1;
         for(var i in toptree){
-            $("#topNavi").append('<li class="navli-a" ><a href="#">'+toptree[i].name+'<a></li>');
+            // alert(toptree[i].href)
+            // alert(toptree[i].name)
+            if(toptree[i].href!=='no'){
+                if(k==-1) k=i;
+                $("#topNavi").append('<li class="navli-a" ><a href="#">'+toptree[i].name+'<a></li>');
+            }
         }
         temptree2=[{"id":1,"text":"权限列表","children":[]}]
         temptree2[0].children=leftTop.createTreeData2(temptree2[0]);
-        return leftTop.createTreeData(toptree[0]);
+        return leftTop.createTreeData(toptree[k]);
     },
 
     findTopNode:function(name){
@@ -194,8 +200,8 @@ $(function(){
             var str=leftTop.dealtree(temptree);
             $("#lefttree").tree("loadData",str);
             $("#welcome").text("欢迎"+msg.entities[0].username+"登录resthouse系统");
-            document.getElementById('uusername').setAttribute('value',msg.entities[0].username);
-            document.getElementById('uname').setAttribute('value',msg.entities[0].name);
+            $('#uusername').text(msg.entities[0].username);
+            $('#uname').text(msg.entities[0].name);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
@@ -204,7 +210,9 @@ $(function(){
     eldercare.init();
     areacare.init();
     $('#button-allow').toggleClass("fc-state-default1");
-
+    elder.drawElderList();
+    user.drawinfo();
+    //上面两句是为了解决一个无可奈何的显示bug
 });
 
 $('.navli-a').live('click',function(){
