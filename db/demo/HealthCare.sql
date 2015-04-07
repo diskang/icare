@@ -1,20 +1,20 @@
-EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'HCDB_UPDATE_TEST'
+EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'HCDB_2'
 GO
 USE [master]
 GO
-ALTER DATABASE [HCDB_UPDATE_TEST] SET  SINGLE_USER WITH ROLLBACK IMMEDIATE
+ALTER DATABASE [HCDB_2] SET  SINGLE_USER WITH ROLLBACK IMMEDIATE
 GO
 USE [master]
 GO
-/****** Object:  Database [HCDB_UPDATE_TEST]    Script Date: 2015/3/13 11:00:40 ******/
-DROP DATABASE [HCDB_UPDATE_TEST]
+/****** Object:  Database [HCDB_2]    Script Date: 2015/3/13 11:00:40 ******/
+DROP DATABASE [HCDB_2]
 GO
 
 
-CREATE DATABASE HCDB_UPDATE_TEST
+CREATE DATABASE HCDB_2
 GO
 
-USE HCDB_UPDATE_TEST
+USE HCDB_2
 GO
 
 CREATE TABLE T_USER
@@ -389,6 +389,8 @@ CREATE TABLE T_CARE_ITEM
 	level				int				NOT NULL,				--
 	period				int				,						--
 	frequency			int				,						--
+	start_time			time(0)			,						--
+	end_time			time(0)			,						--
 	notes				nvarchar(32)	,						--
 	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
 )
@@ -415,8 +417,8 @@ CREATE TABLE T_ELDER_ITEM
 	icon				varchar(32)		,						--
 	level				int				NOT NULL,				--
 	period				int				,						--
-	start_time			time			,						--
-	end_time			time			,						--
+	start_time			time(0)			,						--
+	end_time			time(0)			,						--
 	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
 )
 GO
