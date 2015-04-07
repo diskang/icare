@@ -13,7 +13,7 @@
 	    <result property="frequency" column="frequency" />
 	    <result property="notes" column="notes" />
 	    <result property="delFlag" column="del_flag" />
-	    <result property="startTime" column="start_tiem" />
+	    <result property="startTime" column="start_time" />
 	    <result property="endTime" column="end_time" />
 	</resultMap>
   
