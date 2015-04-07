@@ -88,13 +88,7 @@
 	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
 		<property name="proxyTargetClass" value="true" />
 	</bean>
-	<bean class="com.sjtu.icare.common.web.CustomSimpleMappingExceptionResolver">        
-        <property name="exceptionMappings">  
-            <props>  
-                <prop key="org.apache.shiro.authz.UnauthorizedException">error/403</prop>
-            </props>  
-        </property>  
-    </bean>
+	
 	<!-- Shiro end -->
     
 	<!-- 上传文件拦截，设置最大上传文件大小   10M=10*1024*1024(B)=10485760 bytes -->  
