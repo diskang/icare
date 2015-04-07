@@ -1,4 +1,4 @@
-POST /gero/126/elder
+POST /resthouse/api/web/gero/2/elder
 {
     "nationality":"",
     "photo_url":"",
@@ -702,4 +702,3 @@ POST /gero/126/elder
     "gender":"1",
     "track_url":""
 }
-|

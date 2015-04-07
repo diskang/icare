@@ -1,33 +1,8 @@
-POST /gero/126/staff
+POST /resthouse/api/web/gero/2/staff
 {
     "gender":"1",
     "notes":"",
-    "gero_id":"126",
-    "email":"",
-    "identity_no":"1",
-    "native_place":"",
-    "wechat_id":"",
-    "phone_no":"",
-    "leave_date":"",
-    "household_address":"",
-    "education":"",
-    "nssf_id":"",
-    "birthday":"",
-    "political_status":"",
-    "zip_code":"",
-    "photo_url":"",
-    "nationality":"",
-    "name":"admin",
-    "register_date":"",
-    "residence_address":"",
-    "cancel_date":"",
-    "archive_id":""
-}
-|
-{
-    "gender":"1",
-    "notes":"",
-    "gero_id":"126",
+    "gero_id":"2",
     "email":"296234687@qq.com",
     "identity_no":"310102198301093624",
     "native_place":"",
@@ -52,7 +27,7 @@ POST /gero/126/staff
 {
     "gender":"0",
     "notes":"",
-    "gero_id":"126",
+    "gero_id":"2",
     "email":"673338118@qq.com",
     "identity_no":"310109195407102016",
     "native_place":"",
@@ -77,7 +52,7 @@ POST /gero/126/staff
 {
     "gender":"1",
     "notes":"",
-    "gero_id":"126",
+    "gero_id":"2",
     "email":"18900000000@189.cn",
     "identity_no":"310102195906100045",
     "native_place":"",
@@ -102,7 +77,7 @@ POST /gero/126/staff
 {
     "gender":"1",
     "notes":"",
-    "gero_id":"126",
+    "gero_id":"2",
     "email":"13564065426@135.cn",
     "identity_no":"321124196305190044",
     "native_place":"",
@@ -127,7 +102,7 @@ POST /gero/126/staff
 {
     "gender":"1",
     "notes":"",
-    "gero_id":"126",
+    "gero_id":"2",
     "email":"15921710267@159.cn",
     "identity_no":"320625196601183423",
     "native_place":"",
@@ -152,7 +127,7 @@ POST /gero/126/staff
 {
     "gender":"0",
     "notes":"",
-    "gero_id":"126",
+    "gero_id":"2",
     "email":"13801821308@138.cn",
     "identity_no":"310107197612300819",
     "native_place":"",
@@ -177,7 +152,7 @@ POST /gero/126/staff
 {
     "gender":"1",
     "notes":"",
-    "gero_id":"126",
+    "gero_id":"2",
     "email":"18965500410@189.cn",
     "identity_no":"310110196203065022",
     "native_place":"",
@@ -202,7 +177,7 @@ POST /gero/126/staff
 {
     "gender":"1",
     "notes":"",
-    "gero_id":"126",
+    "gero_id":"2",
     "email":"13918950767@139.cn",
     "identity_no":"310108195910113226",
     "native_place":"",
@@ -227,7 +202,7 @@ POST /gero/126/staff
 {
     "gender":"1",
     "notes":"",
-    "gero_id":"126",
+    "gero_id":"2",
     "email":"18956682063@189.cn",
     "identity_no":"310107195601214748",
     "native_place":"",
@@ -252,7 +227,7 @@ POST /gero/126/staff
 {
     "gender":"1",
     "notes":"",
-    "gero_id":"126",
+    "gero_id":"2",
     "email":"18900000001@189.cn",
     "identity_no":"320626196112074820",
     "native_place":"",
@@ -277,7 +252,7 @@ POST /gero/126/staff
 {
     "gender":"1",
     "notes":"",
-    "gero_id":"126",
+    "gero_id":"2",
     "email":"13004198375@189.cn",
     "identity_no":"310105196010161682",
     "native_place":"",
@@ -302,7 +277,7 @@ POST /gero/126/staff
 {
     "gender":"1",
     "notes":"",
-    "gero_id":"126",
+    "gero_id":"2",
     "email":"13551539743@189.cn",
     "identity_no":"310103196108291669",
     "native_place":"",
@@ -327,7 +302,7 @@ POST /gero/126/staff
 {
     "gender":"1",
     "notes":"",
-    "gero_id":"126",
+    "gero_id":"2",
     "email":"13761809047@189.cn",
     "identity_no":"342622196409237889",
     "native_place":"",
@@ -352,7 +327,7 @@ POST /gero/126/staff
 {
     "gender":"1",
     "notes":"",
-    "gero_id":"126",
+    "gero_id":"2",
     "email":"18900000002@189.cn",
     "identity_no":"320724197201143928",
     "native_place":"",
@@ -377,7 +352,7 @@ POST /gero/126/staff
 {
     "gender":"1",
     "notes":"",
-    "gero_id":"126",
+    "gero_id":"2",
     "email":"13621784502@189.cn",
     "identity_no":"31010419661227002x",
     "native_place":"",
@@ -402,7 +377,7 @@ POST /gero/126/staff
 {
     "gender":"0",
     "notes":"",
-    "gero_id":"126",
+    "gero_id":"2",
     "email":"13301669279@189.cn",
     "identity_no":"310108196512054130",
     "native_place":"",
@@ -427,7 +402,7 @@ POST /gero/126/staff
 {
     "gender":"1",
     "notes":"",
-    "gero_id":"126",
+    "gero_id":"2",
     "email":"15021162321@189.cn",
     "identity_no":"321027195110020626",
     "native_place":"",
@@ -452,7 +427,7 @@ POST /gero/126/staff
 {
     "gender":"1",
     "notes":"",
-    "gero_id":"126",
+    "gero_id":"2",
     "email":"13916091157@189.com",
     "identity_no":"310107195512103229",
     "native_place":"",
@@ -473,4 +448,3 @@ POST /gero/126/staff
     "cancel_date":"",
     "archive_id":""
 }
-|
