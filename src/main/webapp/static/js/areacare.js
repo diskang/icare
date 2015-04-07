@@ -118,7 +118,7 @@ var areacare={
         if (childs.length!==0){
             for(var i in childs){
                 var temp= new areacare.createTreeNode(childs[i]);
-                if (areacare.findTreeChildren(childs[i].id).length!==0 && childs[i].type!==1){
+                if (areacare.findTreeChildren(childs[i].id).length!==0 && childs[i].level!==3){
                     temp.children=areacare.createTreeData(childs[i]);
                 }
                 result.push(temp);

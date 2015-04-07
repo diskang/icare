@@ -4,19 +4,19 @@ var user={
 	    $("#usershow").removeClass('hide');
 	},
 	changepwd:function(){
-		alert("changing");
-	},
-	putuser:function(){
-		var infoUrl=rhurl.origin+'/user/'+uid;
+		var pwd=prompt('请输入密码:');
+		if(pwd){
+		var infoUrl=rhurl.origin+'/user/'+uid+'/password';
 		$.ajax({
             url: infoUrl, 
             type: 'put', 
-            data:JSON.stringify({name:document.getElementById("uusername").value,photo_url:''}), 
+            data:JSON.stringify({password:pwd}), 
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
             timeout: deadtime, 
             error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
-            success: function(result){document.getElementById('uusername').setAttribute('value',result.username);} 
+            success: function(result){alert("修改成功");} 
         }); 
 	}
+	},
 }
