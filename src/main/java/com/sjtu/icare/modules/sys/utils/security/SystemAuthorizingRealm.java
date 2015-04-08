@@ -109,8 +109,8 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
                 if (StringUtils.isNotBlank(privilege.getApi())){
                     // 添加基于Permission的权限信息
                 	String api = privilege.getApi();
-                    logger.debug("permission:"+api);
-                    // info.addStringPermission(api);
+//                    logger.debug("permission:"+api);
+                    info.addStringPermission(api);
                 }
             }
             
