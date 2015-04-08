@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import com.sjtu.icare.common.persistence.DataEntity;
 import com.sjtu.icare.common.utils.Collections3;
+import com.sjtu.icare.common.utils.OSSObjectUtils;
+import com.sjtu.icare.common.utils.StringUtils;
 import com.sjtu.icare.modules.sys.entity.Role;
 
 public class User extends DataEntity<User> {
@@ -468,6 +470,14 @@ public class User extends DataEntity<User> {
 		this.elderId = elderId;
 	}
 	
+	public String getPhotoSrc() {
+		if (StringUtils.isBlank(photoUrl))
+			return null;
+		else {
+			OSSObjectUtils ossObjectUtils = new OSSObjectUtils();
+			return ossObjectUtils.getDownloadUrl(photoUrl); 
+		}
+	}
 	
 	
 }
