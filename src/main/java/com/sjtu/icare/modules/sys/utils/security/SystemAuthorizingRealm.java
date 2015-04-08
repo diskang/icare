@@ -84,9 +84,9 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-    	logger.debug(getAvailablePrincipal(principals).getClass().toString());
+    	// logger.debug(getAvailablePrincipal(principals).getClass().toString());
         UserPrincipal principal = (UserPrincipal) getAvailablePrincipal(principals);
-        logger.debug("getpermisson");
+        // logger.debug("getpermisson");
         User user = getSystemService().getUserByUsername(principal.getUsername());
         if (user != null) {
             UserUtils.putCache("user", user);
@@ -103,13 +103,13 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
                 	permission = permission.replace("{sid}", user.getUserId()+"");
                 	permission = permission.replace("{eid}", user.getUserId()+"");
                 	permission = permission.replace("{cid}", user.getUserId()+"");
-                	logger.debug("permission:"+permission);
+                	// logger.debug("permission:"+permission);
                     info.addStringPermission(permission);
                 }
                 if (StringUtils.isNotBlank(privilege.getApi())){
                     // 添加基于Permission的权限信息
                 	String api = privilege.getApi();
-                    logger.debug("permission:"+api);
+//                    logger.debug("permission:"+api);
                     info.addStringPermission(api);
                 }
             }
@@ -216,7 +216,6 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
      */
     @Override
     public boolean hasRole(PrincipalCollection principals, String roleIdentifier) {
-    	logger.debug("here");
         if (principals.fromRealm(getName()).isEmpty()) {
         	logger.debug("not web app auth");
             return false;
