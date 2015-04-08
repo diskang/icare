@@ -199,7 +199,7 @@ $(function(){
             leftTop.removeLefttree;
             var str=leftTop.dealtree(temptree);
             $("#lefttree").tree("loadData",str);
-            $("#welcome").text("欢迎"+msg.entities[0].username+"登录resthouse系统");
+            $("#welcome").text("欢迎"+msg.entities[0].name+"登录resthouse系统");
             $('#uusername').text(msg.entities[0].username);
             $('#uname').text(msg.entities[0].name);
         },
@@ -250,5 +250,15 @@ $('.form_time').datetimepicker({
         startView: 1,
         minView: 0,
         maxView: 1,
+        forceParse: 0
+    });
+$('.form_date').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
         forceParse: 0
     });

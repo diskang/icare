@@ -468,9 +468,9 @@
                     <th data-options="field:'level',width:100,align:'center'">护理等级</th>
                     <th data-options="field:'period',width:80,align:'center'">周期</th>
                     <th data-options="field:'frequency',width:80,align:'center'">频率</th>
-                    <th data-options="field:'notes',width:200,align:'center'">说 明</th>
                     <th data-options="field:'start_time',width:100,align:'center'">开 始</th>
                     <th data-options="field:'end_time',width:100,align:'center'">结 束</th>
+                    <th data-options="field:'notes',width:200,align:'center'">说 明</th>
                   </tr>
                 </thead>
               </table>
@@ -1015,17 +1015,20 @@
         <tr><td>护理等级: </td><td><input type="text" id="gcilevel" /></td></tr>
         <tr><td>周期: </td><td><input type="text" id="gciperiod" /></td></tr>
         <tr><td>频率: </td><td><input type="text" id="gcifrequency" /></td></tr>
-        <tr><td>说明: </td><td><input type="text" id="gcinotes" /></td></tr>
+        <tr><td>图标: </td><td><input type="text" id="gciicon" /></td></tr>
         <tr><td>开始时间: </td><td>
           <div class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
             <input id="gcistart_time" class="form-control" size="16" type="text" style='width:80px;' value="" readonly>
             <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
-          </div></td></tr>
+          </div></td>
+        </tr>
         <tr><td>结束时间: </td><td>
           <div class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
             <input id="gciend_time" class="form-control" size="16" type="text" style='width:80px;' value="" readonly>
             <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
-          </div></td></tr>
+          </div></td>
+        </tr>
+        <tr><td>说明: </td><td><input type="text" id="gcinotes" /></td></tr>
       </table>
 </div>
 <div id="geroareaitempost-dialog-form"  class="easyui-dialog" title="项目信息" style="width:300px;height:250px;padding:10px"
