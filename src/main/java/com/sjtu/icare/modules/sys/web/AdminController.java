@@ -31,17 +31,12 @@ public class AdminController extends BaseController{
 	 */
 	@RequestMapping(value = "${adminPath}", method = RequestMethod.GET)
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
-		logger.debug("admin!");
-//		SecurityUtils.getSubject().hasRole("gero:1");
-			User user = UserUtils.getUser();
-			response.addCookie(new Cookie("uid", user.getId()+""));
-			response.addCookie(new Cookie("gid", user.getGeroId()+""));
-			// 如果已经登录，则跳转到管理首页
-			if(user.getUsername() != null){
-				logger.debug("admin");
-				return "module/gero_management";
-			}
-//		}
+		User user = UserUtils.getUser();
+		// 如果已经登录，则跳转到管理首页
+		if(user.getUsername() != null){
+			logger.debug("admin");
+			return "module/gero_management";
+		}
 		return "module/sys/sysLogin";
 	}
 }

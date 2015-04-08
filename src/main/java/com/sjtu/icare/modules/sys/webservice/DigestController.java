@@ -25,6 +25,11 @@ import com.sjtu.icare.common.web.rest.SysBaseController;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.service.SystemService;
 
+/**
+ * PAD 登录
+ * @author JiaoTianyi
+ *
+ */
 @RestController
 @RequestMapping({"/pad/login"})
 public class DigestController extends SysBaseController{
@@ -63,13 +68,13 @@ public class DigestController extends SysBaseController{
 		User user = systemService.getUserByUsername(username);
 		
 		if (user == null) {
-			String message = "GET_DIGEST_BAD_NOT_FOUND";
+			String message = "GET_DIGEST_NOT_FOUND";
 			logger.error(message);
 			throw new RestException(HttpStatus.NOT_FOUND, message);
 		}
 		
 		if (!systemService.validatePassword(password, user.getPassword())) {
-			String message = "GET_DIGEST_BAD_UNAUTHORIZED";
+			String message = "GET_DIGEST_UNAUTHORIZED";
 			logger.error(message);
 			throw new RestException(HttpStatus.UNAUTHORIZED, message);
 		}else {

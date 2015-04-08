@@ -26,7 +26,6 @@ import com.sjtu.icare.modules.sys.entity.Privilege;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.service.SystemService;
 import com.sjtu.icare.modules.sys.utils.UserUtils;
-import com.sjtu.icare.modules.sys.web.TestController;
 
 /**
  * 无状态认证实现类

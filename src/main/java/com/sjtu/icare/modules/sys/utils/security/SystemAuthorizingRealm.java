@@ -35,7 +35,6 @@ import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.service.SystemService;
 import com.sjtu.icare.modules.sys.utils.UserUtils;
 import com.sjtu.icare.modules.sys.web.LoginController;
-import com.sjtu.icare.modules.sys.web.TestController;
 import com.sjtu.icare.modules.sys.entity.Privilege;
 
 /**

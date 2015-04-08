@@ -1,11 +1,6 @@
 package com.sjtu.icare.modules.sys.utils;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
@@ -14,7 +9,6 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
 import com.google.common.collect.Lists;
-import com.sjtu.icare.common.service.BaseService;
 import com.sjtu.icare.common.utils.SpringContextHolder;
 import com.sjtu.icare.modules.sys.entity.Privilege;
 import com.sjtu.icare.modules.sys.entity.User;
@@ -25,7 +19,6 @@ import com.sjtu.icare.common.utils.CacheUtils;
 import com.sjtu.icare.modules.sys.entity.Role;
 import com.sjtu.icare.modules.sys.utils.security.SystemAuthorizingRealm.UserPrincipal;
 import com.sjtu.icare.modules.sys.utils.UserUtils;
-import com.sjtu.icare.modules.sys.web.TestController;
 
 
 /**
