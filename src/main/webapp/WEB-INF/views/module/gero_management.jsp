@@ -899,7 +899,7 @@
           iconCls:'icon-ok',
           handler:function(){
             var node = $('#careitemchoosetree').tree('getSelected');
-            if(node) care_item.postitem(node.id,node.attributes.level);
+            if(node) care_item.postitem(node.id);
             $('#eldercareitem-dialog-form').dialog('close');
           }
         }]
@@ -907,15 +907,33 @@
     <div id="eldercareitem-Info-card" class="info-card-d">
       <div class='old' style="padding-top:10px;">
         <div class="pers-s">请选择一个项目</div>
-        <ul id="careitemchoosetree" class="easyui-tree" style="padding-left:20px;text-align:left;max-height:400px;overflow-y:scroll;border:1px solid #bcbcbc;" data-options="">
+        <ul id="careitemchoosetree" class="easyui-tree" style="padding-left:20px;text-align:left;max-height:400px;overflow-y:scroll;border:1px solid #bcbcbc;" data-options="
+          onSelect:function(){
+          var node = $('#careitemchoosetree').tree('getSelected');
+          $('#cistime').attr('value',node.attributes.start_time);
+          $('#cietime').attr('value',node.attributes.end_time);
+          $('#cilevel').attr('value',node.attributes.level);
+          $('#ciicon').attr('value',node.attributes.icon);
+          $('#ciperiod').attr('value',node.attributes.period);
+        }
+        ">
         </ul>
       </div>
     </div>    
     <div class="info-card-e">
       <table>
-        <tr><td>开始时间</td><td><input type="text" id="cistime" /></td></tr>
-        <tr><td>结束时间</td><td><input type="text" id="cietime" /></td></tr>
-        <tr><td>图标</td><td><input type="text" id="ciicon" /></td></tr>
+        <tr><td>开始时间</td><td><div class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+            <input id="cistime" class="form-control" size="16" type="text" style='width:80px;' value="" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+          </div></td></tr>
+        <tr><td>结束时间</td><td>
+          <div class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+            <input id="cietime" class="form-control" size="16" type="text" style='width:80px;' value="" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+          </div></td></tr>
+        <tr><td>周期：</td><td><input type="text" id="ciperiod" /></td></tr>
+        <tr><td>护理等级：</td><td><input type="text" id="cilevel" /></td></tr>
+        <tr><td>图标：</td><td><input type="text" id="ciicon" /></td></tr>
       </table>
     </div>   
 </div>
@@ -1000,10 +1018,14 @@
         <tr><td>说明: </td><td><input type="text" id="gcinotes" /></td></tr>
         <tr><td>开始时间: </td><td>
           <div class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
-            <input class="form-control" size="16" type="text" style='width:80px;' value="" readonly>
+            <input id="gcistart_time" class="form-control" size="16" type="text" style='width:80px;' value="" readonly>
             <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
           </div></td></tr>
-        <tr><td>结束时间: </td><td><input type="text" id="gciend_time" readonly/></td></tr>
+        <tr><td>结束时间: </td><td>
+          <div class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+            <input id="gciend_time" class="form-control" size="16" type="text" style='width:80px;' value="" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+          </div></td></tr>
       </table>
 </div>
 <div id="geroareaitempost-dialog-form"  class="easyui-dialog" title="项目信息" style="width:300px;height:250px;padding:10px"

@@ -24,7 +24,7 @@ var care_item={
                     var temp={
                         id:msg.entities[i].id,
                         text:msg.entities[i].name,
-                        attributes:{level:msg.entities[i].level,period:msg.entities[i].period},
+                        attributes:{icon:msg.entities[i].icon,level:msg.entities[i].level,period:msg.entities[i].period,start_time:msg.entities[i].start_time,end_time:msg.entities[i].end_time},
                         iconCls:'icon-blank',
                     }
                     care_item.itemtemp.push(temp);
@@ -134,13 +134,14 @@ var care_item={
             displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录', 
         });
     },
-    postitem:function(id,level){
+    postitem:function(id){
         var obj={
             care_item_id:id,
-            level:level,
+            level:$("#cilevel").val(),
             start_time:$("#cistime").val(),
             end_time:$("#cietime").val(),
-            icon:parseInt($("#ciicon").val()),
+            icon:$("#ciicon").val(),
+            period:$("#ciperiod").val(),
         }
         var infoUrl=rhurl.origin+'/gero/'+gid+'/elder/'+care_item.eid+'/care_item';  
         $.ajax({
