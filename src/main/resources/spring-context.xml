@@ -68,6 +68,15 @@
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
 		<property name="configLocation" value="classpath:${ehcache.configFile}" />
 	</bean>
+	
+	<bean class="com.sjtu.icare.common.web.CustomSimpleMappingExceptionResolver">        
+        <property name="exceptionMappings">  
+            <props>  
+                <prop key="org.apache.shiro.authz.UnauthorizedException">error/403</prop>
+                <prop key="java.lang.Exception">error/500</prop>  
+            </props>  
+        </property>  
+    </bean>
 
 	<!-- Production 环境 -->
  	<beans profile="production">
