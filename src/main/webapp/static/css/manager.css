@@ -1068,7 +1068,9 @@ a:hover{ color:#d71318;}
 .fc-toolbar .fc-state-down {
   z-index: 3;
 }
-
+.datetimepicker{
+  z-index:99000000;
+}
 .fc-toolbar .fc-state-active,
 .fc-toolbar .ui-state-active {
   z-index: 4;

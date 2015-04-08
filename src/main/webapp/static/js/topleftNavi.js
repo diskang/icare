@@ -241,3 +241,14 @@ $('#eldercarercont li').live('click',function(){
 $('#areacarercont li').live('click',function(){     
     areacare.getList(parseInt($(this).attr("pid")),$(this).text());
 });
+$('.form_time').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
+        forceParse: 0
+    });

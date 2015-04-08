@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="/resthouse/static/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/resthouse/static/css/easyui.css">
 <link rel="stylesheet" type="text/css" href="/resthouse/static/css/icon.css">
+<link rel="stylesheet" type="text/css" href="/resthouse/static/css/bootstrap-datetimepicker.min.css">
 <link href="/resthouse/static/css/vis.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -973,7 +974,7 @@
 
 
 <!-----------------------项目信息------------------------------>
-<div id="gerocareitempost-dialog-form"  class="easyui-dialog" title="角色信息" style="width:300px;height:400px;padding:10px"
+<div id="gerocareitempost-dialog-form"  class="easyui-dialog" title="项目信息" style="width:300px;height:400px;padding:10px"
       data-options="
         modal:true,
         closed:true,
@@ -997,11 +998,15 @@
         <tr><td>周期: </td><td><input type="text" id="gciperiod" /></td></tr>
         <tr><td>频率: </td><td><input type="text" id="gcifrequency" /></td></tr>
         <tr><td>说明: </td><td><input type="text" id="gcinotes" /></td></tr>
-        <tr><td>开始时间: </td><td><input type="text" id="gcistart_time" /></td></tr>
-        <tr><td>结束时间: </td><td><input type="text" id="gciend_time" /></td></tr>
+        <tr><td>开始时间: </td><td>
+          <div class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+            <input class="form-control" size="16" type="text" style='width:80px;' value="" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+          </div></td></tr>
+        <tr><td>结束时间: </td><td><input type="text" id="gciend_time" readonly/></td></tr>
       </table>
 </div>
-<div id="geroareaitempost-dialog-form"  class="easyui-dialog" title="角色信息" style="width:300px;height:250px;padding:10px"
+<div id="geroareaitempost-dialog-form"  class="easyui-dialog" title="项目信息" style="width:300px;height:250px;padding:10px"
       data-options="
         modal:true,
         closed:true,
@@ -1030,6 +1035,8 @@
 <script type="text/javascript" src="/resthouse/static/js/jquery-1.8.3.min.js" ></script>
 <script type="text/javascript" src="/resthouse/static/js/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="/resthouse/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/topleftNavi.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/photo.js"></script>
 <script type="text/javascript" src="/resthouse/static/js/staff.js"></script>
