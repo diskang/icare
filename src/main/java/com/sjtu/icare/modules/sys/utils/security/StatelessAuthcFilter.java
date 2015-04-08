@@ -43,11 +43,11 @@ public class StatelessAuthcFilter extends AccessControlFilter {
 	    //4、生成无状态Token  
 	    
 	    StatelessToken token = new StatelessToken(username, params, clientDigest);  
-	    logger.debug("before login");
+	    // logger.debug("before login");
 	    try {  
 			//5、委托给Realm进行登录 
 			Subject subject = getSubject(request, response);
-			logger.debug("subject getted");
+			// logger.debug("subject getted");
 			subject.login(token);
 			// 鉴权转移到controller方法去做
 //			String permission = getPathWithinApplication(request)+":"+GET_METHOD;

@@ -52,12 +52,12 @@ public class StatelessRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         StatelessToken statelessToken = (StatelessToken) token;
         String username = statelessToken.getUsername();
-        logger.debug(username);
+        logger.debug("stateless_login:"+username);
         String key = getKey(username);//根据用户名获取密钥（和客户端的一样）
         String keyDigest = Encodes.encodeHex(Digests.sha1(key.getBytes()));
         //在服务器端生成客户端参数消息摘要
         String serverDigest = HmacSHA256Utils.digest(keyDigest, statelessToken.getParams());
-        logger.debug(serverDigest);
+        logger.debug("stateless_user_digest:"+serverDigest);
         //然后进行客户端消息摘要和服务器端消息摘要的匹配
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(
                 username,
@@ -74,9 +74,9 @@ public class StatelessRealm extends AuthorizingRealm {
         //根据用户名查找角色，请根据需求实现
         String username = (String) principals.getPrimaryPrincipal();
         User user = getSystemService().getUserByUsername(username);
-        logger.debug("stateless_user:"+user.getUsername());
+        // logger.debug("stateless_user:"+user.getUsername());
         if (user.getUsername() != null) {
-        	logger.debug("user getted");
+        	// logger.debug("user getted");
 //            UserUtils.putCache("user", user);
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             info.addRole("gero:"+user.getGeroId());
@@ -91,13 +91,13 @@ public class StatelessRealm extends AuthorizingRealm {
                 	permission = permission.replace("{sid}", user.getUserId()+"");
                 	permission = permission.replace("{eid}", user.getUserId()+"");
                 	permission = permission.replace("{cid}", user.getUserId()+"");
-                	logger.debug("permission:"+permission);
+                	// logger.debug("permission:"+permission);
                     info.addStringPermission(permission);
                 }
                 if (StringUtils.isNotBlank(privilege.getApi())){
                     // 添加基于Permission的权限信息
                 	String api = privilege.getApi();
-                    logger.debug("permission:"+api);
+                    // logger.debug("permission:"+api);
                     info.addStringPermission(api);
                 }
             }
