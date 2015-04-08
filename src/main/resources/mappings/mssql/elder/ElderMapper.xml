@@ -20,6 +20,7 @@
 	    <result property="assessUrl" column="assess_url" />
 	    <result property="trackUrl" column="track_url" />
 		<result property="padMac" column="pad_mac" />
+		<result property="email" column="email" />
 	</resultMap>
   
     <select id="getElderEntity" resultMap="ElderMap">
