@@ -67,7 +67,7 @@ public class ElderRelativeRestController  extends BasicController {
 			@RequestParam("rows") int rows,
 			@RequestParam("sort") String sort
 			) {
-//		checkApi(request);
+		checkApi(request);
 //		List<String> permissions = new ArrayList<String>();
 //		permissions.add("admin:gero:"+geroId+":staff:info:read");
 //		checkPermissions(permissions);
