@@ -118,13 +118,15 @@ var care_item={
             toolbar: [{ 
                 text: '添加', 
                 iconCls: 'icon-add', 
-                handler: function() { 
+                handler: function() {
+                    if(care_item.eid!=="")
                     care_item.addItemInfo();
                 } 
             }, '-',{ 
             text: '删除', 
                 iconCls: 'icon-remove', 
-                handler: function(){ 
+                handler: function(){
+                    if(care_item.eid!=="")
                     care_item.delItemInfo();
                 }
             }]

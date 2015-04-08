@@ -98,6 +98,7 @@
         $("#staff-dialog-form").dialog("open");
         $("#staff-dialog-form").dialog("center");
         $('#staff-Info-card-a input').attr('disabled','disabled');
+        $('#staff-Info-card-a .input-group-addon').addClass('hide');
         $("#staff-Info-card-a").find('.validatebox-text').validatebox('disableValidation');
         $('#sname').attr('value',data.name);
         $('#semail').attr('value',data.email);
@@ -137,6 +138,7 @@
         $('#role-check input').attr("checked",false);
         $('#role-check input').attr("disabled",true);
         $('#staff-Info-card-a input').attr('value',null).removeAttr('disabled','');
+        $('#staff-Info-card-a .input-group-addon').removeClass('hide');
         $("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
         $('#staff-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
@@ -147,6 +149,7 @@
         $("#staff-dialog-form").dialog("center");
         $('#staff-Info-card-a input').removeAttr('disabled','');
         $('#role-check input').attr("disabled",false);
+        $('#staff-Info-card-a .input-group-addon').removeClass('hide');
         $("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
     },
     delStaffInfo: function(){
