@@ -83,7 +83,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {  
 		
 		UsernamePasswordToken token = (UsernamePasswordToken) createToken(request, response); 
-	    logger.debug("before login");
+	    // logger.debug("before login");
 	    
 	    HttpServletRequest httpServletRequest = (HttpServletRequest)request;
 	    if (!httpServletRequest.getHeader("Accept").contains("application/json")) {
@@ -104,7 +104,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
         }else {
         	try { 
 			Subject subject = getSubject(request, response);
-			logger.debug("subject getted");
+			// logger.debug("subject getted");
 			subject.login(token);
         	} catch ( UnknownAccountException uae ) { 
     	    	onLoginFail(response,"No Account");
