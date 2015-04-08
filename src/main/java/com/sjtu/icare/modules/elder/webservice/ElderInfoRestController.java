@@ -173,8 +173,7 @@ public class ElderInfoRestController extends GeroBaseController{
 				resultMap.put("wechat_id", user.getWechatId()); 
 				resultMap.put("zip_code", user.getZipCode()); 
 				
-				OSSObjectUtils ossObjectUtils = new OSSObjectUtils();
-				resultMap.put("photo_src", ossObjectUtils.getDownloadUrl(user.getPhotoUrl())); 
+				resultMap.put("photo_src", user.getPhotoSrc()); 
 				
 				ElderEntity queryElderEntity = new ElderEntity();
 				queryElderEntity.setId(user.getUserId());
@@ -357,8 +356,7 @@ public class ElderInfoRestController extends GeroBaseController{
 			resultMap.put("wechat_id", user.getWechatId()); 
 			resultMap.put("zip_code", user.getZipCode()); 
 			
-			OSSObjectUtils ossObjectUtils = new OSSObjectUtils();
-			resultMap.put("photo_src", ossObjectUtils.getDownloadUrl(user.getPhotoUrl())); 
+			resultMap.put("photo_src", user.getPhotoSrc()); 
 			
 			resultMap.put("apply_url", elderEntity.getApplyUrl()); 
 			resultMap.put("area_id", elderEntity.getAreaId());

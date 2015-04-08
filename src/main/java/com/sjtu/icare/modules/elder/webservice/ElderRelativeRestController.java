@@ -123,8 +123,7 @@ public class ElderRelativeRestController  extends BasicController {
 					resultMap.put("wechat_id", user.getWechatId()); 
 					resultMap.put("zip_code", user.getZipCode()); 
 					
-					OSSObjectUtils ossObjectUtils = new OSSObjectUtils();
-					resultMap.put("photo_src", ossObjectUtils.getDownloadUrl(user.getPhotoUrl())); 
+					resultMap.put("photo_src", user.getPhotoSrc()); 
 					
 					RelativeEntity requestRelativeEntity = new RelativeEntity();
 					requestRelativeEntity.setId(user.getUserId());
@@ -293,8 +292,7 @@ public class ElderRelativeRestController  extends BasicController {
 			resultMap.put("wechat_id", user.getWechatId()); 
 			resultMap.put("zip_code", user.getZipCode()); 
 			
-			OSSObjectUtils ossObjectUtils = new OSSObjectUtils();
-			resultMap.put("photo_src", ossObjectUtils.getDownloadUrl(user.getPhotoUrl())); 
+			resultMap.put("photo_src", user.getPhotoSrc()); 
 			
 			
 			resultMap.put("elder_id", relativeEntity.getElderId()); 

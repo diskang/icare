@@ -135,8 +135,7 @@ public class StaffRestController extends BasicController {
 					resultMap.put("wechat_id", user.getWechatId());
 					resultMap.put("zip_code", user.getZipCode());
 
-					OSSObjectUtils ossObjectUtils = new OSSObjectUtils();
-					resultMap.put("photo_src", ossObjectUtils.getDownloadUrl(user.getPhotoUrl())); 
+					resultMap.put("photo_src", user.getPhotoSrc()); 
 					
 					StaffEntity queryStaffEntity = new StaffEntity();
 					queryStaffEntity.setId(user.getUserId());
@@ -320,8 +319,7 @@ public class StaffRestController extends BasicController {
 			resultMap.put("wechat_id", user.getWechatId());
 			resultMap.put("zip_code", user.getZipCode());
 			
-			OSSObjectUtils ossObjectUtils = new OSSObjectUtils();
-			resultMap.put("photo_src", ossObjectUtils.getDownloadUrl(user.getPhotoUrl())); 
+			resultMap.put("photo_src", user.getPhotoSrc()); 
 			
 
 			resultMap.put("nssf_id", staffEntity.getNssfId());
