@@ -76,8 +76,9 @@ var geroItem={
             notes:document.getElementById("gcinotes").value,
             period:parseInt(document.getElementById("gciperiod").value),
             frequency:parseInt(document.getElementById("gcifrequency").value),
-            start_time:parseInt(document.getElementById("gcistart_time").value),
-            end_time:parseInt(document.getElementById("gciend_time").value),
+            icon:$("#gciicon").val(),
+            start_time:$("#gcistart_time").val(),
+            end_time:$("#gciend_time").val(),
         }
         var infoUrl=rhurl.origin+'/gero/'+gid+'/care_item';
         $.ajax({
@@ -102,7 +103,7 @@ var geroItem={
         $(".inf").addClass('hide');
         $("#geroareaitemshow").removeClass('hide');
         $('#geroareaitempage').datagrid({ 
-            title:'专护项目列表', 
+            title:'房护项目列表', 
             iconCls:'icon-edit',//图标 
             height:270,
             nowrap: false, 
@@ -175,6 +176,7 @@ var geroItem={
             notes:document.getElementById("gainotes").value,
             period:parseInt(document.getElementById("gaiperiod").value),
             frequency:parseInt(document.getElementById("gaifrequency").value),
+            icon:document.getElementById("gaiicon").value,
         }
         var infoUrl=rhurl.origin+'/gero/'+gid+'/area_item';
         $.ajax({
