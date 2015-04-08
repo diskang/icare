@@ -42,6 +42,7 @@ var eldercare={
             if(node)$("#elderchecktree").tree("check",node.target);
         }
         $("#elderdutypanel").removeClass('hide')
+        $("#eldercarer-end").attr('value',item.end);
         callback(null); // cancel updating the item
       },
 
@@ -73,7 +74,7 @@ var eldercare={
     $('#eldercarercont li').remove();
     $.ajax({
         type: "get",
-        data:{page:1,rows:65535,sort:'ID'},
+        data:{page:1,rows:65535,sort:'ID',role:"老人护工"},
         dataType: "json",
         contentType: "application/json;charset=utf-8",
         url:rhurl.origin+'/gero/'+gid+'/staff',
@@ -160,7 +161,7 @@ var eldercare={
   },
   buttonclk:function(){
     eldercare.obj.staff_id=eldercare.sid;
-    eldercare.obj.end_date=document.getElementById("eldercarer-end").value;
+    eldercare.obj.end_date=$("#eldercarer-end").val();
     var nodes = $('#elderchecktree').tree('getChecked', ['checked','indeterminate']);
     if(nodes){
       eldercare.obj.elder_ids=[];

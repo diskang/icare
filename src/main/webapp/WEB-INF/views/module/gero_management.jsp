@@ -237,7 +237,7 @@
                     <th data-options="field:'name',width:100,align:'center'">姓 名</th>
                     <th data-options="field:'identity_no',width:160,align:'center'">身份证号</th>
                     <th data-options="field:'gender',width:80,align:'center'">性 别</th>
-                    <th data-options="field:'phone',width:100,align:'center'">电 话</th>
+                    <th data-options="field:'phone_no',width:100,align:'center'">电 话</th>
                     <th data-options="field:'email',width:120,align:'center'">邮 箱</th>
                   </tr>
                 </thead>
@@ -367,11 +367,20 @@
               <div class="dutyhead">控制操作</div>
               <div class="dutycontrol">
                 <div></div>
-                <div>结束日期:<input type="text" id="eldercarer-end" ></input></div>
-                <div></div>
+                <table>
+                  <tr></tr>
+                  <tr> <td>结束日期:</td>
+                    <td>
+                    <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                      <input class="form-control" style="width:115px;"size="16" id="eldercarer-end" type="text" value="" readonly>
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                    </div>
+                    </td>
+                  </tr>
+                  <tr></tr>
+                </table>
                 <div><button id="eldercarerbutton" class="btn btn-default" onclick="eldercare.buttonclk()" style="margin-left:180px;margin-top:10px;" >提交</button>
                 </div>
-                <div></div>
                 <p>说明: 结束日期为真正结束日期的后一天。</p>
               </div>
             </div>
@@ -402,12 +411,20 @@
             <div id="areadutypanel" class="itemmiddle hide">
               <div class="dutyhead">控制操作</div>
               <div class="dutycontrol">
-                <div></div>
-                <div>结束日期:<input type="text" id="areacarer-end" ></input></div>
-                <div></div>
+                <table>
+                  <tr></tr>
+                  <tr> <td>结束日期:</td>
+                    <td>
+                    <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                      <input class="form-control" style="width:115px;"size="16" id="areacarer-end" type="text" value="" readonly>
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                    </div>
+                    </td>
+                  </tr>
+                  <tr></tr>
+                </table>
                 <div><button id="areacarerbutton" class="btn btn-default" onclick="areacare.buttonclk()" style="margin-left:180px;margin-top:10px;" >提交</button>
                 </div>
-                <div></div>
                 <p>说明: 结束日期为真正结束日期的后一天。</p>
               </div>
             </div>
@@ -641,7 +658,11 @@
       <div id="elder-Info-card-a" class="info-card-a">
         <table>
           <tr><td class="td1"><text>老人姓名: </text></td><td class="td2"><input id="ename"class="easyui-validatebox textbox" data-options="required:true"></input>*</td></tr>
-          <tr><td class="td1"><text>出生日期：</text></td><td class="td2"><input id="ebirthday"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'date'"></input>*</td></tr>
+          <tr><td class="td1"><text>出生日期：</text></td><td class="td2">
+              <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                <input class="form-control" style="width:115px;"size="16" id="ebirthday" type="text" value="" readonly>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+              </div></td></tr>
           <tr><td class="td1"><text>年    龄：</text></td><td class="td2"><input id="eage"></input></td></tr>
           <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="ephone_no" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
           <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input type="radio" name="egender" value='0' />男 <input type="radio" name="egender" value='1' />女</td></tr>
@@ -657,8 +678,16 @@
           <tr><td class="td1"><text>档案编号：</text></td><td class="td2"><input id="earchive_id"></input></td></tr>
           <tr><td class="td1"><text>入住床号：</text></td><td class="td2"><input id="earea_id" style="width:80px;"  onclick="elder.area_idclick();" class="easyui-validatebox textbox" type="button" data-options="required:true"></input></td></tr>
           <tr><td class="td1"><text>家庭地址：</text></td><td class="td2"><input id="eaddress"></input></td></tr>
-          <tr><td class="td1"><text>入院日期：</text></td><td class="td2"><input id="echeckin_date"></input></td></tr>
-          <tr><td class="td1"><text>离院日期：</text></td><td class="td2"><input id="echeckout_date"></input></td></tr>
+          <tr><td class="td1"><text>入院日期：</text></td><td class="td2">
+            <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+              <input class="form-control" style="width:115px;"size="16" id="echeckin_date" type="text" value="" readonly>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+            </div></td></tr>
+          <tr><td class="td1"><text>离院日期：</text></td><td class="td2">
+            <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+              <input class="form-control" style="width:115px;"size="16" id="echeckout_date" type="text" value="" readonly>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+            </div></input></td></tr>
           <tr><td class="td1"><text>pad_mac：</text></td><td class="td2"><input id="epad_mac"></input></td></tr>
         </table>
       </div>
@@ -714,7 +743,12 @@
           <tr><td class="td1"><text>民    族：</text></td><td class="td2"><input id="rnationality"></input></td></tr>
           <tr><td class="td1"><text>政治面貌：</text></td><td class="td2"><input id="rpolitical_status"></input></td></tr>
           <tr><td class="td1"><text>电子邮箱：</text></td><td class="td2"><input id="remail"></input></td></tr>
-          <tr><td class="td1"><text>出生日期：</text></td><td class="td2"><input id="rbirthday"></input></td></tr>
+          <tr><td class="td1"><text>出生日期：</text></td><td class="td2">
+            <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+              <input class="form-control" style="width:115px;"size="16" id="rbirthday" type="text" value="" readonly>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+            </div>
+          </td></tr>
           <tr><td class="td1"><text>身份证号：</text></td><td class="td2"><input id="ridentity_no"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'idcard'"></input></td></tr>
           <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input type="radio" name="rgender" value='0' checked="checked" />男 <input type="radio" name="rgender" value='1' />女</td></tr>
           <tr><td class="td1"><text>教育程度：</text></td><td class="td2"><input id="reducation"></input></td></tr>
@@ -725,8 +759,18 @@
           <tr><td class="td1"><text>邮编：</text></td><td class="td2"><input id="rzip_code"></input></td></tr>
           <tr><td class="td1"><text>微信号：</text></td><td class="td2"><input id="rwechat_id"></input></td></tr>
           <tr><td class="td1"><text>籍贯：</text></td><td class="td2"><input id="rnative_place"></input></td></tr>
-          <tr><td class="td1"><text>注册日期：</text></td><td class="td2"><input id="rregister_date"></input></td></tr>
-          <tr><td class="td1"><text>注销日期：</text></td><td class="td2"><input id="rcancel_date"></input></td></tr>
+          <tr><td class="td1"><text>注册日期：</text></td><td class="td2">
+            <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+              <input class="form-control" style="width:115px;"size="16" id="rregister_date" type="text" value="" readonly>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+            </div>
+          </td></tr>
+          <tr><td class="td1"><text>注销日期：</text></td><td class="td2">
+            <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+              <input class="form-control" style="width:115px;"size="16" id="rcancel_date" type="text" value="" readonly>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+            </div>
+          </input></td></tr>
         </table>
       </div>
       <div id="relative-Info-card-b" class="info-card-b"><img src="images/p_2.jpg"></div>
@@ -782,21 +826,41 @@
           <tr><td class="td1"><text>民族：</text></td><td class="td2"><input id="snationality"></input></td></tr>
           <tr><td class="td1"><text>政治面貌：</text></td><td class="td2"><input id="spolitical_status"></input></td></tr>
           <tr><td class="td1"><text>电子邮箱：</text></td><td class="td2"><input id="semail"></input></td></tr>
-          <tr><td class="td1"><text>出生日期：</text></td><td class="td2"><input id="sbirthday"></input></td></tr>
+          <tr><td class="td1"><text>出生日期：</text></td><td class="td2">
+            <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+              <input class="form-control" style="width:115px;"size="16" id="sbirthday" type="text" value="" readonly>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+            </div>
+          </td></tr>
           <tr><td class="td1"><text>身份证号：</text></td><td class="td2"><input id="sidentity_no"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'idcard'"></input></td></tr>
           <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input type="radio" name="sgender" value='0' checked="checked" />男 <input type="radio" name="sgender" value='1' />女</td></tr>
           <tr><td class="td1"><text>户口所在地：</text></td><td class="td2"><input id="sresidence_address"></input></td></tr>
           <tr><td class="td1"><text>档案编号：</text></td><td class="td2"><input id="sarchive_id"></input></td></tr>
           <tr><td class="td1"><text>社保卡号：</text></td><td class="td2"><input id="snssf_id"></input></td></tr>
           <tr><td class="td1"><text>居住地址：</text></td><td class="td2"><input id="shousehold_address"></input></td></tr>
-          <tr><td class="td1"><text>注册日期：</text></td><td class="td2"><input id="sregister_date"></input></td></tr>
-          <tr><td class="td1"><text>注销日期：</text></td><td class="td2"><input id="scancel_date"></input></td></tr>
+          <tr><td class="td1"><text>注册日期：</text></td><td class="td2">
+            <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+              <input class="form-control" style="width:115px;"size="16" id="sregister_date" type="text" value="" readonly>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+            </div>
+          </td></tr>
+          <tr><td class="td1"><text>注销日期：</text></td><td class="td2">
+            <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+              <input class="form-control" style="width:115px;"size="16" id="scancel_date" type="text" value="" readonly>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+            </div>
+          </td></tr>
           <tr><td class="td1"><text>年龄：</text></td><td class="td2"><input id="sage"></input></td></tr>
           <tr><td class="td1"><text>邮编：</text></td><td class="td2"><input id="szip_code"></input></td></tr>
           <tr><td class="td1"><text>微信号：</text></td><td class="td2"><input id="swechat_id"></input></td></tr>
           <tr><td class="td1"><text>籍贯：</text></td><td class="td2"><input id="snative_place"></input></td></tr>
           <tr><td class="td1"><text>basic_url：</text></td><td class="td2"><input id="sbasic_url"></input></td></tr>
-          <tr><td class="td1"><text>离职日期：</text></td><td class="td2"><input id="sleave_date"></input></td></tr>
+          <tr><td class="td1"><text>离职日期：</text></td><td class="td2">
+            <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+              <input class="form-control" style="width:115px;"size="16" id="sleave_date" type="text" value="" readonly>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+            </div>
+          </td></tr>
         </table>
       </div>
       <div id="staff-Info-card-b" class="info-card-b"><img src="images/p_2.jpg"></div>
@@ -1031,13 +1095,13 @@
         <tr><td>说明: </td><td><input type="text" id="gcinotes" /></td></tr>
       </table>
 </div>
-<div id="geroareaitempost-dialog-form"  class="easyui-dialog" title="项目信息" style="width:300px;height:250px;padding:10px"
+<div id="geroareaitempost-dialog-form"  class="easyui-dialog" title="项目信息" style="width:300px;height:300px;padding:10px"
       data-options="
         modal:true,
         closed:true,
         fix:true,
         left:($(window).width()-300)*0.5,
-        top:($(window).height()-200)*0.5,
+        top:($(window).height()-300)*0.5,
         draggable:true,
         iconCls: 'icon-save',
         buttons: [{
@@ -1053,6 +1117,7 @@
         <tr><td>项目名: </td><td><input type="text" id="gainame" /></td></tr>
         <tr><td>周期: </td><td><input type="text" id="gaiperiod" /></td></tr>
         <tr><td>频率: </td><td><input type="text" id="gaifrequency" /></td></tr>
+        <tr><td>图标: </td><td><input type="text" id="gaiicon" /></td></tr>
         <tr><td>说明: </td><td><input type="text" id="gainotes" /></td></tr>
       </table>
 </div>

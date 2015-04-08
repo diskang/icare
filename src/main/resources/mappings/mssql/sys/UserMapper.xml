@@ -282,7 +282,8 @@
                 zip_code, 
                 residence_address, 
                 household_address, 
-                wechat_id) 
+                wechat_id,
+                email) 
         VALUES
             (#{password},
             #{geroId},
@@ -305,7 +306,8 @@
             #{zipCode}, 
             #{residenceAddress}, 
             #{householdAddress}, 
-            #{wechatId})
+            #{wechatId},
+            #{email})
             
     </insert>
     
@@ -377,6 +379,9 @@
             </if>
             <if test="wechatId != null">
             T_USER.wechat_id = #{wechatId}
+            </if>
+            <if test="email != null">
+            T_USER.email = #{email}
             </if>
         </set>
         WHERE
