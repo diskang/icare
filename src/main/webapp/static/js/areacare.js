@@ -42,6 +42,7 @@ var areacare={
             if(node)$("#areachecktree").tree("check",node.target);
         }
         $("#areadutypanel").removeClass('hide')
+        $("#areacarer-end").attr('value',item.end);
         callback(null); // cancel updating the item
       },
 
@@ -73,7 +74,7 @@ var areacare={
     $('#areacarercont li').remove();
     $.ajax({
         type: "get",
-        data:{page:1,rows:65535,sort:'ID'},
+        data:{page:1,rows:65535,sort:'ID',role:"房间护工"},
         dataType: "json",
         contentType: "application/json;charset=utf-8",
         url:rhurl.origin+'/gero/'+gid+'/staff',
@@ -187,7 +188,7 @@ var areacare={
   },
   buttonclk:function(){
     areacare.obj.staff_id=areacare.sid;
-    areacare.obj.end_date=document.getElementById("areacarer-end").value;
+    areacare.obj.end_date=$("#areacarer-end").val();
     var nodes = $('#areachecktree').tree('getChecked', ['checked']);
     if(nodes){
       areacare.obj.area_ids=[];

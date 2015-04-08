@@ -58,6 +58,7 @@ var relative={
         $("#relative-dialog-form").dialog("open");
         $("#relative-dialog-form").dialog("center");
         $('#relative-Info-card-a input').attr('disabled','disabled');
+        $('#relative-Info-card-a .input-group-addon').addClass('hide');
         $('#relative-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
         $('#rname').attr('value',data.name);
         $('#rbirthday').attr('value',data.birthday);
@@ -93,6 +94,7 @@ var relative={
         $("#relative-dialog-form").dialog("open");
         $("#relative-dialog-form").dialog("center");
         $('#relative-Info-card-a input').attr('value',null).removeAttr('disabled');
+        $('#relative-Info-card-a .input-group-addon').removeClass('hide');
         $('#relative-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
         $('#relative-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
@@ -102,6 +104,7 @@ var relative={
         $("#relative-dialog-form").dialog("open");
         $("#relative-dialog-form").dialog("center");
         $('#relative-Info-card-a input').removeAttr('disabled');
+        $('#relative-Info-card-a .input-group-addon').removeClass('hide');
         $('#relative-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
     },
     delRelativeInfo: function(){

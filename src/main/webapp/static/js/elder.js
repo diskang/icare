@@ -63,6 +63,7 @@ var elder={
         $("#elder-dialog-form").dialog("open");
         $("#elder-dialog-form").dialog("center");
         $('#elder-Info-card-a input').attr('disabled','disabled');
+        $('#elder-Info-card-a .input-group-addon').addClass('hide');
         $('#elder-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
         $('#ename').attr('value',data.name);
         $('#ebirthday').attr('value',data.birthday);
@@ -97,6 +98,7 @@ var elder={
         $("#elder-dialog-form").dialog("open");
         $("#elder-dialog-form").dialog("center");
         $('#elder-Info-card-a input').attr('value',null).removeAttr('disabled');
+        $('#elder-Info-card-a .input-group-addon').removeClass('hide');
         $('#elder-Info-card-a').find('.easyui-validatebox').validatebox('enableValidation').validatebox('validate');
         $('#elder-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
@@ -106,6 +108,7 @@ var elder={
         $("#elder-dialog-form").dialog("open");
         $("#elder-dialog-form").dialog("center");
         $('#elder-Info-card-a input').removeAttr('disabled');
+        $('#elder-Info-card-a .input-group-addon').removeClass('hide');
         $('#elder-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
     },
     delElderInfo: function(){
