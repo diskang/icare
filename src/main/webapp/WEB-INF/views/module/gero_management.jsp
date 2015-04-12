@@ -657,10 +657,10 @@
     <div id="elder-Info-card" class="info-card">
       <div id="elder-Info-card-a" class="info-card-a">
         <table>
-          <tr><td class="td1"><text>老人姓名: </text></td><td class="td2"><input id="ename"class="easyui-validatebox textbox" data-options="required:true"></input>*</td></tr>
+          <tr><td class="td1"><text>老人姓名: </text></td><td class="td2"><input id="ename"class="easyui-validatebox textbox" required='required' missingMessage="不能为空"></input>*</td></tr>
           <tr><td class="td1"><text>出生日期：</text></td><td class="td2">
               <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                <input class="form-control" style="width:115px;"size="16" id="ebirthday" type="text" value="" readonly>
+                <input class="form-control easyui-validatebox textbox" style="width:115px;"size="16" id="ebirthday" type="text" required='required' value="" readonly>
                 <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
               </div></td></tr>
           <tr><td class="td1"><text>年    龄：</text></td><td class="td2"><input id="eage"></input></td></tr>
@@ -735,7 +735,7 @@
     <div id="relative-Info-card" class="info-card ">
       <div id="relative-Info-card-a" class="info-card-a">
         <table>
-          <tr><td class="td1"><text>姓    名: </text></td><td class="td2"><input id="rname"></input></td></tr>
+          <tr><td class="td1"><text>姓    名: </text></td><td class="td2"><input id="rname"class="easyui-validatebox textbox" data-options="required:true"></input></td></tr>
           <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="rphone_no" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
           <tr><td class="td1"><text>紧急系数: </text></td><td class="td2"><input id="rurgent"></input></td></tr>
           <tr><td class="td1"><text>与老人关系：</text></td><td class="td2"><input id="rrelationship"></input></td></tr>
@@ -745,7 +745,7 @@
           <tr><td class="td1"><text>电子邮箱：</text></td><td class="td2"><input id="remail"></input></td></tr>
           <tr><td class="td1"><text>出生日期：</text></td><td class="td2">
             <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-              <input class="form-control" style="width:115px;"size="16" id="rbirthday" type="text" value="" readonly>
+              <input class="form-control easyui-validatebox textbox" data-options="required:true" style="width:115px;"size="16" id="rbirthday" type="text" value="" readonly>
               <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
             </div>
           </td></tr>
@@ -820,7 +820,7 @@
     <div id="staff-Info-card" class="info-card ">
       <div id="staff-Info-card-a" class="info-card-a">
         <table>
-          <tr><td class="td1"><text>姓    名: </text></td><td class="td2"><input id="sname"></input></td></tr>
+          <tr><td class="td1"><text>姓    名: </text></td><td class="td2"><input id="sname" class="easyui-validatebox textbox" data-options="required:true"></input></td></tr>
           <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="sphone_no" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
           <tr><td class="td1"><text>婚姻状况：</text></td><td class="td2"><input id="smarriage"></input></td></tr>
           <tr><td class="td1"><text>民族：</text></td><td class="td2"><input id="snationality"></input></td></tr>
@@ -828,7 +828,7 @@
           <tr><td class="td1"><text>电子邮箱：</text></td><td class="td2"><input id="semail"></input></td></tr>
           <tr><td class="td1"><text>出生日期：</text></td><td class="td2">
             <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-              <input class="form-control" style="width:115px;"size="16" id="sbirthday" type="text" value="" readonly>
+              <input class="form-control easyui-validatebox textbox" style="width:115px;"size="16" id="sbirthday" data-options="required:true" type="text" value="" readonly>
               <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
             </div>
           </td></tr>
