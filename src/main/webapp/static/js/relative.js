@@ -95,7 +95,8 @@ var relative={
         $("#relative-dialog-form").dialog("center");
         $('#relative-Info-card-a input').attr('value',null).removeAttr('disabled');
         $('#relative-Info-card-a .input-group-addon').removeClass('hide');
-        $('#relative-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
+        $('#relative-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
+        //$('#relative-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
         $('#relative-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
 
@@ -105,7 +106,8 @@ var relative={
         $("#relative-dialog-form").dialog("center");
         $('#relative-Info-card-a input').removeAttr('disabled');
         $('#relative-Info-card-a .input-group-addon').removeClass('hide');
-        $('#relative-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
+        $('#relative-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
+        //$('#relative-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
     },
     delRelativeInfo: function(){
         var relativet = $('#relativepage').datagrid('getSelected');
@@ -146,6 +148,9 @@ var relative={
     			});
     },
     buttonclk:function(){
+        $('#relative-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
+        if($('#relder_id').validatebox('isValid') && $('#rname').validatebox('isValid') && $('#rphone_no').validatebox('isValid') && $('#ridentity_no').validatebox('isValid') && $('#rbirthday').validatebox('isValid'))
+        {
         var sexc;
         var radios = document.getElementsByName("rgender");
             for (var i = 0; i < radios.length; i++) {
@@ -185,6 +190,8 @@ var relative={
             error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){relative.drawRelativeList();} 
         }); 
+        }
+        else alert("请确保输入正确");
     },
     doSearch:function(){
         $('#relativepage').datagrid('load',{           

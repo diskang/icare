@@ -12,13 +12,13 @@ var elder={
         $("#elder_name").attr('value',null);
         $("#elder_care_level").attr('value',null);
 	    $('#elderpage').datagrid({ 
-        // title:'老人信息列表', 
-        // iconCls:'icon-edit',//图标 
-        // fit:true,//自动大小 
-        // nowrap: false, 
-        // //loadMsg:"正在加载，请稍等...", 
-        // striped: true, 
-        // border: true, 
+        title:'老人信息列表', 
+        iconCls:'icon-edit',//图标 
+        fit:true,//自动大小 
+        nowrap: false, 
+        loadMsg:"正在加载，请稍等...", 
+        striped: true, 
+        border: true, 
         collapsible:false,//是否可折叠的 
         url:rhurl.origin+'/gero/'+gid+'/elder',  
         method:'get',
@@ -99,7 +99,8 @@ var elder={
         $("#elder-dialog-form").dialog("center");
         $('#elder-Info-card-a input').attr('value',null).removeAttr('disabled');
         $('#elder-Info-card-a .input-group-addon').removeClass('hide');
-        $('#elder-Info-card-a').find('.easyui-validatebox').validatebox('enableValidation').validatebox('validate');
+        $('#elder-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
+        //$('#elder-Info-card-a').find('.easyui-validatebox').validatebox('enableValidation').validatebox('validate');
         $('#elder-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
 
@@ -109,7 +110,8 @@ var elder={
         $("#elder-dialog-form").dialog("center");
         $('#elder-Info-card-a input').removeAttr('disabled');
         $('#elder-Info-card-a .input-group-addon').removeClass('hide');
-        $('#elder-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
+        $('#elder-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
+        //$('#elder-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
     },
     delElderInfo: function(){
         var eldert = $('#elderpage').datagrid('getSelected');
@@ -171,6 +173,9 @@ var elder={
     			});
     },
     buttonclk:function(){
+        $('#elder-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
+        if($('#ename').validatebox('isValid') && $('#ephone_no').validatebox('isValid') && $('#eidentity_no').validatebox('isValid') && $('#earea_id').validatebox('isValid') && $('#ebirthday').validatebox('isValid'))
+        {
         var sexc;
         var radios = document.getElementsByName("egender");
             for (var i = 0; i < radios.length; i++) {
@@ -209,6 +214,8 @@ var elder={
             error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(result){elder.drawElderList();} 
         }); 
+        }
+        else(alert('请确保输入正确'));
     },
     doSearch:function(){
         $('#elderpage').datagrid('load',{           

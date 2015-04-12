@@ -139,7 +139,8 @@
         $('#role-check input').attr("disabled",true);
         $('#staff-Info-card-a input').attr('value',null).removeAttr('disabled','');
         $('#staff-Info-card-a .input-group-addon').removeClass('hide');
-        $("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
+        $("#staff-Info-card-a").find('.validatebox-text').validatebox('disableValidation');
+        //$("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
         $('#staff-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
 
@@ -150,7 +151,8 @@
         $('#staff-Info-card-a input').removeAttr('disabled','');
         $('#role-check input').attr("disabled",false);
         $('#staff-Info-card-a .input-group-addon').removeClass('hide');
-        $("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
+        $("#staff-Info-card-a").find('.validatebox-text').validatebox('disableValidation');
+        //$("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
     },
     delStaffInfo: function(){
         var stafft = $('#staffpage').datagrid('getSelected');
@@ -197,6 +199,9 @@
     },
 
     buttonclk:function(){
+        $('#staff-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
+        if($('#sname').validatebox('isValid') && $('#sphone_no').validatebox('isValid') && $('#sidentity_no').validatebox('isValid') && $('#sbirthday').validatebox('isValid'))
+        {
         var sexc;
         var radios = document.getElementsByName("sgender");
             for (var i = 0; i < radios.length; i++) {
@@ -256,6 +261,8 @@
             success: function(result){staff.drawStaffList();} 
         }); 
         }
+        }
+        else alert("请确保输入正确");
     },
     doSearch:function(){
         $('#staffpage').datagrid('load',{           
