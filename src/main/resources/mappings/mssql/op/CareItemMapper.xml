@@ -82,10 +82,10 @@
             T_CARE_ITEM.frequency = #{frequency},
             </if>
             <if test="notes != null">
-            T_CARE_ITEM.notes = #{notes}
+            T_CARE_ITEM.notes = #{notes},
             </if>
             <if test="startTime != null">
-            T_CARE_ITEM.start_time = #{startTime}
+            T_CARE_ITEM.start_time = #{startTime},
             </if>
             <if test="endTime != null">
             T_CARE_ITEM.end_time = #{endTime}

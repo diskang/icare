@@ -203,30 +203,42 @@ public class UserController extends SysBaseController{
 		checkUserInGero(uid, getGeroId());
 		
 		Map<String, Object> requestBodyParamMap = ParamUtils.getMapByJson(inJson, logger);
-		String password;
+		String oldPassword;
+		String newPassword;
 		
 		// 输入参数检查
 		try {
-			password = (String) String.valueOf(requestBodyParamMap.get("password"));
+			oldPassword = (String) String.valueOf(requestBodyParamMap.get("old_password"));
+			newPassword = (String) String.valueOf(requestBodyParamMap.get("new_password"));
 						
-			if (password == null || password.equals("null"))
+			if (oldPassword == null || oldPassword.equals("null") || newPassword == null || newPassword.equals("null"))
 				throw new Exception();
 			
 			// 此处可添加密码长度的验证方法
 			
 		} catch(Exception e) {
 			String message = ErrorConstants.format(ErrorConstants.USER_UPDATE_PASSWORD_PARAM_INVALID,
-					"[password=" + requestBodyParamMap.get("password") + "]");
+					"[old_password=" + requestBodyParamMap.get("old_password") + "]" +
+					"[new_password=" + requestBodyParamMap.get("new_password") + "]");
 			logger.error(message);
 			throw new RestException(HttpStatus.BAD_REQUEST, message);
 		}
 		
-		User user = getUserFromId(uid);
+		User user;
+		try {
+			user = getUserFromId(uid);
+			if(!systemService.validatePassword(oldPassword, user.getPassword()))
+				throw  new Exception();
+		} catch (Exception e) {
+			String message = "更新密码旧密码不正确";
+			logger.error(message);
+			throw new RestException(HttpStatus.FORBIDDEN, message);
+		}
 		
 		BasicReturnedJson result = new BasicReturnedJson();
 			
 		try {
-			systemService.updatePasswordById(user, password);
+			systemService.updatePasswordById(user, newPassword);
 		} catch (Exception e) {
 			String message = ErrorConstants.format(ErrorConstants.USER_UPDATE_PASSWORD_SERVICE_ERROR,
 					"[password=" + requestBodyParamMap.get("password") + "]");

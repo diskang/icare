@@ -1,7 +1,11 @@
 var geroItem={
+    gciid:'',
+    gcimethod:'',
+    gaiid:'',
+    gaimethod:'',
     drawGeroCareItemList:function(){
-	   $(".inf").addClass('hide');
-	   $("#gerocareitemshow").removeClass('hide');
+	    $(".inf").addClass('hide');
+	    $("#gerocareitemshow").removeClass('hide');
         $('#gerocareitempage').datagrid({ 
             title:'专护项目列表', 
             iconCls:'icon-edit',//图标 
@@ -49,7 +53,21 @@ var geroItem={
             displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录', 
         });
     },
+    drawGCIInfo:function(data){
+        $("#gerocareitempost-dialog-form").dialog("open");
+        $("#gerocareitempost-dialog-form").dialog("center");
+        $("#gerocareitempost-dialog-form input").attr("value",null);
+        $('#gciname').attr('value',data.name);
+        $('#gciicon').attr('value',data.icon);
+        $('#gcilevel').attr('value',data.level);
+        $('#gciperiod').attr('value',data.period);
+        $('#gcifrequency').attr('value',data.frequency);
+        $('#gcinotes').attr('value',data.notes);
+        $('#gcistart_time').attr('value',data.start_time);
+        $('#gciend_time').attr('value',data.end_time);
+    },
     addGeroCareItemInfo: function(){
+        geroItem.gcimethod='post';
         $("#gerocareitempost-dialog-form").dialog("open");
         $("#gerocareitempost-dialog-form").dialog("center");
         $("#gerocareitempost-dialog-form input").attr("value",null);
@@ -69,7 +87,27 @@ var geroItem={
         })
 
     },
-    postcareitem:function(){
+    onGCIDblClickRow:function(index){
+                geroItem.gcimethod='put';
+                var item = $('#gerocareitempage').datagrid('getSelected');
+                geroItem.gciid='/'+item.id;
+                infoUrl=rhurl.origin+"/gero/"+gid+"/care_item" + geroItem.gciid;
+                $.ajax({
+                    type: "get",
+                    dataType: "json",
+                    contentType: "application/json;charset=utf-8",
+                    url: infoUrl,
+                    timeout:deadtime,
+                    success: function (msg) {
+                        var data=leftTop.dealdata(msg);
+                        geroItem.drawGCIInfo(data[0]);
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+                    }
+                });
+    },
+    clickcareitem:function(){
         var obj={
             name:document.getElementById("gciname").value,
             level:parseInt(document.getElementById("gcilevel").value),
@@ -80,10 +118,10 @@ var geroItem={
             start_time:$("#gcistart_time").val(),
             end_time:$("#gciend_time").val(),
         }
-        var infoUrl=rhurl.origin+'/gero/'+gid+'/care_item';
+        var infoUrl=rhurl.origin+'/gero/'+gid+'/care_item'+geroItem.gciid;
         $.ajax({
             url: infoUrl, 
-            type: 'post', 
+            type: geroItem.gcimethod, 
             data:JSON.stringify(obj), 
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",
@@ -150,6 +188,7 @@ var geroItem={
         });
     },
     addGeroAreaItemInfo: function(){
+        geroItem.gaiid='post';
         $("#geroareaitempost-dialog-form").dialog("open");
         $("#geroareaitempost-dialog-form").dialog("center");
         $("#geroareaitempost-dialog-form input").attr("value",null);
@@ -170,18 +209,48 @@ var geroItem={
         })
 
     },
-    postareaitem:function(){
-          var obj={
+    drawGAIInfo:function(data){
+        $("#geroareaitempost-dialog-form").dialog("open");
+        $("#geroareaitempost-dialog-form").dialog("center");
+        $("#geroareaitempost-dialog-form input").attr("value",null);
+        $('#gainame').attr('value',data.name);
+        $('#gaiicon').attr('value',data.icon);
+        $('#gaiperiod').attr('value',data.period);
+        $('#gaifrequency').attr('value',data.frequency);
+        $('#gainotes').attr('value',data.notes);
+    },
+    onGAIDblClickRow:function(index){
+                geroItem.gaimethod='put';
+                var item = $('#geroareaitempage').datagrid('getSelected');
+                geroItem.gaiid='/'+item.id;
+                infoUrl=rhurl.origin+"/gero/"+gid+"/area_item" + geroItem.gaiid;
+                $.ajax({
+                    type: "get",
+                    dataType: "json",
+                    contentType: "application/json;charset=utf-8",
+                    url: infoUrl,
+                    timeout:deadtime,
+                    success: function (msg) {
+                        var data=leftTop.dealdata(msg);
+                        geroItem.drawGAIInfo(data[0]);
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+                    }
+                });
+    },
+    clickareaitem:function(){
+        var obj={
             name:document.getElementById("gainame").value,
             notes:document.getElementById("gainotes").value,
             period:parseInt(document.getElementById("gaiperiod").value),
             frequency:parseInt(document.getElementById("gaifrequency").value),
             icon:document.getElementById("gaiicon").value,
         }
-        var infoUrl=rhurl.origin+'/gero/'+gid+'/area_item';
+        var infoUrl=rhurl.origin+'/gero/'+gid+'/area_item'+geroItem.gaiid;
         $.ajax({
             url: infoUrl, 
-            type: 'post', 
+            type: geroItem.gaimethod, 
             data:JSON.stringify(obj), 
             dataType: 'json', 
             contentType: "application/json;charset=utf-8",

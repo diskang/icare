@@ -20,14 +20,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aliyun.oss.internal.OSSUtils;
 import com.sjtu.icare.common.config.CommonConstants;
 import com.sjtu.icare.common.config.ErrorConstants;
 import com.sjtu.icare.common.persistence.Page;
 import com.sjtu.icare.common.utils.BasicReturnedJson;
 import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.utils.MapListUtils;
-import com.sjtu.icare.common.utils.OSSObjectUtils;
 import com.sjtu.icare.common.utils.ParamUtils;
 import com.sjtu.icare.common.utils.PinyinUtils;
 import com.sjtu.icare.common.web.rest.GeroBaseController;
@@ -182,7 +180,15 @@ public class ElderInfoRestController extends GeroBaseController{
 					throw new Exception("内部错误： user 找不到对应的 elder");
 				
 				resultMap.put("apply_url", elder.getApplyUrl()); 
+				
 				resultMap.put("area_id", elder.getAreaId());
+				GeroAreaEntity requestGeroAreaEntity = new GeroAreaEntity();
+				requestGeroAreaEntity.setGeroId(geroId);
+				requestGeroAreaEntity.setId(elder.getAreaId());
+				GeroAreaEntity geroAreaEntity = geroAreaService.getGeroArea(requestGeroAreaEntity);
+				
+				resultMap.put("area_fullname", geroAreaEntity.getFullName());
+				
 				resultMap.put("assess_url", elder.getAssessUrl());
 				resultMap.put("archive_id", elder.getArchiveId());
 				resultMap.put("care_level", elder.getCareLevel()); 
@@ -359,7 +365,15 @@ public class ElderInfoRestController extends GeroBaseController{
 			resultMap.put("photo_src", user.getPhotoSrc()); 
 			
 			resultMap.put("apply_url", elderEntity.getApplyUrl()); 
+			
 			resultMap.put("area_id", elderEntity.getAreaId());
+			GeroAreaEntity requestGeroAreaEntity = new GeroAreaEntity();
+			requestGeroAreaEntity.setGeroId(geroId);
+			requestGeroAreaEntity.setId(elderEntity.getAreaId());
+			GeroAreaEntity geroAreaEntity = geroAreaService.getGeroArea(requestGeroAreaEntity);
+			
+			resultMap.put("area_fullname", geroAreaEntity.getFullName());
+			
 			resultMap.put("assess_url", elderEntity.getAssessUrl());
 			resultMap.put("archive_id", elderEntity.getArchiveId());
 			resultMap.put("care_level", elderEntity.getCareLevel()); 
