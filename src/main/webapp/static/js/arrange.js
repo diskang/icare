@@ -139,6 +139,7 @@ var arrange={
 	},
 	drawArrangeList2:function(){
 	    $('.fc-body tr').remove();
+	    arrange.subres=[];
 	    arrange.initdate();
 	    arrange.showth();
 		var datat;
