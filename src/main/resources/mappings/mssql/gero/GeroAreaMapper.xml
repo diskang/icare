@@ -24,6 +24,9 @@
         WHERE 
             T_AREA.gero_id = #{geroId}
             AND T_AREA.del_flag = 0
+            <if test="id != null">
+            AND T_AREA.id = #{id}
+            </if>
             <if test="parentId != null">
             AND T_AREA.parent_id = #{parentId}
             </if>
