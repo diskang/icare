@@ -144,7 +144,10 @@ public class User extends DataEntity<User> {
 	}
 
 	public void setRegisterDate(String registerDate){
-		this.registerDate = registerDate;
+		if (StringUtils.isBlank(registerDate))
+			this.registerDate = null;
+		else
+			this.registerDate = registerDate;
 	}
 
 	public Role getRole() {
@@ -230,7 +233,10 @@ public class User extends DataEntity<User> {
 	}
 
 	public void setCancelDate(String cancelDate) {
-		this.cancelDate = cancelDate;
+		if (StringUtils.isBlank(cancelDate))
+			this.cancelDate = null;
+		else
+			this.cancelDate = cancelDate;
 	}
 
 	public String getPhotoUrl() {
