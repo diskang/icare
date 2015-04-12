@@ -131,7 +131,10 @@ public class ElderEntity implements Serializable {
 	 * @param checkinDate the checkinDate to set
 	 */
 	public void setCheckinDate(String checkinDate) {
-		this.checkinDate = checkinDate;
+		if (StringUtils.isBlank(checkinDate))
+			this.checkinDate = null;
+		else
+			this.checkinDate = checkinDate;
 	}
 	/**
 	 * @return the checkoutDate
