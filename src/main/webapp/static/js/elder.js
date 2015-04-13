@@ -8,6 +8,7 @@ var elder={
         $("#elder-dialog-form").dialog("close");
         $(".inf").addClass('hide');
 	    $("#eldershow").removeClass('hide');
+        $("#elder_areafullname").attr('value',null);
         $("#elder_areaid").attr('value',null);
         $("#elder_name").attr('value',null);
         $("#elder_care_level").attr('value',null);
@@ -75,6 +76,7 @@ var elder={
         $('#eaddress').attr('value',data.address);
         $('#enative_place').attr('value',data.native_place);
         $('#earea_id').attr('value',data.area_id);
+        $('#earea_fullname').attr('value',data.area_fullname);
         $('#ecare_level').attr('value',data.care_level);
         $('#enssf_id').attr('value',data.nssf_id);
         $('#earchive_id').attr('value',data.archive_id);
@@ -174,7 +176,7 @@ var elder={
     },
     buttonclk:function(){
         $('#elder-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
-        if($('#ename').validatebox('isValid') && $('#ephone_no').validatebox('isValid') && $('#eidentity_no').validatebox('isValid') && $('#earea_id').validatebox('isValid') && $('#ebirthday').validatebox('isValid'))
+        if($('#ename').validatebox('isValid') && $('#ephone_no').validatebox('isValid') && $('#eidentity_no').validatebox('isValid') && $('#earea_fullname').validatebox('isValid') && $('#ebirthday').validatebox('isValid'))
         {
         var sexc;
         var radios = document.getElementsByName("egender");
@@ -234,6 +236,7 @@ var elder={
     reset:function(){
         $('#elder_name').attr('value',null);
         $('#elder_areaid').attr('value',null);
+        $('#elder_areafullname').attr('value',null);
         $('#elder_care_level').attr('value',null);
     },
 
@@ -243,7 +246,7 @@ var elder={
         this.text=node.name;
         this.children=[];
         iconCls='icon-blank';
-        this.attributes={"type":node.type,"level":node.level}
+        this.attributes={"type":node.type,"level":node.level,'fullname':node.full_name}
     },
     findTreeChildren:function(id){
         var result=[];
@@ -285,6 +288,7 @@ var elder={
                 elder.areatemp=elder.createTreeData({"id":0,"types":0});
                 $("#areachoosetree").tree("loadData",elder.areatemp);
                 areavalue="#earea_id";
+                areanamevalue="#earea_fullname";
                 var node=$("#areachoosetree").tree('find',parseInt($('#earea_id').val()));
                 if(node)$("#areachoosetree").tree("check",node.target);
             },
@@ -310,6 +314,7 @@ var elder={
                 elder.areatemp=elder.createTreeData({"id":0,"types":0});
                 $("#areachoosetree").tree("loadData",elder.areatemp);
                 areavalue="#elder_areaid";
+                areanamevalue="#elder_areafullname";
                 var node=$("#areachoosetree").tree('find',parseInt($('#elder_areaid').val()));
                 if(node)$("#areachoosetree").tree("check",node.target);
             },

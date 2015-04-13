@@ -108,7 +108,8 @@
             <div class="form-group group">
               <label class="control" for="name">房间:</label>
               <div class="col-smm-2">
-                <input id="elder_areaid" type='button' onclick='elder.searcharea_id();' class="form-control"  value=""></input>
+                <input id="elder_areafullname" type='button' onclick='elder.searcharea_id();' class="form-control"  value=""></input>
+                <input id="elder_areaid"  class="form-control hide"  value=""></input>
               </div>
             </div>
             <div class="form-group group">
@@ -687,7 +688,9 @@
           <tr><td class="td1"><text>身份证号：</text></td><td class="td2"><input id="eidentity_no"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'idcard'"></input></td></tr>
           <tr><td class="td1"><text>社保卡号：</text></td><td class="td2"><input id="enssf_id"></input></td></tr>
           <tr><td class="td1"><text>档案编号：</text></td><td class="td2"><input id="earchive_id"></input></td></tr>
-          <tr><td class="td1"><text>入住床号：</text></td><td class="td2"><input id="earea_id" style="width:157px;"  onclick="elder.area_idclick();" class="easyui-validatebox textbox" type="button" data-options="required:true"></input></td></tr>
+          <tr><td class="td1"><text>入住床号：</text></td><td class="td2"><input id="earea_fullname" style="width:157px;"  onclick="elder.area_idclick();" class="easyui-validatebox textbox" type="button" data-options="required:true"></input>
+            <input id="earea_id" class="hide"></input>
+          </td></tr>
           <tr><td class="td1"><text>家庭地址：</text></td><td class="td2"><input id="eaddress"></input></td></tr>
           <tr><td class="td1"><text>入院日期：</text></td><td class="td2">
             <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
@@ -945,7 +948,7 @@
           iconCls:'icon-ok',
           handler:function(){
             var node = $('#areachoosetree').tree('getSelected');
-            if(node) $(areavalue).attr('value',node.id);
+            if(node) {$(areavalue).attr('value',node.id);$(areanamevalue).attr('value',node.attributes.fullname);}
             $('#area-dialog-form').dialog('close');
           }
         }]
