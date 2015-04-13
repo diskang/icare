@@ -223,10 +223,13 @@ a:hover{ color:#d71318;}
   font-size:20px;
 }
 .td1{
-  width:130px;
+  width:140px;
+  text-align: right;
+  padding-right: 3px;
 }
 .td2{
   width:200px;
+  padding-left: 3px;
 }
 .info-card-a{
 	width: 60%;

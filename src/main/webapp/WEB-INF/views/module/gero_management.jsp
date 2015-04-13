@@ -657,14 +657,13 @@
     <div id="elder-Info-card" class="info-card">
       <div id="elder-Info-card-a" class="info-card-a">
         <table>
-          <tr><td class="td1"><text>老人姓名: </text></td><td class="td2"><input id="ename"class="easyui-validatebox textbox" required='required' missingMessage="不能为空"></input>*</td></tr>
+          <tr><td class="td1"><text>老人姓名： </text></td><td class="td2"><input id="ename"class="easyui-validatebox textbox" required='required' missingMessage="不能为空"></input>*</td></tr>
           <tr><td class="td1"><text>出生日期：</text></td><td class="td2">
               <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
                 <input class="form-control easyui-validatebox textbox" style="width:115px;"size="16" id="ebirthday" type="text" required='required' value="" readonly>
                 <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
               </div></td></tr>
-          <tr><td class="td1"><text>年    龄：</text></td><td class="td2"><input id="eage"></input></td></tr>
-          <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="ephone_no" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
+          <tr><td class="td1"><text>电    话： </text></td><td class="td2"><input id="ephone_no" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
           <tr><td class="td1"><text>性    别：</text></td><td class="td2"><input type="radio" name="egender" value='0' />男 <input type="radio" name="egender" value='1' />女</td></tr>
           <tr><td class="td1"><text>婚姻状况：</text></td><td class="td2"><input id="emarriage"></input></td></tr>
           <tr><td class="td1"><text>民    族：</text></td><td class="td2"><input id="enationality"></input></td></tr>
@@ -676,7 +675,7 @@
           <tr><td class="td1"><text>身份证号：</text></td><td class="td2"><input id="eidentity_no"class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'idcard'"></input></td></tr>
           <tr><td class="td1"><text>社保卡号：</text></td><td class="td2"><input id="enssf_id"></input></td></tr>
           <tr><td class="td1"><text>档案编号：</text></td><td class="td2"><input id="earchive_id"></input></td></tr>
-          <tr><td class="td1"><text>入住床号：</text></td><td class="td2"><input id="earea_id" style="width:80px;"  onclick="elder.area_idclick();" class="easyui-validatebox textbox" type="button" data-options="required:true"></input></td></tr>
+          <tr><td class="td1"><text>入住床号：</text></td><td class="td2"><input id="earea_id" style="width:157px;"  onclick="elder.area_idclick();" class="easyui-validatebox textbox" type="button" data-options="required:true"></input></td></tr>
           <tr><td class="td1"><text>家庭地址：</text></td><td class="td2"><input id="eaddress"></input></td></tr>
           <tr><td class="td1"><text>入院日期：</text></td><td class="td2">
             <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
@@ -735,7 +734,7 @@
     <div id="relative-Info-card" class="info-card ">
       <div id="relative-Info-card-a" class="info-card-a">
         <table>
-          <tr><td class="td1"><text>姓    名: </text></td><td class="td2"><input id="rname"class="easyui-validatebox textbox" data-options="required:true"></input></td></tr>
+          <tr><td class="td1"><text>姓    名： </text></td><td class="td2"><input id="rname"class="easyui-validatebox textbox" data-options="required:true"></input></td></tr>
           <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="rphone_no" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
           <tr><td class="td1"><text>紧急系数: </text></td><td class="td2"><input id="rurgent"></input></td></tr>
           <tr><td class="td1"><text>与老人关系：</text></td><td class="td2"><input id="rrelationship"></input></td></tr>

@@ -67,7 +67,6 @@ var elder={
         $('#elder-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
         $('#ename').attr('value',data.name);
         $('#ebirthday').attr('value',data.birthday);
-        $('#eage').attr('value',data.age);
         var radios = document.getElementsByName("egender");
             for (var i = 0; i < radios.length; i++) {
                 if (radios[i].getAttribute('value')==data.gender) radios[i].checked="checked";
@@ -200,7 +199,6 @@ var elder={
             checkin_date:document.getElementById("echeckin_date").value,
             checkout_date:document.getElementById("echeckout_date").value,
             pad_mac:document.getElementById("epad_mac").value,
-            age:document.getElementById("eage").value,
             marriage:document.getElementById("emarriage").value,
         }
         var infoUrl=rhurl.origin+'/gero/'+gid+'/elder'+elder.eid;
