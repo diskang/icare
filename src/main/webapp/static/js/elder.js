@@ -11,6 +11,7 @@ var elder={
         $("#elder_areaid").attr('value',null);
         $("#elder_name").attr('value',null);
         $("#elder_care_level").attr('value',null);
+        $('#elderpage').datagrid('load',{});
 	    $('#elderpage').datagrid({ 
         title:'老人信息列表', 
         iconCls:'icon-edit',//图标 
@@ -230,7 +231,11 @@ var elder={
                     care_level: $('#elder_care_level').val(),
                 });
     },
-
+    reset:function(){
+        $('#elder_name').attr('value',null);
+        $('#elder_areaid').attr('value',null);
+        $('#elder_care_level').attr('value',null);
+    },
 
 
     createTreeNode:function(node){

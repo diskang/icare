@@ -106,40 +106,45 @@
               </div>
             </div>
             <div class="form-group group">
-              <label class="col-ssm-1" for="name">房间:</label>
+              <label class="control" for="name">房间:</label>
               <div class="col-smm-2">
                 <input id="elder_areaid" type='button' onclick='elder.searcharea_id();' class="form-control"  value=""></input>
               </div>
             </div>
             <div class="form-group group">
-              <label class="col-smm-1" for="name">护理等级:</label>
+              <label class="control" for="name">护理等级:</label>
               <div class="col-smm-2">
                 <select id="elder_care_level" class="form-control"  value="">
                   <option value=''></option>
-                  <option value='0'>0</option>
-                  <option value='1'>1</option>
-                  <option value='2'>2</option>
-                  <option value='3'>3</option>
+                  <option value='0'>专护</option>
+                  <option value='1'>1级</option>
+                  <option value='2'>2级</option>
+                  <option value='3'>3级</option>
                 </select>
               </div>
             </div>
             <div class="form-group group"> 
               <div class="col-md-offset-2">
-                <button id="elder-search" class="btn btn-default" onclick="elder.doSearch()" style="margin-left:30px;" >搜索</button>
+                <button id="elder-reset" class="btn btn-default"  style='float:right;'onclick="elder.reset()"  >重置</button>
+              </div>
+            </div>
+            <div class="form-group group"> 
+              <div class="col-md-offset-2">
+                <button id="elder-search" class="btn btn-default" style='float:right;'onclick="elder.doSearch()"  >搜索</button>
               </div>
             </div>
           </div>
-          <div class="list" style="min-height:500px">
+          <div class="list" style="min-height:500px;width:100%">
               <table id="elderpage"  class="easyui-datagrid" title="老人信息列表" style="height:400px;" data-options="onDblClickRow:elder.onElderDblClickRow">
                 <thead>
                   <tr>
                     <th data-options="field:'elder_id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
-                    <th data-options="field:'area_id',width:80,align:'center'">房 间</th>
-                    <th data-options="field:'name',width:100,align:'center'">姓 名</th>
-                    <th data-options="field:'identity_no',width:160,align:'center'">身份证号</th>
-                    <th data-options="field:'gender',width:80,align:'center'">性 别</th>
-                    <th data-options="field:'age',width:80,align:'center'">年 龄</th>
+                    <th data-options="field:'area_id',width:150,align:'center'">房 间</th>
+                    <th data-options="field:'name',width:110,align:'center'">姓 名</th>
+                    <th data-options="field:'identity_no',width:200,align:'center'">身份证号</th>
+                    <th data-options="field:'gender',width:100,align:'center'">性 别</th>
+                    <th data-options="field:'phone_no',width:120,align:'center'">电话</th>
                     <th data-options="field:'care_level',width:100,align:'center'">护理等级</th>
                   </tr>
                 </thead>
@@ -165,26 +170,27 @@
             <div class="form-group group">
               <label class="col-ssm-1" for="name">相关老人:</label>
               <div class="col-smm-2">
-                <input id="relative_elderid" type='button' onclick='relative.searchelder_id();' class="form-control"  value=""></input>
+                <input id="relative_eldername" type='button' onclick='relative.searchelder_id();' class="form-control"  value=""></input>
+                <input id="relative_elderid" class="form-control hide"  value=""></input>
               </div>
             </div>
             <div class="form-group group"> 
               <div class="col-md-offset-2">
-                <button id="relative-search" class="btn btn-default" onclick="relative.doSearch()" style="margin-left:30px;" >搜索</button>
+                <button  class="btn btn-default" onclick="relative.reset()" style="margin-left:30px;" >重置</button>
+                <button id="relative-search" class="btn btn-default" onclick="relative.doSearch()"  >搜索</button>
               </div>
             </div>
           </div>
-          <div class="list" style="min-height:500px">
+          <div class="list" style="min-height:500px;width:100%">
               <table id="relativepage"  class="easyui-datagrid" title="家属信息列表" style="height:400px;" data-options="onDblClickRow:relative.onRelativeDblClickRow">
                 <thead>
                   <tr>
                     <th data-options="field:'relative_id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
-                    <th data-options="field:'name',width:120,align:'center'">姓 名</th>
-                    <th data-options="field:'phone_no',width:120,align:'center'">电话</th>
-                    <th data-options="field:'elder_id',width:160,align:'center'">相关老人</th>
-                    <th data-options="field:'gender',width:80,align:'center'">性 别</th>
-                    <th data-options="field:'age',width:80,align:'center'">年 龄</th>
+                    <th data-options="field:'name',width:200,align:'center'">姓 名</th>
+                    <th data-options="field:'gender',width:160,align:'center'">性 别</th>
+                    <th data-options="field:'phone_no',width:250,align:'center'">电话</th>
+                    <th data-options="field:'elder_name',width:200,align:'center'">相关老人</th>
                   </tr>
                 </thead>
               </table>
@@ -223,22 +229,27 @@
             </div>
             <div class="form-group group"> 
               <div class="col-md-offset-2">
-                <button id="elder-search" class="btn btn-default" onclick="staff.doSearch()" style="margin-left:30px;" >搜索</button>
+                <button id="staff-reset" class="btn btn-default"  style='float:right;' onclick="staff.reset()"  >重置</button>
+              </div>
+            </div>
+            <div class="form-group group"> 
+              <div class="col-md-offset-2">
+                <button id="staff-search" class="btn btn-default" style='float:right;' onclick="staff.doSearch()">搜索</button>
               </div>
             </div>
           </div>
-          <div class="list" style="min-height:500px">
+          <div class="list" style="min-height:500px;width:100%">
               <table id="staffpage"  class="easyui-datagrid" title="员工信息列表" style="height:400px;" data-options="onDblClickRow:staff.onStaffDblClickRow">
                 <thead>
                   <tr>
                     <th data-options="field:'staff_id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
-                    <th data-options="field:'role',width:100,align:'center'">角色</th>
+                    <th data-options="field:'role',width:120,align:'center'">角色</th>
                     <th data-options="field:'name',width:100,align:'center'">姓 名</th>
-                    <th data-options="field:'identity_no',width:160,align:'center'">身份证号</th>
-                    <th data-options="field:'gender',width:80,align:'center'">性 别</th>
-                    <th data-options="field:'phone_no',width:100,align:'center'">电 话</th>
-                    <th data-options="field:'email',width:120,align:'center'">邮 箱</th>
+                    <th data-options="field:'identity_no',width:200,align:'center'">身份证号</th>
+                    <th data-options="field:'gender',width:90,align:'center'">性 别</th>
+                    <th data-options="field:'phone_no',width:130,align:'center'">电 话</th>
+                    <th data-options="field:'email',width:150,align:'center'">邮 箱</th>
                   </tr>
                 </thead>
               </table>
@@ -274,9 +285,9 @@
           <div class="info-card-b">
             <div id="areaInfo" class="hide">
               <table>
-                <tr><td>name: </td><td><input type="text" id="aname" ></input></td></tr>
-                <tr><td>type: </td><td><input type="text" id="atype"></input></td></tr>
-                <tr><td>level: </td><td><input type="text" id="alevel"></input></td></tr>
+                <tr><td style='padding-right:10px'>名称: </td><td><input type="text" id="aname" ></input></td></tr>
+                <tr><td >类型: </td><td><input type="text" id="atype"></input></td></tr>
+                <tr><td >级别: </td><td><input type="text" id="alevel"></input></td></tr>
               </table>
               <div class="col-md-offset-2">
                 <button id="areabutton" class="btn btn-default" onclick="area.buttonclk()" style="margin-left:180px;margin-top:10px;" >确定</button>
@@ -476,7 +487,7 @@
         <div class="pers-s">养老院项目管理</div>
         <div class="old">
           <div class="page-header"></div>
-          <div class="list" style="min-height:280px;padding-top:10px;">
+          <div class="list" style="min-height:500px;padding-top:10px;width:100%">
               <table id="gerocareitempage"  class="easyui-datagrid" title="专护项目列表" style="height:270px;" data-options="onDblClickRow:geroItem.onGCIDblClickRow">
                 <thead>
                   <tr>
@@ -485,8 +496,8 @@
                     <th data-options="field:'level',width:100,align:'center'">护理等级</th>
                     <th data-options="field:'period',width:80,align:'center'">周期</th>
                     <th data-options="field:'frequency',width:80,align:'center'">频率</th>
-                    <th data-options="field:'start_time',width:100,align:'center'">开 始</th>
-                    <th data-options="field:'end_time',width:100,align:'center'">结 束</th>
+                    <th data-options="field:'start_time',width:100,align:'center'">开始时间</th>
+                    <th data-options="field:'end_time',width:100,align:'center'">完成时间</th>
                     <th data-options="field:'notes',width:200,align:'center'">说 明</th>
                   </tr>
                 </thead>
@@ -498,15 +509,15 @@
         <div class="pers-s">养老院项目管理</div>
         <div class="old">
           <div class="page-header"></div>
-          <div class="list" style="min-height:280px;padding-top:10px;">
+          <div class="list" style="min-height:500px;padding-top:10px;width:100%">
               <table id="geroareaitempage"  class="easyui-datagrid" title="房护项目列表" style="height:270px;" data-options="onDblClickRow:geroItem.onGAIDblClickRow">
                 <thead>
                   <tr>
                     <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
-                    <th data-options="field:'name',width:140,align:'center'">名 称</th>
-                    <th data-options="field:'period',width:80,align:'center'">周期</th>
-                    <th data-options="field:'frequency',width:80,align:'center'">频率</th>
-                    <th data-options="field:'notes',width:300,align:'center'">说 明</th>
+                    <th data-options="field:'name',width:180,align:'center'">名 称</th>
+                    <th data-options="field:'period',width:120,align:'center'">周期</th>
+                    <th data-options="field:'frequency',width:120,align:'center'">频率</th>
+                    <th data-options="field:'notes',width:390,align:'center'">说 明</th>
                   </tr>
                 </thead>
               </table>
@@ -524,25 +535,26 @@
               <label class="control" for="name">老人:</label>
               <div class="col-smm-2">
                 <input id="care_item_elder_name" type:"button" onclick="care_item.chooseelder()" class="form-control"  value=""></input>
+                <input id="care_item_elder_id" class="hide"  value=""></input>
               </div>
             </div>
             <div class="form-group group"> 
               <div class="col-md-offset-2">
-                <button class="btn btn-default" onclick="care_item.doSearch()" style="margin-left:30px;" >搜索</button>
+                <button class="btn btn-default" style="margin-left:30px;" onclick="care_item.doSearch()" >搜索</button>
               </div>
             </div>
           </div>
-          <div class="list" style="min-height:500px">
+          <div class="list" style="min-height:500px;width:100%">
               <table id="eldercareitempage"  class="easyui-datagrid" title="老人专属项目列表" style="height:400px;" data-options="onDblClickRow:care_item.onDblClickRow">
                 <thead>
                   <tr>
                     <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'care_item_id',hidden:true,align:'center'">标识号</th>
-                    <th data-options="field:'care_item_name',width:120,align:'center'">项目名</th>
+                    <th data-options="field:'care_item_name',width:150,align:'center'">项目名</th>
                     <th data-options="field:'period',width:120,align:'center'">周期</th>
                     <th data-options="field:'level',width:120,align:'center'">护理等级</th>
-                    <th data-options="field:'start_time',width:120,align:'center'">开始时间</th>
-                    <th data-options="field:'end_time',width:120,align:'center'">结束时间</th>
+                    <th data-options="field:'start_time',width:200,align:'center'">开始时间</th>
+                    <th data-options="field:'end_time',width:200,align:'center'">完成时间</th>
                   </tr>
                 </thead>
               </table>
@@ -557,13 +569,13 @@
         <div class="pers-s">养老院角色管理</div>
         <div class="old">
           <div class="page-header"></div>
-          <div class="list" style="min-height:300px;padding-top:10px;">
+          <div class="list" style="min-height:500px;padding-top:10px;width:100%">
               <table id="gerorolepage"  class="easyui-datagrid" title="角色列表" style="height:300px;width:500px;" data-options="onDblClickRow:role.onRoleDblClickRow">
                 <thead>
                   <tr>
                     <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
-                    <th data-options="field:'name',width:140,align:'center'">角色名</th>
-                    <th data-options="field:'notes',width:300,align:'center'">说 明</th>
+                    <th data-options="field:'name',width:300,align:'center'">角色名</th>
+                    <th data-options="field:'notes',width:510,align:'center'">说 明</th>
                   </tr>
                 </thead>
               </table>
@@ -735,8 +747,8 @@
       <div id="relative-Info-card-a" class="info-card-a">
         <table>
           <tr><td class="td1"><text>姓    名： </text></td><td class="td2"><input id="rname"class="easyui-validatebox textbox" data-options="required:true"></input></td></tr>
-          <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="rphone_no" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
-          <tr><td class="td1"><text>紧急系数: </text></td><td class="td2"><input id="rurgent"></input></td></tr>
+          <tr><td class="td1"><text>电    话： </text></td><td class="td2"><input id="rphone_no" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
+          <tr><td class="td1"><text>紧急系数： </text></td><td class="td2"><input id="rurgent"></input></td></tr>
           <tr><td class="td1"><text>与老人关系：</text></td><td class="td2"><input id="rrelationship"></input></td></tr>
           <tr><td class="td1"><text>婚姻状况：</text></td><td class="td2"><input id="rmarriage"></input></td></tr>
           <tr><td class="td1"><text>民    族：</text></td><td class="td2"><input id="rnationality"></input></td></tr>
@@ -753,8 +765,7 @@
           <tr><td class="td1"><text>教育程度：</text></td><td class="td2"><input id="reducation"></input></td></tr>
           <tr><td class="td1"><text>户口所在地：</text></td><td class="td2"><input id="rresidence"></input></td></tr>
           <tr><td class="td1"><text>居住地址：</text></td><td class="td2"><input id="raddress"></input></td></tr>
-          <tr><td class="td1"><text>年    龄：</text></td><td class="td2"><input id="rage"></input></td></tr>
-          <tr><td class="td1"><text>老人选择：</text></td><td class="td2"><input id="relder_id" style="width:80px;"  onclick="relative.elder_idclick();" class="easyui-validatebox textbox" type="button" data-options="required:true"></input></td></tr>
+          <tr><td class="td1"><text>老人选择：</text></td><td class="td2"><input id="relder_name" style="width:157px;"  onclick="relative.elder_idclick();" class="easyui-validatebox textbox" type="button" data-options="required:true"></input><input id="relder_id" class="hide"  ></input></td></tr>
           <tr><td class="td1"><text>邮编：</text></td><td class="td2"><input id="rzip_code"></input></td></tr>
           <tr><td class="td1"><text>微信号：</text></td><td class="td2"><input id="rwechat_id"></input></td></tr>
           <tr><td class="td1"><text>籍贯：</text></td><td class="td2"><input id="rnative_place"></input></td></tr>
@@ -819,8 +830,8 @@
     <div id="staff-Info-card" class="info-card ">
       <div id="staff-Info-card-a" class="info-card-a">
         <table>
-          <tr><td class="td1"><text>姓    名: </text></td><td class="td2"><input id="sname" class="easyui-validatebox textbox" data-options="required:true"></input></td></tr>
-          <tr><td class="td1"><text>电    话: </text></td><td class="td2"><input id="sphone_no" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
+          <tr><td class="td1"><text>姓    名： </text></td><td class="td2"><input id="sname" class="easyui-validatebox textbox" data-options="required:true"></input></td></tr>
+          <tr><td class="td1"><text>电    话： </text></td><td class="td2"><input id="sphone_no" class="easyui-validatebox textbox" data-options="required:true,invalidMessage:'123',validType:'phoneNum'"></input></td></tr>
           <tr><td class="td1"><text>婚姻状况：</text></td><td class="td2"><input id="smarriage"></input></td></tr>
           <tr><td class="td1"><text>民族：</text></td><td class="td2"><input id="snationality"></input></td></tr>
           <tr><td class="td1"><text>政治面貌：</text></td><td class="td2"><input id="spolitical_status"></input></td></tr>
@@ -849,7 +860,6 @@
               <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
             </div>
           </td></tr>
-          <tr><td class="td1"><text>年龄：</text></td><td class="td2"><input id="sage"></input></td></tr>
           <tr><td class="td1"><text>邮编：</text></td><td class="td2"><input id="szip_code"></input></td></tr>
           <tr><td class="td1"><text>微信号：</text></td><td class="td2"><input id="swechat_id"></input></td></tr>
           <tr><td class="td1"><text>籍贯：</text></td><td class="td2"><input id="snative_place"></input></td></tr>
@@ -989,7 +999,7 @@
             <input id="cistime" class="form-control" size="16" type="text" style='width:80px;' value="" readonly>
             <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
           </div></td></tr>
-        <tr><td>结束时间</td><td>
+        <tr><td>完成时间</td><td>
           <div class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
             <input id="cietime" class="form-control" size="16" type="text" style='width:80px;' value="" readonly>
             <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
@@ -1019,7 +1029,7 @@
           iconCls:'icon-ok',
           handler:function(){
             var node = $('#elderchoosetree').tree('getSelected');
-            if(node) $(eldervalue).attr('value',node.id);
+            if(node) {$(eldervalue).attr('value',node.id);$(eldernamevalue).attr('value',node.text);}
             elderchoosename=node.text;
             $('#elderchoose-dialog-form').dialog('close');
           }
@@ -1085,7 +1095,7 @@
             <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
           </div></td>
         </tr>
-        <tr><td>结束时间: </td><td>
+        <tr><td>完成时间: </td><td>
           <div class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii:ss" data-link-field="dtp_input3" data-link-format="hh:ii:ss">
             <input id="gciend_time" class="form-control" size="16" type="text" style='width:80px;' value="" readonly>
             <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>

@@ -6,6 +6,10 @@
         $("#staff-dialog-form").dialog("close");
         $(".inf").addClass('hide');
 	    $("#staffshow").removeClass('hide');
+        $('#staffpage').datagrid('load',{});
+        $("#staff_name").attr('value',null);
+        $("#staff_identity_no").attr('value',null);
+        $("#staff_role").attr('value',null);
 	    $('#staffpage').datagrid({ 
             title:'员工信息列表', 
             iconCls:'icon-edit',//图标 
@@ -123,7 +127,6 @@
         $('#swechat_id').attr('value',data.wechat_id);
         $('#sbasic_url').attr('value',data.basic_url);
         $('#sleave_date').attr('value',data.leave_date);
-        $('#sage').attr('value',data.age);
         $('#spolitical_status').attr('value',data.political_status);
         if(data.photo_url!==undefined) $('#staff-Info-card-b img').attr("src",data.photo_src).attr("width","178px").attr("height","220px");
         else $('#staff-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
@@ -142,17 +145,6 @@
         $("#staff-Info-card-a").find('.validatebox-text').validatebox('disableValidation');
         //$("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
         $('#staff-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
-    },
-
-    editStaffInfo: function(){
-        staff.method='put';
-        $("#staff-dialog-form").dialog("open");
-        $("#staff-dialog-form").dialog("center");
-        $('#staff-Info-card-a input').removeAttr('disabled','');
-        $('#role-check input').attr("disabled",false);
-        $('#staff-Info-card-a .input-group-addon').removeClass('hide');
-        $("#staff-Info-card-a").find('.validatebox-text').validatebox('disableValidation');
-        //$("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
     },
     delStaffInfo: function(){
         var stafft = $('#staffpage').datagrid('getSelected');
@@ -227,7 +219,6 @@
             wechat_id:document.getElementById("swechat_id").value,
             basic_url:document.getElementById("sbasic_url").value,
             leave_date:document.getElementById("sleave_date").value,
-            age:document.getElementById("sage").value,
             political_status:document.getElementById("spolitical_status").value
         }
         var infoUrl=rhurl.origin+'/gero/'+gid+'/staff'+staff.sid;
@@ -270,5 +261,10 @@
                     role: $('#staff_role').val(),
                     identity_no: $('#staff_identity_no').val(),
                 });
-    }
+    },
+    reset:function(){
+        $('#staff_name').attr('value',null);
+        $('#staff_role').attr('value',null);
+        $('#staff_identity_no').attr('value',null);
+    },
 }

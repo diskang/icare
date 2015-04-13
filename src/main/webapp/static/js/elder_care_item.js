@@ -76,8 +76,9 @@ var care_item={
                 }
                 $("#elderchoosetree").tree("loadData",relative.eldertemp);
 
-                eldervalue='#care_item_elder_name';
-                var node=$("#elderchoosetree").tree('find',parseInt($('#care_item_elder_name').val()));
+                eldervalue='#care_item_elder_id';
+                eldernamevalue='#care_item_elder_name';
+                var node=$("#elderchoosetree").tree('find',parseInt($('#care_item_elder_id').val()));
                 if(node) $("#elderchoosetree").tree("select",node.target);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -86,7 +87,7 @@ var care_item={
         });
     },
     doSearch:function(){
-        care_item.eid=$('#care_item_elder_name').val();
+        care_item.eid=$('#care_item_elder_id').val();
         $('#eldercareitempage').datagrid({ 
             title:elderchoosename+'专护项目列表', 
             iconCls:'icon-edit',//图标 

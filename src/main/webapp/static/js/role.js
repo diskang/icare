@@ -8,14 +8,12 @@ var role={
 	$('#gerorolepage').datagrid({ 
         title:'角色列表', 
         iconCls:'icon-edit',//图标 
-        height:300,
-        width:500,
         nowrap: false, 
         loadMsg:"正在加载，请稍等...", 
         striped: true, 
         border: true, 
         collapsible:false,//是否可折叠的 
-        fit:false,//自动大小 
+        fit:true,//自动大小 
         url:rhurl.origin+'/gero/'+gid+'/role',  
         method:'get',
         remoteSort:true,  
