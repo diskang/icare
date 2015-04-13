@@ -215,6 +215,9 @@ a:hover{ color:#d71318;}
   text-align: left;
   font-size:20px;
 }
+.equalwidth{
+  width:164px;
+}
 .easyui-dialog table tr{
   min-width:400px;
   height:35px;
@@ -230,6 +233,10 @@ a:hover{ color:#d71318;}
 .td2{
   width:200px;
   padding-left: 3px;
+}
+.td3{
+  width:200px;
+  padding-left: 20px;
 }
 .info-card-a{
 	width: 60%;

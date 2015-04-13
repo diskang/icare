@@ -1,10 +1,29 @@
 var care_item={
     eid:'',
     itemtemp:[],
+    cid:'',
     drawItemList:function(){
        $(".inf").addClass('hide');
        $("#eldercareitemshow").removeClass('hide');
-       care_item.doSearch();
+       if($('#care_item_elder_name').val()===''){
+          var infourl=rhurl.origin+'/gero/'+gid+'/elder';
+          $.ajax({
+            type: "get",
+            dataType: "json",
+            data:{page:1,rows:1,sort:'ID'},
+            contentType: "application/json;charset=utf-8",
+            url:infourl,
+            timeout:deadtime,
+            success: function (msg) {
+                $('#care_item_elder_id').attr('value',msg.entities[0].elder_id);
+                $('#care_item_elder_name').attr('value',msg.entities[0].name);
+                care_item.doSearch();
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+            }
+          });
+        }
     },
     addItemInfo: function(){
         $('#eldercareitem-dialog-form').dialog('open');
@@ -86,6 +105,17 @@ var care_item={
             }
         });
     },
+    onDblClickRow:function(){
+        var itemt = $('#eldercareitempage').datagrid('getSelected');
+        care_item.cid=itemt.id;
+        $("#eldercarechange-dialog-form").dialog("open");
+        $("#eldercarechange-dialog-form").dialog("center");
+        $('#cicstime').attr('value',itemt.start_time);
+        $('#cicetime').attr('value',itemt.end_time);
+        $('#cicicon').attr('value',itemt.icon);
+        $('#cicperiod').attr('value',itemt.period);
+        $('#ciclevel').attr('value',itemt.level);
+    },
     doSearch:function(){
         care_item.eid=$('#care_item_elder_id').val();
         $('#eldercareitempage').datagrid({ 
@@ -147,6 +177,27 @@ var care_item={
             period:$("#ciperiod").val(),
         }
         var infoUrl=rhurl.origin+'/gero/'+gid+'/elder/'+care_item.eid+'/care_item';  
+        $.ajax({
+            url: infoUrl, 
+            type:'post', 
+            data:JSON.stringify(obj), 
+            dataType: 'json', 
+            contentType: "application/json;charset=utf-8",
+            timeout: deadtime, 
+            error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
+            success: function(result){care_item.doSearch();} 
+        }); 
+    },
+    putitem:function(){
+        var obj={
+            care_item_id:id,
+            level:$("#ciclevel").val(),
+            start_time:$("#cicstime").val(),
+            end_time:$("#cicetime").val(),
+            icon:$("#cicicon").val(),
+            period:$("#cicperiod").val(),
+        }
+        var infoUrl=rhurl.origin+'/gero/'+gid+'/elder/'+care_item.eid+'/care_item/'+care_item.cid;  
         $.ajax({
             url: infoUrl, 
             type:'post', 

@@ -63,7 +63,6 @@ var role={
         temp=[];
         temp2=[];
         $("#authoritychecktree").tree("loadData",temptree2);
-        $("#authoritychecktree").tree("collapseAll");
         var nodes = $('#authoritychecktree').tree('getChecked', ['checked','indeterminate']);
         for (var i  in nodes){
                 $("#authoritychecktree").tree("uncheck",nodes[i].target);
