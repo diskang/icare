@@ -477,7 +477,7 @@
         <div class="old">
           <div class="page-header"></div>
           <div class="list" style="min-height:280px;padding-top:10px;">
-              <table id="gerocareitempage"  class="easyui-datagrid" title="专护项目列表" style="height:270px;" data-options="onDblClickRow:geroItem.onCareDblClickRow">
+              <table id="gerocareitempage"  class="easyui-datagrid" title="专护项目列表" style="height:270px;" data-options="onDblClickRow:geroItem.onGCIDblClickRow">
                 <thead>
                   <tr>
                     <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
@@ -499,7 +499,7 @@
         <div class="old">
           <div class="page-header"></div>
           <div class="list" style="min-height:280px;padding-top:10px;">
-              <table id="geroareaitempage"  class="easyui-datagrid" title="房护项目列表" style="height:270px;" data-options="onDblClickRow:geroItem.onCareDblClickRow">
+              <table id="geroareaitempage"  class="easyui-datagrid" title="房护项目列表" style="height:270px;" data-options="onDblClickRow:geroItem.onGAIDblClickRow">
                 <thead>
                   <tr>
                     <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
@@ -1068,7 +1068,7 @@
           text:'确定',
           iconCls:'icon-ok',
           handler:function(){
-            geroItem.postcareitem();
+            geroItem.clickcareitem();
             $('#gerocareitempost-dialog-form').dialog('close');
           }
         }]
@@ -1080,13 +1080,13 @@
         <tr><td>频率: </td><td><input type="text" id="gcifrequency" /></td></tr>
         <tr><td>图标: </td><td><input type="text" id="gciicon" /></td></tr>
         <tr><td>开始时间: </td><td>
-          <div class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+          <div class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii:ss" data-link-field="dtp_input3" data-link-format="hh:ii:ss">
             <input id="gcistart_time" class="form-control" size="16" type="text" style='width:80px;' value="" readonly>
             <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
           </div></td>
         </tr>
         <tr><td>结束时间: </td><td>
-          <div class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+          <div class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii:ss" data-link-field="dtp_input3" data-link-format="hh:ii:ss">
             <input id="gciend_time" class="form-control" size="16" type="text" style='width:80px;' value="" readonly>
             <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
           </div></td>
@@ -1107,7 +1107,7 @@
           text:'确定',
           iconCls:'icon-ok',
           handler:function(){
-            geroItem.postareaitem();
+            geroItem.clickareaitem();
             $('#geroareaitempost-dialog-form').dialog('close');
           }
         }]

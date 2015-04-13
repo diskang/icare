@@ -47,11 +47,11 @@ var elder={
             handler: function(){ 
                 elder.delElderInfo(); 
             }
-        }/*,'-',{ text: '查看项目', iconCls: 'icon-search', 
+        },'-',{ text: '查看项目', iconCls: 'icon-search', 
             handler: function(){ 
                 elder.searchitem(); 
             }
-        }*/]
+        }]
     }); 
 	    var pager = $('#elderpage').datagrid('getPager');	// get the pager of datagrid
 		pager.pagination({
@@ -131,24 +131,24 @@ var elder={
             }
         }
     },
-    // searchitem:function(){
-    //     var eldert = $('#elderpage').datagrid('getSelected');
-    //     if(eldert){
-    //         infoUrl=rhurl.origin+"/gero/"+gid+"/elder/" + eldert.elder_id+"/care_item";
-    //         $.ajax({
-    //             url: infoUrl,
-    //             data:{page:1,rows:65535,sort:'ID'},
-    //             type: 'get',
-    //             timeout:deadtime,
-    //             success:function(){
-    //                 alert(1);
-    //             },
-    //             error:function(XMLHttpRequest, textStatus, errorThrown){
-    //                 leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
-    //             }
-    //         })
-    //     }
-    // },
+    searchitem:function(){
+        var eldert = $('#elderpage').datagrid('getSelected');
+        if(eldert){
+            infoUrl=rhurl.origin+"/gero/"+gid+"/elder/" + eldert.elder_id+"/care_item";
+            $.ajax({
+                url: infoUrl,
+                data:{page:1,rows:65535,sort:'ID'},
+                type: 'get',
+                timeout:deadtime,
+                success:function(){
+                    alert(1);
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                    leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
+                }
+            })
+        }
+    },
 
     onElderDblClickRow:function(index){
                 elder.method='put';
@@ -210,7 +210,15 @@ var elder={
             contentType: "application/json;charset=utf-8",
             timeout: deadtime, 
             error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
-            success: function(result){elder.drawElderList();} 
+            success: function(msg){
+                elder.drawElderList();
+                if (elder.method==='post'){
+                    elder.method='put';
+                    var data=leftTop.dealdata(msg);
+                        elder.drawElderInfo(data[0]);
+                }
+
+            } 
         }); 
         }
         else(alert('请确保输入正确'));
