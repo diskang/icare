@@ -39,7 +39,7 @@
                     result.rows[i].gender=sex[result.rows[i].gender];
                     var roletemp='';
                     for(var j in result.rows[i].role_list){
-                        roletemp+=result.rows[i].role_list[j].name;
+                        roletemp+=result.rows[i].role_list[j].name+' ';
                     }
                     result.rows[i].role=roletemp;
                 }
@@ -145,6 +145,15 @@
         $("#staff-Info-card-a").find('.validatebox-text').validatebox('disableValidation');
         //$("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
         $('#staff-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
+    },
+    editStaffInfo: function(){
+        staff.method='put';
+        $("#staff-dialog-form").dialog("open");
+        $("#staff-dialog-form").dialog("center");
+        $('#staff-Info-card-a input').removeAttr('disabled','');
+        $('#staff-Info-card-a .input-group-addon').removeClass('hide');
+        $('#role-check input').attr("disabled",false);
+        $("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
     },
     delStaffInfo: function(){
         var stafft = $('#staffpage').datagrid('getSelected');

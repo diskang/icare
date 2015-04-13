@@ -245,12 +245,12 @@
                   <tr>
                     <th data-options="field:'staff_id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
-                    <th data-options="field:'role',width:120,align:'center'">角色</th>
+                    <th data-options="field:'role',width:150,align:'center'">角色</th>
                     <th data-options="field:'name',width:100,align:'center'">姓 名</th>
                     <th data-options="field:'identity_no',width:200,align:'center'">身份证号</th>
                     <th data-options="field:'gender',width:90,align:'center'">性 别</th>
-                    <th data-options="field:'phone_no',width:130,align:'center'">电 话</th>
-                    <th data-options="field:'email',width:150,align:'center'">邮 箱</th>
+                    <th data-options="field:'phone_no',width:120,align:'center'">电 话</th>
+                    <th data-options="field:'email',width:130,align:'center'">邮 箱</th>
                   </tr>
                 </thead>
               </table>
