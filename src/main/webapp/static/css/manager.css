@@ -215,6 +215,9 @@ a:hover{ color:#d71318;}
   text-align: left;
   font-size:20px;
 }
+.equalwidth{
+  width:164px;
+}
 .easyui-dialog table tr{
   min-width:400px;
   height:35px;
@@ -223,10 +226,17 @@ a:hover{ color:#d71318;}
   font-size:20px;
 }
 .td1{
-  width:130px;
+  width:140px;
+  text-align: right;
+  padding-right: 3px;
 }
 .td2{
   width:200px;
+  padding-left: 3px;
+}
+.td3{
+  width:200px;
+  padding-left: 20px;
 }
 .info-card-a{
 	width: 60%;
@@ -406,6 +416,7 @@ a:hover{ color:#d71318;}
 }
 .list{
   width:90%;
+  padding-top:20px;
   padding-bottom:20px;
 }
 .list .list-header{
@@ -472,7 +483,7 @@ a:hover{ color:#d71318;}
 	font-family: "宋体";
 	line-height: 1.8;
 	font-size: 14px;
-	width: 8%;
+	width: 100px;
 	float: left;
 	text-align: center;
 	font-weight: bold;

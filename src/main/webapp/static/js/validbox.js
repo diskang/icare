@@ -133,7 +133,7 @@ $.extend($.fn.validatebox.defaults.rules,{
 
 $(function(){
       $('.validatebox-text').bind('blur', function(){
-        $(this).validatebox('enableValidation').validatebox('validate');
+          $(this).validatebox('enableValidation').validatebox('validate');
       });
       $('.validatebox-text').bind('focus', function(){
         $(this).validatebox('disableValidation');

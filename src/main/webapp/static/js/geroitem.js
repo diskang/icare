@@ -194,7 +194,7 @@ var geroItem={
         $("#geroareaitempost-dialog-form input").attr("value",null);
     },
     delGeroAreaItemInfo: function(){
-        var itemt = $('#gerocareitempage').datagrid('getSelected');
+        var itemt = $('#geroareaitempage').datagrid('getSelected');
         var infoUrl=rhurl.origin+"/gero/"+gid+"/area_item/" + itemt.id;
         $.ajax({
             url: infoUrl,

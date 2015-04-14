@@ -8,9 +8,11 @@ var elder={
         $("#elder-dialog-form").dialog("close");
         $(".inf").addClass('hide');
 	    $("#eldershow").removeClass('hide');
+        $("#elder_areafullname").attr('value',null);
         $("#elder_areaid").attr('value',null);
         $("#elder_name").attr('value',null);
         $("#elder_care_level").attr('value',null);
+        $('#elderpage').datagrid('load',{});
 	    $('#elderpage').datagrid({ 
         title:'老人信息列表', 
         iconCls:'icon-edit',//图标 
@@ -36,7 +38,10 @@ var elder={
             leftTop.dealdata(data);
         	result.total=data.total;
         	result.rows=data.entities;
-            for (var i in result.rows) result.rows[i].gender=sex[result.rows[i].gender];
+            for (var i in result.rows) {
+                result.rows[i].gender=sex[result.rows[i].gender];
+                result.rows[i].care_level=clevellist[result.rows[i].care_level];
+            }
         	return result;
         },
         toolbar: [{ text: '添加', iconCls: 'icon-add', 
@@ -67,7 +72,6 @@ var elder={
         $('#elder-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
         $('#ename').attr('value',data.name);
         $('#ebirthday').attr('value',data.birthday);
-        $('#eage').attr('value',data.age);
         var radios = document.getElementsByName("egender");
             for (var i = 0; i < radios.length; i++) {
                 if (radios[i].getAttribute('value')==data.gender) radios[i].checked="checked";
@@ -75,6 +79,7 @@ var elder={
         $('#eaddress').attr('value',data.address);
         $('#enative_place').attr('value',data.native_place);
         $('#earea_id').attr('value',data.area_id);
+        $('#earea_fullname').attr('value',data.area_fullname);
         $('#ecare_level').attr('value',data.care_level);
         $('#enssf_id').attr('value',data.nssf_id);
         $('#earchive_id').attr('value',data.archive_id);
@@ -174,7 +179,7 @@ var elder={
     },
     buttonclk:function(){
         $('#elder-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
-        if($('#ename').validatebox('isValid') && $('#ephone_no').validatebox('isValid') && $('#eidentity_no').validatebox('isValid') && $('#earea_id').validatebox('isValid') && $('#ebirthday').validatebox('isValid'))
+        if($('#ename').validatebox('isValid') && $('#ephone_no').validatebox('isValid') && $('#eidentity_no').validatebox('isValid') && $('#earea_fullname').validatebox('isValid') && $('#ebirthday').validatebox('isValid'))
         {
         var sexc;
         var radios = document.getElementsByName("egender");
@@ -200,7 +205,6 @@ var elder={
             checkin_date:document.getElementById("echeckin_date").value,
             checkout_date:document.getElementById("echeckout_date").value,
             pad_mac:document.getElementById("epad_mac").value,
-            age:document.getElementById("eage").value,
             marriage:document.getElementById("emarriage").value,
         }
         var infoUrl=rhurl.origin+'/gero/'+gid+'/elder'+elder.eid;
@@ -232,7 +236,12 @@ var elder={
                     care_level: $('#elder_care_level').val(),
                 });
     },
-
+    reset:function(){
+        $('#elder_name').attr('value',null);
+        $('#elder_areaid').attr('value',null);
+        $('#elder_areafullname').attr('value',null);
+        $('#elder_care_level').attr('value',null);
+    },
 
 
     createTreeNode:function(node){
@@ -240,7 +249,7 @@ var elder={
         this.text=node.name;
         this.children=[];
         iconCls='icon-blank';
-        this.attributes={"type":node.type,"level":node.level}
+        this.attributes={"type":node.type,"level":node.level,'fullname':node.full_name}
     },
     findTreeChildren:function(id){
         var result=[];
@@ -282,6 +291,7 @@ var elder={
                 elder.areatemp=elder.createTreeData({"id":0,"types":0});
                 $("#areachoosetree").tree("loadData",elder.areatemp);
                 areavalue="#earea_id";
+                areanamevalue="#earea_fullname";
                 var node=$("#areachoosetree").tree('find',parseInt($('#earea_id').val()));
                 if(node)$("#areachoosetree").tree("check",node.target);
             },
@@ -307,6 +317,7 @@ var elder={
                 elder.areatemp=elder.createTreeData({"id":0,"types":0});
                 $("#areachoosetree").tree("loadData",elder.areatemp);
                 areavalue="#elder_areaid";
+                areanamevalue="#elder_areafullname";
                 var node=$("#areachoosetree").tree('find',parseInt($('#elder_areaid').val()));
                 if(node)$("#areachoosetree").tree("check",node.target);
             },

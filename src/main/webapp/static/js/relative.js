@@ -9,6 +9,8 @@ var relative={
 	    $("#relativeshow").removeClass('hide');
         $("#relative_name").attr('value',null);
         $("#relative_elderid").attr('value',null);
+        $("#relative_eldername").attr('value',null);
+        $('#relativepage').datagrid('load',{});
 	    $('#relativepage').datagrid({ 
         title:'家属信息列表', 
         iconCls:'icon-edit',//图标 
@@ -62,7 +64,7 @@ var relative={
         $('#relative-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
         $('#rname').attr('value',data.name);
         $('#rbirthday').attr('value',data.birthday);
-        $('#rage').attr('value',data.age);
+        $('#relder_name').attr('value',data.elder_name);
         var radios = document.getElementsByName("rgender");
             for (var i = 0; i < radios.length; i++) {
                 if (radios[i].getAttribute('value')==data.gender) radios[i].checked="checked";
@@ -149,7 +151,7 @@ var relative={
     },
     buttonclk:function(){
         $('#relative-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
-        if($('#relder_id').validatebox('isValid') && $('#rname').validatebox('isValid') && $('#rphone_no').validatebox('isValid') && $('#ridentity_no').validatebox('isValid') && $('#rbirthday').validatebox('isValid'))
+        if($('#relder_name').validatebox('isValid') && $('#rname').validatebox('isValid') && $('#rphone_no').validatebox('isValid') && $('#ridentity_no').validatebox('isValid') && $('#rbirthday').validatebox('isValid'))
         {
         var sexc;
         var radios = document.getElementsByName("rgender");
@@ -174,7 +176,6 @@ var relative={
             email:document.getElementById("remail").value,
             relationship:document.getElementById("rrelationship").value,
             urgent:document.getElementById("rurgent").value,
-            age:document.getElementById("rage").value,
             register_date:document.getElementById("rregister_date").value,
             cancel_date:document.getElementById("rcancel_date").value,
             marriage:document.getElementById("rmarriage").value,
@@ -223,6 +224,7 @@ var relative={
                 }
                 $("#elderchoosetree").tree("loadData",relative.eldertemp);
                 eldervalue='#relder_id';
+                eldernamevalue='#relder_name';
                 var node=$("#elderchoosetree").tree('find',parseInt($('#relder_id').val()));
                 if(node)$("#elderchoosetree").tree("check",node.target);
             },
@@ -255,6 +257,7 @@ var relative={
                 }
                 $("#elderchoosetree").tree("loadData",relative.eldertemp);
                 eldervalue='#relative_elderid';
+                eldernamevalue='#relative_eldername';
                 var node=$("#elderchoosetree").tree('find',parseInt($('#relative_elderid').val()));
                 if(node)$("#elderchoosetree").tree("check",node.target);
             },
@@ -262,6 +265,11 @@ var relative={
                 leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
             }
         });
+    },
+    reset:function(){
+        $("#relative_name").attr('value',null);
+        $("#relative_elderid").attr('value',null);
+        $("#relative_eldername").attr('value',null);
     }
 
 }
