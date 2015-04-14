@@ -33,6 +33,7 @@ var areanamevalue;
 var eldervalue;
 var eldernamevalue;
 var elderchoosename='';
+var clevellist=['专护','1级','2级','3级'];
 Sundate.setTime(Sundate.getTime()-Sundate.getDay()*24*60*60*1000);
 hrefTable['/gero/1/elder']='elder.drawElderList()';
 hrefTable['/gero/1/staff']='staff.drawStaffList()';

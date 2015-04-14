@@ -38,7 +38,10 @@ var elder={
             leftTop.dealdata(data);
         	result.total=data.total;
         	result.rows=data.entities;
-            for (var i in result.rows) result.rows[i].gender=sex[result.rows[i].gender];
+            for (var i in result.rows) {
+                result.rows[i].gender=sex[result.rows[i].gender];
+                result.rows[i].care_level=clevellist[result.rows[i].care_level];
+            }
         	return result;
         },
         toolbar: [{ text: '添加', iconCls: 'icon-add', 

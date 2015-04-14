@@ -141,7 +141,7 @@
                   <tr>
                     <th data-options="field:'elder_id',hidden:true,align:'center'">标识号</th>
                     <th data-options="field:'id',hidden:true,align:'center'">标识号</th>
-                    <th data-options="field:'area_id',width:150,align:'center'">房 间</th>
+                    <th data-options="field:'area_fullname',width:150,align:'center'">房 间</th>
                     <th data-options="field:'name',width:110,align:'center'">姓 名</th>
                     <th data-options="field:'identity_no',width:200,align:'center'">身份证号</th>
                     <th data-options="field:'gender',width:100,align:'center'">性 别</th>
