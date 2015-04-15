@@ -178,7 +178,7 @@
 
 
     onStaffDblClickRow:function(index){
-                staff.method='';
+                staff.method='put';
                 var stafft = $('#staffpage').datagrid('getSelected');
                 staff.sid=stafft.staff_id;
                 staff.uid='/'+stafft.id;

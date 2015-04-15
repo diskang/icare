@@ -2,6 +2,7 @@ var photo={
 	UploadPicDropzone:'',
 	doit:function(url){
 		$('#photosubmit').dialog("open");
+		$('#photosubmit').dialog("center");
 		if (typeof(this.UploadPicDropzone) == "string"){
 			this.UploadPicDropzone = new Dropzone("form#upload-pic-dropzone",
 				{
