@@ -652,12 +652,6 @@
           handler:function(){
             elder.editElderInfo();
           }
-        },'-',{
-          text:'传照片',
-          iconCls:'icon-edit',
-          handler:function(){
-            if(elder.method==='put') photo.doit(rhurl.root+'/uploadObject/user'+elder.uid)
-          }
         }],
         buttons: [{
           text:'确定',
@@ -709,7 +703,7 @@
           <tr><td class="td1"><text>pad_mac：</text></td><td class="td2"><input id="epad_mac" class="equalwidth"></input></td></tr>
         </table>
       </div>
-      <div id="elder-Info-card-b" class="info-card-b"><img src="images/p_2.jpg">
+      <div id="elder-Info-card-b" class="info-card-b"><img src="images/p_2.jpg" onclick="if(elder.method==='put') photo.doit(rhurl.root+'/uploadObject/user'+elder.uid);">
       </div>
     </div>
 </div>
@@ -730,12 +724,6 @@
           iconCls:'icon-edit',
           handler:function(){
             relative.editRelativeInfo();
-          }
-        },'-',{
-          text:'传照片',
-          iconCls:'icon-edit',
-          handler:function(){
-            if(relative.method==='put') photo.doit(rhurl.root+'/uploadObject/user'+relative.uid)
           }
         }],
         buttons: [{
@@ -790,7 +778,7 @@
           </input></td></tr>
         </table>
       </div>
-      <div id="relative-Info-card-b" class="info-card-b"><img src="images/p_2.jpg"></div>
+      <div id="relative-Info-card-b" class="info-card-b"><img src="images/p_2.jpg" onclick="if(relative.method==='put') photo.doit(rhurl.root+'/uploadObject/user'+relative.uid)"></div>
     </div>
 </div>
 
@@ -814,12 +802,6 @@
           iconCls:'icon-edit',
           handler:function(){
             staff.editStaffInfo();
-          }
-        },'-',{
-          text:'传照片',
-          iconCls:'icon-edit',
-          handler:function(){
-            if(staff.method==='put') photo.doit(rhurl.root+'/uploadObject/user'+staff.uid)
           }
         }],
         buttons: [{
@@ -879,7 +861,7 @@
           </td></tr>
         </table>
       </div>
-      <div id="staff-Info-card-b" class="info-card-b"><img src="images/p_2.jpg"></div>
+      <div id="staff-Info-card-b" class="info-card-b"><img src="images/p_2.jpg" onclick="if(staff.method==='put') photo.doit(rhurl.root+'/uploadObject/user'+staff.uid)"></div>
       <div id="staff-Info-card-c" class="info-card-c">
         <text style="font-size:20px;">角色设置</text>
         <ul id="role-check">
