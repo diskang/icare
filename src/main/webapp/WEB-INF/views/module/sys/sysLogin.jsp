@@ -82,9 +82,9 @@
 					</c:if>
                 </div>
                 <div class="footer">
-                    <label class="checkbox inline">
+                    <!-- <label class="checkbox inline">
                         <input type="checkbox" id="rememberMe" name="rememberMe"> <span style="color:#08c;">记住我</span>
-                    </label>
+                    </label> -->
                     <input class="btn btn-primary" type="submit" value="登 录"/>
                 </div>
 				<div id="themeSwitch" class="dropdown pull-right">
