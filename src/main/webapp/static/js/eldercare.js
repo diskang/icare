@@ -9,12 +9,13 @@ var eldercare={
         elder_ids:[],
         end_date:'',
   },
+  careid:-1,
+  caretemp:[],
 	drawElderCareList:function(){
     min=timeline.getCurrentTime();
 		$(".inf").addClass('hide');
 		$("#eldercareshow").removeClass('hide');
     $("#elderdutypanel").addClass('hide');
-    eldercare.updateeldercarer();
     eldercare.updateeldertree();
   },
 
@@ -30,6 +31,7 @@ var eldercare={
         eldercare.carework_id='';
         $("#elderdutypanel").removeClass('hide')
         $("#elderchecktree").tree("loadData",eldercare.eldertemp);
+        $("#eldercarer-end").attr('value',null);
         callback(null); // cancel item creation
       },
 
@@ -66,8 +68,6 @@ var eldercare={
       }
     };
     timeline = new vis.Timeline(container, [], options);
-    // timeline.clear({items: true});
-    //timeline.setItems(items2);
   },
 
   updateeldercarer:function(){
@@ -80,15 +80,19 @@ var eldercare={
         url:rhurl.origin+'/gero/'+gid+'/staff',
         timeout:deadtime,
         success: function (msg) {
-            var parent=document.getElementById("eldercarercont");
+            if(eldercare.careid==-1) eldercare.careid=msg.entities[0].staff_id;
+            eldercare.caretemp=[];
             for(var i in msg.entities){
-                var dt=document.createElement('li');
-                dt.setAttribute('pid',msg.entities[i].staff_id);
-                var a=document.createElement('a');
-                a.innerHTML=msg.entities[i].name;
-                dt.appendChild(a);
-                parent.appendChild(dt);
+            var temp={
+              id:msg.entities[i].staff_id,
+              text:msg.entities[i].name,
+              iconCls:'icon-blank',
             }
+            eldercare.caretemp.push(temp);
+          }
+          $("#eldercarercont").tree("loadData",eldercare.caretemp);
+          var node = $('#eldercarercont').tree('find',eldercare.careid);
+          $('#eldercarercont').tree('select', node.target);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
@@ -115,6 +119,7 @@ var eldercare={
             eldercare.eldertemp.push(temp);
           }
           $("#elderchecktree").tree("loadData",eldercare.eldertemp);
+          eldercare.updateeldercarer();
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
@@ -123,6 +128,7 @@ var eldercare={
 
   },
   getList:function(id ,name){
+    eldercare.careid=id;
     timeline.clear({items:true});
     $("#elderdutypanel").addClass('hide');
     eldercare.name=name;
@@ -153,6 +159,18 @@ var eldercare={
           }
           var items2 = new vis.DataSet(cache);
           timeline.setItems(items2);
+          
+
+          timeline.setSelection(cache[0].id);
+          eldercare.method='put';
+          eldercare.carework_id='/'+cache[0].id;
+          $("#elderchecktree").tree("loadData",eldercare.eldertemp);
+          for(var i in cache[0].elder_ids){
+            var node=$("#elderchecktree").tree('find',cache[0].elder_ids[i]);
+              if(node)$("#elderchecktree").tree("check",node.target);
+          }
+          $("#elderdutypanel").removeClass('hide')
+          $("#eldercarer-end").attr('value',cache[0].end);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
