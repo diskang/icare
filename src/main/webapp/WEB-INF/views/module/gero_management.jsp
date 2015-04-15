@@ -372,7 +372,11 @@
           <div class="itemcont">
             <div class="itemleft">
               <div class="dutyhead">专护人员</div>
-              <ul id="eldercarercont">
+              <ul id="eldercarercont" class="easyui-tree" data-options="
+                onSelect:function(){
+                var node = $('#eldercarercont').tree('getSelected');
+                  eldercare.getList(node.id,node.text);
+              }">
               </ul>
             </div>
             <div id="elderdutypanel" class="itemmiddle hide">
@@ -417,7 +421,11 @@
           <div class="itemcont">
             <div class="itemleft">
               <div class="dutyhead">房护人员</div>
-              <ul id="areacarercont">
+              <ul id="areacarercont" class="easyui-tree"data-options="
+                onSelect:function(){
+                var node = $('#areacarercont').tree('getSelected');
+                  areacare.getList(node.id,node.text);
+              }">
               </ul>
             </div>
             <div id="areadutypanel" class="itemmiddle hide">

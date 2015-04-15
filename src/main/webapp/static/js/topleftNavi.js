@@ -238,9 +238,6 @@ $('.fc-next-button').live('click',function(){arrange.next()});
 $('.fc-today-button').live('click',function(){arrange.today()});
 $('.fc-allow-button').live('click',function(){arrange.allowchange()});
 $('.fc-submit-button').live('click',function(){arrange.putarrange()});
-$('#eldercarercont li').live('click',function(){     
-    eldercare.getList(parseInt($(this).attr("pid")),$(this).text());
-});
 $('#areacarercont li').live('click',function(){     
     areacare.getList(parseInt($(this).attr("pid")),$(this).text());
 });
