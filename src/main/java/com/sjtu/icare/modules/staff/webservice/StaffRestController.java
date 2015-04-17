@@ -184,12 +184,10 @@ public class StaffRestController extends BasicController {
 		checkPermissions(permissions);
 
 		// 将参数转化成驼峰格式的 Map
-		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(
-				inJson, logger);
+		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
+		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
 		tempRquestParamMap.put("geroId", geroId);
 		tempRquestParamMap.put("registerDate", DateUtils.getDateTime());
-		Map<String, Object> requestParamMap = MapListUtils
-				.convertMapToCamelStyle(tempRquestParamMap);
 
 		try {
 
