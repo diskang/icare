@@ -8,14 +8,12 @@ var role={
 	$('#gerorolepage').datagrid({ 
         title:'角色列表', 
         iconCls:'icon-edit',//图标 
-        height:300,
-        width:500,
         nowrap: false, 
         loadMsg:"正在加载，请稍等...", 
         striped: true, 
         border: true, 
         collapsible:false,//是否可折叠的 
-        fit:false,//自动大小 
+        fit:true,//自动大小 
         url:rhurl.origin+'/gero/'+gid+'/role',  
         method:'get',
         remoteSort:true,  
@@ -65,7 +63,6 @@ var role={
         temp=[];
         temp2=[];
         $("#authoritychecktree").tree("loadData",temptree2);
-        $("#authoritychecktree").tree("collapseAll");
         var nodes = $('#authoritychecktree').tree('getChecked', ['checked','indeterminate']);
         for (var i  in nodes){
                 $("#authoritychecktree").tree("uncheck",nodes[i].target);

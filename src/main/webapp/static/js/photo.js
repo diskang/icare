@@ -2,6 +2,7 @@ var photo={
 	UploadPicDropzone:'',
 	doit:function(url){
 		$('#photosubmit').dialog("open");
+		$('#photosubmit').dialog("center");
 		if (typeof(this.UploadPicDropzone) == "string"){
 			this.UploadPicDropzone = new Dropzone("form#upload-pic-dropzone",
 				{
@@ -20,12 +21,16 @@ var photo={
 		}
 		if (typeof(this.UploadPicDropzone) != "string") {
 			this.UploadPicDropzone.options.url = url;
+			$('#upload-pic-dropzone-message').html('选择图片上传');
 			this.UploadPicDropzone.on("sending", function(file) {
 				$('#upload-pic-dropzone-message').html('上传中……');
 				this.removeAllFiles();
 			});
 			this.UploadPicDropzone.on("error", function(file, message ,xhr) {
-				$('#upload-pic-dropzone-message').html(xhr.response);
+				if (! typeof(xhr) == "undefined")
+					$('#upload-pic-dropzone-message').html(xhr.response);
+				else
+					$('#upload-pic-dropzone-message').html("图片大小不能超过0.5M,文件格式为jpg");
 				this.removeAllFiles();
 			});
 			this.UploadPicDropzone.on("success", function(file, message ,xhr) {

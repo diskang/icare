@@ -9,12 +9,12 @@ var areacare={
         area_ids:[],
         end_date:'',
   },
+  careid:-1,
 	drawAreaCareList:function(){
     min=timeline2.getCurrentTime();
 		$(".inf").addClass('hide');
 		$("#areacareshow").removeClass('hide');
     $("#areadutypanel").addClass('hide');
-    areacare.updateareacarer();
     areacare.updateareatree();
   },
 
@@ -30,6 +30,7 @@ var areacare={
         areacare.areawork_id='';
         $("#areadutypanel").removeClass('hide')
         $("#areachecktree").tree("loadData",areacare.areatemp);
+        $("#areacarer-end").attr('value',null);
         callback(null); // cancel item creation
       },
 
@@ -80,15 +81,19 @@ var areacare={
         url:rhurl.origin+'/gero/'+gid+'/staff',
         timeout:deadtime,
         success: function (msg) {
-            var parent=document.getElementById("areacarercont");
+            if(areacare.careid==-1) areacare.careid=msg.entities[0].staff_id;
+            areacare.caretemp=[];
             for(var i in msg.entities){
-                var dt=document.createElement('li');
-                dt.setAttribute('pid',msg.entities[i].staff_id);
-                var a=document.createElement('a');
-                a.innerHTML=msg.entities[i].name;
-                dt.appendChild(a);
-                parent.appendChild(dt);
+            var temp={
+              id:msg.entities[i].staff_id,
+              text:msg.entities[i].name,
+              iconCls:'icon-blank',
             }
+            areacare.caretemp.push(temp);
+          }
+          $("#areacarercont").tree("loadData",areacare.caretemp);
+          var node = $('#areacarercont').tree('find',areacare.careid);
+          $('#areacarercont').tree('select', node.target);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
@@ -142,6 +147,7 @@ var areacare={
           areacare.temparea=msg.entities;
           areacare.areatemp=areacare.createTreeData({"id":0,"types":0});
           $("#areachecktree").tree("loadData",areacare.areatemp);
+          areacare.updateareacarer();
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);
@@ -150,6 +156,7 @@ var areacare={
 
   },
   getList:function(id ,name){
+    areacare.careid=id;
     timeline2.clear({items:true});
     $("#areadutypanel").addClass('hide');
     areacare.name=name;
@@ -180,6 +187,18 @@ var areacare={
           }
           var items2 = new vis.DataSet(cache);
           timeline2.setItems(items2);
+
+          timeline2.setSelection(cache[0].id);
+          areacare.method='put';
+          areacare.areawork_id='/'+cache[0].id;
+          $("#areachecktree").tree("loadData",areacare.areatemp);
+          for(var i in cache[0].area_ids){
+            var node=$("#areachecktree").tree('find',cache[0].area_ids[i]);
+              if(node)$("#areachecktree").tree("check",node.target);
+          }
+          $("#areadutypanel").removeClass('hide')
+          $("#areacarer-end").attr('value',cache[0].end);
+          
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);

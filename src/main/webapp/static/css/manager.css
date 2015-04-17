@@ -43,7 +43,7 @@ a:hover{ color:#d71318;}
 }
 .header-s {
   height:142px;
-  background-image: url(/resthouse/static/images/b_1.png);
+  background-image: url(/static/images/b_1.png);
   background-repeat: no-repeat;
   background-position: right center;
 }
@@ -73,7 +73,7 @@ a:hover{ color:#d71318;}
 .daohang{
 	height: 41px;
 	width: 100%;
-	background-image: url(/resthouse/static/images/d_1.jpg);
+	background-image: url(/static/images/d_1.jpg);
 	background-repeat: repeat-x;
 }
 .Navigation{
@@ -86,7 +86,7 @@ a:hover{ color:#d71318;}
 	line-height: 41px;
 	text-align: center;
 	font-size: 16px;
-	background-image: url(/resthouse/static/images/d_2.jpg);
+	background-image: url(/static/images/d_2.jpg);
 	background-repeat: no-repeat;
 	background-position: right;
 }
@@ -98,18 +98,18 @@ a:hover{ color:#d71318;}
 	text-align: center;
 	font-size: 16px;
 	
-	background-image: url(/resthouse/static/images/d_2.jpg);
+	background-image: url(/static/images/d_2.jpg);
 	background-repeat: no-repeat;
 	background-position: right;}
 .Navigation .navli{
-  background-image:url(/resthouse/static/images/d_3.jpg);
+  background-image:url(/static/images/d_3.jpg);
   background-repeat: no-repeat;
 	background-position: center;
 }
 .Navigation .navli a:hover,.Navigation .navli-b a:hover,.Navigation .navli-a a:hover{
   color:#333;
   text-decoration: none;
-  background-image:url(/resthouse/static/images/d_3.jpg);
+  background-image:url(/static/images/d_3.jpg);
   background-repeat: no-repeat;
 	background-position: center;
 	display:block;
@@ -118,7 +118,7 @@ a:hover{ color:#d71318;}
 
 .Navigation li a:focus,
 .Navigation li a:focus{
-	background-image: url(/resthouse/static/images/d_3.jpg);
+	background-image: url(/static/images/d_3.jpg);
 	background-repeat: no-repeat;
 	background-position: center center;
 	text-decoration: none;
@@ -192,7 +192,7 @@ a:hover{ color:#d71318;}
 .pers-s{
 	height: 41px;
 	width: 100%;
-	background: url(/resthouse/static/images/r_1.jpg);
+	background: url(/static/images/r_1.jpg);
 	height: 41px;
 	float: left;
 	line-height: 41px;
@@ -215,6 +215,9 @@ a:hover{ color:#d71318;}
   text-align: left;
   font-size:20px;
 }
+.equalwidth{
+  width:164px;
+}
 .easyui-dialog table tr{
   min-width:400px;
   height:35px;
@@ -223,10 +226,17 @@ a:hover{ color:#d71318;}
   font-size:20px;
 }
 .td1{
-  width:130px;
+  width:140px;
+  text-align: right;
+  padding-right: 3px;
 }
 .td2{
   width:200px;
+  padding-left: 3px;
+}
+.td3{
+  width:200px;
+  padding-left: 20px;
 }
 .info-card-a{
 	width: 60%;
@@ -406,6 +416,7 @@ a:hover{ color:#d71318;}
 }
 .list{
   width:90%;
+  padding-top:20px;
   padding-bottom:20px;
 }
 .list .list-header{
@@ -472,7 +483,7 @@ a:hover{ color:#d71318;}
 	font-family: "宋体";
 	line-height: 1.8;
 	font-size: 14px;
-	width: 8%;
+	width: 100px;
 	float: left;
 	text-align: center;
 	font-weight: bold;
@@ -824,7 +835,7 @@ a:hover{ color:#d71318;}
 	background-color: #f3f3f3;
 	padding-top: 20px;
 	padding-bottom: 20px;
-	background-image: url(/resthouse/static/images/f_1.png);
+	background-image: url(/static/images/f_1.png);
 	background-repeat: repeat-x;
 	background-position: center bottom;
 }

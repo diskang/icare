@@ -29,8 +29,11 @@ var options;
 var gid=getUser().gero_id;
 var uid=getUser().id;
 var areavalue;
+var areanamevalue;
 var eldervalue;
+var eldernamevalue;
 var elderchoosename='';
+var clevellist=['专护','1级','2级','3级'];
 Sundate.setTime(Sundate.getTime()-Sundate.getDay()*24*60*60*1000);
 hrefTable['/gero/1/elder']='elder.drawElderList()';
 hrefTable['/gero/1/staff']='staff.drawStaffList()';
@@ -235,9 +238,6 @@ $('.fc-next-button').live('click',function(){arrange.next()});
 $('.fc-today-button').live('click',function(){arrange.today()});
 $('.fc-allow-button').live('click',function(){arrange.allowchange()});
 $('.fc-submit-button').live('click',function(){arrange.putarrange()});
-$('#eldercarercont li').live('click',function(){     
-    eldercare.getList(parseInt($(this).attr("pid")),$(this).text());
-});
 $('#areacarercont li').live('click',function(){     
     areacare.getList(parseInt($(this).attr("pid")),$(this).text());
 });

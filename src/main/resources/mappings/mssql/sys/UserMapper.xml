@@ -378,7 +378,7 @@
             T_USER.household_address = #{householdAddress},
             </if>
             <if test="wechatId != null">
-            T_USER.wechat_id = #{wechatId}
+            T_USER.wechat_id = #{wechatId},
             </if>
             <if test="email != null">
             T_USER.email = #{email}

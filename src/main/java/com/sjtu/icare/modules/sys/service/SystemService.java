@@ -171,10 +171,7 @@ public class SystemService extends BaseService {
 			userMapper.deleteUserRole(user);
 			if (user.getRoleList() != null && user.getRoleList().size() > 0) {
 				userMapper.insertUserRole(user);
-			} else {
-				throw new ServiceException(user.getLoginName()
-						+ "No role setted!");
-			}
+			} 
 			// 清除用户缓存
 			UserUtils.clearCache(user);
 			// 清除权限缓存

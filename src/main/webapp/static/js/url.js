@@ -1,5 +1,5 @@
 var rhurl={
-	origin:"/resthouse/api/web",
-	staticurl:"/resthouse/static",
-	root:'/resthouse',
+	origin:"/api/web",
+	staticurl:"/static",
+	root:'/',
 }

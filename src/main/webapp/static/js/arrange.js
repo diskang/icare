@@ -10,7 +10,9 @@ var arrange={
 			if (arrange.subres[i].staff_id===id){
 				flag=false;
 				arrange.subres[i].work_date.push(date);
-				arrange.subres[i].nowork_date.pop(date);
+				var t=arrange.subres[i].nowork_date.indexOf(date);
+				if(t>-1)
+					arrange.subres[i].nowork_date.splice(t,1);
 			}
 		}
 		if(flag){
@@ -26,7 +28,9 @@ var arrange={
 			if (arrange.subres[i].staff_id===id){
 				flag=false;
 				arrange.subres[i].nowork_date.push(date);
-				arrange.subres[i].work_date.pop(date);
+				var t=arrange.subres[i].work_date.indexOf(date);
+				if(t>-1)
+					arrange.subres[i].work_date.splice(t,1);
 			}
 		}
 		if(flag){
@@ -47,7 +51,7 @@ var arrange={
             			contentType: "application/json;charset=utf-8",
            		 		timeout: deadtime, 
             			error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
-            			success: function(result){arrange.subres=[];arrange.drawArrangeList2();arrange.changed=false;} 
+            			success: function(result){arrange.drawArrangeList2();arrange.changed=false;} 
             		}); 
              }
 		}
@@ -138,6 +142,7 @@ var arrange={
 	    
 	},
 	drawArrangeList2:function(){
+		arrange.subres=[];
 	    $('.fc-body tr').remove();
 	    arrange.initdate();
 	    arrange.showth();
