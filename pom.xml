@@ -46,7 +46,7 @@
         <jdk.version>1.7</jdk.version>
         <tomcat.version>2.2</tomcat.version>
         <jetty.version>7.6.10.v20130312</jetty.version>
-        <webserver.port>8181</webserver.port>
+        <webserver.port>80</webserver.port>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <downloadSources>false</downloadSources>
         
@@ -617,7 +617,7 @@
                 <version>${tomcat.version}</version> 
                 <configuration>
                     <port>${webserver.port}</port>
-                    <path>/${project.artifactId}</path>
+                    <path>/</path>
                     <uriEncoding>${project.build.sourceEncoding}</uriEncoding>
                 </configuration>
             </plugin>

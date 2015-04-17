@@ -11,15 +11,15 @@
 
 <title>resthouse管理界面</title>
 
-<link href="/resthouse/static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="/resthouse/static/css/manager.css" rel="stylesheet" type="text/css">
-<link href="/resthouse/static/css/conter.css" rel="stylesheet" type="text/css">
-<link href="/resthouse/static/css/jeesite.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="/resthouse/static/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="/resthouse/static/css/easyui.css">
-<link rel="stylesheet" type="text/css" href="/resthouse/static/css/icon.css">
-<link rel="stylesheet" type="text/css" href="/resthouse/static/css/bootstrap-datetimepicker.min.css">
-<link href="/resthouse/static/css/vis.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/static/css/manager.css" rel="stylesheet" type="text/css">
+<link href="/static/css/conter.css" rel="stylesheet" type="text/css">
+<link href="/static/css/jeesite.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/static/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="/static/css/easyui.css">
+<link rel="stylesheet" type="text/css" href="/static/css/icon.css">
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap-datetimepicker.min.css">
+<link href="/static/css/vis.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -44,7 +44,7 @@
 <!-------------------------头部-------------------------->
 <div class="head">
   <div class="container header-s">
-    <div class="logo"><img src="/resthouse/static/images/logo.png" ></div>
+    <div class="logo"><img src="/static/images/logo.png" ></div>
   </div>
 </div>
 <!--------------------------导航条-------------------------------->
@@ -54,7 +54,7 @@
       <li class="navli" href="#">首页</li>
     </ul>
     <div class="btn-group pull-right">
-      <a id="logout" class="btn" href="/resthouse/admin/logout"> 退出 </a>
+      <a id="logout" class="btn" href="/admin/logout"> 退出 </a>
     </div>
     <div class="btn-group pull-right">
       <a id="userinfo" class="btn"onclick="user.drawinfo()"> 个人中心 </a>
@@ -68,7 +68,7 @@
   <div class="container Information">
   <!--------------------------左导航--------------------------------> 
     <div class="leftNav" id="leftNavi" >
-      <div style="background:url('/resthouse/static/images/r_1.jpg');line-height:30px;font-size:16px;color: #fff;height:30px;padding-left:20px;font-size:20px;margin:0;text-align:left;">菜单</div>
+      <div style="background:url('/static/images/r_1.jpg');line-height:30px;font-size:16px;color: #fff;height:30px;padding-left:20px;font-size:20px;margin:0;text-align:left;">菜单</div>
       <ul id="lefttree" style="padding-left:20px;height:670px;padding-top:10px;text-align:left;overflow:scroll;">
       </ul>
     </div>
@@ -1181,29 +1181,29 @@
       </table>
 </div>
 
-<script type="text/javascript" src="/resthouse/static/js/jquery-1.8.3.min.js" ></script>
-<script type="text/javascript" src="/resthouse/static/js/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/topleftNavi.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/photo.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/staff.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/elder.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/item.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/geroitem.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/role.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/authority.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/arrange.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/url.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/relative.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/user.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/area.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/areacare.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/eldercare.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/elder_care_item.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/validbox.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/vis.js"></script>
-<script type="text/javascript" src="/resthouse/static/js/dropzone.js"></script>
+<script type="text/javascript" src="/static/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="/static/js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript" src="/static/js/topleftNavi.js"></script>
+<script type="text/javascript" src="/static/js/photo.js"></script>
+<script type="text/javascript" src="/static/js/staff.js"></script>
+<script type="text/javascript" src="/static/js/elder.js"></script>
+<script type="text/javascript" src="/static/js/item.js"></script>
+<script type="text/javascript" src="/static/js/geroitem.js"></script>
+<script type="text/javascript" src="/static/js/role.js"></script>
+<script type="text/javascript" src="/static/js/authority.js"></script>
+<script type="text/javascript" src="/static/js/arrange.js"></script>
+<script type="text/javascript" src="/static/js/url.js"></script>
+<script type="text/javascript" src="/static/js/relative.js"></script>
+<script type="text/javascript" src="/static/js/user.js"></script>
+<script type="text/javascript" src="/static/js/area.js"></script>
+<script type="text/javascript" src="/static/js/areacare.js"></script>
+<script type="text/javascript" src="/static/js/eldercare.js"></script>
+<script type="text/javascript" src="/static/js/elder_care_item.js"></script>
+<script type="text/javascript" src="/static/js/validbox.js"></script>
+<script type="text/javascript" src="/static/js/vis.js"></script>
+<script type="text/javascript" src="/static/js/dropzone.js"></script>
 </body>
 </html>
