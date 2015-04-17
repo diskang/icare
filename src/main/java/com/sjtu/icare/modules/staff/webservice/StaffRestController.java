@@ -186,8 +186,8 @@ public class StaffRestController extends BasicController {
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
 		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
-		tempRquestParamMap.put("geroId", geroId);
-		tempRquestParamMap.put("registerDate", DateUtils.getDateTime());
+		requestParamMap.put("geroId", geroId);
+		requestParamMap.put("registerDate", DateUtils.getDateTime());
 
 		try {
 
