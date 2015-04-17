@@ -40,10 +40,10 @@ public class OSSObjectUtils {
 	
 	private static Logger logger = Logger.getLogger(UploadUtils.class);
 	
-	private static String key = "iwa1cq1kHCGjc0KW";
-	private static String secret = "toL6dPkxWjazEkbZuqIHr3vKIcnshJ";
+	private static String key = "0mwAcrY4au5LRFDi";
+	private static String secret = "kHVp7IP9wwi6EL0HCLKS7nIozFCa2r";
 	private static String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
-	private static String bucket = "garfieldjty-test";
+	private static String bucket = "icare";
 	private static Long expireTime = (long) 3600000;
 	
 //	private static String basicPath = "userfiles";//上传根目录
