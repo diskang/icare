@@ -176,7 +176,6 @@
 
     },
 
-
     onStaffDblClickRow:function(index){
                 staff.method='put';
                 var stafft = $('#staffpage').datagrid('getSelected');
