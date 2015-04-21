@@ -32,6 +32,9 @@ var geroItem={
             	var result={"total":0,"rows":0};
                 result.total=data.total;
                 result.rows=data.entities;
+                for (var i in result.rows) {
+                    result.rows[i].level=clevellist[result.rows[i].level];
+                }
                 return result;
             },
             toolbar: [{ 
@@ -71,6 +74,7 @@ var geroItem={
         $("#gerocareitempost-dialog-form").dialog("open");
         $("#gerocareitempost-dialog-form").dialog("center");
         $("#gerocareitempost-dialog-form input").attr("value",null);
+        $("#gerocareitempost-dialog-form select").attr("value",null);
     },
     delGeroCareItemInfo: function(){
         var itemt = $('#gerocareitempage').datagrid('getSelected');

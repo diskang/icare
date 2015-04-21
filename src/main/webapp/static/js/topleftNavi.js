@@ -34,6 +34,11 @@ var eldervalue;
 var eldernamevalue;
 var elderchoosename='';
 var clevellist=['专护','1级','2级','3级'];
+var levellistre=[];
+levellistre['专护']=0;
+levellistre['1级']=1;
+levellistre['2级']=2;
+levellistre['3级']=3;
 Sundate.setTime(Sundate.getTime()-Sundate.getDay()*24*60*60*1000);
 hrefTable['/gero/1/elder']='elder.drawElderList()';
 hrefTable['/gero/1/staff']='staff.drawStaffList()';
@@ -155,8 +160,8 @@ var leftTop = {
             // alert(toptree[i].href)
             // alert(toptree[i].name)
             if(toptree[i].href!=='no'){
-                if(k==-1) k=i;
-                $("#topNavi").append('<li class="navli-a" ><a href="#">'+toptree[i].name+'<a></li>');
+                if(k==-1) {k=i;$("#topNavi").append('<li class="navli" ><a href="#">'+toptree[i].name+'<a></li>');}
+                else $("#topNavi").append('<li class="navli-a" ><a href="#">'+toptree[i].name+'<a></li>');
             }
         }
         temptree2=[{"id":1,"text":"权限列表","children":[]}]
@@ -219,6 +224,10 @@ $(function(){
 });
 
 $('.navli-a').live('click',function(){
+    $('.navli').addClass('navli-a');
+    $('.navli').removeClass('navli');
+    $(this).addClass('navli');
+    $(this).removeClass('navli-a');
     var str=leftTop.createTreeData(leftTop.findTopNode($(this).text()));
     $("#lefttree").tree("loadData",str);
 });

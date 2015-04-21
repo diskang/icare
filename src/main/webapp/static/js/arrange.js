@@ -147,7 +147,7 @@ var arrange={
 	    arrange.initdate();
 	    arrange.showth();
 		var datat;
-	    if(document.getElementById("arrange_role").value) datat={start_date:weekstr[0],end_date:weekstr[6],role:document.getElementById("arrange_role").value};
+	    if($("#arrange_role").val()) datat={start_date:weekstr[0],end_date:weekstr[6],role:$("#arrange_role").val()};
 	    	else datat={start_date:weekstr[0],end_date:weekstr[6]};
 	    $.ajax({
         	type: "get",

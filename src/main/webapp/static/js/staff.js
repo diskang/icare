@@ -2,6 +2,7 @@
     method:'',
     sid:'',
     uid:'',
+    flag:false,
     drawStaffList:function(){
         $("#staff-dialog-form").dialog("close");
         $(".inf").addClass('hide');
@@ -92,6 +93,7 @@
     },
 
      drawStaffInfo: function(data){
+        staff.flag=false;
         staff.sid="/"+data.staff_id;
         staff.uid="/"+data.id;
         var rolestr='';
@@ -102,14 +104,18 @@
         $("#staff-dialog-form").dialog("open");
         $("#staff-dialog-form").dialog("center");
         $('#staff-Info-card-a input').attr('disabled','disabled');
+        $('#staff-Info-card-a select').attr('disabled','disabled');
         $('#staff-Info-card-a .input-group-addon').addClass('hide');
+        $('#spic').removeClass('hide');
+        $('#spnote').addClass('hide');
         $("#staff-Info-card-a").find('.validatebox-text').validatebox('disableValidation');
         $('#sname').attr('value',data.name);
         $('#semail').attr('value',data.email);
         $('#sbirthday').attr('value',data.birthday);
         var radios = document.getElementsByName("sgender");
             for (var i = 0; i < radios.length; i++) {
-                if (radios[i].getAttribute('value')==data.gender) radios[i].checked="checked";
+                radios[i].checked=null;
+                if (i==parseInt(data.gender)) radios[i].checked="checked";
             }
         $('#shousehold_address').attr('value',data.household_address);
         $('#snssf_id').attr('value',data.nssf_id);
@@ -136,23 +142,33 @@
         staff.sid="";
         staff.uid="";
         staff.method='post';
+        staff.flag=false;
         $("#staff-dialog-form").dialog("open");
         $("#staff-dialog-form").dialog("center");
         $('#role-check input').attr("checked",false);
         $('#role-check input').attr("disabled",true);
         $('#staff-Info-card-a input').attr('value',null).removeAttr('disabled','');
+        $('#staff-Info-card-a select').attr('value',null).removeAttr('disabled','');
         $('#staff-Info-card-a .input-group-addon').removeClass('hide');
+        $('#spic').addClass('hide');
+        $('#spnote').removeClass('hide');
+        var radios = document.getElementsByName("sgender");
+            for (var i = 0; i < radios.length; i++) {
+                radios[i].checked=null;
+            }
         $("#staff-Info-card-a").find('.validatebox-text').validatebox('disableValidation');
         //$("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
         $('#staff-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
     editStaffInfo: function(){
-        staff.method='put';
+        staff.flag=true;
         $("#staff-dialog-form").dialog("open");
         $("#staff-dialog-form").dialog("center");
         $('#staff-Info-card-a input').removeAttr('disabled','');
+        $('#staff-Info-card-a select').removeAttr('disabled','');
         $('#staff-Info-card-a .input-group-addon').removeClass('hide');
         $('#role-check input').attr("disabled",false);
+        $('#spnote').removeClass('hide');
         $("#staff-Info-card-a").find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
     },
     delStaffInfo: function(){
@@ -178,6 +194,7 @@
 
     onStaffDblClickRow:function(index){
                 staff.method='put';
+                staff.flag=false;
                 var stafft = $('#staffpage').datagrid('getSelected');
                 staff.sid=stafft.staff_id;
                 staff.uid='/'+stafft.id;

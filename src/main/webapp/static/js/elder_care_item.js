@@ -114,7 +114,7 @@ var care_item={
         $('#cicetime').attr('value',itemt.end_time);
         $('#cicicon').attr('value',itemt.icon);
         $('#cicperiod').attr('value',itemt.period);
-        $('#ciclevel').attr('value',itemt.level);
+        $('#ciclevel').attr('value',levellistre[itemt.level]);
     },
     doSearch:function(){
         care_item.eid=$('#care_item_elder_id').val();
@@ -144,6 +144,9 @@ var care_item={
                 var result={"total":0,"rows":0};
                 result.total=data.total;
                 result.rows=data.entities;
+                for (var i in result.rows) {
+                result.rows[i].level=clevellist[result.rows[i].level];
+            }
                 return result;
             },
             toolbar: [{ 

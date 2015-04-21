@@ -1,5 +1,6 @@
 var elder={
     method:'',
+    flag:false,
     eid:'',
     uid:"",
     temparea:[],
@@ -65,16 +66,20 @@ var elder={
     },
     
     drawElderInfo: function(data){
+        elder.flag=false;
         $("#elder-dialog-form").dialog("open");
         $("#elder-dialog-form").dialog("center");
         $('#elder-Info-card-a input').attr('disabled','disabled');
+        $('#elder-Info-card-a select').attr('disabled','disabled');
         $('#elder-Info-card-a .input-group-addon').addClass('hide');
+        $('#epic').removeClass('hide');
+        $('#epnote').addClass('hide');
         $('#elder-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
         $('#ename').attr('value',data.name);
         $('#ebirthday').attr('value',data.birthday);
         var radios = document.getElementsByName("egender");
             for (var i = 0; i < radios.length; i++) {
-                if (radios[i].getAttribute('value')==data.gender) radios[i].checked="checked";
+                if (i==parseInt(data.gender)) radios[i].checked="checked";
             }
         $('#eaddress').attr('value',data.address);
         $('#enative_place').attr('value',data.native_place);
@@ -89,7 +94,6 @@ var elder={
         $('#epolitical_status').attr('value',data.political_status);
         $('#echeckin_date').attr('value',data.checkin_date);
         $('#echeckout_date').attr('value',data.checkout_date);
-        $('#epad_mac').attr('value',data.pad_mac);
         $('#emarriage').attr('value',data.marriage);
         $('#eidentity_no').attr('value',data.identity_no);
 
@@ -100,22 +104,32 @@ var elder={
     addElderInfo: function(){
         elder.eid="";
         elder.method='post';
+        elder.flag=false;
         $("#elder-dialog-form").dialog("open");
         $("#elder-dialog-form").dialog("center");
         $('#elder-Info-card-a input').attr('value',null).removeAttr('disabled');
+        $('#elder-Info-card-a select').attr('value',null).removeAttr('disabled');
         $('#elder-Info-card-a .input-group-addon').removeClass('hide');
         $('#elder-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
+        var radios = document.getElementsByName("egender");
+            for (var i = 0; i < radios.length; i++) {
+                radios[i].checked=null;
+            }
+        $('#epic').addClass('hide');
+        $('#epnote').removeClass('hide');
         //$('#elder-Info-card-a').find('.easyui-validatebox').validatebox('enableValidation').validatebox('validate');
         $('#elder-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
 
     editElderInfo: function(){
-        elder.method='put';
+        elder.flag=true;
         $("#elder-dialog-form").dialog("open");
         $("#elder-dialog-form").dialog("center");
         $('#elder-Info-card-a input').removeAttr('disabled');
+        $('#elder-Info-card-a select').removeAttr('disabled');
         $('#elder-Info-card-a .input-group-addon').removeClass('hide');
         $('#elder-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
+        $('#epnote').removeClass('hide');
         //$('#elder-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
     },
     delElderInfo: function(){
@@ -158,6 +172,7 @@ var elder={
 
     onElderDblClickRow:function(index){
                 elder.method='put';
+                elder.flag=false;
                 var eldert = $('#elderpage').datagrid('getSelected');
                 elder.eid='/'+eldert.elder_id;
                 elder.uid='/'+eldert.id;
@@ -204,7 +219,6 @@ var elder={
             residence:document.getElementById("eresidence").value,
             checkin_date:document.getElementById("echeckin_date").value,
             checkout_date:document.getElementById("echeckout_date").value,
-            pad_mac:document.getElementById("epad_mac").value,
             marriage:document.getElementById("emarriage").value,
         }
         var infoUrl=rhurl.origin+'/gero/'+gid+'/elder'+elder.eid;
@@ -218,12 +232,11 @@ var elder={
             error: function(XMLHttpRequest, textStatus, errorThrown){leftTop.dealerror(XMLHttpRequest, textStatus, errorThrown);}, 
             success: function(msg){
                 elder.drawElderList();
-                if (elder.method==='post'){
-                    elder.method='put';
-                    var data=leftTop.dealdata(msg);
-                        elder.drawElderInfo(data[0]);
-                }
-
+                // if (elder.method==='post'){
+                //     elder.method='put';
+                //     var data=leftTop.dealdata(msg);
+                //         elder.drawElderInfo(data[0]);
+                // }
             } 
         }); 
         }

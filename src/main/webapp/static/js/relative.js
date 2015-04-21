@@ -1,5 +1,6 @@
 var relative={
 	method:'',
+    flag:false,
     rid:'',
     uid:"",
     eldertemp:[],
@@ -57,17 +58,22 @@ var relative={
     },
     
     drawRelativeInfo: function(data){
+        relative.flag=false;
         $("#relative-dialog-form").dialog("open");
         $("#relative-dialog-form").dialog("center");
         $('#relative-Info-card-a input').attr('disabled','disabled');
+        $('#relative-Info-card-a select').attr('disabled','disabled');
         $('#relative-Info-card-a .input-group-addon').addClass('hide');
+        $('#rpnote').addClass('hide');
+        $('#rpic').removeClass('hide');
         $('#relative-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
         $('#rname').attr('value',data.name);
         $('#rbirthday').attr('value',data.birthday);
         $('#relder_name').attr('value',data.elder_name);
         var radios = document.getElementsByName("rgender");
             for (var i = 0; i < radios.length; i++) {
-                if (radios[i].getAttribute('value')==data.gender) radios[i].checked="checked";
+                radios[i].checked=null;
+                if (i==parseInt(data.gender)) radios[i].checked="checked";
             }
         $('#raddress').attr('value',data.address);
         $('#relder_id').attr('value',data.elder_id);
@@ -93,22 +99,32 @@ var relative={
     addRelativeInfo: function(){
         relative.eid="";
         relative.method='post';
+        relative.flag=false;
         $("#relative-dialog-form").dialog("open");
         $("#relative-dialog-form").dialog("center");
         $('#relative-Info-card-a input').attr('value',null).removeAttr('disabled');
+        $('#relative-Info-card-a select').attr('value',null).removeAttr('disabled');
+        var radios = document.getElementsByName("rgender");
+            for (var i = 0; i < radios.length; i++) {
+                radios[i].checked=null;
+            }
         $('#relative-Info-card-a .input-group-addon').removeClass('hide');
         $('#relative-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
+        $('#rpnote').removeClass('hide');
+        $('#rpic').addClass('hide');
         //$('#relative-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
         $('#relative-Info-card-b img').attr("src",rhurl.staticurl+"/images/p_2.jpg").attr("width","178px").attr("height","220px");
     },
 
     editRelativeInfo: function(){
-        relative.method='put';
+        relative.flag=true;
         $("#relative-dialog-form").dialog("open");
         $("#relative-dialog-form").dialog("center");
         $('#relative-Info-card-a input').removeAttr('disabled');
+        $('#relative-Info-card-a select').removeAttr('disabled');
         $('#relative-Info-card-a .input-group-addon').removeClass('hide');
         $('#relative-Info-card-a').find('.validatebox-text').validatebox('disableValidation');
+        $('#rpnote').removeClass('hide');
         //$('#relative-Info-card-a').find('.validatebox-text').validatebox('enableValidation').validatebox('validate');
     },
     delRelativeInfo: function(){
@@ -130,6 +146,7 @@ var relative={
 
     onRelativeDblClickRow:function(index){
                 relative.method='put';
+                relative.flag=false;
                 var relativet = $('#relativepage').datagrid('getSelected');
                 relative.rid='/'+relativet.relative_id;
                 relative.uid='/'+relativet.id;
