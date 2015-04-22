@@ -1271,7 +1271,7 @@
 <script type="text/javascript" src="/static/js/eldercare.js"></script>
 <script type="text/javascript" src="/static/js/elder_care_item.js"></script>
 <script type="text/javascript" src="/static/js/validbox.js"></script>
-<script type="text/javascript" src="/static/js/vis.js"></script>
+<script type="text/javascript" src="/static/js/vis-min.js"></script>
 <script type="text/javascript" src="/static/js/dropzone.js"></script>
 </body>
 </html>
