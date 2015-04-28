@@ -23,15 +23,15 @@
         <ehcache.version>2.6.9</ehcache.version>
         <sitemesh.version>2.4.2</sitemesh.version>
         <!-- <activiti.version>5.14</activiti.version> -->
-        <slf4j.version>1.7.5</slf4j.version>
+        <slf4j.version>1.7.10</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
         <commons-lang3.version>3.1</commons-lang3.version>
         <commons-io.version>2.4</commons-io.version>
-        <commons-codec.version>1.8</commons-codec.version>
+        <commons-codec.version>1.9</commons-codec.version>
         <commons-fileupload.version>1.3</commons-fileupload.version>
         <commons-beanutils.version>1.8.3</commons-beanutils.version>
         <jackson.version>2.2.3</jackson.version>
-        <xstream.version>1.4.3</xstream.version>
+        <xstream.version>1.4.7</xstream.version>
         <guava.version>14.0.1</guava.version>
         <dozer.version>5.4.0</dozer.version>
         <poi.version>3.9</poi.version>
@@ -257,6 +257,15 @@
             <version>${spring.version}</version>
         </dependency>
         
+        <!-- added by kangshiyong 2015-4-27 01:09:00
+        if not add httpclient here, 
+        there is version conflict with http package in weixin-java-mp -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.5</version>
+        </dependency>
+    
         <dependency>
             <groupId>opensymphony</groupId>
             <artifactId>sitemesh</artifactId>
@@ -284,7 +293,7 @@
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
-            <version>2.1</version>
+            <version>2.2</version>
             <scope>provided</scope>
         </dependency>
         <!-- WEB end -->
@@ -539,6 +548,12 @@
 			<version>2.5.0</version>
 		</dependency>
 		
+		<!-- wechat package from github -->
+		<dependency>
+            <groupId>me.chanjar</groupId>
+            <artifactId>weixin-java-mp</artifactId>
+            <version>1.1.4</version>
+        </dependency>
     </dependencies>
   <build>
     <finalName>resthouse</finalName>
