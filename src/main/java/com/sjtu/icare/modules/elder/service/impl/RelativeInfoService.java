@@ -50,6 +50,12 @@ public class RelativeInfoService implements IRelativeInfoService {
 		
 	}
 
+	@Override
+	public List<User> getUsersOfRelatives2(User user) {
+		user.setUserType(CommonConstants.RELATIVE_TYPE);
+		return user.getPage().setList(relativeDAO.getUsersOfRelatives2(user)).getList();
+	}
+
 
 
 

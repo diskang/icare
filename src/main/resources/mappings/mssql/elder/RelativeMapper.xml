@@ -43,6 +43,26 @@
 	  
     </select>
 
+    <select id="getUsersOfRelatives2" resultMap="com.sjtu.icare.modules.sys.persistence.UserMapper.UserMap">
+    
+        SELECT
+            T_USER.*
+        FROM 
+        	T_USER
+        WHERE
+        	T_USER.cancel_date is null
+            <if test="name != null">
+                AND T_USER.name LIKE '%' + #{name} + '%'
+            </if> 
+            <if test="elderId != null">
+                AND T_USER.id in (
+                	SELECT T_ELDER_RELATIVE_RELATIONSHIP.relative_user_id 
+                	FROM T_ELDER_RELATIVE_RELATIONSHIP 
+                	WHERE T_ELDER_RELATIVE_RELATIONSHIP.elder_user_id = #{elderId})
+            </if>
+	  
+    </select>
+
 
     <insert id="insertRelative" parameterType="RelativeEntity" useGeneratedKeys="true" keyProperty="id">
     

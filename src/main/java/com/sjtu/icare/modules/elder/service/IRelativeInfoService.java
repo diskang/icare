@@ -22,4 +22,6 @@ public interface IRelativeInfoService {
 
 	void deleteRelative(RelativeEntity relativeEntity);
 
+	List<User> getUsersOfRelatives2(User user);
+
 }
