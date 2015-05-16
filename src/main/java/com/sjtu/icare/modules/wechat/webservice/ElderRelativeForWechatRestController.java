@@ -47,7 +47,7 @@ import com.sjtu.icare.modules.wechat.service.IElderRelativeRelationshipService;
 
 @RestController
 //@RequestMapping({"${api.web}/relative_for_wechat", "${api.service}/relative_for_wechat"})
-@RequestMapping("/relative_for_wechat")
+@RequestMapping("/wechat/relative")
 public class ElderRelativeForWechatRestController  extends BasicController {
 	private static Logger logger = Logger.getLogger(ElderRelativeForWechatRestController.class);
 	
@@ -205,7 +205,7 @@ public class ElderRelativeForWechatRestController  extends BasicController {
 		
 		// 获取基础的 JSON
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
-		requestParamMap.put("password", systemService.entryptPassword((String) requestParamMap.get("phoneNo")));
+		requestParamMap.put("password", SystemService.entryptPassword((String) requestParamMap.get("phoneNo")));
 		// 插入数据
 		try {
 			// insert into Relative
