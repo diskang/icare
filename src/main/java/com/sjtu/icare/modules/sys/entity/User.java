@@ -39,7 +39,10 @@ public class User extends DataEntity<User> {
     private String householdAddress; //居住地址
     private String email;//邮箱
     private String wechatId; //微信账号
-    private int geroId;//养老院ID
+    private Integer geroId;//养老院ID
+    private String unionId;
+    private String subscribe;
+    private String subscribeTime;
     
     // elders 查询参数
     private Integer ageMin;
@@ -376,11 +379,11 @@ public class User extends DataEntity<User> {
 		this.wechatId = wechatId;
 	}
 
-	public int getGeroId() {
+	public Integer getGeroId() {
 		return geroId;
 	}
 
-	public void setGeroId(int geroId) {
+	public void setGeroId(Integer geroId) {
 		this.geroId = geroId;
 	}
 
@@ -483,6 +486,30 @@ public class User extends DataEntity<User> {
 			OSSObjectUtils ossObjectUtils = new OSSObjectUtils();
 			return ossObjectUtils.getDownloadUrl(photoUrl); 
 		}
+	}
+
+	public String getUnionId() {
+		return unionId;
+	}
+
+	public void setUnionId(String unionId) {
+		this.unionId = unionId;
+	}
+
+	public String getSubscribe() {
+		return subscribe;
+	}
+
+	public void setSubscribe(String subscribe) {
+		this.subscribe = subscribe;
+	}
+
+	public String getSubscribeTime() {
+		return subscribeTime;
+	}
+
+	public void setSubscribeTime(String subscribeTime) {
+		this.subscribeTime = subscribeTime;
 	}
 	
 	

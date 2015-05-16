@@ -100,4 +100,6 @@ public interface UserMapper extends CrudMapper<User> {
 	 */
 	public void updateUser(Map<String, Object> paramMap);
 
+	public User getByWechatId(User user);
+
 }

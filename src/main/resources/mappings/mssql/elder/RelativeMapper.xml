@@ -6,11 +6,16 @@
 
     <resultMap type="com.sjtu.icare.modules.elder.entity.RelativeEntity" id="RelativeMap">
 	    <id property="id" column="id" />
-	    <result property="elderId" column="elder_id" />
+	    <!-- <result property="elderId" column="elder_id" /> -->
 	    <result property="name" column="name" />
 	    <result property="urgent" column="urgent" />
 	    <result property="relationship" column="relationship" />
 	    <result property="cancelDate" column="cancel_date" />
+	</resultMap>
+	
+    <resultMap type="com.sjtu.icare.modules.elder.entity.ElderRelativeRelationshipEntity" id="ElderRelativeRelationshipMap">
+	    <result property="elderUserId" column="elder_user_id" />
+	    <result property="relativeUserId" column="relative_user_id" />
 	</resultMap>
   
     <select id="getRelative" resultMap="RelativeMap">
@@ -36,9 +41,9 @@
 	            <if test="name != null">
 	                AND T_USER.name LIKE '%' + #{name} + '%'
 	            </if> 
-	            <if test="elderId != null">
+	           <!--  <if test="elderId != null">
 	                AND T_ELDER_RELATIVE.elder_id = #{elderId}
-	            </if>
+	            </if> -->
 	        )    
 	  
     </select>
@@ -63,13 +68,40 @@
 	  
     </select>
 
+    <select id="getElderRelativeRelationships" resultMap="ElderRelativeRelationshipMap">
+    
+        SELECT
+            T_ELDER_RELATIVE_RELATIONSHIP.*
+        FROM 
+        	T_ELDER_RELATIVE_RELATIONSHIP
+        WHERE
+
+            <if test="elderUserId != null">
+                T_ELDER_RELATIVE_RELATIONSHIP.elder_user_id = #{elderUserId}
+            </if> 
+            <if test="relativeUserId != null">
+                T_ELDER_RELATIVE_RELATIONSHIP.relative_user_id = #{relativeUserId}
+            </if> 
+ 
+    </select>
+
 
     <insert id="insertRelative" parameterType="RelativeEntity" useGeneratedKeys="true" keyProperty="id">
     
         INSERT INTO
-            T_ELDER_RELATIVE(name, elder_id, urgent, relationship, cancel_date) 
+            T_ELDER_RELATIVE(name, urgent, relationship, cancel_date) 
         VALUES
-            (#{name}, #{elderId}, #{urgent}, #{relationship}, #{cancelDate})
+            (#{name}, #{urgent}, #{relationship}, #{cancelDate})
+            
+    </insert>
+
+
+    <insert id="insertElderRelativeRelationship">
+    
+        INSERT INTO
+            T_ELDER_RELATIVE_RELATIONSHIP(elder_user_id, relative_user_id) 
+        VALUES
+            (#{elderUserId}, #{relativeUserId})
             
     </insert>
     
@@ -81,9 +113,6 @@
         <set>
             <if test="name != null">
             T_ELDER_RELATIVE.name = #{name},
-            </if>
-            <if test="elderId != null">
-            T_ELDER_RELATIVE.elder_id = #{elderId},
             </if>
             <if test="urgent != null">
             T_ELDER_RELATIVE.urgent = #{urgent},
@@ -111,6 +140,16 @@
             T_ELDER_RELATIVE.id = #{id}
             
     </update>
+    
+    <delete id="deleteElderRelativeRelationship">
+    
+        DELETE FROM
+            T_ELDER_RELATIVE_RELATIONSHIP
+        WHERE
+            T_ELDER_RELATIVE_RELATIONSHIP.elder_user_id = #{elderUserId}
+            AND T_ELDER_RELATIVE_RELATIONSHIP.relative_user_id = #{relativeUserId}
+            
+    </delete>
     
     
 </mapper>

@@ -260,4 +260,10 @@ public class UserUtils {
 //			getCacheMap().remove(key);
 			getSession().removeAttribute(key);
 		}
+
+		public static User getUserByWechatId(int openId) {
+			User requestUser = new User();
+			requestUser.setWechatId(Integer.toString(openId));
+			return userMapper.getByWechatId(requestUser);
+		}
 }

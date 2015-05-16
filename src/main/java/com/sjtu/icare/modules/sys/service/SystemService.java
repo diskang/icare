@@ -494,4 +494,9 @@ public class SystemService extends BaseService {
 		userMapper.updateUser(paramMap);
 	}
 
+	public User getUserByWechatId(int openId) {
+		User u = UserUtils.getUserByWechatId(openId);
+		return u;
+	}
+
 }

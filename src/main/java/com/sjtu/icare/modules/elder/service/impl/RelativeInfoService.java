@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sjtu.icare.common.config.CommonConstants;
+import com.sjtu.icare.modules.elder.entity.ElderRelativeRelationshipEntity;
 import com.sjtu.icare.modules.elder.entity.RelativeEntity;
 import com.sjtu.icare.modules.elder.persistence.RelativeDAO;
 import com.sjtu.icare.modules.elder.service.IRelativeInfoService;
@@ -56,7 +57,22 @@ public class RelativeInfoService implements IRelativeInfoService {
 		return user.getPage().setList(relativeDAO.getUsersOfRelatives2(user)).getList();
 	}
 
+	@Override
+	public void insertElderRelativeRelationship(ElderRelativeRelationshipEntity elderRelativeRelationshipEntity) {
+		relativeDAO.insertElderRelativeRelationship(elderRelativeRelationshipEntity);
+	}
 
+	@Override
+	public void deleteElderRelativeRelationship(ElderRelativeRelationshipEntity elderRelativeRelationshipEntity) {
+		relativeDAO.deleteElderRelativeRelationship(elderRelativeRelationshipEntity);
+		
+	}
+
+	@Override
+	public List<ElderRelativeRelationshipEntity> getElderRelativeRelationships(
+			ElderRelativeRelationshipEntity elderRelativeRelationshipEntity) {
+		return relativeDAO.getElderRelativeRelationships(elderRelativeRelationshipEntity);
+	}
 
 
 }

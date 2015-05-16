@@ -31,6 +31,9 @@
         <result property="email" column="email" />
         <result property="wechatId" column="wechat_id" />
         <result property="geroId" column="gero_id" />
+        <result property="unionId" column="union_id" />
+        <result property="subscribe" column="subscribe" />
+        <result property="subscribeTime" column="subscribe_time" />
     </resultMap>
 	
 	<sql id="userColumns">
@@ -81,6 +84,13 @@
 			*
 		FROM T_USER
 		WHERE user_type = #{userType} AND user_id = #{userId} AND cancel_date is null
+	</select>
+	
+	<select id="getByWechatId" resultMap="UserMap" parameterType="User">
+		SELECT
+			*
+		FROM T_USER
+		WHERE wechat_id = #{wechatId} AND cancel_date is null
 	</select>
 	
     <!-- 
