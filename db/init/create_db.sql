@@ -1,21 +1,21 @@
-EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'HCDB_2'
-GO
+EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'{DATABASE_NAME}'
+;
 USE [master]
-GO
-ALTER DATABASE [HCDB_2] SET  SINGLE_USER WITH ROLLBACK IMMEDIATE
-GO
+;
+ALTER DATABASE [{DATABASE_NAME}] SET  SINGLE_USER WITH ROLLBACK IMMEDIATE
+;
 USE [master]
-GO
-/****** Object:  Database [HCDB_2]    Script Date: 2015/3/13 11:00:40 ******/
-DROP DATABASE [HCDB_2]
-GO
+;
+/****** Object:  Database [{DATABASE_NAME}]    Script Date: 2015/3/13 11:00:40 ******/
+DROP DATABASE [{DATABASE_NAME}]
+;
 
 
-CREATE DATABASE HCDB_2
-GO
+CREATE DATABASE {DATABASE_NAME}
+;
 
-USE HCDB_2
-GO
+USE {DATABASE_NAME}
+;
 
 CREATE TABLE T_USER
 (
@@ -42,12 +42,15 @@ CREATE TABLE T_USER
 	residence_address	nvarchar(50)	,						--户籍地址
 	household_address	nvarchar(50)	,						--居住地址
 	email				varchar(20)		,						--邮箱地址
-	wechat_id			nvarchar(64)	,						--微信账号
-	gero_id				int				NOT NULL,				--养老院id，关联GERO
+	wechat_id			varchar(32)		,						--微信账号(open_id)
+	gero_id				int				,						--养老院id，关联GERO
+	union_id			varchar(32)		,						--微信用户id（跨应用，见微信api）
+	subscribe			char(1)			,						--是否关注，取关后为0
+	subscribe_time		datetime		,						--用户关注时间
 	
 	CONSTRAINT uc_UserID UNIQUE (user_type,user_id)
 )
-GO
+;
 
 CREATE TABLE T_GERO
 (
@@ -66,7 +69,7 @@ CREATE TABLE T_GERO
 	register_date		datetime		NOT NULL,				--注册日期
 	cancel_date			datetime		,						--注销日期
 )
-GO
+;
 
 CREATE TABLE T_AREA
 (
@@ -80,7 +83,7 @@ CREATE TABLE T_AREA
 	full_name			nvarchar(500)	NOT NULL,				--位置全名
 	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
 )
-GO
+;
 
 CREATE TABLE T_DEVICE
 (
@@ -91,7 +94,7 @@ CREATE TABLE T_DEVICE
 	device_type_id		int				NOT NULL,				--设备种类id，关联DEVICE_TYPE
 	active_mode			varchar(10)		NOT NULL,				--active：正在测量，pause：当前中止，idol：当前空闲（已连接），disconnect：链接断开
 )
-GO
+;
 
 CREATE TABLE T_DEVICE_TYPE
 (
@@ -99,7 +102,7 @@ CREATE TABLE T_DEVICE_TYPE
 	name				nvarchar(20)	NOT NULL,				--设备种类名
 	notes				nvarchar(32)	,						--备注
 )
-GO
+;
 
 CREATE TABLE T_GERO_ELDER_EXCHANGE
 (
@@ -130,7 +133,7 @@ CREATE TABLE T_ELDER
 	track_url			varchar(256)	,						--7天跟踪记录表url（图片）
 	pad_mac				varchar(17)		,						--老人房间pad的mac，用于绑定上传信息
 )
-GO
+;
 
 CREATE TABLE T_ELDER_SHEET
 (
@@ -152,18 +155,24 @@ CREATE TABLE T_ELDER_SHEET
 	register_no			int				,						--住院号，不知道什么用，先留着
 	approve_signature	nvarchar(20)							--院长签名
 )
-GO
+;
 
 CREATE TABLE T_ELDER_RELATIVE
 (
 	id					int				PRIMARY KEY IDENTITY,	--家属ID
-	elder_id			int				NOT NULL,				--关联T_ELDER表
 	name				nvarchar(20)	NOT NULL,				--名字
 	urgent				bit				,						--是否紧急联系人
 	relationship		nvarchar(20)	,						--与老人关系，optional
 	cancel_date			datetime		,						--注销日期
 )
-GO
+;
+
+CREATE TABLE T_ELDER_RELATIVE_RELATIONSHIP
+(
+	relative_user_id	int				NOT NULL,				--家属user_ID
+	elder_user_id		int				NOT NULL,				--老人user_ID
+)
+;
 
 CREATE TABLE T_SELFCARE_ITEM
 (
@@ -171,7 +180,7 @@ CREATE TABLE T_SELFCARE_ITEM
 	item_name			nvarchar(20)	NOT NULL,				--
 	gero_id				int				NOT NULL,				--
 )
-GO
+;
 
 CREATE TABLE T_ELDER_SELFCARE_STATUS
 (
@@ -180,7 +189,7 @@ CREATE TABLE T_ELDER_SELFCARE_STATUS
 	selfcare_item_id	int				NOT NULL,				--
 	level				int				NOT NULL,				--
 )
-GO
+;
 
 CREATE TABLE T_ELDER_TEMPERATURE
 (
@@ -220,7 +229,7 @@ CREATE TABLE T_STAFF
 	leave_date			date			,						--离职时间
 	archive_id			varchar(20)		,						--纸质档案编号
 )
-GO
+;
 
 CREATE TABLE T_CAREWORK_RECORD
 (
@@ -231,7 +240,7 @@ CREATE TABLE T_CAREWORK_RECORD
 	item_name			nvarchar(32)	NOT NULL,				--项目名
 	finish_time			datetime		NOT NULL,				--完成时间
 )
-GO
+;
 
 CREATE TABLE T_AREAWORK_RECORD
 (
@@ -242,7 +251,7 @@ CREATE TABLE T_AREAWORK_RECORD
 	area_id				int				NOT NULL,				--
 	finish_time			datetime		NOT NULL,				--
 )
-GO
+;
 
 -- CREATE TABLE T_CAREWORK_ELDER_RECORD
 -- (
@@ -252,7 +261,7 @@ GO
 -- 	elder_item_list		nvarchar(256)	NOT NULL,				--
 -- 	finish_time			datetime		NOT NULL,				--
 -- )
--- GO
+-- ;
 
 CREATE TABLE T_ELDER_AUDIO_RECORD
 (
@@ -266,7 +275,7 @@ CREATE TABLE T_ELDER_AUDIO_RECORD
 	url					nvarchar(256)	NOT NULL,				--
 	read_times			int				NOT NULL,				--
 )
-GO
+;
 
 CREATE TABLE T_STAFF_SCHEDULE_PLAN
 (
@@ -275,7 +284,7 @@ CREATE TABLE T_STAFF_SCHEDULE_PLAN
 	gero_id				int				NOT NULL,				--
 	work_date			date			NOT NULL,				--
 )
-GO
+;
 
 -- CREATE TABLE T_CAREWORK_SCHEDULE_DETAIL
 --CREATE TABLE T_CAREWORK
@@ -286,7 +295,7 @@ GO
 --	start_date			date			NOT NULL,				--
 --	end_date			date			NOT NULL,				--
 --)
---GO
+--;
 
 CREATE TABLE T_CAREWORK
 (
@@ -297,7 +306,7 @@ CREATE TABLE T_CAREWORK
 	end_date			date			,						--结束日期
 	status				int				NOT NULL,				--状态（按顺序增加）
 )
-GO
+;
 
 
 -- CREATE TABLE T_AREAWORK_SCHEDULE_DETAIL
@@ -309,7 +318,7 @@ GO
 	-- start_date			date			NOT NULL,				--
 	-- end_date			date			NOT NULL,				--
 -- )
--- GO
+-- ;
 
 CREATE TABLE T_AREAWORK
 (
@@ -320,7 +329,7 @@ CREATE TABLE T_AREAWORK
 	end_date			date			,						--结束日期
 	status				int				NOT NULL,				--状态（按顺序增加）
 )
-GO
+;
 
 CREATE TABLE T_ROLE
 (
@@ -329,7 +338,7 @@ CREATE TABLE T_ROLE
 	name				nvarchar(50)	NOT NULL,				--角色名称
 	notes				nvarchar(32)	NOT NULL,				--备注
 )
-GO
+;
 
 CREATE TABLE T_PRIVILEGE
 (
@@ -343,7 +352,7 @@ CREATE TABLE T_PRIVILEGE
 	icon				varchar(100)	,						--图标
 	notes				nvarchar(500)	,						--权限说明
 )
-GO
+;
 
 CREATE TABLE T_ROLE_PRIVILEGES
 (
@@ -351,7 +360,7 @@ CREATE TABLE T_ROLE_PRIVILEGES
 	role_id				int				NOT NULL,				--
 	privilege_id		int				,						--
 )
-GO
+;
 
 CREATE TABLE T_USER_ROLES
 (
@@ -359,7 +368,7 @@ CREATE TABLE T_USER_ROLES
 	user_id				int				NOT NULL,				--
 	role_id				int				NOT NULL,				--
 )
-GO
+;
 
 -- CREATE TABLE T_CARE_ITEM
 -- (
@@ -369,7 +378,7 @@ GO
 -- 	notes				nvarchar(32)	,						--
 -- 	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
 -- )
--- GO
+-- ;
 
 -- CREATE TABLE T_AREA_ITEM
 -- (
@@ -378,7 +387,7 @@ GO
 -- 	notes				nvarchar(32)	,						--
 -- 	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
 -- )
--- GO
+-- ;
 
 CREATE TABLE T_CARE_ITEM
 (
@@ -394,7 +403,7 @@ CREATE TABLE T_CARE_ITEM
 	notes				nvarchar(32)	,						--
 	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
 )
-GO
+;
 
 CREATE TABLE T_AREA_ITEM
 (
@@ -407,7 +416,7 @@ CREATE TABLE T_AREA_ITEM
 	notes				nvarchar(32)	,						--
 	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
 )
-GO
+;
 
 CREATE TABLE T_ELDER_ITEM
 (
@@ -421,293 +430,293 @@ CREATE TABLE T_ELDER_ITEM
 	end_time			time(0)			,						--
 	del_flag			char(1)			NOT NULL	DEFAULT '0'	--默认0，删除1	
 )
-GO
+;
 
 ALTER TABLE T_GERO
 ADD CONSTRAINT fk_GERO_staff_id
 FOREIGN KEY (contact_id)
 REFERENCES T_STAFF(id)
-GO
+;
 
 ALTER TABLE T_USER
 ADD CONSTRAINT fk_USER_gero_id
 FOREIGN KEY (gero_id)
 REFERENCES T_GERO(id)
-GO
+;
 
 ALTER TABLE T_AREA
 ADD CONSTRAINT fk_AREA_gero_id
 FOREIGN KEY (gero_id)
 REFERENCES T_GERO(id)
-GO
+;
 
 ALTER TABLE T_DEVICE
 ADD CONSTRAINT fk_DEVICE_elder_id
 FOREIGN KEY (elder_id)
 REFERENCES T_ELDER(id)
-GO
+;
 
 ALTER TABLE T_DEVICE
 ADD CONSTRAINT fk_DEVICE_area_id
 FOREIGN KEY (area_id)
 REFERENCES T_AREA(id)
-GO
+;
 
 ALTER TABLE T_DEVICE
 ADD CONSTRAINT fk_DEVICE_type_id
 FOREIGN KEY (device_type_id)
 REFERENCES T_DEVICE_TYPE(id)
-GO
+;
 
 ALTER TABLE T_GERO_ELDER_EXCHANGE
 ADD CONSTRAINT fk_GERO_ELDER_EXCHANGE_recorder
 FOREIGN KEY (recorder)
 REFERENCES T_STAFF(id)
-GO
+;
 
 ALTER TABLE T_GERO_ELDER_EXCHANGE
 ADD CONSTRAINT fk_GERO_ELDER_EXCHANGE_gero_id
 FOREIGN KEY (gero_id)
 REFERENCES T_GERO(id)
-GO
+;
 
 ALTER TABLE T_ELDER
 ADD CONSTRAINT fk_ELDER_gero_id
 FOREIGN KEY (gero_id)
 REFERENCES T_GERO(id)
-GO
+;
 
 ALTER TABLE T_ELDER
 ADD CONSTRAINT fk_ELDER_area_id
 FOREIGN KEY (area_id)
 REFERENCES T_AREA(id)
-GO
+;
 
 ALTER TABLE T_ELDER_SHEET
 ADD CONSTRAINT fk_ELDER_SHEET_bed_id
 FOREIGN KEY (elder_id)
 REFERENCES T_ELDER(id)
-GO
+;
 
 ALTER TABLE T_ELDER_RELATIVE
 ADD CONSTRAINT fk_ELDER_RELATIVE_elder_id
 FOREIGN KEY (elder_id)
 REFERENCES T_ELDER(id)
-GO
+;
 
 ALTER TABLE T_SELFCARE_ITEM
 ADD CONSTRAINT fk_SELFCARE_ITEM_gero_id
 FOREIGN KEY (gero_id)
 REFERENCES T_GERO(id)
-GO
+;
 
 ALTER TABLE T_ELDER_SELFCARE_STATUS
 ADD CONSTRAINT fk_ELDER_SELFCARE_STATUS_elder_id
 FOREIGN KEY (elder_id)
 REFERENCES T_ELDER(id)
-GO
+;
 
 ALTER TABLE T_ELDER_SELFCARE_STATUS
 ADD CONSTRAINT fk_ELDER_SELFCARE_STATUS_selfcare_item_id
 FOREIGN KEY (selfcare_item_id)
 REFERENCES T_SELFCARE_ITEM(id)
-GO
+;
 
 ALTER TABLE T_ELDER_TEMPERATURE
 ADD CONSTRAINT fk_ELDER_TEMPERATURE_elder_id
 FOREIGN KEY (elder_id)
 REFERENCES T_ELDER(id)
-GO
+;
 
 ALTER TABLE T_ELDER_TEMPERATURE
 ADD CONSTRAINT fk_ELDER_TEMPERATURE_doctor_id
 FOREIGN KEY (doctor_id)
 REFERENCES T_STAFF(id)
-GO
+;
 
 ALTER TABLE T_ELDER_HEART_RATE
 ADD CONSTRAINT fk_ELDER_HEART_RATE_elder_id
 FOREIGN KEY (elder_id)
 REFERENCES T_ELDER(id)
-GO
+;
 
 ALTER TABLE T_ELDER_HEART_RATE
 ADD CONSTRAINT fk_ELDER_HEART_RATE_doctor_id
 FOREIGN KEY (doctor_id)
 REFERENCES T_STAFF(id)
-GO
+;
 
 ALTER TABLE T_ELDER_BLOOD_PRESSURE
 ADD CONSTRAINT fk_ELDER_BLOOD_PRESSURE_elder_id
 FOREIGN KEY (elder_id)
 REFERENCES T_ELDER(id)
-GO
+;
 
 ALTER TABLE T_ELDER_BLOOD_PRESSURE
 ADD CONSTRAINT fk_ELDER_BLOOD_PRESSURE_doctor_id
 FOREIGN KEY (doctor_id)
 REFERENCES T_STAFF(id)
-GO
+;
 
 ALTER TABLE T_STAFF
 ADD CONSTRAINT fk_STAFF_gero_id
 FOREIGN KEY (gero_id)
 REFERENCES T_GERO(id)
-GO
+;
 
 ALTER TABLE T_CAREWORK_RECORD
 ADD CONSTRAINT fk_CAREWORK_RECORD_carer_id
 FOREIGN KEY (carer_id)
 REFERENCES T_STAFF(id)
-GO
+;
 
 ALTER TABLE T_CAREWORK_RECORD
 ADD CONSTRAINT fk_CAREWORK_RECORD_elder_item_id
 FOREIGN KEY (elder_item_id)
 REFERENCES T_ELDER_ITEM(id)
-GO
+;
 
 ALTER TABLE T_AREAWORK_RECORD
 ADD CONSTRAINT fk_AREAWORK_RECORD_carer_id
 FOREIGN KEY (carer_id)
 REFERENCES T_STAFF(id)
-GO
+;
 
 ALTER TABLE T_AREAWORK_RECORD
 ADD CONSTRAINT fk_AREAWORK_RECORD_area_item_id
 FOREIGN KEY (area_item_id)
 REFERENCES T_AREA_ITEM(id)
-GO
+;
 
 ALTER TABLE T_AREAWORK_RECORD
 ADD CONSTRAINT fk_AREAWORK_RECORD_area_id
 FOREIGN KEY (area_id)
 REFERENCES T_AREA(id)
-GO
+;
 
 -- ALTER TABLE T_CAREWORK_ELDER_RECORD
 -- ADD CONSTRAINT fk_CAREWORK_ELDER_RECORD_carer_id
 -- FOREIGN KEY (carer_id)
 -- REFERENCES T_STAFF(id)
--- GO
+-- ;
 
 -- ALTER TABLE T_CAREWORK_ELDER_RECORD
 -- ADD CONSTRAINT fk_CAREWORK_ELDER_RECORD_elder_id
 -- FOREIGN KEY (elder_id)
 -- REFERENCES T_ELDER(id)
--- GO
+-- ;
 
 ALTER TABLE T_ELDER_AUDIO_RECORD
 ADD CONSTRAINT fk_ELDER_AUDIO_RECORD_elder_id
 FOREIGN KEY (elder_id)
 REFERENCES T_ELDER(id)
-GO
+;
 
 ALTER TABLE T_STAFF_SCHEDULE_PLAN
 ADD CONSTRAINT fk_STAFF_SCHEDULE_PLAN_carer_id
 FOREIGN KEY (staff_id)
 REFERENCES T_STAFF(id)
-GO
+;
 
 ALTER TABLE T_STAFF_SCHEDULE_PLAN
 ADD CONSTRAINT fk_STAFF_SCHEDULE_PLAN_gero_id
 FOREIGN KEY (gero_id)
 REFERENCES T_GERO(id)
-GO
+;
 
 ALTER TABLE T_CAREWORK
 ADD CONSTRAINT fk_CAREWORK_carer_id
 FOREIGN KEY (carer_id)
 REFERENCES T_STAFF(id)
-GO
+;
 
 ALTER TABLE T_CAREWORK
 ADD CONSTRAINT fk_CAREWORK_elder_id
 FOREIGN KEY (gero_id)
 REFERENCES T_GERO(id)
-GO
+;
 
 ALTER TABLE T_AREAWORK
 ADD CONSTRAINT fk_AREAWORK_carer_id
 FOREIGN KEY (carer_id)
 REFERENCES T_STAFF(id)
-GO
+;
 
 ALTER TABLE T_AREAWORK
 ADD CONSTRAINT fk_AREAWORK_area_id
 FOREIGN KEY (gero_id)
 REFERENCES T_GERO(id)
-GO
+;
 
 ALTER TABLE T_ROLE
 ADD CONSTRAINT fk_ROLE_gero_id
 FOREIGN KEY (gero_id)
 REFERENCES T_GERO(id)
-GO
+;
 
 ALTER TABLE T_ROLE_PRIVILEGES
 ADD CONSTRAINT fk_ROLE_PRIVILEGES_role_id
 FOREIGN KEY (role_id)
 REFERENCES T_ROLE(id)
 ON DELETE CASCADE
-GO
+;
 
 ALTER TABLE T_ROLE_PRIVILEGES
 ADD CONSTRAINT fk_ROLE_PRIVILEGES_privilege_id
 FOREIGN KEY (privilege_id)
 REFERENCES T_PRIVILEGE(id)
 ON DELETE CASCADE
-GO
+;
 
 ALTER TABLE T_USER_ROLES
 ADD CONSTRAINT fk_USER_ROLES_staff_id
 FOREIGN KEY (user_id)
 REFERENCES T_USER(id)
 ON DELETE CASCADE
-GO
+;
 
 ALTER TABLE T_USER_ROLES
 ADD CONSTRAINT fk_USER_ROLES_role_id
 FOREIGN KEY (role_id)
 REFERENCES T_ROLE(id)
 ON DELETE CASCADE
-GO
+;
 
 ALTER TABLE T_CARE_ITEM
 ADD CONSTRAINT fk_CARE_ITEM_gero_id
 FOREIGN KEY (gero_id)
 REFERENCES T_GERO(id)
-GO
+;
 
 -- ALTER TABLE T_GERO_CARE_ITEM
 -- ADD CONSTRAINT fk_GERO_CARE_ITEM_care_item_id
 -- FOREIGN KEY (care_item_id)
 -- REFERENCES T_CARE_ITEM(id)
--- GO
+-- ;
 
 ALTER TABLE T_AREA_ITEM
 ADD CONSTRAINT fk_AREA_ITEM_gero_id
 FOREIGN KEY (gero_id)
 REFERENCES T_GERO(id)
-GO
+;
 
 -- ALTER TABLE T_GERO_AREA_ITEM
 -- ADD CONSTRAINT fk_GERO_AREA_ITEM_area_item_id
 -- FOREIGN KEY (area_item_id)
 -- REFERENCES T_AREA_ITEM(id)
--- GO
+-- ;
 
 ALTER TABLE T_ELDER_ITEM
 ADD CONSTRAINT fk_ELDER_ITEM_elder_id
 FOREIGN KEY (elder_id)
 REFERENCES T_ELDER(id)
-GO
+;
 
 ALTER TABLE T_ELDER_ITEM
 ADD CONSTRAINT fk_ELDER_ITEM_care_item_id
 FOREIGN KEY (care_item_id)
 REFERENCES T_CARE_ITEM(id)
-GO
+;
 
 
 
