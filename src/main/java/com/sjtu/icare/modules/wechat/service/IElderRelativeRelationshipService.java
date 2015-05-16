@@ -9,6 +9,6 @@ import java.util.Map;
 
 public interface IElderRelativeRelationshipService {
 
-	Map<String, Object> getElderRelativeRelationshipsByRelativeId(int openId);
+	Map<String, Object> getElderRelativeRelationshipsByRelativeId(String openId);
 
 }

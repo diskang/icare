@@ -5,6 +5,7 @@
  */
 package com.sjtu.icare.modules.wechat.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class ElderRelativeRelationship implements
 	
 	@Override
 	public Map<String, Object> getElderRelativeRelationshipsByRelativeId(
-			int openId) {
+			String openId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		String status = null;
 		User user = systemService.getUserByWechatId(openId);
@@ -47,9 +48,18 @@ public class ElderRelativeRelationship implements
 		} else {
 			status = CommonConstants.UNSUBSCRIBED;
 		}
-				
+			
+		List<Integer> elderIds = null;
+		if (elderRelativeRelationshipEntities != null) {
+			elderIds = new ArrayList<Integer>();
+			for (ElderRelativeRelationshipEntity elderRelativeRelationshipEntity : elderRelativeRelationshipEntities) {
+				user = systemService.getUser(elderRelativeRelationshipEntity.getElderUserId());
+				elderIds.add(user.getUserId());
+			}
+		}
 		result.put("status", status);
 		result.put("relationship", elderRelativeRelationshipEntities);
+		result.put("elderIds", elderIds);
 		return result;
 	}
 	
