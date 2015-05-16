@@ -307,7 +307,7 @@ public class ElderRelativeForWechatRestController  extends BasicController {
 	@RequestMapping(value="/{openId}/elder_relationship", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getElderRelativeRelationship(
 			HttpServletRequest request,
-			@PathVariable("openId") int openId
+			@PathVariable("openId") String openId
 			) {
 //		checkApi(request);
 //		List<String> permissions = new ArrayList<String>();

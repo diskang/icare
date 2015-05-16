@@ -1,6 +1,7 @@
 package com.sjtu.icare.modules.sys.utils;
 
 import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
@@ -261,9 +262,9 @@ public class UserUtils {
 			getSession().removeAttribute(key);
 		}
 
-		public static User getUserByWechatId(int openId) {
+		public static User getUserByWechatId(String openId) {
 			User requestUser = new User();
-			requestUser.setWechatId(Integer.toString(openId));
+			requestUser.setWechatId(openId);
 			return userMapper.getByWechatId(requestUser);
 		}
 }
