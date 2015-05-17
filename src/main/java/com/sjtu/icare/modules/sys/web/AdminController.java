@@ -1,19 +1,13 @@
 package com.sjtu.icare.modules.sys.web;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sjtu.icare.common.config.Global;
 import com.sjtu.icare.common.web.BaseController;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.utils.UserUtils;

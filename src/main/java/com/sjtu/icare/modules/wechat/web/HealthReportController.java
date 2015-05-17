@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
+import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpServiceImpl;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 
@@ -37,7 +38,7 @@ import com.sjtu.icare.modules.wechat.service.IElderRelativeRelationshipService;
 public class HealthReportController extends BasicController{
 
 	@Autowired WxMpInMemoryConfigStorage wxMpConfigStorage;
-	@Autowired WxMpServiceImpl wxMpService;
+	@Autowired WxMpService wxMpService;
 	@Autowired private IElderRelativeRelationshipService elderRelativeRelationshipService;
 	@Autowired private IElderHealthDataService elderHealthDataService;
 	
@@ -97,7 +98,7 @@ public class HealthReportController extends BasicController{
 					result.addEntity(elderHealthMap);
 				}
 				
-			}else{
+			}else{//
 				
 			}
 			return result.getMap();

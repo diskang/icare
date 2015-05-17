@@ -46,8 +46,7 @@ import com.sjtu.icare.modules.sys.service.SystemService;
 import com.sjtu.icare.modules.wechat.service.IElderRelativeRelationshipService;
 
 @RestController
-//@RequestMapping({"${api.web}/relative_for_wechat", "${api.service}/relative_for_wechat"})
-@RequestMapping("/wechat/relative")
+@RequestMapping("${api.wechat}/relative")
 public class ElderRelativeForWechatRestController  extends BasicController {
 	private static Logger logger = Logger.getLogger(ElderRelativeForWechatRestController.class);
 	
