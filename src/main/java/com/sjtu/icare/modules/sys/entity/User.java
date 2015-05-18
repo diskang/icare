@@ -54,7 +54,8 @@ public class User extends DataEntity<User> {
     // relative 查询参数
     private Integer elderId;
     
-    
+    // 模糊匹配标志
+    private Boolean fuzzyMatch;
     
 	private Role role;	// 根据角色查询用户条件
 	
@@ -510,6 +511,14 @@ public class User extends DataEntity<User> {
 
 	public void setSubscribeTime(String subscribeTime) {
 		this.subscribeTime = subscribeTime;
+	}
+
+	public Boolean getFuzzyMatch() {
+		return fuzzyMatch;
+	}
+
+	public void setFuzzyMatch(Boolean fuzzyMatch) {
+		this.fuzzyMatch = fuzzyMatch;
 	}
 	
 	

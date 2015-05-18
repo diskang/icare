@@ -14,7 +14,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,6 +44,7 @@ import com.sjtu.icare.modules.elder.service.impl.ElderInfoService;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.service.SystemService;
 import com.sjtu.icare.modules.wechat.service.IElderRelativeRelationshipService;
+import com.sjtu.icare.modules.wechat.service.impl.ElderRelativeRelationshipService.ElderRelativeRelationshipReturn;
 
 @RestController
 //@RequestMapping({"${api.web}/relative_for_wechat", "${api.service}/relative_for_wechat"})
@@ -320,7 +320,7 @@ public class ElderRelativeForWechatRestController  extends BasicController {
 			// 获取基础的 JSON返回
 			BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
 			
-			Map<String, Object> tempresultMap = elderRelativeRelationshipService.getElderRelativeRelationshipsByRelativeId(openId);
+			ElderRelativeRelationshipReturn tempresultMap = elderRelativeRelationshipService.getElderRelativeRelationshipsByRelativeId(openId);
 			
 			basicReturnedJson.addEntity(tempresultMap);
 			
