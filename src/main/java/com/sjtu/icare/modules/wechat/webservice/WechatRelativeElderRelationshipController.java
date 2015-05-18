@@ -81,20 +81,34 @@ public class WechatRelativeElderRelationshipController extends BasicController{
 		}
 		// 获取基础的 JSON
 		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
-		
+		User user = systemService.getUserByUserTypeAndUserId(CommonConstants.RELATIVE_TYPE, relativeId);
+		if(user==null){
+			throw new RestException(HttpStatus.NOT_FOUND, "no user found by relative Id");
+		}else{
+			if(!wechatId.equals(user.getWechatId())){
+				logger.error(wechatId+"||"+user.getWechatId());
+				throw new RestException(HttpStatus.UNAUTHORIZED, "wechatId not match with user's id");
+			}
+			//add role
+//			List<Role> roleList = new ArrayList<Role>();
+//			Integer geroId = user.getGeroId();
+//			Role tmpRole = new Role();
+//			tmpRole.setGeroId(geroId);
+//			tmpRole.setName("家属");
+//			tmpRole = systemService.getRoleByNameAndGero(tmpRole);
+//			roleList.add(tmpRole);
+//			user.setRoleList(roleList);
+//			if(!systemService.updateUserRoles(user)){
+//				logger.error("failed to add role to relative");
+//			}
+		}
 		// 插入数据
 		try {
-			User user = systemService.getUserByUserTypeAndUserId(CommonConstants.RELATIVE_TYPE, relativeId);
-			if(user==null){
-				throw new RestException(HttpStatus.NOT_FOUND, "no user found by relative Id");
-			}else{
-				if(user.getWechatId()!=wechatId){
-					throw new RestException(HttpStatus.UNAUTHORIZED, "wechatId not match with user's id");
-				}
-			}
+			
 			Integer relativeUserId = user.getId();
 			user = systemService.getUserByUserTypeAndUserId(CommonConstants.ELDER_TYPE, elderId);
 			Integer elderUserId = user.getId();
+			
 			// insert into Relative
 			ElderRelativeRelationshipEntity requestElderRelativeRelationshipEntity = new ElderRelativeRelationshipEntity();
 			requestElderRelativeRelationshipEntity.setElderUserId(elderUserId);
@@ -200,4 +214,5 @@ public class WechatRelativeElderRelationshipController extends BasicController{
 		return basicReturnedJson.getMap();
 		
 	}
+	
 }
