@@ -390,6 +390,9 @@
             <if test="wechatId != null">
             T_USER.wechat_id = #{wechatId},
             </if>
+             <if test="subscribe != null">
+            T_USER.subscribe = #{subscribe},
+            </if>
             <if test="email != null">
             T_USER.email = #{email}
             </if>

@@ -11,13 +11,10 @@
 	<meta http-equiv="Expires" CONTENT="-1">           
 	<meta http-equiv="Cache-Control" CONTENT="no-cache">           
 	<meta http-equiv="Pragma" CONTENT="no-cache">
-	<link rel="stylesheet" href="common.css">
-	<link rel="stylesheet" href="oldMain.css">
-	<script src="oldMain.js"></script>
-	<title>家属注册</title>
+<title>老人健康数据</title>
 </head>
 <body>
-<h2>wechatId:${wechatId}</h2>
-<h2>wechatId__${user.id},${user.userId},${user.getName()} </h2>
+<h3>healthReport:${healthReport}</h3>
+
 </body>
 </html>

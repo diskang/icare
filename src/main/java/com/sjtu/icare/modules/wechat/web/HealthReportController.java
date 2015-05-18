@@ -1,10 +1,12 @@
 package com.sjtu.icare.modules.wechat.web;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
@@ -13,19 +15,18 @@ import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.sjtu.icare.common.config.CommonConstants;
 import com.sjtu.icare.common.config.ErrorConstants;
-import com.sjtu.icare.common.utils.BasicReturnedJson;
+import com.sjtu.icare.common.mapper.JsonMapper;
 import com.sjtu.icare.common.utils.DateUtils;
-import com.sjtu.icare.common.web.rest.BasicController;
+import com.sjtu.icare.common.web.BaseController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
-import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.elder.entity.ElderBloodPressureEntity;
 import com.sjtu.icare.modules.elder.entity.ElderHeartRateEntity;
 import com.sjtu.icare.modules.elder.entity.ElderTemperatureEntity;
@@ -34,52 +35,57 @@ import com.sjtu.icare.modules.wechat.service.IElderRelativeRelationshipService;
 import com.sjtu.icare.modules.wechat.service.impl.ElderRelativeRelationshipService;
 import com.sjtu.icare.modules.wechat.service.impl.ElderRelativeRelationshipService.ElderRelativeRelationshipReturn.Elder;
 
-@RestController
+@Controller
 @RequestMapping({"/wechat/healthreport"})
-public class HealthReportController extends BasicController{
+public class HealthReportController extends BaseController{
 
 	@Autowired WxMpInMemoryConfigStorage wxMpConfigStorage;
 	@Autowired WxMpService wxMpService;
 	@Autowired private IElderRelativeRelationshipService elderRelativeRelationshipService;
 	@Autowired private IElderHealthDataService elderHealthDataService;
-	
+	private JsonMapper jsonMapper = new JsonMapper();
 	private static Logger logger = Logger.getLogger(HealthReportController.class);
 			
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
-	public Map<String, Object> getMenu(@RequestParam("code") String code,
-			@RequestParam("state") String state,
-			HttpServletRequest request){
+	public String getMenu(@RequestParam("code") String code,
+			@RequestParam(value="state",required=false) String state,
+			HttpServletRequest request, HttpServletResponse response, Model model){
 		
 		String openId ="";
-		BasicReturnedJson result = new BasicReturnedJson();
 		//get openId by code
 		try {
 			WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
 			openId = wxMpOAuth2AccessToken.getOpenId();
-	
 		} catch (WxErrorException e) {
-			throw new RestException(HttpStatus.NOT_FOUND, "cannot get openId");
+			return "error/404";
 		}
 		try{
-			//get elderIds from openId
+			//get elderInfos from openId
 			ElderRelativeRelationshipService.ElderRelativeRelationshipReturn
-			relativeElders = elderRelativeRelationshipService.getElderRelativeRelationshipsByRelativeId(openId);
+			relativeElders = elderRelativeRelationshipService.getElderRelativeRelationshipsByWechatId(openId);
+			if(relativeElders==null){//user not register, redirect to register page
+				model.addAttribute("wechatId",openId);
+				return "module/wechat/register";
+			}
 			String status = (String)relativeElders.getStatus();
 			
 			List<Elder>elders = relativeElders.getElders();
 			if(CommonConstants.SUBSCRIBED_WITHOUT_RELATIONSHIP_BINDING.equals(status)){
 				//redirect to binding
+				return "redirect:/wechat/bind?wechat_id="+openId;
 			}else if(CommonConstants.SUBSCRIBED_WITH_RELATIONSHIP_BINDING.equals(status)){
 				//get elder health data by elder id in the last week
 				ElderBloodPressureEntity queryBloodPressureEntity = new ElderBloodPressureEntity();
 				ElderHeartRateEntity queryHeartRateEntity = new ElderHeartRateEntity();
 				ElderTemperatureEntity queryTemperatureEntity = new ElderTemperatureEntity();
-				for (int i = 0; i < elders.size(); i++) {
-					Integer elderId = elders.get(i).getElderId();
+				List<Object> elderHealthReportList= new ArrayList<Object>();
+				for (Elder elder: elders) {
+					Integer elderId = elder.getElderId();
 					queryBloodPressureEntity.setElderId(elderId);
 					queryHeartRateEntity.setElderId(elderId);
 					queryTemperatureEntity.setElderId(elderId);
 					String endDate = DateUtils.getDate();
+					//get data for last 7 days
 					String startDate = DateUtils.formatDate(DateUtils.addDays(new Date(), -7),"yyyy-MM-dd");
 					List<ElderBloodPressureEntity> elderBloodPressureEntityList = 
 							elderHealthDataService.getElderBloodPressureEntities(
@@ -93,25 +99,25 @@ public class HealthReportController extends BasicController{
 					// 构造返回的 JSON
 					Map<String, Object> elderHealthMap = new HashMap<String, Object>(); 
 					elderHealthMap.put("elderId", elderId);
-					//TODO need name
+					elderHealthMap.put("elderName", elder.getElderName());
 					elderHealthMap.put("bp", elderBloodPressureEntityList);
 					elderHealthMap.put("hr", elderHeartRateEntityList);
 					elderHealthMap.put("t", elderTemperatureEntityList);
-					result.addEntity(elderHealthMap);
+					elderHealthReportList.add(elderHealthMap);
 				}
-				
-			}else{//
-				
+				model.addAttribute("healthReport",jsonMapper.toJson(elderHealthReportList));
+				return "module/wechat/healthReport";
+			}else{//UNSubscribe cannot visit
+				logger.error("relative's relationship status:"+status);
+				return "error/403";
 			}
-			return result.getMap();
 		}catch(Exception e){
 			String otherMessage = "获取老人血压,心率，体温数据失败：\n" +	 "[" + e.getMessage() + "]";
 			String message = ErrorConstants.format(ErrorConstants.ELDER_BLOOD_PRESSURE_GET_SERVICE_FAILED, otherMessage);
 			logger.error(message);
-			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
+			return "error/500";
 		}
-		
-		
+
 	}
 	
 }

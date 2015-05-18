@@ -40,7 +40,7 @@ public class ElderBindController extends BaseController{
 	 * 2.  with code from clicking the menu button 
 	 * */
 	@RequestMapping({"/wechat/bind"})
-	public String register(@RequestParam(value="wechat_id",required=false) String wechatId, 
+	public String relativeBindElder(@RequestParam(value="wechat_id",required=false) String wechatId, 
 			@RequestParam(value="code",required=false) String code,
 			HttpServletRequest request, HttpServletResponse response, Model model) {
 		String openId="";
@@ -51,7 +51,7 @@ public class ElderBindController extends BaseController{
 		if(code==null||code.isEmpty()){
 			if(wechatId==null||wechatId.isEmpty()){
 				logger.error("no user information given");
-				return "error/403";
+				return "error/403";//TODO add a 400 page
 			}else{
 				openId = wechatId;
 			}

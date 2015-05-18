@@ -17,7 +17,7 @@
 <h2>wechatId:${wechatId}</h2>
 <h2>digest:${digest}</h2>
 
-<h2>user:${user}</h2>
-<h2>geroList:${geroList}</h2>
+<h2>wechatId__${user.id},${user.userId},${user.getName()} </h2>
+<h2>geroList:${geroList[0].id}</h2>
 </body>
 </html>
