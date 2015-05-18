@@ -44,6 +44,7 @@ import com.sjtu.icare.modules.elder.service.impl.ElderInfoService;
 import com.sjtu.icare.modules.sys.entity.User;
 import com.sjtu.icare.modules.sys.service.SystemService;
 import com.sjtu.icare.modules.wechat.service.IElderRelativeRelationshipService;
+import com.sjtu.icare.modules.wechat.service.impl.ElderRelativeRelationshipService.ElderRelativeRelationshipReturn;
 
 @RestController
 @RequestMapping("${api.wechat}/relative")
@@ -318,7 +319,7 @@ public class ElderRelativeForWechatRestController  extends BasicController {
 			// 获取基础的 JSON返回
 			BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
 			
-			Map<String, Object> tempresultMap = elderRelativeRelationshipService.getElderRelativeRelationshipsByRelativeId(openId);
+			ElderRelativeRelationshipReturn tempresultMap = elderRelativeRelationshipService.getElderRelativeRelationshipsByRelativeId(openId);
 			
 			basicReturnedJson.addEntity(tempresultMap);
 			
