@@ -62,7 +62,12 @@
                 AND T_USER.user_id = T_ELDER.id 
                 AND T_USER.cancel_date is NULL
 	            <if test="name != null">
-	                AND T_USER.name LIKE '%' + #{name} + '%'
+	                <if test="fuzzyMatch == true or fuzzyMatch == null">
+		                AND T_USER.name LIKE '%' + #{name} + '%'
+	                </if>
+	                <if test="fuzzyMatch == false">
+		                AND T_USER.name = #{name}
+	                </if>
 	            </if> 
 	            <if test="gender != null">
 	                AND T_USER.gender = #{gender}

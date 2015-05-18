@@ -5,10 +5,10 @@
  */
 package com.sjtu.icare.modules.wechat.service;
 
-import java.util.Map;
+import com.sjtu.icare.modules.wechat.service.impl.ElderRelativeRelationshipService.ElderRelativeRelationshipReturn;
 
 public interface IElderRelativeRelationshipService {
 
-	Map<String, Object> getElderRelativeRelationshipsByRelativeId(String openId);
+	ElderRelativeRelationshipReturn getElderRelativeRelationshipsByRelativeId(String openId);
 
 }

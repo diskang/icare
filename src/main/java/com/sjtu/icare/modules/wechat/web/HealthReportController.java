@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.WxMpServiceImpl;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 
 import org.apache.log4j.Logger;
@@ -32,6 +31,8 @@ import com.sjtu.icare.modules.elder.entity.ElderHeartRateEntity;
 import com.sjtu.icare.modules.elder.entity.ElderTemperatureEntity;
 import com.sjtu.icare.modules.elder.service.IElderHealthDataService;
 import com.sjtu.icare.modules.wechat.service.IElderRelativeRelationshipService;
+import com.sjtu.icare.modules.wechat.service.impl.ElderRelativeRelationshipService;
+import com.sjtu.icare.modules.wechat.service.impl.ElderRelativeRelationshipService.ElderRelativeRelationshipReturn.Elder;
 
 @RestController
 @RequestMapping({"/wechat/healthreport"})
@@ -61,10 +62,11 @@ public class HealthReportController extends BasicController{
 		}
 		try{
 			//get elderIds from openId
-			Map<String, Object> relativeElders = elderRelativeRelationshipService.getElderRelativeRelationshipsByRelativeId(openId);
-			String status = (String)relativeElders.get("status");
-			@SuppressWarnings("unchecked")
-			List<Integer>elderIds = (List<Integer>)relativeElders.get("elderIds");
+			ElderRelativeRelationshipService.ElderRelativeRelationshipReturn
+			relativeElders = elderRelativeRelationshipService.getElderRelativeRelationshipsByRelativeId(openId);
+			String status = (String)relativeElders.getStatus();
+			
+			List<Elder>elders = relativeElders.getElders();
 			if(CommonConstants.SUBSCRIBED_WITHOUT_RELATIONSHIP_BINDING.equals(status)){
 				//redirect to binding
 			}else if(CommonConstants.SUBSCRIBED_WITH_RELATIONSHIP_BINDING.equals(status)){
@@ -72,8 +74,8 @@ public class HealthReportController extends BasicController{
 				ElderBloodPressureEntity queryBloodPressureEntity = new ElderBloodPressureEntity();
 				ElderHeartRateEntity queryHeartRateEntity = new ElderHeartRateEntity();
 				ElderTemperatureEntity queryTemperatureEntity = new ElderTemperatureEntity();
-				for (int i = 0; i < elderIds.size(); i++) {
-					int elderId = elderIds.get(i);
+				for (int i = 0; i < elders.size(); i++) {
+					Integer elderId = elders.get(i).getElderId();
 					queryBloodPressureEntity.setElderId(elderId);
 					queryHeartRateEntity.setElderId(elderId);
 					queryTemperatureEntity.setElderId(elderId);
