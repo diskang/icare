@@ -84,7 +84,8 @@ public class HealthReportController extends BaseController{
 					queryBloodPressureEntity.setElderId(elderId);
 					queryHeartRateEntity.setElderId(elderId);
 					queryTemperatureEntity.setElderId(elderId);
-					String endDate = DateUtils.getDate();
+					//从明天开始前推才能把今天的数据取出来- -,so +1
+					String endDate = DateUtils.formatDate(DateUtils.addDays(new Date(), 1),"yyyy-MM-dd");
 					//get data for last 7 days
 					String startDate = DateUtils.formatDate(DateUtils.addDays(new Date(), -7),"yyyy-MM-dd");
 					List<ElderBloodPressureEntity> elderBloodPressureEntityList = 
