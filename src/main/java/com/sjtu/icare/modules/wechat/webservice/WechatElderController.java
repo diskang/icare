@@ -190,6 +190,7 @@ public class WechatElderController extends BasicController{
 		if(! CommonConstants.SUBSCRIBED_WITH_RELATIONSHIP_BINDING.equals(status)){
 			throw new RestException(HttpStatus.UNAUTHORIZED, "no elders bind");
 		}
+		//TODO
 		try {
 			BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
 			ElderTemperatureEntity queryTemperatureEntity = new ElderTemperatureEntity();
