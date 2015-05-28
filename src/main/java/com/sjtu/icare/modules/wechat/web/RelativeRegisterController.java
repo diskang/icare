@@ -59,7 +59,7 @@ public class RelativeRegisterController extends BaseController{
 		if(user!=null){
 			JsonMapper jsonMapper = new JsonMapper();
 			model.addAttribute("relativeAbout", jsonMapper.toJson(user));
-			return "module/wechat/relativeAbout";
+			return "module/wechat/updateInfo";
 		}
 		model.addAttribute("wechatId", openId);
 		

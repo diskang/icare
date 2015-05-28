@@ -47,17 +47,31 @@ public class HealthReportController extends BaseController{
 	private static Logger logger = Logger.getLogger(HealthReportController.class);
 			
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
-	public String getMenu(@RequestParam("code") String code,
+	public String getMenu(@RequestParam(value="code",required=false) String code,
 			@RequestParam(value="state",required=false) String state,
+			@RequestParam(value="wechat_id",required=false) String wechatId, 
 			HttpServletRequest request, HttpServletResponse response, Model model){
 		
 		String openId ="";
-		//get openId by code
-		try {
-			WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
-			openId = wxMpOAuth2AccessToken.getOpenId();
-		} catch (WxErrorException e) {
-			return "error/404";
+		if(code==null||code.isEmpty()){
+			if(wechatId==null||wechatId.isEmpty()){
+				logger.error("no user information given");
+				return "error/403";//TODO add a 400 page
+			}else{
+				openId = wechatId;
+			}
+		}else{
+			//get openId by code
+			try {
+				WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
+				openId = wxMpOAuth2AccessToken.getOpenId();
+			} catch (WxErrorException e) {
+				return "error/404";
+			}
+			if(openId==null || openId.isEmpty()){
+				logger.error("get AccessToken failed or code invalid, no openId found");
+				return "error/403";
+			}
 		}
 		try{
 			//get elderInfos from openId

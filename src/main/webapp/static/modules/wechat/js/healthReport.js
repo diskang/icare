@@ -7,21 +7,15 @@ $(document).ready(function(){
  var health = {
 	init:function(str){//初始化老人数据
 		var length = str.length;
+		if(length>2)alert("您绑定的老人个数超过了2个，其余将无法显示");
 		var formcontents = $(".row");
-		 for(var k=0;k<length;k++){//循环对象个数
-			var val = JSON.stringify(str[k]);
-			var i = 0;
-		    for(var e in val){ //循环具体内容
-		    	if(i==0)
-		    		$(".wrapinput").eq(i).append('<label class="item"><a href="#">'+val["elderName"]+'</a></label>');
-		    	if(i==1)
-		    		$(".wrapinput").eq(i).append('<label class="item"><a href="#">'+val["hr"]+'</a></label>');
-		    	if(i==2)
-		    		$(".wrapinput").eq(i).append('<label class="item"><a href="#">'+val["t"]+'</a></label>');
-		    	if(i==3)
-		    		$(".wrapinput").eq(i).append('<label class="item"><a href="#">'+val["bp"]+'</a></label>');
-		    	i++ ;
-		    }
+		 for(var k=0;k<2;k++){//循环对象个数
+			//var val = JSON.stringify(str[k]);
+			var elder = str[k]; 
+		    $(".wrapinput").eq(0).append('<label class="item" style="width: 30%"><a href="#">'+elder["elderName"]+'</a></label>');
+		    $(".wrapinput").eq(1).append('<label class="item" style="width: 30%"><a href="#">'+elder["hr"]+'</a></label>');
+		    $(".wrapinput").eq(2).append('<label class="item" style="width: 30%"><a href="#">'+elder["t"]+'</a></label>');
+		    $(".wrapinput").eq(3).append('<label class="item" style="width: 30%"><a href="#">'+elder["bp"]+'</a></label>'); 	
 		} 
 	}	 
  };
