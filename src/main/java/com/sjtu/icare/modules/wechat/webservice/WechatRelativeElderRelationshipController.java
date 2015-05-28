@@ -102,12 +102,14 @@ public class WechatRelativeElderRelationshipController extends BasicController{
 //				logger.error("failed to add role to relative");
 //			}
 		}
+		Integer relativeUserId = user.getId();
+		user = systemService.getUserByUserTypeAndUserId(CommonConstants.ELDER_TYPE, elderId);
+		if(user==null){
+			throw new RestException(HttpStatus.NOT_FOUND, "no elder found by elder Id");
+		}
+		Integer elderUserId = user.getId();
 		// 插入数据
 		try {
-			
-			Integer relativeUserId = user.getId();
-			user = systemService.getUserByUserTypeAndUserId(CommonConstants.ELDER_TYPE, elderId);
-			Integer elderUserId = user.getId();
 			
 			// insert into Relative
 			ElderRelativeRelationshipEntity requestElderRelativeRelationshipEntity = new ElderRelativeRelationshipEntity();
@@ -119,6 +121,7 @@ public class WechatRelativeElderRelationshipController extends BasicController{
 			String otherMessage = "[" + e.getMessage() + "]";
 			String message = ErrorConstants.format(ErrorConstants.RELATIVE_INFO_POST_SERVICE_FAILED, otherMessage);
 			logger.error(message);
+			e.printStackTrace();
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);
 		}
 		

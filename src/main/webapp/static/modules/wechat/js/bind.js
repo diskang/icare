@@ -1,9 +1,55 @@
 // JavaScript Document
 
  $(function(){
+	 $(".wrapaddr").hide();//开始隐藏照片div
+	 var imgUrl = [];
+	 var imgId = [];//老人id
+	 var index = 2;
+	 $('#elderSearch').click(function(){
+		add.validateName();
+		$.ajax({
+		 	url : '/api/wechat/elder',
+		 	type : "get",
+		 	data : {"elder_name":add.trimAll($('#userName').val()),"gero_id":"2"},
+		 	success : function(obj){
+		 		if(obj.entities!=""){
+		 			 for(var i=0;i<obj.entities.length;i++){
+		 				 imgUrl[i] = obj.entities[i].photo_url;
+		 				 imgId[i] = obj.entities[i].elder_id;
+		 			 }
+		 		}
+		 		add.imgulrAttr();
+		 	}
+		 });
+	 });
 	 
-	 $('#userName').blur(function(){
-		 add.validateName();
+	 //图片上向翻
+	 $(".top").click(function(){
+	 	if(index!=2){
+	 		if(index % 2 !=0){
+	 			index = index - 1;//图片为单数时
+	 		}else{
+	 			index = index - 2;//图片为双数时
+	 		}
+	 		add.imgulrAttr();
+	 	}
+	 });
+	 
+	 $(".next").click(function(){
+	 	if(imgUrl.length-index <= 0)
+	 		return ;
+	 	if((imgUrl.length-index) < 2){
+	 		index = index + 1;//图片为单数时
+	 	}else{
+	 		index = index + 2;//图片为双数时
+	 	}
+	 	add.imgulrAttr();
+	 });
+	 
+	 $("#back").click(function(){
+ 		if(window.confirm('您确定要离开吗?') ){
+			 WeixinJSBridge.call("closeWindow");
+		 }
 	 });
 	 
 	 //保存按钮
@@ -22,8 +68,34 @@
 		   }
 		});
 		if(isValidate)
-		 {that.addClass("disabled");
-		 	document.getElementById("add").submit();
+		 {
+		 	that.addClass("disabled");
+		 	var elder_name = $("#userName").val();//姓名,需要elder_id，不是elder_name
+		 	var elderId = $('input:radio:checked').val();
+		  	$.ajax({
+			    url : '/api/wechat/relative/'+relativeId+'/elder/'+elderId+'?wechat_id='+wechatId,//TODO  替换这里的elder_id
+			    type : 'post',
+			    data : '{}',
+			    contentType : 'application/json',
+			    dataType : "json",
+			    success : function(obj){
+					//后台返回的json对象 麻烦你帮我处理一下	
+			    	//var status = obj.status;
+			    	if(obj.status==200){
+			    		alert("添加成功");
+			    		 WeixinJSBridge.call("closeWindow");
+			    	}else{
+			    		that.removeClass("disabled");
+			    	}
+			    },
+			    error:function(XMLHttpRequest, textStatus, errorThrown){
+			    	that.removeClass("disabled");
+			    	alert("系统异常");
+			    //     alert(XMLHttpRequest.status);
+        //             alert(XMLHttpRequest.readyState);
+        //             alert(textStatus);
+			    }
+			});
 		 }
 	  });
 	 
@@ -35,26 +107,66 @@
 			if(!add.validateName()){
 				return false;
 			}
-			/*if(!$("input[type=radio]").is(":checked")){
-				$('#imgError').html("请选择!"); 
-				return false;
-			}else{
-				$('#imgError').html("&nbsp;");
-			}*/
+			if($("input[type=radio]").length != 0){
+				if(!$("input[type=radio]").is(":checked")){
+					$('#imgError').html("请选择!"); 
+					return false;
+				}else{
+					$('#imgError').html("&nbsp;");
+				}
+			}
 			  return true;
 		 },
 		 validateName:function(){
 			var userVal=add.trimAll($('#userName').val());
 			if(userVal=="")
 			  {
-				  $('#nameError').html("姓名不能为空!");  
+				  $('#userName').parent().next().html("姓名不能为空!");  
 				  return false;
 			  }
 			 else
 			  {
-				  $('#nameError').html("&nbsp;");
+				  $('#userName').parent().next().html("&nbsp;");
 			  }
 			return true;
+		 },
+		 imgulrAttr : function(){
+		 		var leng = imgUrl.length;//获取它的长度
+		 		var begImg,endImg; //第一个图片和第二个图片的下标
+		 		
+		 		if(leng<=0)
+		 			return ;
+		 		if(index % 2 ==0&&leng!=1){
+		 			 begImg = index-2; //第一个图片的下标
+			 		 endImg = begImg+1; //第二个图片的下标
+		 			$(".wrapaddr").find("ul").html("");//清除原有html
+		 			$(".wrapaddr").find("ul").append(
+				 			' <li class="imgli">'+
+						 		'<img alt="加载失败" src="http://202.120.38.227/downloadObject?file_url='+imgUrl[begImg]+'" width="120px" height="112px" class="img oneImg" >'+
+						 		'<input type="radio" name="radio" class="radio" value="'+imgId[begImg]+'">确应照片'+
+						 	'</li>'+
+						 	'<li class="imgli" >'+
+						 		'<img alt="加载失败" src="http://202.120.38.227/downloadObject?file_url='+imgUrl[endImg]+'" width="120px" height="112px" class="img twoImg">'+
+						 		'<input type="radio" name="radio" class="radio" value="'+imgId[endImg]+'">确应照片'+
+						 	'</li>'
+					);
+		 		}else{
+		 			if(leng==1){
+		 				begImg = 0; //第一个图片的下标
+		 			}else{
+		 				begImg = index-1; //第一个图片的下标
+		 			}
+		 			
+		 			$(".wrapaddr").find("ul").html("");//清除原有html
+		 			$(".wrapaddr").find("ul").append(
+						 	'<li class="imgli imgCont" >'+
+						 		'<img alt="加载失败" src="http://202.120.38.227/downloadObject?file_url='+imgUrl[begImg]+'" width="128px" height="112px" class="img twoImg ">'+
+						 		'<input type="radio" name="radio" class="radio" value="'+imgId[begImg]+'">确应照片'+
+						 	'</li>'
+					);
+		 		}
+		 		 $(".wrapaddr").show();//显示照片div
+		 		
 		 }
 		};
 	  });

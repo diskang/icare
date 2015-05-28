@@ -61,6 +61,8 @@ div.formcontent .clearfix:after{
   content:"\200B";clear:both;display:block;height:0;
 
 }
+.imgli{float: left;width: 42%;}
+.imgCont{ text-align: center;    margin-left: 20%;}
 p.error
  {
 	color:#f30000; 

@@ -111,7 +111,7 @@ public class WechatRelativeController  extends BasicController {
 					resultMap.put("notes", user.getNotes()); 
 					resultMap.put("phone_no", user.getPhoneNo()); 
 					resultMap.put("photo_url", user.getPhotoUrl()); 
-					resultMap.put("political_status", user.getPoliticalStatus()); 
+					resultMap.put("political_statu s", user.getPoliticalStatus()); 
 					resultMap.put("register_date", user.getRegisterDate()); 
 					resultMap.put("residence_address", user.getResidenceAddress()); 
 					resultMap.put("username", user.getUsername()); 
@@ -161,12 +161,18 @@ public class WechatRelativeController  extends BasicController {
 	@RequestMapping(method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object postRelativeForWechat(
 			HttpServletRequest request,
+			@RequestParam(value="wechat_id",required=false) String wechatId,
 			@RequestBody String inJson
 			) {
-//		checkApi(request);
-//		List<String> permissions = new ArrayList<String>();
-//		permissions.add("admin:gero:"+geroId+":elder:info:add");
-//		checkPermissions(permissions);
+		if (wechatId==null || wechatId.isEmpty()) {
+			throw new RestException(HttpStatus.BAD_REQUEST, "wechat Id required"); 
+		}
+		try{
+			User user = systemService.getUserByWechatId(wechatId);
+			if(user!=null)throw new Exception();
+		}catch(Exception e){
+			throw new RestException(HttpStatus.FORBIDDEN, "cannot create new user due to previous reasons");
+		}
 		
 		// 将参数转化成驼峰格式的 Map
 		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
@@ -182,7 +188,7 @@ public class WechatRelativeController  extends BasicController {
 			
 			if (requestParamMap.get("name") == null
 				|| requestParamMap.get("phoneNo") == null
-				|| requestParamMap.get("wechatId") == null
+//				|| requestParamMap.get("wechatId") == null
 				)
 				throw new Exception();
 			
@@ -216,6 +222,7 @@ public class WechatRelativeController  extends BasicController {
 			BeanUtils.populate(requestUser, requestParamMap);
 			requestUser.setUsername(requestUser.getIdentityNo());
 			requestUser.setGeroId(null);
+			requestUser.setWechatId(wechatId);
 			requestUser.setSubscribe("1");
 			//requestUser.setSubscribeTime();
 			Integer userId = systemService.insertUser(requestUser);

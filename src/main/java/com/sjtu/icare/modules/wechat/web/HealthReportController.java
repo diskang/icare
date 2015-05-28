@@ -101,9 +101,25 @@ public class HealthReportController extends BaseController{
 					Map<String, Object> elderHealthMap = new HashMap<String, Object>(); 
 					elderHealthMap.put("elderId", elderId);
 					elderHealthMap.put("elderName", elder.getElderName());
-					elderHealthMap.put("bp", elderBloodPressureEntityList);
-					elderHealthMap.put("hr", elderHeartRateEntityList);
-					elderHealthMap.put("t", elderTemperatureEntityList);
+					if(elderHeartRateEntityList!=null&&elderHeartRateEntityList.size()>0){
+						ElderHeartRateEntity heartRate= elderHeartRateEntityList.get(elderHeartRateEntityList.size()-1);
+						elderHealthMap.put("hr", heartRate.getRate());
+					}else{
+						elderHealthMap.put("hr", null);
+					}
+					if(elderTemperatureEntityList!=null&&elderTemperatureEntityList.size()>0){
+						ElderTemperatureEntity temperature= elderTemperatureEntityList.get(elderTemperatureEntityList.size()-1);
+						elderHealthMap.put("t", temperature.getTemperature() );
+					}else{
+						elderHealthMap.put("t", null);
+					}
+					if(elderBloodPressureEntityList!=null&&elderBloodPressureEntityList.size()>0){
+						ElderBloodPressureEntity bloodPressure= elderBloodPressureEntityList.get(elderBloodPressureEntityList.size()-1);
+						String bpString = bloodPressure.getSystolicPressure()+"/"+bloodPressure.getDiastolicPressure();
+						elderHealthMap.put("bp", bpString );
+					}else{
+						elderHealthMap.put("bp", null);
+					}
 					elderHealthReportList.add(elderHealthMap);
 				}
 				model.addAttribute("healthReport",jsonMapper.toJson(elderHealthReportList));

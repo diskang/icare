@@ -18,22 +18,24 @@
 	<script src="/static/js/jquery-1.8.3.min.js"></script>
 	<script src="/static/modules/wechat/js/healthReport.js"></script>
 	<title>老人身体状况</title>
-	<script type="text/javascript">
-		var str = '${healthReport}';
-	</script>
+		
 </head>
 
 <body>
-
+<script type="text/javascript">
+	//var str = '${healthReport}'; 
+	var str = JSON.parse('${healthReport}'); 
+	//alert(JSON.stringify(str[0]));
+</script>
 <h3 class="title"><a href="javascript:history.go(-1);" class="back"></a><label>老人身体状况</label></h3> 
 <div class="content">
 	<div class="formcontent">
 		<div  class="row" >
-		<div class="wrapinput" >
+			<div class="wrapinput" >
 				<label class="item">姓名</label>
-		</div>
-		<p class="error">&nbsp;</p>
-	   </div>
+			</div>
+			<p class="error">&nbsp;</p>
+	    </div>
 		
      
 		<div class="row">
@@ -57,8 +59,6 @@
 		</div>
         <a class="btn">返回</a>
 	</div>
- 
 </div>
-
 </body>
 </html>

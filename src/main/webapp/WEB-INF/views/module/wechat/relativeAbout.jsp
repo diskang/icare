@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!--% String path = request.getContextPath(); %-->
 <% String basePath = request.getScheme()+"://" + request.getServerName()+":"+request.getServerPort();%>
 <!DOCTYPE html>
 <html>
@@ -17,38 +16,20 @@
 	<link rel="stylesheet" href="/static/modules/wechat/css/register.css">
 	<script type="text/javascript" src="<%=basePath%>/static/js/jquery-1.8.3.min.js"></script>
 	<script type="text/javascript" src="<%=basePath%>/static/modules/wechat/js/register.js"></script>
-	<title>注册 </title>
+	<title>信息维护 </title>
 	<script type="text/javascript">
-		var wechatId = '${wechatId}';
-		var basePath = "<%=basePath%>";
+		//var wechatId = '${wechatId}';
+		var basePath = <%=basePath%>+"";
 	</script>
 </head>
 
 <body>
 
 <h3 class="title">
-	<a href="#" class="back"></a>注册
+	<a href="#" class="back"></a>信息维护
 </h3>
-
 <div class="content">
-	<p class="tip">您可以通过以下操作完成注册。注册完才可以添加老人!</p>
-	<div class="formcontent">
-	
-		<form action="/api/wechat/relative" id="regForm" method="post">
-		<input type="hidden" name="wechatId" value="${wechatId}">
-	
-		<div class="row">
-				<input type="text" name="name" placeholder="请输入姓名" maxlength="30" id="name"   />
-				<p class="error" id="nameErr">&nbsp;</p>
-		</div>
-		<div class="row">
-			<input type="number" name="phoneNo" placeholder="请输入手机号码" maxlength="11" id="phoneNum"/>
-			<p class="error" id="phoneNumErr">&nbsp;</p>
-		</div>
-		<a class="btn" >注册</a>
-		</form>
-		
-	</div>
+<p class="tip">${relativeAbout} </p>
 </div>
 </body>
 </html>

@@ -1,4 +1,10 @@
-$(function() {
+$(document).ready(function(){
+	
+	 $(".back").click(function(){
+ 		if(window.confirm('您确定要离开吗?') ){
+			 WeixinJSBridge.call("closeWindow");
+		 }
+	 });
    var register={
 	  trimAll: function(str) {return str.replace(/\s/g, '');},
 	  isMobile:function (str){return new RegExp(/^(13|14|15|17|18)\d{9}$/).test(str)},
@@ -27,8 +33,36 @@ $(function() {
 			   }
 			})
 			if(isValidate)
-			 {that.addClass("disabled")
-			 document.getElementById("regForm").submit();
+			 {
+			 	that.addClass("disabled");
+			 	var name = $("#name").val();//姓名
+			 	var phoneNum = $("#phoneNum").val();//手机号码
+			 	$.ajax({
+			 		url : '/api/wechat/relative?wechat_id='+wechatId,
+			 		contentType : 'application/json',
+				    type : 'post',
+				    data : JSON.stringify({"name":name,"phoneNo":phoneNum}),
+				    dataType : "json",
+				    success : function(obj){
+						//后台返回的json对象 麻烦你帮我处理一下	
+				    	//var status = obj.status;
+				    	
+				    	if(obj.status==200){
+				    		that.removeClass("disabled");
+					    	window.location.href = basePath+"/wechat/bind?wechat_id="+wechatId;
+				    	}else if(obj.error!=""){
+			 				alert(obj.error);
+			 				that.removeClass("disabled");
+				    	}
+				    	
+				    },
+				    error:function(XMLHttpRequest, textStatus, errorThrown){
+				    	that.removeClass("disabled");
+				    	alert(XMLHttpRequest.status);
+                        alert(XMLHttpRequest.readyState);
+                        alert(textStatus);
+				    }
+			 	});
 			 }
 		  });
 	   },
