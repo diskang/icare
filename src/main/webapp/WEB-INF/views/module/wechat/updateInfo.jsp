@@ -22,9 +22,16 @@
 
 <body>
 
-<h3 class="title"><a href="javascript:history.go(-1);" class="back"></a><label>个人信息修改</label></h3> 
+<h3 class="title"><a href="#" class="back"></a><label>个人信息修改</label></h3> 
 <div class="content">
 	<div class="formcontent">
+		<div class="row">
+			<div class="wrapinput">
+				<label>手机号码</label>
+				<input  type="text"  id="mobilePhone" name="phoneNumber" maxlength="11" value=""/>
+			</div>
+			<p class="error">&nbsp;</p>
+		</div>
 		<div class="row">
 			<div class="wrapinput">
 				<label>联系地址</label>
@@ -33,13 +40,6 @@
 			<p class="error">&nbsp;</p>
 		</div>
      
-		<div class="row">
-			<div class="wrapinput">
-				<label>手机号码</label>
-				<input  type="text"  id="mobilePhone" name="phoneNumber" maxlength="11" value=""/>
-			</div>
-			<p class="error">&nbsp;</p>
-		</div>
         <a class="btn">保存修改</a>
 	</div>
  

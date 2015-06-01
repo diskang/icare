@@ -4,21 +4,173 @@ $(document).ready(function(){
 	$("a.btn").click(function(){
 		 WeixinJSBridge.call("closeWindow");
 	});
- var health = {
+	$(".back").click(function(){
+ 		if(window.confirm('您确定要离开吗?') ){
+			 WeixinJSBridge.call("closeWindow");
+		 }
+	 });
+
+
+	health.init(str);
+	
+});
+
+var _setHealthData=function(dataUrl,options,parseFunction){
+	$.ajax({
+	    url : dataUrl,
+	    type : 'get',
+	    success : function(obj){
+			//后台返回的json对象 麻烦你帮我处理一下	
+	    	//var status = obj.status;
+	    	if(obj.status==200){
+	    		if(obj.entities.length>0){
+	    			var healthData = parseFunction(obj.entities);
+	    			new Chart(document.getElementById("canvas").getContext("2d")).Line(healthData,options);
+	    		}
+	    		
+	    	}else{
+	    		that.removeClass("disabled");
+	    	}
+	    },
+	    error:function(XMLHttpRequest, textStatus, errorThrown){
+	    	that.removeClass("disabled");
+	    }
+	});
+}	
+var health = {
 	init:function(str){//初始化老人数据
 		var length = str.length;
-		if(length>2)alert("您绑定的老人个数超过了2个，其余将无法显示");
+		if(length>2)alert("只能显示两个老人");
 		var formcontents = $(".row");
 		 for(var k=0;k<2;k++){//循环对象个数
 			//var val = JSON.stringify(str[k]);
-			var elder = str[k]; 
-		    $(".wrapinput").eq(0).append('<label class="item" style="width: 30%"><a href="#">'+elder["elderName"]+'</a></label>');
-		    $(".wrapinput").eq(1).append('<label class="item" style="width: 30%"><a href="#">'+elder["hr"]+'</a></label>');
-		    $(".wrapinput").eq(2).append('<label class="item" style="width: 30%"><a href="#">'+elder["t"]+'</a></label>');
-		    $(".wrapinput").eq(3).append('<label class="item" style="width: 30%"><a href="#">'+elder["bp"]+'</a></label>'); 	
+			var elder = str[k];
+			var eid  = elder.elderId;
+			popup.preAppend(0,eid,elder.elderName);
+			popup.preAppend(1,eid,elder.hr);
+			popup.preAppend(2,eid,elder.t);
+			popup.preAppend(3,eid,elder.bp);
 		} 
-	}	 
- };
- health.init(str);
-});
+	},
+	
+	getT:function(elderId){
+		var dataUrl = '/api/wechat/elder/'+elderId+'/temperature?wechat_id='+wechatId;
+		var tOptions = {'scaleOverride':true,'scaleSteps':6, 'scaleStepWidth':0.5,'scaleStartValue':36};
+		var parseFunction = function(entities){
+			var len=entities.length;
+//			Ts = new Array(len<7?7:len);//at least 7
+//			for (var i= len-1; i>=0; i--){
+//				Ts[i] = entities[i].temperature;
+//			}
+//			Ts=Ts.reverse();
+			var usedLength = len<7?len:7;
+			Ts = new Array(usedLength);//at most 7
+			for (var i= 0; i<usedLength; i++){
+				Ts[i] = entities[i].temperature;
+			}
+			var tData = {
+				labels : ["1","2","3","4","5","6","7"].slice(0,usedLength),
+				datasets : [{
+					fillColor : "rgba(90,190,90,.5)",
+					strokeColor : "rgba(90,190,90,1)",
+					pointColor : "rgba(90,190,90,1)",
+					pointStrokeColor : "#fff",
+					data : Ts
+				}]
+			};
+			return tData;
+		}
+		_setHealthData(dataUrl,tOptions,parseFunction);
+		popup.open("老人最近体温记录");
+	},
+	getHR:function(elderId){
+		var dataUrl = '/api/wechat/elder/'+elderId+'/heart_rate?wechat_id='+wechatId;
+		var hrOptions = {'scaleOverride':true,'scaleSteps':10, 'scaleStepWidth':5,'scaleStartValue':50};
+		var parseFunction = function(entities){
+			var len=entities.length;
+			var usedLength = len<7?len:7;
+			var hrs = new Array(usedLength);//at most 7
+			for (var i= 0; i<usedLength; i++){
+				hrs[i] = entities[i].rate;
+			}
+			
+			var hrData = {
+				labels : ["1","2","3","4","5","6","7"].slice(0,usedLength),
+				datasets : [{
+					fillColor : "rgba(90,190,90,.5)",
+					strokeColor : "rgba(90,190,90,1)",
+					pointColor : "rgba(90,190,90,1)",
+					pointStrokeColor : "#fff",
+					data : hrs
+				}]
+			}
+			return hrData;
+		}
+		_setHealthData(dataUrl,hrOptions,parseFunction);
+		popup.open("老人最近心率记录");
+	},
+	getBP:function(elderId){
+		var dataUrl = '/api/wechat/elder/'+elderId+'/blood_pressure?wechat_id='+wechatId;
+		var bpOptions = {'scaleOverride':true,'scaleSteps':10, 'scaleStepWidth':10,'scaleStartValue':50};
+		var parseFunction = function(entities){
+			var len=entities.length;
+			var usedLength = len<7?len:7;
+			var sp = new Array(usedLength);//at most 7
+			var dp = new Array(usedLength);//at most 7
+			for (var i= 0; i<usedLength; i++){
+				sp[i] = entities[i].systolicPressure;
+				dp[i] = entities[i].diastolicPressure;
+			}
+			var bpData = {
+				labels : ["1","2","3","4","5","6","7"].slice(0,usedLength),
+				datasets : [{
+					fillColor : "rgba(90,190,90,.5)",
+					strokeColor : "rgba(90,190,90,1)",
+					pointColor : "rgba(90,190,90,1)",
+					pointStrokeColor : "#fff",
+					data : sp
+				},
+				{
+					fillColor : "rgba(220,220,220,0.5)",
+					strokeColor : "rgba(220,220,220,1)",
+					pointColor : "rgba(220,220,220,1)",
+					pointStrokeColor : "#fff",
+					data : dp
+				}]
+			}
+			return bpData;
+		}
+		_setHealthData(dataUrl,bpOptions,parseFunction);
+		popup.open("老人最近血压记录");
+	}
+};
+
+var popup = {
+	open:function(title){
+		var popWindow = document.getElementById("popupBackground");
+		$('.popWindow b').html(title);
+		popWindow.style.display="block";
+	},
+	close:function(){
+		var popWindow = document.getElementById("popupBackground");
+		popWindow.style.display="none";
+	},
+	preAppend:function(number,elderId,content){//number=0,1,2,3
+		var onclickEvent = [' ', 
+		                    ' onclick="health.getHR('+elderId+')"',
+		                    ' onclick="health.getT('+elderId+')"',
+		                    ' onclick="health.getBP('+elderId+')"'][number];
+		$(".wrapinput").eq(number).append(
+				'<label class="item" style="width:30%" ' +onclickEvent +'>'+content+'</a></label>');
+	}
+//	,toggle:function(){
+//		var popWindow = document.getElementById("popupBackground");
+//		if(popWindow.style.display=="none"){
+//			popWindow.style.display="block";
+//		}else{
+//			popWindow.style.display="none";
+//		}
+//	}
+};
+
 

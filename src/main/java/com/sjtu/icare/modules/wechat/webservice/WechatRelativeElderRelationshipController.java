@@ -1,5 +1,7 @@
 package com.sjtu.icare.modules.wechat.webservice;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -20,6 +22,7 @@ import com.sjtu.icare.common.web.rest.BasicController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.elder.entity.ElderRelativeRelationshipEntity;
+import com.sjtu.icare.modules.elder.persistence.RelativeDAO;
 import com.sjtu.icare.modules.elder.service.IRelativeInfoService;
 import com.sjtu.icare.modules.elder.service.impl.ElderInfoService;
 import com.sjtu.icare.modules.sys.entity.User;
@@ -34,6 +37,8 @@ public class WechatRelativeElderRelationshipController extends BasicController{
 	private static Logger logger = Logger.getLogger(WechatRelativeElderRelationshipController.class);
 	@Autowired
 	private SystemService systemService;
+	@Autowired
+	private RelativeDAO relativeDAO;
 	@Autowired
 	private ElderInfoService elderInfoService;
 	@Autowired
@@ -102,24 +107,36 @@ public class WechatRelativeElderRelationshipController extends BasicController{
 //				logger.error("failed to add role to relative");
 //			}
 		}
+		ElderRelativeRelationshipReturn tempresultMap = elderRelativeRelationshipService.getElderRelativeRelationshipsByWechatId(wechatId);
+		if(tempresultMap==null){
+			throw new RestException(HttpStatus.NOT_FOUND, "no user found by wechat Id");
+		}
 		Integer relativeUserId = user.getId();
 		user = systemService.getUserByUserTypeAndUserId(CommonConstants.ELDER_TYPE, elderId);
 		if(user==null){
 			throw new RestException(HttpStatus.NOT_FOUND, "no elder found by elder Id");
 		}
 		Integer elderUserId = user.getId();
-		// 插入数据
-		try {
-			
-			// insert into Relative
-			ElderRelativeRelationshipEntity requestElderRelativeRelationshipEntity = new ElderRelativeRelationshipEntity();
-			requestElderRelativeRelationshipEntity.setElderUserId(elderUserId);
+		//entity to query
+		ElderRelativeRelationshipEntity requestElderRelativeRelationshipEntity = new ElderRelativeRelationshipEntity();
+		List<ElderRelativeRelationshipEntity> elderRelativeRelationshipEntities =  null;//query result
+		try {//get existing relationships
 			requestElderRelativeRelationshipEntity.setRelativeUserId(relativeUserId);
+			elderRelativeRelationshipEntities = relativeDAO.getElderRelativeRelationships(requestElderRelativeRelationshipEntity);
+		}catch(Exception e){
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, "cannot get relationship for relative"); 
+		} 
+		//check how many elders the relative already bind, support number <=2
+		if(elderRelativeRelationshipEntities!=null && elderRelativeRelationshipEntities.size()>2){
+			throw new RestException(HttpStatus.FORBIDDEN, "exceed maximum binded number, can only add two relatives"); 
+		}
+		
+		try{//no problems found, add new elder 's user id 
+			requestElderRelativeRelationshipEntity.setElderUserId(elderUserId);
+			// insert into Relative table
 			relativeInfoService.insertElderRelativeRelationship(requestElderRelativeRelationshipEntity);
-			
-		} catch(Exception e) {
-			String otherMessage = "[" + e.getMessage() + "]";
-			String message = ErrorConstants.format(ErrorConstants.RELATIVE_INFO_POST_SERVICE_FAILED, otherMessage);
+		}catch(Exception e) {
+			String message = ErrorConstants.format(ErrorConstants.RELATIVE_INFO_POST_SERVICE_FAILED, e.getMessage());
 			logger.error(message);
 			e.printStackTrace();
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, message);

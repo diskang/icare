@@ -7,19 +7,29 @@
 	 var index = 2;
 	 $('#elderSearch').click(function(){
 		add.validateName();
+		$(".wrapaddr").find("ul").html("");//清除原有html
 		$.ajax({
 		 	url : '/api/wechat/elder',
 		 	type : "get",
 		 	data : {"elder_name":add.trimAll($('#userName').val()),"gero_id":"2"},
 		 	success : function(obj){
-		 		if(obj.entities!=""){
+		 		if(obj.entities!=null &&obj.entities.length>0){
+		 			//alert("inside");
 		 			 for(var i=0;i<obj.entities.length;i++){
 		 				 imgUrl[i] = obj.entities[i].photo_url;
 		 				 imgId[i] = obj.entities[i].elder_id;
 		 			 }
+		 		}else{
+		 			return;
 		 		}
 		 		add.imgulrAttr();
-		 	}
+		 	/*	if(obj.entities.length>0){
+	 				 $(".radio")[0].checked = true;
+	 			}*/
+		 	},
+		 	error:function(XMLHttpRequest, textStatus, errorThrown){
+		    	that.removeClass("disabled");
+		    }
 		 });
 	 });
 	 
@@ -51,6 +61,10 @@
 			 WeixinJSBridge.call("closeWindow");
 		 }
 	 });
+	 //点击图片也可以选中老人 TODO 没效果
+	 $(".wrapaddr ul").find("li").click(function(){
+		 $(this).find("input[name=radio]").attr('checked',true);
+	 });
 	 
 	 //保存按钮
 	  $('a.btn').click(function(){
@@ -73,7 +87,7 @@
 		 	var elder_name = $("#userName").val();//姓名,需要elder_id，不是elder_name
 		 	var elderId = $('input:radio:checked').val();
 		  	$.ajax({
-			    url : '/api/wechat/relative/'+relativeId+'/elder/'+elderId+'?wechat_id='+wechatId,//TODO  替换这里的elder_id
+			    url : '/api/wechat/relative/'+relativeId+'/elder/'+elderId+'?wechat_id='+wechatId,
 			    type : 'post',
 			    data : '{}',
 			    contentType : 'application/json',
@@ -90,7 +104,9 @@
 			    },
 			    error:function(XMLHttpRequest, textStatus, errorThrown){
 			    	that.removeClass("disabled");
-			    	alert("系统异常");
+			    	if(XMLHttpRequest.status==403){
+			    	    alert("最多只能绑定两个老人！");
+			    	}
 			    //     alert(XMLHttpRequest.status);
         //             alert(XMLHttpRequest.readyState);
         //             alert(textStatus);
@@ -139,14 +155,13 @@
 		 		if(index % 2 ==0&&leng!=1){
 		 			 begImg = index-2; //第一个图片的下标
 			 		 endImg = begImg+1; //第二个图片的下标
-		 			$(".wrapaddr").find("ul").html("");//清除原有html
 		 			$(".wrapaddr").find("ul").append(
 				 			' <li class="imgli">'+
-						 		'<img alt="加载失败" src="http://202.120.38.227/downloadObject?file_url='+imgUrl[begImg]+'" width="120px" height="112px" class="img oneImg" >'+
+						 		'<img alt="加载失败" src="/downloadObject?file_url='+imgUrl[begImg]+'" width="120px" height="112px" class="img oneImg" >'+
 						 		'<input type="radio" name="radio" class="radio" value="'+imgId[begImg]+'">确应照片'+
 						 	'</li>'+
 						 	'<li class="imgli" >'+
-						 		'<img alt="加载失败" src="http://202.120.38.227/downloadObject?file_url='+imgUrl[endImg]+'" width="120px" height="112px" class="img twoImg">'+
+						 		'<img alt="加载失败" src="/downloadObject?file_url='+imgUrl[endImg]+'" width="120px" height="112px" class="img twoImg">'+
 						 		'<input type="radio" name="radio" class="radio" value="'+imgId[endImg]+'">确应照片'+
 						 	'</li>'
 					);
@@ -160,7 +175,7 @@
 		 			$(".wrapaddr").find("ul").html("");//清除原有html
 		 			$(".wrapaddr").find("ul").append(
 						 	'<li class="imgli imgCont" >'+
-						 		'<img alt="加载失败" src="http://202.120.38.227/downloadObject?file_url='+imgUrl[begImg]+'" width="128px" height="112px" class="img twoImg ">'+
+						 		'<img alt="加载失败" src="/downloadObject?file_url='+imgUrl[begImg]+'" width="128px" height="112px" class="img twoImg ">'+
 						 		'<input type="radio" name="radio" class="radio" value="'+imgId[begImg]+'">确应照片'+
 						 	'</li>'
 					);

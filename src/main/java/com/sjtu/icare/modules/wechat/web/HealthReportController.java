@@ -101,7 +101,7 @@ public class HealthReportController extends BaseController{
 					//从明天开始前推才能把今天的数据取出来- -,so +1
 					String endDate = DateUtils.formatDate(DateUtils.addDays(new Date(), 1),"yyyy-MM-dd");
 					//get data for last 7 days
-					String startDate = DateUtils.formatDate(DateUtils.addDays(new Date(), -7),"yyyy-MM-dd");
+					String startDate = DateUtils.formatDate(DateUtils.addDays(new Date(), -30),"yyyy-MM-dd");
 					List<ElderBloodPressureEntity> elderBloodPressureEntityList = 
 							elderHealthDataService.getElderBloodPressureEntities(
 							queryBloodPressureEntity, startDate, endDate);
@@ -136,6 +136,7 @@ public class HealthReportController extends BaseController{
 					}
 					elderHealthReportList.add(elderHealthMap);
 				}
+				model.addAttribute("wechatId",openId);
 				model.addAttribute("healthReport",jsonMapper.toJson(elderHealthReportList));
 				return "module/wechat/healthReport";
 			}else{//UNSubscribe cannot visit
