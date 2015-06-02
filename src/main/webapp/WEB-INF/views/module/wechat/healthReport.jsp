@@ -66,12 +66,11 @@
 		
 		<div class="popWindow" onclick="event.cancelBubble=true">
 			<h3 class="title">
-			<b>这里是标题</b>
-			<span class="close thick" onclick="popup.close()"></span>
+				<b>这里是标题</b>
+				<span class="close thick" onclick="popup.close()"></span>
 			</h3>
 			<div class='wrapper'>
-			<canvas height='180' id='canvas' width='300'></canvas>
-			<div style="text-align:center;clear:both"></div>
+				<canvas id='canvas'></canvas>
 			</div>
 		</div>
 	</div>

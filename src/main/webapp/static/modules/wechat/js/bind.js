@@ -61,10 +61,7 @@
 			 WeixinJSBridge.call("closeWindow");
 		 }
 	 });
-	 //点击图片也可以选中老人 TODO 没效果
-	 $(".wrapaddr ul").find("li").click(function(){
-		 $(this).find("input[name=radio]").attr('checked',true);
-	 });
+	 
 	 
 	 //保存按钮
 	  $('a.btn').click(function(){
@@ -180,7 +177,11 @@
 						 	'</li>'
 					);
 		 		}
-		 		 $(".wrapaddr").show();//显示照片div
+		 		//点击图片也可以选中老人 TODO 没效果
+		 		$(".wrapaddr ul").find("li").click(function(){
+		 			$(this).find("input[name=radio]").attr('checked',true);
+				});
+		 		$(".wrapaddr").show();//显示照片div
 		 		
 		 }
 		};

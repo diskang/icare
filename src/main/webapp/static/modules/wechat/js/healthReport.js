@@ -24,8 +24,11 @@ var _setHealthData=function(dataUrl,options,parseFunction){
 	    	//var status = obj.status;
 	    	if(obj.status==200){
 	    		if(obj.entities.length>0){
+	    			$(".wrapper").html("");
+	    			$(".wrapper").append("<canvas id='canvas'></canvas>");
 	    			var healthData = parseFunction(obj.entities);
-	    			new Chart(document.getElementById("canvas").getContext("2d")).Line(healthData,options);
+	    			var myChart = new Chart(document.getElementById("canvas").getContext("2d")).Line(healthData,options);
+	    			//var legend = myChart.generateLegend();
 	    		}
 	    		
 	    	}else{
@@ -55,7 +58,8 @@ var health = {
 	
 	getT:function(elderId){
 		var dataUrl = '/api/wechat/elder/'+elderId+'/temperature?wechat_id='+wechatId;
-		var tOptions = {'scaleOverride':true,'scaleSteps':6, 'scaleStepWidth':0.5,'scaleStartValue':36};
+		var tOptions = {'scaleOverride':true,'scaleSteps':6, 'scaleStepWidth':0.5,'scaleStartValue':36
+				,tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>"};
 		var parseFunction = function(entities){
 			var len=entities.length;
 //			Ts = new Array(len<7?7:len);//at least 7
@@ -71,6 +75,7 @@ var health = {
 			var tData = {
 				labels : ["1","2","3","4","5","6","7"].slice(0,usedLength),
 				datasets : [{
+					label: "体温",
 					fillColor : "rgba(90,190,90,.5)",
 					strokeColor : "rgba(90,190,90,1)",
 					pointColor : "rgba(90,190,90,1)",
@@ -111,7 +116,8 @@ var health = {
 	},
 	getBP:function(elderId){
 		var dataUrl = '/api/wechat/elder/'+elderId+'/blood_pressure?wechat_id='+wechatId;
-		var bpOptions = {'scaleOverride':true,'scaleSteps':10, 'scaleStepWidth':10,'scaleStartValue':50};
+		var bpOptions = {'scaleOverride':true,'scaleSteps':10, 'scaleStepWidth':10,'scaleStartValue':50
+				,tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>"};
 		var parseFunction = function(entities){
 			var len=entities.length;
 			var usedLength = len<7?len:7;
@@ -124,6 +130,7 @@ var health = {
 			var bpData = {
 				labels : ["1","2","3","4","5","6","7"].slice(0,usedLength),
 				datasets : [{
+					label:"低压",
 					fillColor : "rgba(90,190,90,.5)",
 					strokeColor : "rgba(90,190,90,1)",
 					pointColor : "rgba(90,190,90,1)",
@@ -131,6 +138,7 @@ var health = {
 					data : sp
 				},
 				{
+					label:"高压",
 					fillColor : "rgba(220,220,220,0.5)",
 					strokeColor : "rgba(220,220,220,1)",
 					pointColor : "rgba(220,220,220,1)",
