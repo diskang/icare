@@ -241,6 +241,60 @@ public class WechatRelativeController  extends BasicController {
 		
 	}
 	
-	
+	/*
+	 * update a relative's information
+	 * TODO unsecured method, vulnerable 
+	 * */
+	@Transactional
+	@RequestMapping(method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
+	public Object modifyRelativeForWechat(
+			HttpServletRequest request,
+			@RequestParam(value="wechat_id",required=false) String wechatId,
+			@RequestBody String inJson
+			) {
+		if (wechatId==null || wechatId.isEmpty()) {
+			throw new RestException(HttpStatus.BAD_REQUEST, "wechat Id required"); 
+		}
+		User requestUser = null; 
+		try{
+			User user = systemService.getUserByWechatId(wechatId);
+			if(user==null){
+				throw new Exception();
+			}else{
+				requestUser = user;
+			}
+		}catch(Exception e){
+			throw new RestException(HttpStatus.NOT_FOUND, "no user found by wechat id");
+		}
+		
+		// 将参数转化成驼峰格式的 Map
+		Map<String, Object> tempRquestParamMap = ParamUtils.getMapByJson(inJson, logger);
+		Map<String, Object> requestParamMap = MapListUtils.convertMapToCamelStyle(tempRquestParamMap);
+		
+		BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
+		try {
+			String phoneNo = (String) requestParamMap.get("phoneNo");
+			String householdAddress = (String) requestParamMap.get("householdAddress");
+			if(phoneNo==null&& householdAddress==null){
+				throw new Exception();
+			}else{
+				requestUser.setPhoneNo(phoneNo);
+				requestUser.setHouseholdAddress(householdAddress);
+				
+			}
+		} catch(Exception e) {
+			throw new RestException(HttpStatus.BAD_REQUEST, "phone and address must be given");
+		}
+		// 更新数据
+		try {
+			// TABLE relative no change
+			systemService.updateUser(requestUser);
+		} catch(Exception e) {
+			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, "update relative failed");
+		}
+
+		return basicReturnedJson.getMap();
+		
+	}
 	
 }

@@ -56,12 +56,12 @@ public class RelativeRegisterController extends BaseController{
 		}
 		
 		user = systemService.getUserByWechatId(openId);
+		model.addAttribute("wechatId", openId);
 		if(user!=null){
 			JsonMapper jsonMapper = new JsonMapper();
 			model.addAttribute("relativeAbout", jsonMapper.toJson(user));
 			return "module/wechat/updateInfo";
 		}
-		model.addAttribute("wechatId", openId);
 		
 		//TODO write a jsp file in wechat folder
 		return "module/wechat/register";

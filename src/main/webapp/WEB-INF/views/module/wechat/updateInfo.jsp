@@ -27,6 +27,13 @@
 	<div class="formcontent">
 		<div class="row">
 			<div class="wrapinput">
+				<label>姓名</label>
+				<input type="text" id="relativeName" name="relativeName" disabled="disabled" maxlength="10" value=""/>
+			</div>
+			<p class="error">&nbsp;</p>
+		</div>
+		<div class="row">
+			<div class="wrapinput">
 				<label>手机号码</label>
 				<input  type="text"  id="mobilePhone" name="phoneNumber" maxlength="11" value=""/>
 			</div>
@@ -35,7 +42,7 @@
 		<div class="row">
 			<div class="wrapinput">
 				<label>联系地址</label>
-				<input type="text" id="relativeName" name="relativeName"  maxlength="50" value=""/>
+				<input type="text" id="relativeAddress" name="address"  maxlength="50" value=""/>
 			</div>
 			<p class="error">&nbsp;</p>
 		</div>
@@ -45,9 +52,11 @@
  
 </div>
 <script type="text/javascript">
+	var wechatId = '${wechatId}';
 	var relativeAbout = JSON.parse('${relativeAbout}'); 
 	$('#relativeName').val(relativeAbout.name);
 	$('#mobilePhone').val(relativeAbout.phoneNo);
+	$('#relativeAddress').val(relativeAbout.householdAddress);
 	//alert(JSON.stringify(relativeAbout));
 </script>
 </body>
