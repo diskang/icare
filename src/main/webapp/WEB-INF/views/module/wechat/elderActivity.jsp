@@ -19,7 +19,7 @@
 	<script src="/static/modules/wechat/js/elderActivity.js"></script>
 	<title>老人最新动态</title>
 	<script type="text/javascript">
-		
+		var activity = JSON.parse('${activityRecord}'); 
 	</script>
 </head>
 
@@ -74,7 +74,7 @@
 		</div>
         <a class="btn">返回</a>
 	</div>
- 
+ 	<p>${activityRecord}</p>
 </div>
 
 </body>

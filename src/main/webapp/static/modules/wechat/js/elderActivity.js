@@ -5,4 +5,6 @@ $(document).ready(function(){
 			 WeixinJSBridge.call("closeWindow");
 		 }
 	 });
+	 
 });
+
