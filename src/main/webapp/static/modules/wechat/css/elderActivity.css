@@ -7,15 +7,11 @@ p.tip{color:#686868;font-size:20px;line-height:25px;padding:0 5%;padding-bottom:
 div.formcontent{padding:0 5%;}
 div.row p.error{line-height:30px;}
 div.formcontent .wrapinput{background:#e5e5e5;border:1px solid #e5e5e5;border-radius:5px;height:40px;}
-div.formcontent .wrapinput label{  float: left;
-  line-height: 40px;
-  width: 30%;
-  box-sizing: border-box;
-  padding-left: 10px;color:#AAA;}
-  div.formcontent .wrapinput .item{width: 40%; font-family: 'Î¢ÈíÑÅºÚ'; color: #666;}
+
+div.formcontent .wrapinput .item{width: 40%; font-family: 'Î¢ï¿½ï¿½ï¿½Åºï¿½'; color: #666;}
 div.formcontent .dateValue label{  float: left;
   line-height: 20px;
-  width: 30%;
+  width: 40%;
   box-sizing: border-box;
   padding-left: 10px;color:#AAA;}
 div.formcontent .dateValue .withLabe2{width: 40%;}
@@ -26,3 +22,6 @@ div.formcontent .dateValue:after{
   content:"\200B";clear:both;display:block;height:0;
 
 }
+.elderNameShow{width: 50%;background-color: #F52626; color: white; text-align: center;border-radius:3px; line-height: 40px;   box-sizing: border-box;padding-left: 10px;float: left;}
+.elderNamehide{width: 50%;background-color: #e5e5e5; color: #AAA; text-align: center;border-radius:3px; line-height: 40px;   box-sizing: border-box; padding-left: 10px;float: left;}
+.headInfo label{width: 40%;}
