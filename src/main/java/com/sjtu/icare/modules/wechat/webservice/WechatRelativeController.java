@@ -243,10 +243,12 @@ public class WechatRelativeController  extends BasicController {
 	
 	/*
 	 * update a relative's information
+	 * cannot use PUT method conventionally, connection OK under wifi condition, but error using GPRS
+	 * now I choose post method anyway
 	 * TODO unsecured method, vulnerable 
 	 * */
 	@Transactional
-	@RequestMapping(method = RequestMethod.PUT, produces = MediaTypes.JSON_UTF_8)
+	@RequestMapping(value="modify",method = RequestMethod.POST, produces = MediaTypes.JSON_UTF_8)
 	public Object modifyRelativeForWechat(
 			HttpServletRequest request,
 			@RequestParam(value="wechat_id",required=false) String wechatId,
