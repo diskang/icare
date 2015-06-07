@@ -25,12 +25,13 @@ public class SubscribeHandler implements WxMpMessageHandler{
 			Map<String, Object> context, WxMpService wxMpService,
 			WxSessionManager sessionManager) throws WxErrorException {
 		String appId = Global.getConfig("wechat.appId");
+		String host = Global.getConfig("api.host");
 		logger.debug(appId);
-		String RedirectUrl = wxMpService.oauth2buildAuthorizationUrl("http://202.120.38.227/wechat/register", "snsapi_base", "1");    
-			
-		String welcomeMsg = "welcome to us. please click "
-				+ "<a href=\""+RedirectUrl+"\">here</a>"
-				+ " to register";
+		String registerUrl = host+"/wechat/register";
+		String RedirectUrl = wxMpService.oauth2buildAuthorizationUrl(registerUrl, "snsapi_base", "1");
+		String welcomeMsg = "欢迎关注Housecare老伴公众账号，请点击 "
+				+ "<a href=\""+RedirectUrl+"\">这里</a>"
+				+ " 注册";
 		WxMpXmlOutTextMessage m
         = WxMpXmlOutMessage.TEXT().content(welcomeMsg).fromUser(wxMessage.getToUserName())
         .toUser(wxMessage.getFromUserName()).build();

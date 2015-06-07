@@ -10,10 +10,10 @@ import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutNewsMessage;
 
-import org.apache.log4j.Logger;
+import com.sjtu.icare.common.config.Global;
 
 public class PlatformMessageHandler implements WxMpMessageHandler{
-	private static Logger logger = Logger.getLogger(PlatformMessageHandler.class);
+//	private static Logger logger = Logger.getLogger(PlatformMessageHandler.class);
 	
 //	@Autowired private IElderRelativeRelationshipService elderRelativeRelationshipService;
 	
@@ -21,12 +21,12 @@ public class PlatformMessageHandler implements WxMpMessageHandler{
 	public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
 			Map<String, Object> context, WxMpService wxMpService,
 			WxSessionManager sessionManager) throws WxErrorException {
-
+		String host = Global.getConfig("api.host");
 		WxMpXmlOutNewsMessage.Item item = new WxMpXmlOutNewsMessage.Item();
 		item.setDescription("老伴养老平台");
 		item.setPicUrl("https://mmbiz.qlogo.cn/mmbiz/yOzUI5WmzvuCseL1GO1SYx8cmbu2bes1FwkvGVgHaCbaPovxMWrFUOV2V5TFiaIEDPZUbTAGkZVgKd0Hr7xvvcg/0?wx_fmt=jpeg");
 		item.setTitle("老伴养老平台");
-		item.setUrl("http://202.120.38.227");
+		item.setUrl(host);
 //		WxMpXmlOutNewsMessage.Item item2 = new WxMpXmlOutNewsMessage.Item();
 //		item2.setDescription("description");
 //		item2.setPicUrl("http://pic1.zhimg.com/e076d5d7ee095c31e10ee9ceea9229de_b.jpg");

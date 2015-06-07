@@ -16,9 +16,9 @@ $(function(){
 			var phoneNum = $('#mobilePhone').val();
 			var address = $('#relativeAddress').val();
 			$.ajax({//TODO 加入elder id
-		 		url : '/api/wechat/relative?wechat_id='+wechatId,
+		 		url : '/api/wechat/relative/modify?wechat_id='+wechatId,
 		 		contentType : 'application/json',
-			    type : 'put',
+			    type : 'post',
 			    data : JSON.stringify({"phoneNo":phoneNum,"householdAddress":address}),
 			    dataType : "json",
 			    success : function(obj){

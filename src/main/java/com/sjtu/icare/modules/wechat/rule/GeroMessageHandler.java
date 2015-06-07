@@ -2,6 +2,8 @@ package com.sjtu.icare.modules.wechat.rule;
 
 import java.util.Map;
 
+import com.sjtu.icare.common.config.Global;
+
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpMessageHandler;
@@ -72,11 +74,13 @@ public class GeroMessageHandler implements WxMpMessageHandler{
         return m;
 	}
 
+	@SuppressWarnings("unused")
 	private String getUnbindPrompt(WxMpService wxMpService){
-		String RedirectUrl = wxMpService.oauth2buildAuthorizationUrl("http://202.120.38.227/wechat/register", "snsapi_base", "1");    
+		String host = Global.getConfig("api.host");
+		String RedirectUrl = wxMpService.oauth2buildAuthorizationUrl(host+"/wechat/register", "snsapi_base", "1");    
 		
 		String hint = "您还未绑定任何老人，请点击"
-				+ "<a href=\""+RedirectUrl+"\">here</a>"
+				+ "<a href=\""+RedirectUrl+"\">这里</a>"
 				+ " 绑定";
 		return hint;
 	}
