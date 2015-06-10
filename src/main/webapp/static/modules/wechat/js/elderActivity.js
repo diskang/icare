@@ -28,8 +28,8 @@ var health = {
 	init:function(activity){//初始化老人数据
 		if(activity.length>1){//如果有2个人就显示姓名
 			$(".row").eq(0).append('<div class="wrapinput">'+
-			'<label  id="elder0" class="elderNameShow">'+activity[0][0]["elderName"]+'</label>'+
-			'<label  id="elder1" class="elderNamehide">'+activity[1][0]["elderName"]+'</label>'+
+			'<label  id="elder0" class="elderNameShow">'+activity[0]["elderName"]+'</label>'+
+			'<label  id="elder1" class="elderNamehide">'+activity[1]["elderName"]+'</label>'+
 			'</div>'+
 			'<p class="error">&nbsp;</p>');
 		}
@@ -39,15 +39,21 @@ var health = {
 		var num = [];//次数
 		var newStr = [];
 		var newIndex = 0;
-		for(var k=0;k<activity[index].length;k++){
+		var recordLength = activity[index]["elderRecord"].length;
+		if(recordLength==0){
+			$(".emptyDiv")[0].style.display="block";
+		}else{
+			$(".emptyDiv")[0].style.display="none"
+		}
+		for(var k=0;k<recordLength;k++){
 			var n = 1;
-			for(var j=k+1;j<activity[index].length;j++){
-				if(activity[index][k]["elderItemId"]==activity[index][j]["elderItemId"]){
+			for(var j=k+1;j<activity[index]["elderRecord"].length;j++){
+				if(activity[index]["elderRecord"][k]["elderItemId"]==activity[index]["elderRecord"][j]["elderItemId"]){
 					n++;
 				}
 			}
 			if(n==1){
-				newStr[newIndex] = activity[index][k];
+				newStr[newIndex] = activity[index]["elderRecord"][k];
 				newIndex++;
 			}
 			num[k] = n;

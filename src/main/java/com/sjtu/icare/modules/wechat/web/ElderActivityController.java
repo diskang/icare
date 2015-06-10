@@ -2,7 +2,9 @@ package com.sjtu.icare.modules.wechat.web;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -97,11 +99,15 @@ public class ElderActivityController extends BaseController{
 			String endDate = DateUtils.formatDate(DateUtils.addDays(new Date(), 1),"yyyy-MM-dd");
 			
 			for (Elder elder: elders) {
+				Map<String,Object> elderRecordObject = new HashMap<String, Object>();
 				Integer elderId = elder.getElderId();
 				careworkRecordEntity.setElderId(elderId);
 				List<CareworkRecordEntity> careworkRecordEntityList = itemRecordService.getCareworkRecords(
 						careworkRecordEntity, startDate, endDate);
-				elderCareRecordList.add(careworkRecordEntityList);
+				elderRecordObject.put("elderId", elderId);
+				elderRecordObject.put("elderName", elder.getElderName());
+				elderRecordObject.put("elderRecord", careworkRecordEntityList);
+				elderCareRecordList.add(elderRecordObject);
 			}
 			JsonMapper jsonMapper = new JsonMapper();
 			model.addAttribute("activityRecord", jsonMapper.toJson(elderCareRecordList));

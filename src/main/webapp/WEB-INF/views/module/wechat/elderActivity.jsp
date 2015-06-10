@@ -36,6 +36,10 @@
 				<label style="width: 40%;color: #AAA; border-radius:3px; line-height: 40px;   box-sizing: border-box; padding-left: 10px;float: left;">日期</label>
 			</div>
 		</div>
+		<div class="emptyDiv" style="text-align: center; width: 100%; display:none;">
+			<img alt="加载失败" src="/static/modules/wechat/images/content_empty_bg.png" width="75%">
+			<p>您好! 数据暂时还没有更新到服务器!</p>
+		</div>
 		<a class="btn">返回</a>
 	</div>
 </div>
