@@ -40,8 +40,8 @@
 		<div class="row">
 			<div class="wrapinput">
 				<label>姓名</label>
-				<input type="text" id="userName" name="userName"  maxlength="300" value="" style="width:48%; margin-right: 3px;"/>
-				<button style="width: 22.5%;height:100%;border-radius: 5px; border:0px solid #F52626; background-color: #F52626; color: white;" id="elderSearch">搜&nbsp;索</button>
+				<input type="text" id="userName" name="userName"  maxlength="300" value="" style="width:48%; margin-right: 1.5px;"/>
+				<button style="width: 23.4%;height:100%;border-radius: 3px; border:0px solid #F52626; background-color: #F52626; color: white;" id="elderSearch">搜&nbsp;索</button>
 			</div>
 			<p class="error">&nbsp;</p>
 		</div>

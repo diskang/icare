@@ -27,7 +27,7 @@
 	<div class="formcontent">
 		<div class="row">
 			<div class="wrapinput">
-				<label>姓名</label>
+				<label style="text-align: right;">姓名 &nbsp; </label>
 				<input type="text" id="relativeName" name="relativeName" disabled="disabled" maxlength="10" value=""/>
 			</div>
 			<p class="error">&nbsp;</p>

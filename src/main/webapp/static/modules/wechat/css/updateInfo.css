@@ -10,7 +10,8 @@ div.formcontent .wrapinput label{  float: left;
   line-height: 40px;
   width: 28%;
   box-sizing: border-box;
-  padding-left: 10px;color:#AAA;}
+  padding-left: 10px;
+  }
 div.formcontent .wrapinput input{float:left;height:40px;line-height:40px;width:100%;box-sizing:border-box;width:72%;border:none;
 /*background:none;
 */
