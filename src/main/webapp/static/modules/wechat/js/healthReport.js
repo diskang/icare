@@ -42,10 +42,10 @@ var _setHealthData=function(dataUrl,options,parseFunction){
 }	
 var health = {
 	init:function(str){//初始化老人数据
-		var length = str.length;
-		if(length>2)alert("只能显示两个老人");
+		var length = str.length>2?2:str.length;
+		//if(length>2)alert("只能显示两个老人");
 		var formcontents = $(".row");
-		 for(var k=0;k<2;k++){//循环对象个数
+		 for(var k=0;k<length;k++){//循环对象个数
 			//var val = JSON.stringify(str[k]);
 			var elder = str[k];
 			var eid  = elder.elderId;
