@@ -32,7 +32,7 @@
 		<div class="row">
 			<div class="wrapinput">
 				<label>养老院</label>
-				<label style="width: 72%;background-color: white ;" id="oldHome">新天地养老院</label>
+				<label style="width: 72%;background-color: white ;" id="oldHome">黄浦区老年公寓</label>
 			</div>
 			<p class="error">&nbsp;</p>
 		</div>

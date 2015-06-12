@@ -38,12 +38,12 @@
 		<input type="hidden" name="wechatId" value="${wechatId}">
 	
 		<div class="row">
-			<label class="item">姓名</label>
+			<!--label class="item">姓名</label-->
 			<input type="text" name="name" placeholder="请输入姓名" maxlength="30" id="name"   />
 			<p class="error" id="nameErr">&nbsp;</p>
 		</div>
 		<div class="row">
-		<label class="item">手机号码</label>
+		<!--label class="item">手机号码</label-->
 			<input type="number" name="phoneNo" placeholder="请输入手机号码" maxlength="11" id="phoneNum"/>
 			<p class="error" id="phoneNumErr">&nbsp;</p>
 		</div>
