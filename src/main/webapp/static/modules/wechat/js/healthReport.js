@@ -58,8 +58,8 @@ var health = {
 	
 	getT:function(elderId){
 		var dataUrl = '/api/wechat/elder/'+elderId+'/temperature?wechat_id='+wechatId;
-		var tOptions = {'scaleOverride':true,'scaleSteps':6, 'scaleStepWidth':0.5,'scaleStartValue':36
-				,tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>"};
+		var tOptions = {'responsive' : true, 'scaleOverride':true,'scaleSteps':6, 'scaleStepWidth':0.5,'scaleStartValue':36
+				,tooltipTemplate: "体温:<%= value %>℃",tooltipEvents: ["click"]};
 		var parseFunction = function(entities){
 			var len=entities.length;
 //			Ts = new Array(len<7?7:len);//at least 7
@@ -69,11 +69,13 @@ var health = {
 //			Ts=Ts.reverse();
 			var usedLength = len<7?len:7;
 			Ts = new Array(usedLength);//at most 7
+			var x_axis = new Array(usedLength);
 			for (var i= 0; i<usedLength; i++){
 				Ts[i] = entities[i].temperature;
+				x_axis[i]= entities[i]['time'].substr(5,5);
 			}
 			var tData = {
-				labels : ["1","2","3","4","5","6","7"].slice(0,usedLength),
+				labels : x_axis,
 				datasets : [{
 					label: "体温",
 					fillColor : "rgba(90,190,90,.5)",
@@ -90,17 +92,20 @@ var health = {
 	},
 	getHR:function(elderId){
 		var dataUrl = '/api/wechat/elder/'+elderId+'/heart_rate?wechat_id='+wechatId;
-		var hrOptions = {'scaleOverride':true,'scaleSteps':10, 'scaleStepWidth':5,'scaleStartValue':50};
+		var hrOptions = {'responsive' : true,'scaleOverride':true,'scaleSteps':10, 'scaleStepWidth':5,'scaleStartValue':50
+		,tooltipTemplate: "心率:<%= value %>次/分",tooltipEvents: ["click"]};
 		var parseFunction = function(entities){
 			var len=entities.length;
 			var usedLength = len<7?len:7;
 			var hrs = new Array(usedLength);//at most 7
+			var x_axis = new Array(usedLength);
 			for (var i= 0; i<usedLength; i++){
 				hrs[i] = entities[i].rate;
+				x_axis[i]= entities[i]['time'].substr(5,5);
 			}
 			
 			var hrData = {
-				labels : ["1","2","3","4","5","6","7"].slice(0,usedLength),
+				labels : x_axis,
 				datasets : [{
 					fillColor : "rgba(90,190,90,.5)",
 					strokeColor : "rgba(90,190,90,1)",
@@ -116,22 +121,24 @@ var health = {
 	},
 	getBP:function(elderId){
 		var dataUrl = '/api/wechat/elder/'+elderId+'/blood_pressure?wechat_id='+wechatId;
-		var bpOptions = {'scaleOverride':true,'scaleSteps':10, 'scaleStepWidth':10,'scaleStartValue':50
-				,tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>"};
+		var bpOptions = {'responsive' : true,'scaleOverride':true,'scaleSteps':10, 'scaleStepWidth':10,'scaleStartValue':50
+				,multiTooltipTemplate: "<%= datasetLabel  %> - <%= value %>mmHg",tooltipEvents: ["click"]};
 		var parseFunction = function(entities){
 			var len=entities.length;
 			var usedLength = len<7?len:7;
 			var sp = new Array(usedLength);//at most 7
 			var dp = new Array(usedLength);//at most 7
+			var x_axis = new Array(usedLength);
 			for (var i= 0; i<usedLength; i++){
 				sp[i] = entities[i].systolicPressure;
 				dp[i] = entities[i].diastolicPressure;
+				x_axis[i]= entities[i]['time'].substr(5,5);
 			}
 			var bpData = {
-				labels : ["1","2","3","4","5","6","7"].slice(0,usedLength),
+				labels : x_axis,
 				datasets : [{
 					label:"低压",
-					fillColor : "rgba(90,190,90,.5)",
+					fillColor : "rgba(90,190,90,1)",
 					strokeColor : "rgba(90,190,90,1)",
 					pointColor : "rgba(90,190,90,1)",
 					pointStrokeColor : "#fff",
