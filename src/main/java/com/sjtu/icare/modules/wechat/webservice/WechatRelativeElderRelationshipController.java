@@ -126,11 +126,22 @@ public class WechatRelativeElderRelationshipController extends BasicController{
 		}catch(Exception e){
 			throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, "cannot get relationship for relative"); 
 		} 
-		//check how many elders the relative already bind, support number <=2
-		if(elderRelativeRelationshipEntities!=null && elderRelativeRelationshipEntities.size()>2){
-			throw new RestException(HttpStatus.FORBIDDEN, "exceed maximum binded number, can only add two relatives"); 
-		}
 		
+		if (elderRelativeRelationshipEntities!=null){
+			int maxElderNum = 2;
+			int bindedElderNum = elderRelativeRelationshipEntities.size();
+			if( bindedElderNum <maxElderNum){
+				for(ElderRelativeRelationshipEntity e:elderRelativeRelationshipEntities){
+					if(e.getElderUserId()==elderUserId){
+						throw new RestException(HttpStatus.BAD_REQUEST, "elder already binded"); 
+					}
+				}
+			}
+			//check how many elders the relative already bind, support number <=2
+			else if (bindedElderNum >= maxElderNum){
+				throw new RestException(HttpStatus.FORBIDDEN, "exceed maximum binded number, can only add two relatives"); 
+			}
+		}
 		try{//no problems found, add new elder 's user id 
 			requestElderRelativeRelationshipEntity.setElderUserId(elderUserId);
 			// insert into Relative table

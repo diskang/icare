@@ -103,6 +103,8 @@
 			    	that.removeClass("disabled");
 			    	if(XMLHttpRequest.status==403){
 			    	    alert("最多只能绑定两个老人！");
+			    	}else if(XMLHttpRequest.status==400){
+			    		alert("已经绑定过该老人!");
 			    	}
 			    //     alert(XMLHttpRequest.status);
         //             alert(XMLHttpRequest.readyState);

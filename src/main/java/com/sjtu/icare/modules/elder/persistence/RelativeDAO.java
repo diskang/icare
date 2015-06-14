@@ -6,7 +6,6 @@
 package com.sjtu.icare.modules.elder.persistence;
 
 import java.util.List;
-import java.util.Map;
 
 import com.sjtu.icare.common.persistence.annotation.MyBatisDao;
 import com.sjtu.icare.modules.elder.entity.ElderRelativeRelationshipEntity;
