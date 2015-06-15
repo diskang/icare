@@ -148,12 +148,12 @@
 		 imgulrAttr : function(){
 		 		var leng = imgUrl.length;//获取它的长度
 		 		var begImg,endImg; //第一个图片和第二个图片的下标
-		 		
 		 		if(leng<=0)
 		 			return ;
 		 		if(index % 2 ==0&&leng!=1){
-		 			 begImg = index-2; //第一个图片的下标
-			 		 endImg = begImg+1; //第二个图片的下标
+		 			begImg = index-2; //第一个图片的下标
+			 		endImg = begImg+1; //第二个图片的下标
+			 		$(".wrapaddr").find("ul").html("");//清除原有html
 		 			$(".wrapaddr").find("ul").append(
 				 			' <li class="imgli">'+
 						 		'<img alt="加载失败" src="/downloadObject?file_url='+imgUrl[begImg]+'" width="120px" height="112px" class="img oneImg" >'+
