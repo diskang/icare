@@ -9,6 +9,11 @@ package com.sjtu.icare.modules.staff.entity;
 
 import java.io.Serializable;
 
+/**
+ * 员工排班信息实体类
+ * @author sean_7
+ *
+ */
 public class StaffSchedulePlanEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -43,6 +48,7 @@ public class StaffSchedulePlanEntity implements Serializable {
 		this.staffId = staffId;
 	}
 	/**
+	 * 养老院ID
 	 * @return the geroId
 	 */
 	public int getGeroId() {
@@ -55,6 +61,7 @@ public class StaffSchedulePlanEntity implements Serializable {
 		this.geroId = geroId;
 	}
 	/**
+	 * 工作日期
 	 * @return the workDate
 	 */
 	public String getWorkDate() {

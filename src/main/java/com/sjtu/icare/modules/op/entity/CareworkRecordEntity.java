@@ -34,6 +34,7 @@ public class CareworkRecordEntity extends DataEntity<CareworkRecordEntity> imple
 		this.id = id;
 	}
 	/**
+	 * 护工ID
 	 * @return the carerId
 	 */
 	public Integer getCarerId() {
@@ -46,6 +47,7 @@ public class CareworkRecordEntity extends DataEntity<CareworkRecordEntity> imple
 		this.carerId = carerId;
 	}
 	/**
+	 * 老人ID
 	 * @return the elderId
 	 */
 	public Integer getElderId() {
@@ -58,6 +60,7 @@ public class CareworkRecordEntity extends DataEntity<CareworkRecordEntity> imple
 		this.elderId = elderId;
 	}
 	/**
+	 * 老人项目ID
 	 * @return the elderItemId
 	 */
 	public Integer getElderItemId() {
@@ -70,6 +73,7 @@ public class CareworkRecordEntity extends DataEntity<CareworkRecordEntity> imple
 		this.elderItemId = elderItemId;
 	}
 	/**
+	 * 项目名称
 	 * @return the itemName
 	 */
 	public String getItemName() {
@@ -82,6 +86,7 @@ public class CareworkRecordEntity extends DataEntity<CareworkRecordEntity> imple
 		this.itemName = itemName;
 	}
 	/**
+	 * 结束时间
 	 * @return the finishTime
 	 */
 	public String getFinishTime() {
@@ -100,6 +105,7 @@ public class CareworkRecordEntity extends DataEntity<CareworkRecordEntity> imple
 		return serialVersionUID;
 	}
 	/**
+	 * 老人姓名
 	 * @return the elderName
 	 */
 	public String getElderName() {
@@ -112,6 +118,7 @@ public class CareworkRecordEntity extends DataEntity<CareworkRecordEntity> imple
 		this.elderName = elderName;
 	}
 	/**
+	 * 护工姓名
 	 * @return the staffName
 	 */
 	public String getCarerName() {
@@ -156,6 +163,7 @@ public class CareworkRecordEntity extends DataEntity<CareworkRecordEntity> imple
 		this.endDate = endDate;
 	}
 	/**
+	 * 护工类型
 	 * @return the staffType
 	 */
 	public Integer getStaffType() {
@@ -168,6 +176,7 @@ public class CareworkRecordEntity extends DataEntity<CareworkRecordEntity> imple
 		this.staffType = staffType;
 	}
 	/**
+	 * 老人姓名
 	 * @return the elderType
 	 */
 	public Integer getElderType() {

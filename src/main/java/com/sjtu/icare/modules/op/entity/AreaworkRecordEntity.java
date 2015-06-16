@@ -34,6 +34,7 @@ public class AreaworkRecordEntity extends DataEntity<AreaworkRecordEntity> imple
 		this.id = id;
 	}
 	/**
+	 * 护工ID
 	 * @return the carerId
 	 */
 	public Integer getCarerId() {
@@ -46,6 +47,7 @@ public class AreaworkRecordEntity extends DataEntity<AreaworkRecordEntity> imple
 		this.carerId = carerId;
 	}
 	/**
+	 * 房间ID
 	 * @return the areaId
 	 */
 	public Integer getAreaId() {
@@ -58,6 +60,7 @@ public class AreaworkRecordEntity extends DataEntity<AreaworkRecordEntity> imple
 		this.areaId = areaId;
 	}
 	/**
+	 * 房间项目ID
 	 * @return the areaItemId
 	 */
 	public Integer getAreaItemId() {
@@ -70,6 +73,7 @@ public class AreaworkRecordEntity extends DataEntity<AreaworkRecordEntity> imple
 		this.areaItemId = areaItemId;
 	}
 	/**
+	 * 项目ID
 	 * @return the itemName
 	 */
 	public String getItemName() {
@@ -82,6 +86,7 @@ public class AreaworkRecordEntity extends DataEntity<AreaworkRecordEntity> imple
 		this.itemName = itemName;
 	}
 	/**
+	 * 结束时间
 	 * @return the finishTime
 	 */
 	public String getFinishTime() {
@@ -100,6 +105,7 @@ public class AreaworkRecordEntity extends DataEntity<AreaworkRecordEntity> imple
 		return serialVersionUID;
 	}
 	/**
+	 * 护理人员姓名
 	 * @return the carerName
 	 */
 	public String getCarerName() {

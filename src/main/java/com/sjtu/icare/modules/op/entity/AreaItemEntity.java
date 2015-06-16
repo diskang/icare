@@ -11,6 +11,10 @@ import java.io.Serializable;
 
 import com.sjtu.icare.common.persistence.DataEntity;
 
+/**
+ * 房间项目实体类
+ * @author sean_7
+ */
 public class AreaItemEntity extends DataEntity<AreaItemEntity> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -37,6 +41,7 @@ public class AreaItemEntity extends DataEntity<AreaItemEntity> implements Serial
 		this.id = id;
 	}
 	/**
+	 * 养老院ID
 	 * @return the geroId
 	 */
 	public Integer getGeroId() {
@@ -49,6 +54,7 @@ public class AreaItemEntity extends DataEntity<AreaItemEntity> implements Serial
 		this.geroId = geroId;
 	}
 	/**
+	 * 房间项目名称
 	 * @return the name
 	 */
 	public String getName() {
@@ -61,6 +67,7 @@ public class AreaItemEntity extends DataEntity<AreaItemEntity> implements Serial
 		this.name = name;
 	}
 	/**
+	 * 房间项目周期
 	 * @return the period
 	 */
 	public Integer getPeriod() {
@@ -97,6 +104,7 @@ public class AreaItemEntity extends DataEntity<AreaItemEntity> implements Serial
 		this.notes = notes;
 	}
 	/**
+	 * 逻辑删除开关
 	 * @return the delFlag
 	 */
 	public String getDelFlag() {

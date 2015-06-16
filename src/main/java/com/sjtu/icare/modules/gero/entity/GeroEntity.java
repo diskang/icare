@@ -11,6 +11,11 @@ import java.io.Serializable;
 
 import com.sjtu.icare.common.persistence.DataEntity;
 
+/**
+ * 养老院信息实体类
+ * @author sean_7
+ *
+ */
 public class GeroEntity extends DataEntity<GeroEntity> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -60,6 +65,7 @@ public class GeroEntity extends DataEntity<GeroEntity> implements Serializable {
 
 
 	/**
+	 * 养老院名
 	 * @return the name
 	 */
 	public String getName() {
@@ -78,6 +84,7 @@ public class GeroEntity extends DataEntity<GeroEntity> implements Serializable {
 
 
 	/**
+	 * 所在城市
 	 * @return the city
 	 */
 	public String getCity() {
@@ -96,6 +103,7 @@ public class GeroEntity extends DataEntity<GeroEntity> implements Serializable {
 
 
 	/**
+	 * 街区
 	 * @return the district
 	 */
 	public String getDistrict() {
@@ -114,6 +122,7 @@ public class GeroEntity extends DataEntity<GeroEntity> implements Serializable {
 
 
 	/**
+	 * 地址
 	 * @return the address
 	 */
 	public String getAddress() {
@@ -132,6 +141,7 @@ public class GeroEntity extends DataEntity<GeroEntity> implements Serializable {
 
 
 	/**
+	 * 联系方式
 	 * @return the contact
 	 */
 	public String getContact() {
@@ -150,6 +160,7 @@ public class GeroEntity extends DataEntity<GeroEntity> implements Serializable {
 
 
 	/**
+	 * 证照
 	 * @return the licence
 	 */
 	public String getLicence() {
@@ -168,6 +179,7 @@ public class GeroEntity extends DataEntity<GeroEntity> implements Serializable {
 
 
 	/**
+	 * 规模
 	 * @return the scale
 	 */
 	public Integer getScale() {
@@ -186,6 +198,7 @@ public class GeroEntity extends DataEntity<GeroEntity> implements Serializable {
 
 
 	/**
+	 * 护理等级
 	 * @return the careLevel
 	 */
 	public Integer getCareLevel() {
@@ -204,6 +217,7 @@ public class GeroEntity extends DataEntity<GeroEntity> implements Serializable {
 
 
 	/**
+	 * 联系ID
 	 * @return the contactId
 	 */
 	public Integer getContactId() {

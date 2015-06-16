@@ -10,7 +10,11 @@ package com.sjtu.icare.modules.op.entity;
 import java.io.Serializable;
 
 import com.sjtu.icare.common.persistence.DataEntity;
-
+/**
+ * 专护实体类
+ * @author sean_7
+ *
+ */
 public class CareItemEntity extends DataEntity<CareItemEntity> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -41,6 +45,7 @@ public class CareItemEntity extends DataEntity<CareItemEntity> implements Serial
 		this.id = id;
 	}
 	/**
+	 * 养老院ID
 	 * @return the geroId
 	 */
 	public Integer getGeroId() {
@@ -53,6 +58,7 @@ public class CareItemEntity extends DataEntity<CareItemEntity> implements Serial
 		this.geroId = geroId;
 	}
 	/**
+	 * 专护项目名
 	 * @return the name
 	 */
 	public String getName() {
@@ -77,6 +83,7 @@ public class CareItemEntity extends DataEntity<CareItemEntity> implements Serial
 		this.icon = icon;
 	}
 	/**
+	 * 护理等级
 	 * @return the level
 	 */
 	public Integer getLevel() {
@@ -89,6 +96,7 @@ public class CareItemEntity extends DataEntity<CareItemEntity> implements Serial
 		this.level = level;
 	}
 	/**
+	 * 项目周期
 	 * @return the period
 	 */
 	public Integer getPeriod() {
@@ -101,6 +109,7 @@ public class CareItemEntity extends DataEntity<CareItemEntity> implements Serial
 		this.period = period;
 	}
 	/**
+	 * 项目频率
 	 * @return the frequency
 	 */
 	public Integer getFrequency() {
@@ -125,6 +134,7 @@ public class CareItemEntity extends DataEntity<CareItemEntity> implements Serial
 		this.notes = notes;
 	}
 	/**
+	 * 逻辑删除开关
 	 * @return the delFlag
 	 */
 	public String getDelFlag() {

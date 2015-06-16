@@ -6,7 +6,7 @@ import java.io.Serializable;
 import com.sjtu.icare.common.utils.StringUtils;
 
 /**
- * @Description 老人数据 Entity
+ * 老人数据实体类
  * @author WangQi
  * @date 2015-03-05
  */
@@ -38,18 +38,21 @@ public class ElderEntity implements Serializable {
 	}
 
 	/**
+	 * 获取老人ID
 	 * @return the id
 	 */
 	public Integer getId() {
 		return id;
 	}
 	/**
+	 * 设置老人ID
 	 * @param id the id to set
 	 */
 	public void setId(Integer id) {
 		this.id = id;
 	}
 	/**
+	 * 获取老人姓名
 	 * @return the name
 	 */
 	public String getName() {
@@ -62,6 +65,7 @@ public class ElderEntity implements Serializable {
 		this.name = name;
 	}
 	/**
+	 * 养老院ID
 	 * @return the geroId
 	 */
 	public Integer getGeroId() {
@@ -74,6 +78,7 @@ public class ElderEntity implements Serializable {
 		this.geroId = geroId;
 	}
 	/**
+	 * 社保号码
 	 * @return the nssfId
 	 */
 	public String getNssfId() {
@@ -98,6 +103,7 @@ public class ElderEntity implements Serializable {
 		this.archiveId = archiveId;
 	}
 	/**
+	 * 区域ID
 	 * @return the areaId
 	 */
 	public Integer getAreaId() {
@@ -110,6 +116,7 @@ public class ElderEntity implements Serializable {
 		this.areaId = areaId;
 	}
 	/**
+	 * 医疗服务等级
 	 * @return the careLevel
 	 */
 	public Integer getCareLevel() {
@@ -122,6 +129,7 @@ public class ElderEntity implements Serializable {
 		this.careLevel = careLevel;
 	}
 	/**
+	 * 登入时间
 	 * @return the checkinDate
 	 */
 	public String getCheckinDate() {
@@ -137,6 +145,7 @@ public class ElderEntity implements Serializable {
 			this.checkinDate = checkinDate;
 	}
 	/**
+	 * 检出时间
 	 * @return the checkoutDate
 	 */
 	public String getCheckoutDate() {

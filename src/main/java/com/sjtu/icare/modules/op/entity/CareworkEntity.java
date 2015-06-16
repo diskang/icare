@@ -12,6 +12,11 @@ import java.io.Serializable;
 import com.sjtu.icare.common.persistence.DataEntity;
 import com.sjtu.icare.common.utils.StringUtils;
 
+/**
+ * 专护排班实体类
+ * @author sean_7
+ *
+ */
 public class CareworkEntity extends DataEntity<CareworkEntity> implements Serializable {
     
 	private static final long serialVersionUID = 1L;
@@ -39,6 +44,7 @@ public class CareworkEntity extends DataEntity<CareworkEntity> implements Serial
 		this.id = id;
 	}
 	/**
+	 * 护工ID
 	 * @return the carerId
 	 */
 	public Integer getCarerId() {
@@ -51,6 +57,7 @@ public class CareworkEntity extends DataEntity<CareworkEntity> implements Serial
 		this.carerId = carerId;
 	}
 	/**
+	 * 所有负责老人的ID
 	 * @return the elderIds
 	 */
 	public String getElderIds() {
@@ -63,6 +70,7 @@ public class CareworkEntity extends DataEntity<CareworkEntity> implements Serial
 		this.elderIds = elderIds;
 	}
 	/**
+	 * 结束日期
 	 * @return the endDate
 	 */
 	public String getEndDate() {
@@ -78,6 +86,7 @@ public class CareworkEntity extends DataEntity<CareworkEntity> implements Serial
 			this.endDate = endDate;
 	}
 	/**
+	 * 当前状态
 	 * @return the status
 	 */
 	public Integer getStatus() {
@@ -104,6 +113,7 @@ public class CareworkEntity extends DataEntity<CareworkEntity> implements Serial
 		
 	}
 	/**
+	 * 养老院
 	 * @return the geroId
 	 */
 	public Integer getGeroId() {

@@ -6,7 +6,7 @@ import java.io.Serializable;
 import com.sjtu.icare.common.utils.StringUtils;
 
 /**
- * @Description Staff Entity
+ * 员工信息实体类
  * @author WangQi
  * @date 2015-03-06
  */
@@ -35,6 +35,7 @@ public class StaffEntity implements Serializable {
 
 
 	/**
+	 * staff_id
 	 * @return the id
 	 */
 	public Integer getId() {
@@ -53,6 +54,7 @@ public class StaffEntity implements Serializable {
 
 
 	/**
+	 * 姓名
 	 * @return the name
 	 */
 	public String getName() {
@@ -71,6 +73,7 @@ public class StaffEntity implements Serializable {
 
 
 	/**
+	 * 社保号
 	 * @return the nssfId
 	 */
 	public String getNssfId() {
@@ -89,6 +92,7 @@ public class StaffEntity implements Serializable {
 
 
 	/**
+	 * 养老院ID
 	 * @return the geroId
 	 */
 	public Integer getGeroId() {
@@ -125,6 +129,7 @@ public class StaffEntity implements Serializable {
 
 
 	/**
+	 * 离开日期
 	 * @return the leaveDate
 	 */
 	public String getLeaveDate() {

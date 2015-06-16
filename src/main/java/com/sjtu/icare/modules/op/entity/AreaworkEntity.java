@@ -6,6 +6,11 @@ import java.sql.Date;
 import com.sjtu.icare.common.persistence.DataEntity;
 import com.sjtu.icare.common.utils.StringUtils;
 
+/**
+ * 房间排班记录实体类
+ * @author sean_7
+ *
+ */
 public class AreaworkEntity extends DataEntity<AreaworkEntity> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -33,6 +38,7 @@ public class AreaworkEntity extends DataEntity<AreaworkEntity> implements Serial
 		this.id = id;
 	}
 	/**
+	 * 护理人员ID
 	 * @return the carerId
 	 */
 	public Integer getCarerId() {
@@ -45,6 +51,7 @@ public class AreaworkEntity extends DataEntity<AreaworkEntity> implements Serial
 		this.carerId = carerId;
 	}
 	/**
+	 * 房间ID
 	 * @return the areaIds
 	 */
 	public String getAreaIds() {
@@ -57,6 +64,7 @@ public class AreaworkEntity extends DataEntity<AreaworkEntity> implements Serial
 		this.areaIds = areaIds;
 	}
 	/**
+	 * 养老院ID
 	 * @return the geroId
 	 */
 	public Integer getGeroId() {
@@ -69,6 +77,7 @@ public class AreaworkEntity extends DataEntity<AreaworkEntity> implements Serial
 		this.geroId = geroId;
 	}
 	/**
+	 * 结束日期
 	 * @return the endDate
 	 */
 	public String getEndDate() {
@@ -84,6 +93,7 @@ public class AreaworkEntity extends DataEntity<AreaworkEntity> implements Serial
 			this.endDate = endDate;
 	}
 	/**
+	 * 排班状态
 	 * @return the status
 	 */
 	public Integer getStatus() {

@@ -4,7 +4,7 @@ package com.sjtu.icare.modules.elder.entity;
 import java.io.Serializable;
 
 /**
- * @Description T_ELDER_HEART_RATE 表对应的 Entity
+ * 老人心率实体类
  * @author lzl
  * @date 2015-03-08
  */
@@ -36,6 +36,7 @@ public class ElderHeartRateEntity implements Serializable {
 		this.id = id;
 	}
 	/**
+	 * 老人ID
 	 * @return the elderId
 	 */
 	public Integer getElderId() {
@@ -48,6 +49,7 @@ public class ElderHeartRateEntity implements Serializable {
 		this.elderId = elderId;
 	}
 	/**
+	 * 医生ID
 	 * @return the doctorId
 	 */
 	public Integer getDoctorId() {
@@ -60,6 +62,7 @@ public class ElderHeartRateEntity implements Serializable {
 		this.doctorId = doctorId;
 	}
 	/**
+	 * 心率
 	 * @return the rate
 	 */
 	public Double getRate() {
@@ -72,6 +75,7 @@ public class ElderHeartRateEntity implements Serializable {
 		this.rate = rate;
 	}
 	/**
+	 * 录入时间
 	 * @return the time
 	 */
 	public String getTime() {

@@ -11,6 +11,11 @@ import java.io.Serializable;
 
 import com.sjtu.icare.common.persistence.DataEntity;
 
+/**
+ * TODO
+ * @author sean_7
+ *
+ */
 public class GeroElderExchangeEntity extends DataEntity<GeroElderExchangeEntity> implements Serializable  {
 	private static final long serialVersionUID = 1L;
 

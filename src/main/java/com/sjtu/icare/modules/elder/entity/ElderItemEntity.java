@@ -7,6 +7,9 @@
  */
 package com.sjtu.icare.modules.elder.entity;
 
+/**
+ * 老人项目实体类
+ */
 import java.io.Serializable;
 
 import com.sjtu.icare.common.persistence.DataEntity;
@@ -40,6 +43,7 @@ public class ElderItemEntity extends DataEntity<ElderItemEntity> implements Seri
 		this.id = id;
 	}
 	/**
+	 * 老人ID
 	 * @return the elderId
 	 */
 	public Integer getElderId() {
@@ -52,6 +56,7 @@ public class ElderItemEntity extends DataEntity<ElderItemEntity> implements Seri
 		this.elderId = elderId;
 	}
 	/**
+	 * 护理项目ID
 	 * @return the careItemId
 	 */
 	public Integer getCareItemId() {
@@ -64,6 +69,7 @@ public class ElderItemEntity extends DataEntity<ElderItemEntity> implements Seri
 		this.careItemId = careItemId;
 	}
 	/**
+	 * 护理项目名称
 	 * @return the careItemName
 	 */
 	public String getCareItemName() {
@@ -76,6 +82,7 @@ public class ElderItemEntity extends DataEntity<ElderItemEntity> implements Seri
 		this.careItemName = careItemName;
 	}
 	/**
+	 * 老人项目图标
 	 * @return the icon
 	 */
 	public String getIcon() {
@@ -88,6 +95,7 @@ public class ElderItemEntity extends DataEntity<ElderItemEntity> implements Seri
 		this.icon = icon;
 	}
 	/**
+	 * 护理等级
 	 * @return the level
 	 */
 	public Integer getLevel() {
@@ -100,6 +108,7 @@ public class ElderItemEntity extends DataEntity<ElderItemEntity> implements Seri
 		this.level = level;
 	}
 	/**
+	 * 老人项目周期
 	 * @return the period
 	 */
 	public Integer getPeriod() {
@@ -112,6 +121,7 @@ public class ElderItemEntity extends DataEntity<ElderItemEntity> implements Seri
 		this.period = period;
 	}
 	/**
+	 * 老人项目起始时间
 	 * @return the startTime
 	 */
 	public String getStartTime() {
@@ -124,6 +134,7 @@ public class ElderItemEntity extends DataEntity<ElderItemEntity> implements Seri
 		this.startTime = startTime;
 	}
 	/**
+	 * 老人项目结束时间
 	 * @return the endTime
 	 */
 	public String getEndTime() {
@@ -136,6 +147,7 @@ public class ElderItemEntity extends DataEntity<ElderItemEntity> implements Seri
 		this.endTime = endTime;
 	}
 	/**
+	 * 逻辑删除开关
 	 * @return the delFlag
 	 */
 	public String getDelFlag() {
