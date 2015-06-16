@@ -1,3 +1,4 @@
+ALTER TABLE T_ELDER_RELATIVE DROP CONSTRAINT fk_ELDER_RELATIVE_elder_id;
 alter table T_ELDER_RELATIVE drop column elder_id;
 alter table T_USER alter column gero_id int null;
 alter table T_USER alter column wechat_id varchar(32);

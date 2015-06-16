@@ -171,6 +171,7 @@ CREATE TABLE T_ELDER_RELATIVE_RELATIONSHIP
 (
 	relative_user_id	int				NOT NULL,				--家属user_ID
 	elder_user_id		int				NOT NULL,				--老人user_ID
+	CONSTRAINT uc_Elder_Relative_Relation UNIQUE (relative_user_id,elder_user_id)
 )
 ;
 
@@ -494,12 +495,6 @@ REFERENCES T_AREA(id)
 
 ALTER TABLE T_ELDER_SHEET
 ADD CONSTRAINT fk_ELDER_SHEET_bed_id
-FOREIGN KEY (elder_id)
-REFERENCES T_ELDER(id)
-;
-
-ALTER TABLE T_ELDER_RELATIVE
-ADD CONSTRAINT fk_ELDER_RELATIVE_elder_id
 FOREIGN KEY (elder_id)
 REFERENCES T_ELDER(id)
 ;

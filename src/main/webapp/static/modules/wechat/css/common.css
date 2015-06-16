@@ -1,0 +1,113 @@
+@charset "utf-8";
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+html {
+  line-height: 1;
+}
+
+body
+ {
+	font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif;
+    box-sizing: border-box;
+ }
+
+ol, ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+q, blockquote {
+  quotes: none;
+}
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+a img {
+  border: none;
+}
+
+h3.title{height:50px;background:#F52626;color:#FFF;width:100%;line-height:50px;text-align:center;background-size: 20px auto;font-size:25px;border-bottom:1px solid #e25151;}
+h3.title a.back {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 15px;
+  top: 15px;
+  border-top: 2px solid #FFF;
+  border-left: 2px solid #FFF;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+h3.title a.right
+ {
+	background: url(../img/icon.png) no-repeat;
+  position: absolute;
+  right: 10px;
+  height: 32px;
+  width: 32px;
+  background-size: 31px auto;
+  top: 9px;
+ }
+ 
+ h3.title a.cart
+ {
+	background: url(../img/cart.png) no-repeat;
+  position: absolute;
+  right: 55px;
+  height: 32px;
+  width: 32px;
+  background-size: 31px auto;
+  top: 9px;
+ }
+ 
+ h3.title a.filter
+ {
+	background: url(../img/filter.png) no-repeat;
+  position: absolute;
+  right: 55px;
+  height: 32px;
+  width: 32px;
+  background-size: 31px auto;
+  top: 9px;
+ }
+
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+
+.clear{ *zoom:1; }
+.clear:after{ content:"."; display:block; height:0; clear:both; visibility:hidden; }
+
+input::-webkit-input-placeholder{font: inherit;font-size:15px;font-family:微软雅黑;color:#919191;line-height:40px;}

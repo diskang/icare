@@ -106,7 +106,7 @@ public class ElderRelativeRelationshipService implements
 	}
 	
 	@Override
-	public ElderRelativeRelationshipReturn getElderRelativeRelationshipsByRelativeId(
+	public ElderRelativeRelationshipReturn getElderRelativeRelationshipsByWechatId(
 			String openId) {
 		String status = null;
 		User user = systemService.getUserByWechatId(openId);

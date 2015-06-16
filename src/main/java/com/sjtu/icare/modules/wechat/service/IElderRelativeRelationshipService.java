@@ -9,6 +9,6 @@ import com.sjtu.icare.modules.wechat.service.impl.ElderRelativeRelationshipServi
 
 public interface IElderRelativeRelationshipService {
 
-	ElderRelativeRelationshipReturn getElderRelativeRelationshipsByRelativeId(String openId);
+	ElderRelativeRelationshipReturn getElderRelativeRelationshipsByWechatId(String openId);
 
 }

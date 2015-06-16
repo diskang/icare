@@ -29,6 +29,8 @@ public class AdminController extends BaseController{
 		// 如果已经登录，则跳转到管理首页
 		if(user.getUsername() != null){
 			logger.debug("admin");
+//			response.addHeader("Connection", "keep-alive");
+//			response.addHeader("Keep-Alive", "2000");
 			return "module/gero_management";
 		}
 		return "module/sys/sysLogin";

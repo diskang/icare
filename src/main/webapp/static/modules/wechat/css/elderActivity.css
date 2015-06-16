@@ -1,0 +1,27 @@
+
+div.content
+ {
+   margin-top:10%; 
+ }
+p.tip{color:#686868;font-size:20px;line-height:25px;padding:0 5%;padding-bottom:10px;border-bottom:1px solid #ccc;margin-bottom:20px;}
+div.formcontent{padding:0 5%;}
+div.row p.error{line-height:30px;}
+div.formcontent .wrapinput{background:#e5e5e5;border:1px solid #e5e5e5;border-radius:5px;height:40px;}
+
+div.formcontent .wrapinput .item{width: 40%; font-family: '΢���ź�'; color: #666;}
+div.formcontent .dateValue label{  float: left;
+  line-height: 20px;
+  width: 40%;
+  box-sizing: border-box;
+  padding-left: 10px;color:#AAA;}
+div.formcontent .dateValue .withLabe2{width: 40%;}
+a.btn{display:block;border-radius:2px;height:50px;background-color:#f53333;line-height:50px;color:#FFF;text-align:center;font-size:20px;margin-bottom:20px;margin-top:30px;}
+
+.clearfix:after {content:"\200B";clear:both;display:block;height:0;}
+div.formcontent .dateValue:after{
+  content:"\200B";clear:both;display:block;height:0;
+
+}
+.elderNameShow{width: 50%;background-color: #F52626; color: white; text-align: center;border-radius:3px; line-height: 40px;   box-sizing: border-box;padding-left: 10px;float: left;}
+.elderNamehide{width: 50%;background-color: #e5e5e5; color: #AAA; text-align: center;border-radius:3px; line-height: 40px;   box-sizing: border-box; padding-left: 10px;float: left;}
+.headInfo label{width: 40%;}
