@@ -50,10 +50,22 @@ var health = {
 			var elder = str[k];
 			var eid  = elder.elderId;
 			popup.preAppend(0,eid,elder.elderName);
-			popup.preAppend(1,eid,elder.hr);
-			popup.preAppend(2,eid,elder.t);
-			popup.preAppend(3,eid,elder.bp);
-		} 
+			if(elder.hr!=null){
+				popup.preAppend(1,eid,elder.hr);
+			}else{
+				popup.preAppend(1,eid,"无");
+			}
+			if(elder.hr!=null){
+				popup.preAppend(2,eid,elder.t);
+			}else{
+				popup.preAppend(2,eid,"无");
+			}
+			if(elder.hr!=null){
+				popup.preAppend(3,eid,elder.bp);
+			}else{
+				popup.preAppend(3,eid,"无");
+			}	
+		}
 	},
 	
 	getT:function(elderId){
