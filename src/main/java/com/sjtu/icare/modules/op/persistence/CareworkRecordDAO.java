@@ -33,5 +33,15 @@ public interface CareworkRecordDAO {
 	 * @throws
 	 */
 	void insertCareworkRecords(List<Map<String, Object>> paramList);
+
+	/**
+	 * @Title getLatestCareworkRecords
+	 * @Description TODO
+	 * @param @param paramMap
+	 * @param @return
+	 * @return List<CareworkRecordEntity>
+	 * @throws
+	 */
+	List<CareworkRecordEntity> getLatestCareworkRecords(CareworkRecordEntity careworkRecordEntity);
 	
 }

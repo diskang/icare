@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sjtu.icare.common.config.ErrorConstants;
@@ -25,7 +26,10 @@ import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.common.web.rest.RestException;
 import com.sjtu.icare.modules.elder.webservice.ElderTemperatureRestController;
 import com.sjtu.icare.modules.gero.service.impl.GeroAreaService;
+import com.sjtu.icare.modules.op.entity.CareworkRecordEntity;
 import com.sjtu.icare.modules.op.persistence.CareworkDAO;
+import com.sjtu.icare.modules.op.service.IItemRecordService;
+import com.sjtu.icare.modules.op.service.IItemService;
 import com.sjtu.icare.modules.staff.entity.StaffEntity;
 import com.sjtu.icare.modules.staff.service.impl.DutyCarerService;
 
@@ -41,18 +45,24 @@ public class TestControllerS7 {
 	private DutyCarerService dutyCarerService;
 	@Autowired
 	private CareworkDAO careworkDAO;
+	@Autowired
+	private IItemRecordService itemRecordService;
 	
 	private static Logger logger = Logger.getLogger(ElderTemperatureRestController.class);
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
-	public Object testMethod() {
+	public Object testMethod(
+			@RequestParam(value="staff_id", required=false) Integer staffId,
+			@RequestParam(value="elder_id", required=false) Integer elderId) {
 	
 		try {
 			
-			Map<String, Object> paramMap = new HashMap<String, Object>();
-			paramMap.put("elderId", 1);
-			paramMap.put("date", "2015-03-13");
-			List<StaffEntity> resultEntities = careworkDAO.getStaffEntitiesByElderId(paramMap);
+			CareworkRecordEntity careworkRecordEntity = new CareworkRecordEntity();
+			careworkRecordEntity.setCarerId(staffId);
+			careworkRecordEntity.setElderId(elderId);
+			List<CareworkRecordEntity> careworkRecordEntityList = itemRecordService.getLatestCareworkRecords(
+					careworkRecordEntity);
+			return careworkRecordEntityList;
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -66,7 +76,6 @@ public class TestControllerS7 {
 //		queryElderEntity.setId(1);
 //		List<StaffEntity> dutyCarers = dutyCarerService.getDutyCarerByElderIdAndDate(queryElderEntity, "2015-03-13");
 		
-		return "test";
 	}
 
 }

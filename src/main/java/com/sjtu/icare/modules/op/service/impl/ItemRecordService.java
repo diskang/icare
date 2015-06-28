@@ -94,4 +94,14 @@ public class ItemRecordService implements IItemRecordService {
 		areaworkRecordDAO.insertAreaworkRecords(paramList);
 	}
 
+
+	@Override
+	public List<CareworkRecordEntity> getLatestCareworkRecords(
+			CareworkRecordEntity careworkRecordEntity) {
+		careworkRecordEntity.setStaffType(CommonConstants.STAFF_TYPE);
+		careworkRecordEntity.setElderType(CommonConstants.ELDER_TYPE);
+		
+		return careworkRecordEntity.getPage().setList(careworkRecordDAO.getLatestCareworkRecords(careworkRecordEntity)).getList();
+	}
+
 }

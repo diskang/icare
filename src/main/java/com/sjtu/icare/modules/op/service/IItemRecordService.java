@@ -27,6 +27,18 @@ public interface IItemRecordService {
 	List<CareworkRecordEntity> getCareworkRecords(
 			CareworkRecordEntity careworkRecordEntity, String startDate,
 			String endDate);
+	/**
+	 * @Title getCareworkRecords
+	 * @Description 获取最近有记录的那天的记录
+	 * @param @param careworkRecordEntity
+	 * @param @param startDate
+	 * @param @param endDate
+	 * @param @return
+	 * @return List<CareworkRecordEntity>
+	 * @throws
+	 */
+	List<CareworkRecordEntity> getLatestCareworkRecords(
+			CareworkRecordEntity careworkRecordEntity);
 
 	/**
 	 * @Title insertCareworkRecords
