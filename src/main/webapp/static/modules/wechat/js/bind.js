@@ -19,7 +19,8 @@
 		 				 imgUrl[i] = obj.entities[i].photo_url;
 		 				 imgId[i] = obj.entities[i].elder_id;
 		 			 }
-		 		}else{
+		 		}else{//empty
+		 			$('.error').eq(1).html("老人不存在，请检查姓名!");
 		 			return;
 		 		}
 		 		add.imgulrAttr();

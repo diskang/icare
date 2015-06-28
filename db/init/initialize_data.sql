@@ -483,6 +483,8 @@ INSERT INTO {DATABASE_NAME}.dbo.T_CARE_ITEM (gero_id,name,icon,level,period,freq
 INSERT INTO {DATABASE_NAME}.dbo.T_CARE_ITEM (gero_id,name,icon,level,period,frequency,start_time,end_time,notes,del_flag) VALUES (
 1,'梳头','hair_comb',1,1,1,'05:00:00','09:00:00','','0');
 INSERT INTO {DATABASE_NAME}.dbo.T_CARE_ITEM (gero_id,name,icon,level,period,frequency,start_time,end_time,notes,del_flag) VALUES (
+1,'理发','hair_cut',1,15,1,NULL,NULL,'','0');
+INSERT INTO {DATABASE_NAME}.dbo.T_CARE_ITEM (gero_id,name,icon,level,period,frequency,start_time,end_time,notes,del_flag) VALUES (
 1,'更换衣服','clothes_change',1,1,1,NULL,NULL,'','0');
 INSERT INTO {DATABASE_NAME}.dbo.T_CARE_ITEM (gero_id,name,icon,level,period,frequency,start_time,end_time,notes,del_flag) VALUES (
 1,'发放药物','medicine_distribute',1,1,1,NULL,NULL,'','0');

@@ -1095,7 +1095,7 @@
           text:'确定',
           iconCls:'icon-ok',
           handler:function(){
-            
+            care_item.putitem();
           }
         }]
       ">
