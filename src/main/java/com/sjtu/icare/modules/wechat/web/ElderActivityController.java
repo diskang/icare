@@ -1,7 +1,6 @@
 package com.sjtu.icare.modules.wechat.web;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sjtu.icare.common.config.CommonConstants;
 import com.sjtu.icare.common.mapper.JsonMapper;
-import com.sjtu.icare.common.utils.DateUtils;
 import com.sjtu.icare.common.web.BaseController;
 import com.sjtu.icare.common.web.rest.MediaTypes;
 import com.sjtu.icare.modules.op.entity.CareworkRecordEntity;
