@@ -95,15 +95,16 @@ public class ElderActivityController extends BaseController{
 		if(CommonConstants.SUBSCRIBED_WITH_RELATIONSHIP_BINDING.equals(status)){
 			CareworkRecordEntity careworkRecordEntity = new CareworkRecordEntity();
 			List<Object> elderCareRecordList= new ArrayList<Object>();
-			String startDate = DateUtils.formatDate(new Date(),"yyyy-MM-dd");
-			String endDate = DateUtils.formatDate(DateUtils.addDays(new Date(), 1),"yyyy-MM-dd");
+			//String startDate = DateUtils.formatDate(new Date(),"yyyy-MM-dd");
+			//String endDate = DateUtils.formatDate(DateUtils.addDays(new Date(), 1),"yyyy-MM-dd");
 			
 			for (Elder elder: elders) {
 				Map<String,Object> elderRecordObject = new HashMap<String, Object>();
 				Integer elderId = elder.getElderId();
 				careworkRecordEntity.setElderId(elderId);
-				List<CareworkRecordEntity> careworkRecordEntityList = itemRecordService.getCareworkRecords(
-						careworkRecordEntity, startDate, endDate);
+				List<CareworkRecordEntity> careworkRecordEntityList = itemRecordService.getLatestCareworkRecords(careworkRecordEntity);
+//				List<CareworkRecordEntity> careworkRecordEntityList = itemRecordService.getCareworkRecords(
+//						careworkRecordEntity, startDate, endDate);
 				elderRecordObject.put("elderId", elderId);
 				elderRecordObject.put("elderName", elder.getElderName());
 				elderRecordObject.put("elderRecord", careworkRecordEntityList);
