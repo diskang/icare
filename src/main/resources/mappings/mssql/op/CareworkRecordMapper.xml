@@ -62,9 +62,9 @@
                 T_CAREWORK_RECORD.elder_id = T_USER_ELDER.user_id
                 AND T_USER_ELDER.user_type = #{elderType}
         WHERE
-        	convert(nvarchar(10), T_CAREWORK_RECORD.finish_time, 11) = convert(nvarchar(10), (SELECT TOP 1 finish_time FROM T_CAREWORK_RECORD ORDER BY finish_time DESC), 11)
+        	convert(nvarchar(10), T_CAREWORK_RECORD.finish_time, 11) = convert(nvarchar(10), (SELECT TOP 1 finish_time FROM T_CAREWORK_RECORD WHERE T_CAREWORK_RECORD.elder_id = #{elderId} ORDER BY finish_time DESC), 11)
             <if test="carerId != null">
-	            T_CAREWORK_RECORD.carer_id = #{carerId}
+	            AND T_CAREWORK_RECORD.carer_id = #{carerId}
             </if>
             <if test="elderId != null">
 	            AND T_CAREWORK_RECORD.elder_id = #{elderId}
