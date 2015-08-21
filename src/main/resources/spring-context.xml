@@ -15,7 +15,7 @@
 	<description>Spring Configuration</description>
 	
     <!-- 加载配置属性文件 -->
-	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/resthouse.properties" />
+	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/resthouse.properties:/versioncode-url.properties" />
 	
 	<!-- 使用Annotation自动注册Bean，解决事物失效问题：在主容器中不扫描@Controller注解，在SpringMvc中只扫描@Controller注解。 
     为了支持Rest,增加了ControllerAdvice
