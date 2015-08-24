@@ -35,10 +35,10 @@ public class VersionUrl {
 	}
 	
 	public static String getLatestVersioncode(){
-		getConfig("latest.versioncode");
+		return getConfig("latest.versioncode");
 	}
 
 	public static String getLatestUrl(){
-		getConfig("latest.url");
+		return getConfig("latest.url");
 	}
 }
