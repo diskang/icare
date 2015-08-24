@@ -26,23 +26,29 @@ public class VersioncodeController {
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public Object getUrl(
-			@RequestParam(value="versioncode", required=true) String versioncode) {
+			@RequestParam(value="versioncode", required=false) String versioncode) {
 		try {
-			versioncode = versioncode.trim();
+			String url;
+			if (versioncode==null || "".equals(versioncode.trim())){//default
+				versioncode=VersionUrl.getLatestVersioncode();
+				url=VersionUrl.getLatestUrl();
+			}else{
+				versioncode = versioncode.trim();
+				url = VersionUrl.getUrl(versioncode);
+			}
+
 			BasicReturnedJson basicReturnedJson = new BasicReturnedJson();
 			
-    		String url = VersionUrl.getUrl(versioncode);
-    		if (!StringUtils.isBlank(url)) {
-    			
-    			Map<String, Object> resultMap = new HashMap<String, Object>();
-    			
-    			resultMap.put("url", url); 
-    			resultMap.put("versioncode", versioncode); 
-    			
-    			basicReturnedJson.addEntity(resultMap);
-    		}
+			if (!StringUtils.isBlank(url)) {	
+				Map<String, Object> resultMap = new HashMap<String, Object>();
+				
+				resultMap.put("url", url); 
+				resultMap.put("versioncode", versioncode); 
+				
+				basicReturnedJson.addEntity(resultMap);
+			}
 
-            return basicReturnedJson.getMap();    
+			return basicReturnedJson.getMap();	
 		} catch(Exception e) {
 			e.printStackTrace();
 			String otherMessage = "[" + e.getMessage() + "]";

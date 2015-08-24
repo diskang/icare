@@ -13,6 +13,7 @@ import com.sjtu.icare.common.utils.PropertiesLoader;
 /**
  * @author sean_7
  *
+ * add latestversioncode & url by Kang 2015/8/24
  */
 public class VersionUrl {
 
@@ -33,4 +34,11 @@ public class VersionUrl {
 		return getConfig(versioncode);
 	}
 	
+	public static String getLatestVersioncode(){
+		getConfig("latest.versioncode");
+	}
+
+	public static String getLatestUrl(){
+		getConfig("latest.url");
+	}
 }
